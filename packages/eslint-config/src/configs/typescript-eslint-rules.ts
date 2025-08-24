@@ -91,6 +91,11 @@ export const typescriptEslintRules: Linter.RulesRecord = {
   '@typescript-eslint/naming-convention': [
     'error',
     {
+      // These selectors should have no formatting checks
+      selector: ['import', 'objectLiteralProperty', 'typeProperty'],
+      format: null,
+    },
+    {
       selector: 'default',
       format: ['strictCamelCase'],
       leadingUnderscore: 'forbid',
@@ -114,11 +119,6 @@ export const typescriptEslintRules: Linter.RulesRecord = {
       // allow leading underscores for unused parameters (typescript internal convention)
       leadingUnderscore: 'allow',
       trailingUnderscore: 'forbid',
-    },
-    {
-      // These selectors should have no formatting checks
-      selector: ['import', 'objectLiteralProperty', 'typeProperty'],
-      format: [],
     },
   ],
 
