@@ -26,9 +26,9 @@ export async function callPrettier(glob: string, options: Options = {}): Promise
   // If this is undefined, we can just return, as exceptions have been handled.
   if (!binPath) return;
 
-  const args = [...(disableIgnores ? ["--ignore-path ''"] : []), `--${mode}`, `'${glob}'`];
+  const args = [...(disableIgnores ? ["--ignore-path ''"] : []), `--${mode}`, glob];
 
-  await execa({ cwd: workingDir })`${binPath} ${args.join(' ')}`;
+  await execa({ cwd: workingDir })(binPath, args);
 }
 
 /**

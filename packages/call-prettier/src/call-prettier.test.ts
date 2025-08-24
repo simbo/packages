@@ -40,7 +40,7 @@ describe('callPrettier', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['', ' ', ''], '/cwd/node_modules/.bin/prettier', "--write '*.js'");
+    expect(executor).toHaveBeenNthCalledWith(1, '/cwd/node_modules/.bin/prettier', ['--write', '*.js']);
   });
 
   it('should disable ignores when specified', async () => {
@@ -52,12 +52,11 @@ describe('callPrettier', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(
-      1,
-      ['', ' ', ''],
-      '/cwd/node_modules/.bin/prettier',
-      "--ignore-path '' --write '*.js'",
-    );
+    expect(executor).toHaveBeenNthCalledWith(1, '/cwd/node_modules/.bin/prettier', [
+      "--ignore-path ''",
+      '--write',
+      '*.js',
+    ]);
   });
 
   it('should support setting a custom Prettier binary path', async () => {
@@ -69,7 +68,7 @@ describe('callPrettier', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['', ' ', ''], '/custom/path/to/prettier', "--write '*.js'");
+    expect(executor).toHaveBeenNthCalledWith(1, '/custom/path/to/prettier', ['--write', '*.js']);
   });
 
   it('should throw if the Prettier binary is not found', async () => {
