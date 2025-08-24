@@ -7,15 +7,9 @@ vi.mock('node:console', () => ({
   log: vi.fn(),
 }));
 
-vi.mock('@simbo/cli-output/failure', () => ({
+vi.mock('@simbo/cli-output', () => ({
   failure: vi.fn().mockImplementation((msg: string) => `[failure] ${msg}`),
-}));
-
-vi.mock('@simbo/cli-output/hint-to-help', () => ({
   hintToHelp: vi.fn().mockImplementation(() => 'Call --help.'),
-}));
-
-vi.mock('@simbo/cli-output/terminated', () => ({
   terminated: vi.fn().mockImplementation((msg: string) => `[terminated] ${msg}`),
 }));
 

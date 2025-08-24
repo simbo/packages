@@ -1,7 +1,7 @@
 import { log } from 'node:console';
 import { exit } from 'node:process';
 
-import { failure } from '@simbo/cli-output/failure';
+import { failure } from '@simbo/cli-output';
 import { stringifyError } from '@simbo/stringify-error';
 
 import { teardownSteps } from './teardown/teardown-steps.js';

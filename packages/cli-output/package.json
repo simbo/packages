@@ -29,11 +29,7 @@
   },
   "type": "module",
   "exports": {
-    "./failure": "./dist/failure.js",
-    "./success": "./dist/success.js",
-    "./line": "./dist/line.js",
-    "./hint-to-help": "./dist/hint-to-help.js",
-    "./terminated": "./dist/terminated.js"
+    ".": "./dist/index.js"
   },
   "files": [
     "CHANGELOG.md",

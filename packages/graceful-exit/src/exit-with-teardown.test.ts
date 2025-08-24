@@ -10,7 +10,7 @@ vi.mock('node:process', () => ({
   exit: vi.fn(),
 }));
 
-vi.mock('@simbo/cli-output/failure', () => ({
+vi.mock('@simbo/cli-output', () => ({
   failure: vi.fn().mockImplementation((msg: string) => `[failure] ${msg}`),
 }));
 
@@ -24,7 +24,7 @@ vi.mock('./teardown/teardown-steps.js', () => ({
 
 const { log } = vi.mocked(await import('node:console'));
 const { exit } = vi.mocked(await import('node:process'));
-const { failure } = vi.mocked(await import('@simbo/cli-output/failure'));
+const { failure } = vi.mocked(await import('@simbo/cli-output'));
 const { stringifyError } = vi.mocked(await import('@simbo/stringify-error'));
 const { teardownSteps } = vi.mocked(await import('./teardown/teardown-steps.js'));
 

@@ -2,7 +2,7 @@ import { log } from 'node:console';
 import { basename } from 'node:path';
 import { argv } from 'node:process';
 
-import { terminated } from '@simbo/cli-output/terminated';
+import { terminated } from '@simbo/cli-output';
 import { findUpPackage } from '@simbo/find-up-package';
 import { gracefulExit } from '@simbo/graceful-exit';
 import { importMetaPath } from '@simbo/import-meta-path';

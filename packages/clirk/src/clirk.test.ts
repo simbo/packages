@@ -30,7 +30,7 @@ vi.mock('@simbo/find-up-package', () => ({
   findUpPackage: vi.fn().mockResolvedValue({ packageJson: { name: 'test', version: '1.0.0' } }),
 }));
 
-vi.mock('@simbo/cli-output/terminated', () => ({
+vi.mock('@simbo/cli-output', () => ({
   terminated: vi.fn().mockImplementation((msg: string) => `[terminated] ${msg}`),
 }));
 

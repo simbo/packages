@@ -28,7 +28,7 @@ vi.mock('@simbo/find-up-package', () => ({
   findUpPackage: vi.fn(),
 }));
 
-vi.mock('@simbo/cli-output/terminated', () => ({
+vi.mock('@simbo/cli-output', () => ({
   terminated: vi.fn().mockImplementation((msg: string) => `[terminated] ${msg}`),
 }));
 
@@ -38,7 +38,7 @@ vi.mock('minimist', () => ({
 
 const { gracefulExit } = vi.mocked(await import('@simbo/graceful-exit'));
 const { findUpPackage } = vi.mocked(await import('@simbo/find-up-package'));
-const { terminated } = vi.mocked(await import('@simbo/cli-output/terminated'));
+const { terminated } = vi.mocked(await import('@simbo/cli-output'));
 
 const getOptions = (overrides: Partial<ClirkOptions> = {}): ClirkOptions => ({
   importMeta: { dirname: '/test' } as ImportMeta,

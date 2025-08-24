@@ -1,8 +1,6 @@
 import { log } from 'node:console';
 
-import { failure } from '@simbo/cli-output/failure';
-import { hintToHelp } from '@simbo/cli-output/hint-to-help';
-import { terminated } from '@simbo/cli-output/terminated';
+import { failure, hintToHelp, terminated } from '@simbo/cli-output';
 import { stringifyError } from '@simbo/stringify-error';
 import { UserFacingError } from '@simbo/user-facing-error';
 import { dim } from 'yoctocolors';
