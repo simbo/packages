@@ -1,11 +1,12 @@
 {
-  "files.associations": {
-    "tsconfig*.json": "jsonc"
-  },
   "cSpell.enabled": true,
   "cSpell.enabledFileTypes": {
     "*": false,
     "plaintext": true,
     "markdown": true
-  }
+  },
+  "files.associations": {
+    "tsconfig*.json": "jsonc"
+  },
+  "search.followSymlinks": false
 }
