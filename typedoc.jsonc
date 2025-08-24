@@ -6,6 +6,7 @@
   "entryPointStrategy": "packages",
   "plugin": ["typedoc-github-theme", "typedoc-plugin-mdn-links"],
   "exclude": ["packages/tsconfig/", "packages/changelog/"],
+  "treatWarningsAsErrors": true,
 
   "name": "Documentation for Simbo's Packages",
   "router": "kind-dir",
