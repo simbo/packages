@@ -1,0 +1,64 @@
+{
+  "name": "@simbo/import-meta-path",
+  "description": "A small utility for safely deriving absolute file and directory paths from import.meta in Node.js, with a consistent fallback order.",
+  "version": "0.0.0",
+  "keywords": [
+    "import.meta",
+    "esm",
+    "nodejs",
+    "file-path",
+    "dirname",
+    "filename",
+    "url",
+    "path-utils",
+    "utility",
+    "__dirname",
+    "__filename",
+    "fileurltopath"
+  ],
+  "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
+  "license": "MIT",
+  "homepage": "http://github.com/simbo/packages/tree/main/packages/import-meta-path",
+  "repository": "github:simbo/packages",
+  "bugs": "https://github.com/simbo/packages/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/import-meta-path.js"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "check:eslint": "eslint --config ./eslint.config.ts --max-warnings 0",
+    "check:format": "prettier --check .",
+    "check:types": "tsc --noEmit",
+    "clean:dist": "rm -rf dist",
+    "fix:eslint": "pnpm run check:eslint --fix",
+    "fix:format": "prettier --write .",
+    "test": "vitest run --coverage",
+    "test:ui": "pnpm run test:watch --ui",
+    "test:watch": "vitest dev --coverage"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "catalog:core",
+    "@simbo/eslint-config": "workspace:*",
+    "@simbo/prettier-config": "workspace:*",
+    "@simbo/tsconfig": "workspace:*",
+    "@types/node": "catalog:core",
+    "@vitest/coverage-v8": "catalog:core",
+    "@vitest/ui": "catalog:core",
+    "eslint": "catalog:core",
+    "jiti": "catalog:core",
+    "prettier": "catalog:core",
+    "prettier-plugin-organize-attributes": "catalog:core",
+    "typescript": "catalog:core",
+    "vitest": "catalog:core"
+  }
+}
