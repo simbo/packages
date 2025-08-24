@@ -1,6 +1,6 @@
 {
   "name": "@simbo/clirk",
-  "description": "A utility for building Node.js CLIs with common functionality, a small footprint, and excellent performance.",
+  "description": "A utility that makes creating Node.js CLIs easier by providing common functionality out of the box, with excellent performance and a minimal footprint.",
   "version": "1.0.1",
   "keywords": [
     "cli",
