@@ -11,7 +11,7 @@ import { generateVersionMessage } from './lib/generate-version-message.js';
 import { isFlagDefined } from './lib/is-flag-defined.js';
 
 /**
- * clirk - The CLI clerk.
+ * clirk - The CLI Clerk.
  * This function initializes the CLI clerk with the provided options.
  * It parses arguments, provides CLI package information and takes over common
  * CLI tasks like generating help messages, displaying version information, and

@@ -5,7 +5,7 @@ import type { ClirkOptions } from '../clirk.types.js';
 import { addFlagsToOptions } from './add-flags-to-options.js';
 
 const getOptions = (overrides: Partial<ClirkOptions> = {}): ClirkOptions => ({
-  importMeta: '/test',
+  importMeta: { dirname: '/test' } as ImportMeta,
   title: 'Test CLI',
   name: 'test-cli',
   ...overrides,

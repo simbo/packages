@@ -9,7 +9,7 @@ export interface ClirkOptions {
    * The `import.meta` from any script within the CLI package.
    * This is used to resolve the CLI package information.
    */
-  importMeta: string;
+  importMeta: ImportMeta;
 
   /**
    * The options for parsing command line arguments.
@@ -113,6 +113,11 @@ export interface ClirkOptions {
  * The context for the clirk CLI.
  */
 export interface ClirkContext {
+  /**
+   * The absolute path to the directory containing the CLI's package.json.
+   */
+  importPath: string;
+
   /**
    * The options for parsing command line arguments.
    * This is passed to the minimist library.

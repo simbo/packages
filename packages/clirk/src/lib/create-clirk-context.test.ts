@@ -41,7 +41,7 @@ const { findUpPackage } = vi.mocked(await import('@simbo/find-up-package'));
 const { terminated } = vi.mocked(await import('@simbo/cli-output/terminated'));
 
 const getOptions = (overrides: Partial<ClirkOptions> = {}): ClirkOptions => ({
-  importMeta: '/test',
+  importMeta: { dirname: '/test' } as ImportMeta,
   title: 'Test CLI',
   name: 'test-cli',
   ...overrides,

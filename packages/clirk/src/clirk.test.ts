@@ -87,7 +87,7 @@ const { isFlagDefined } = vi.mocked(await import('./lib/is-flag-defined.js'));
 const { clirk } = await import('./clirk.js');
 
 const getOptions = (overrides: Partial<ClirkOptions> = {}): ClirkOptions => ({
-  importMeta: '/test',
+  importMeta: { dirname: '/test' } as ImportMeta,
   title: 'Test CLI',
   name: 'test-cli',
   ...overrides,

@@ -5,6 +5,7 @@ import { argv } from 'node:process';
 import { terminated } from '@simbo/cli-output/terminated';
 import { findUpPackage } from '@simbo/find-up-package';
 import { gracefulExit } from '@simbo/graceful-exit';
+import { importMetaPath } from '@simbo/import-meta-path';
 import minimist from 'minimist';
 
 import type { CliOption, CliParameter, ClirkContextWithoutMessages, ClirkOptions } from '../clirk.types.js';
@@ -29,13 +30,15 @@ export async function createClirkContext(cliOptions: ClirkOptions): Promise<Clir
     throw new Error('The importMeta option is required.');
   }
 
+  const importPath = importMetaPath(cliOptions.importMeta);
+
   const pkg = await findUpPackage({
-    workingDir: cliOptions.importMeta,
+    workingDir: importPath,
     normalize: true,
   });
 
   if (pkg === undefined) {
-    throw new Error(`Could not find package for path: ${cliOptions.importMeta}`);
+    throw new Error(`Could not find package for path: ${importPath}`);
   }
 
   const commandName = basename(argv[1]);
@@ -59,6 +62,7 @@ export async function createClirkContext(cliOptions: ClirkOptions): Promise<Clir
   const { sigintHandler, sigintMessage } = getSigintHandler(cliOptions);
 
   return {
+    importPath,
     argsOptions,
     args,
     title,

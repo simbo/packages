@@ -54,6 +54,7 @@
     "@simbo/cli-output": "workspace:*",
     "@simbo/find-up-package": "workspace:*",
     "@simbo/graceful-exit": "workspace:*",
+    "@simbo/import-meta-path": "workspace:*",
     "@simbo/plural": "workspace:*",
     "@simbo/stringify-error": "workspace:*",
     "minimist": "catalog:packages",
