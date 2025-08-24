@@ -6,10 +6,10 @@ import type { Opts, ParsedArgs } from 'minimist';
  */
 export interface ClirkOptions {
   /**
-   * The `import.meta` from any script within the CLI package.
+   * The `import.meta.dirname` from any script within the CLI package.
    * This is used to resolve the CLI package information.
    */
-  importMeta: ImportMeta;
+  importMetaDirname: string;
 
   /**
    * The options for parsing command line arguments.

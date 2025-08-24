@@ -401,9 +401,6 @@ importers:
       '@simbo/graceful-exit':
         specifier: workspace:*
         version: link:../graceful-exit
-      '@simbo/import-meta-path':
-        specifier: workspace:*
-        version: link:../import-meta-path
       '@simbo/plural':
         specifier: workspace:*
         version: link:../plural

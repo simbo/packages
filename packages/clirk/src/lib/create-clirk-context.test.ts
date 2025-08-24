@@ -41,7 +41,7 @@ const { findUpPackage } = vi.mocked(await import('@simbo/find-up-package'));
 const { terminated } = vi.mocked(await import('@simbo/cli-output'));
 
 const getOptions = (overrides: Partial<ClirkOptions> = {}): ClirkOptions => ({
-  importMeta: { dirname: '/test' } as ImportMeta,
+  importMetaDirname: '/test',
   title: 'Test CLI',
   name: 'test-cli',
   ...overrides,
@@ -52,11 +52,11 @@ describe('createClirkContext', () => {
     vi.clearAllMocks();
   });
 
-  it('throws if importMeta is missing', async () => {
+  it('throws if importMetaDirname is missing', async () => {
     await expect(
       // @ts-expect-error intentional test for missing field
       async () => createClirkContext({ title: 'My CLI', description: '', examples: [] }),
-    ).rejects.toThrow('The importMeta option is required.');
+    ).rejects.toThrow('The importMetaDirname option is required.');
   });
 
   it('handles minimal valid input', async () => {

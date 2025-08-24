@@ -5,7 +5,6 @@ import { argv } from 'node:process';
 import { terminated } from '@simbo/cli-output';
 import { findUpPackage } from '@simbo/find-up-package';
 import { gracefulExit } from '@simbo/graceful-exit';
-import { importMetaPath } from '@simbo/import-meta-path';
 import minimist from 'minimist';
 
 import type { CliOption, CliParameter, ClirkContextWithoutMessages, ClirkOptions } from '../clirk.types.js';
@@ -23,14 +22,14 @@ import { parseStringInput } from './parse-string-input.js';
  *
  * @param cliOptions - The user-supplied options for the CLI definition.
  * @returns A promise that resolves to a ClirkContextWithoutMessages object.
- * @throws If `importMeta` is not provided.
+ * @throws If `importMetaDirname` is not provided.
  */
 export async function createClirkContext(cliOptions: ClirkOptions): Promise<ClirkContextWithoutMessages> {
-  if (!cliOptions.importMeta) {
-    throw new Error('The importMeta option is required.');
+  if (!cliOptions.importMetaDirname) {
+    throw new Error('The importMetaDirname option is required.');
   }
 
-  const importPath = importMetaPath(cliOptions.importMeta);
+  const importPath = cliOptions.importMetaDirname;
 
   const pkg = await findUpPackage({
     workingDir: importPath,
