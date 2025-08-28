@@ -26,7 +26,7 @@
   },
   "type": "module",
   "exports": {
-    ".": "./dist/graceful-exit.js",
+    ".": "./dist/index.js",
     "./teardown": "./dist/teardown/index.js"
   },
   "files": [
