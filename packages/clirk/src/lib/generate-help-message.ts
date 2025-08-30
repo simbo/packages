@@ -1,7 +1,7 @@
 import { plural } from '@simbo/plural';
 import { bold, cyan, dim, underline, yellow } from 'yoctocolors';
 
-import type { ClirkContextWithoutMessages } from '../clirk.types.js';
+import type { ClirkContextWithoutMessages } from '../types/clirk-context.interface.js';
 
 /**
  * Generates a help message for the CLI based on the provided context.
@@ -57,7 +57,7 @@ function getUsage(context: ClirkContextWithoutMessages): string[] {
 
   return [
     bold(`${usageLabel}:`),
-    `  ${yellow(examples.join('\n  '))}`,
+    `  ${examples.map(example => yellow(example)).join('\n  ')}`,
     ...(usage.length > 0 ? [`  ${usage.join('\n  ')}`] : []),
   ];
 }
@@ -101,8 +101,8 @@ function getOptions(context: ClirkContextWithoutMessages): string[] {
 
   const output: string[] = [bold(`${optionsLabel}:`)];
 
-  for (const [key, { description, aliases, isString }] of options.entries()) {
-    const value = isString ? dim('=<VALUE>') : '';
+  for (const [key, { description, aliases, type }] of options.entries()) {
+    const value = type === 'string' ? dim('=<VALUE>') : '';
     let aliasDescription = `  ${yellow(`--${key}`)}${value}\n    ${description.join('\n    ')}`;
     if (aliases.size > 0) {
       const aliasList = [...aliases].map(alias => (alias.length === 1 ? `-${alias}` : `--${alias}`)).join(', ');

@@ -1,4 +1,4 @@
-import type { ClirkContextWithoutMessages } from '../clirk.types.js';
+import type { ClirkContextWithoutMessages } from '../types/clirk-context.interface.js';
 
 /**
  * Generates a version message for the CLI package.

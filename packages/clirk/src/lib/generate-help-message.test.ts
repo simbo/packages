@@ -1,16 +1,24 @@
-import type { PackageNormalized } from '@simbo/find-up-package';
-import { describe, expect, it } from 'vitest';
-import { dim, underline, yellow } from 'yoctocolors';
+import { describe, expect, it, vi } from 'vitest';
 
-import type { ClirkContextWithoutMessages } from '../clirk.types.js';
+import { mockContextWithoutMessages } from '../../tests/mocks.js';
+import type { ClirkContextWithoutMessages } from '../types/clirk-context.interface.js';
 
 import { generateHelpMessage } from './generate-help-message.js';
 
-describe('generateHelpMessage', () => {
-  const baseContext = {
+vi.mock('yoctocolors', () => ({
+  bold: vi.fn((str: string) => `[b]${str}[/b]`),
+  cyan: vi.fn((str: string) => `[c]${str}[/c]`),
+  dim: vi.fn((str: string) => `[d]${str}[/d]`),
+  underline: vi.fn((str: string) => `[u]${str}[/u]`),
+  yellow: vi.fn((str: string) => `[y]${str}[/y]`),
+}));
+
+const getBaseContext = (overrides: Partial<ClirkContextWithoutMessages> = {}): ClirkContextWithoutMessages =>
+  mockContextWithoutMessages({
     icon: '🧪',
     title: 'Test CLI',
     name: 'test-cli',
+    commandName: 'test-cli',
     description: ['A test CLI to verify the help output.'],
     package: {
       path: '/path/to/package',
@@ -22,20 +30,17 @@ describe('generateHelpMessage', () => {
     },
     examples: ['test-cli run', 'test-cli test'],
     usage: ['Use this CLI to test stuff.'],
-    usageLabel: 'USAGE',
     parameters: new Map([
       ['INPUT', { description: ['Input file path.'] }],
       ['OUTPUT', { description: ['Output file path.'] }],
     ]),
-    parametersLabel: 'PARAMETERS',
     options: new Map([
       [
         'verbose',
         {
           description: ['Enable verbose logging.'],
           aliases: new Set(['v']),
-          isBoolean: true,
-          isString: false,
+          type: 'boolean',
         },
       ],
       [
@@ -43,35 +48,54 @@ describe('generateHelpMessage', () => {
         {
           description: ['Path to config file.'],
           aliases: new Set(['c']),
-          isBoolean: false,
-          isString: true,
+          type: 'string',
         },
       ],
     ]),
-    optionsLabel: 'OPTIONS',
-  } as ClirkContextWithoutMessages;
+    ...overrides,
+  });
 
+describe('generateHelpMessage', () => {
   it('generates a complete help message with all sections', () => {
-    const result = generateHelpMessage(baseContext);
+    const result = generateHelpMessage(getBaseContext());
 
-    expect(result).toContain('test-cli — Test CLI');
-    expect(result).toContain('test-cli v1.0.0');
-    expect(result).toContain(underline('https://example.com'));
-    expect(result).toContain('USAGE:');
-    expect(result).toContain('test-cli run');
-    expect(result).toContain('Use this CLI to test stuff.');
-    expect(result).toContain('PARAMETERS:');
-    expect(result).toContain('INPUT');
-    expect(result).toContain('OPTIONS:');
-    expect(result).toContain('--verbose');
-    expect(result).toContain(`${yellow('--config')}${dim('=<VALUE>')}`);
-    expect(result).toContain('Alias: -v');
-    expect(result).toContain('Alias: -c');
+    expect(result).toBe(`
+🧪 [b][c]test-cli — Test CLI[/c][/b]
+
+test-cli v1.0.0
+[d][u]https://example.com[/u][/d]
+
+A test CLI to verify the help output.
+
+[b]USAGE:[/b]
+
+  [y]test-cli run[/y]
+  [y]test-cli test[/y]
+
+  Use this CLI to test stuff.
+
+[b]PARAMETERS:[/b]
+
+  [y]INPUT[/y]
+    Input file path.
+
+  [y]OUTPUT[/y]
+    Output file path.
+
+[b]OPTIONS:[/b]
+
+  [y]--verbose[/y]
+    Enable verbose logging.
+    [d]Alias: -v[/d]
+
+  [y]--config[/y][d]=<VALUE>[/d]
+    Path to config file.
+    [d]Alias: -c[/d]
+`);
   });
 
   it('renders options without aliases and without string type correctly', () => {
-    const result = generateHelpMessage({
-      ...baseContext,
+    const context = getBaseContext({
       usage: [],
       options: new Map([
         [
@@ -79,99 +103,85 @@ describe('generateHelpMessage', () => {
           {
             description: ['Runs without making changes.'],
             aliases: new Set(),
-            isBoolean: true,
-            isString: false,
+            type: 'boolean',
           },
         ],
       ]),
     });
+    const result = generateHelpMessage(context);
 
     expect(result).toContain('--dry-run');
     expect(result).not.toContain('Aliases:');
   });
 
-  it('skips homepage and icon when missing', () => {
-    const result = generateHelpMessage({
-      ...baseContext,
+  it('skips icon when missing', () => {
+    const context = getBaseContext({
       icon: undefined,
+    });
+    const result = generateHelpMessage(context);
+
+    expect(result).not.toContain('🧪');
+  });
+
+  it('skips homepage when missing', () => {
+    const context = getBaseContext({
       package: {
         packageJson: {
           name: 'test-cli',
           version: '1.0.0',
         },
-      } as PackageNormalized,
+        path: '/path/to/package',
+      },
     });
+    const result = generateHelpMessage(context);
 
-    expect(result).toContain('test-cli — Test CLI');
     expect(result).not.toContain('https://example.com');
   });
 
   it('renders aliases with mixed lengths and applies correct prefixing', () => {
-    const result = generateHelpMessage({
-      ...baseContext,
+    const context = getBaseContext({
       options: new Map([
         [
           'mode',
           {
             description: ['Select the mode.'],
             aliases: new Set(['m', 'mode', 'M']),
-            isBoolean: false,
-            isString: true,
+            type: 'boolean',
           },
         ],
       ]),
     });
+    const result = generateHelpMessage(context);
 
     expect(result).toContain('Aliases: -m, --mode, -M');
   });
 
   it('renders multiple aliases with correct plural label', () => {
-    const result = generateHelpMessage({
-      ...baseContext,
+    const context = getBaseContext({
       options: new Map([
         [
           'log',
           {
             description: ['Set log level.'],
             aliases: new Set(['l', 'log', 'logfile']),
-            isBoolean: false,
-            isString: true,
+            type: 'string',
           },
         ],
       ]),
     });
+    const result = generateHelpMessage(context);
 
     expect(result).toMatch(/Aliases: (-l|--log|--logfile)(, )?/);
-    expect(result).toContain('Aliases:');
   });
 
   it('renders empty parameters and options sections gracefully', () => {
-    const result = generateHelpMessage({
-      ...baseContext,
+    const context = getBaseContext({
       parameters: new Map(),
       options: new Map(),
     });
+    const result = generateHelpMessage(context);
 
     expect(result).not.toContain('PARAMETERS:');
     expect(result).not.toContain('OPTIONS:');
-  });
-
-  it('renders all aliases with correct dashes for various edge names', () => {
-    const result = generateHelpMessage({
-      ...baseContext,
-      options: new Map([
-        [
-          'x-opt',
-          {
-            description: ['Some desc.'],
-            aliases: new Set(['x', 'xopt', '3', '_hidden']),
-            isBoolean: true,
-            isString: false,
-          },
-        ],
-      ]),
-    });
-
-    expect(result).toContain('Aliases: -x, --xopt, -3, --_hidden');
   });
 });

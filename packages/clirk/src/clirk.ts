@@ -1,18 +1,21 @@
 import { log } from 'node:console';
-import process from 'node:process';
 
 import { gracefulExit } from '@simbo/graceful-exit';
 
-import type { ClirkContext, ClirkOptions } from './clirk.types.js';
 import { addFlagsToOptions } from './lib/add-flags-to-options.js';
+import { applySigintHandler } from './lib/apply-sigint-handler.js';
 import { createClirkContext } from './lib/create-clirk-context.js';
 import { generateHelpMessage } from './lib/generate-help-message.js';
 import { generateVersionMessage } from './lib/generate-version-message.js';
-import { isFlagDefined } from './lib/is-flag-defined.js';
+import type { ParsedOptions } from './schemas/options-schema.js';
+import { validateOptions } from './schemas/validate-options.js';
+import type { ClirkContext } from './types/clirk-context.interface.js';
+import type { ClirkOptions } from './types/clirk-options.interface.js';
 
 /**
  * clirk - The CLI Clerk.
- * This function initializes the CLI clerk with the provided options.
+ *
+ * This function initializes a CLI with the provided options.
  * It parses arguments, provides CLI package information and takes over common
  * CLI tasks like generating help messages, displaying version information, and
  * handling SIGINT.
@@ -22,15 +25,17 @@ import { isFlagDefined } from './lib/is-flag-defined.js';
  * parsed arguments and options as well as CLI package information.
  */
 export async function clirk(cliOptions: ClirkOptions): Promise<ClirkContext> {
-  const helpHandledByUser = isFlagDefined(cliOptions.argsOptions, 'help');
-  const versionHandledByUser = isFlagDefined(cliOptions.argsOptions, 'version');
+  const parsedOptions: ParsedOptions = validateOptions(cliOptions);
 
-  cliOptions = addFlagsToOptions(cliOptions, {
+  const helpHandledByUser = parsedOptions.argsOptions.boolean.includes('help');
+  const versionHandledByUser = parsedOptions.argsOptions.boolean.includes('version');
+
+  addFlagsToOptions(parsedOptions, {
     help: !helpHandledByUser,
     version: !versionHandledByUser,
   });
 
-  const partialContext = await createClirkContext(cliOptions);
+  const partialContext = await createClirkContext(parsedOptions);
 
   const getHelpMessage = (): string => generateHelpMessage(partialContext);
   const getVersionMessage = (): string => generateVersionMessage(partialContext);
@@ -41,8 +46,8 @@ export async function clirk(cliOptions: ClirkOptions): Promise<ClirkContext> {
     getVersionMessage,
   };
 
-  if (typeof context.sigintHandler === 'function' && !process.listenerCount('SIGINT')) {
-    process.on('SIGINT', context.sigintHandler);
+  if (typeof context.sigintHandler === 'function') {
+    applySigintHandler(context);
   }
 
   if (!helpHandledByUser && context.args.help) {

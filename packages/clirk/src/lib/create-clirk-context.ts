@@ -1,15 +1,12 @@
-import { log } from 'node:console';
 import { basename } from 'node:path';
 import { argv } from 'node:process';
 
-import { terminated } from '@simbo/cli-output';
 import { findUpPackage } from '@simbo/find-up-package';
-import { gracefulExit } from '@simbo/graceful-exit';
 import minimist from 'minimist';
 
-import type { CliOption, CliParameter, ClirkContextWithoutMessages, ClirkOptions } from '../clirk.types.js';
-
-import { parseStringInput } from './parse-string-input.js';
+import type { ParsedMinimistOptions } from '../schemas/minimist-options-schema.js';
+import type { ParsedOptions } from '../schemas/options-schema.js';
+import type { CliOption, CliParameter, ClirkContextWithoutMessages } from '../types/clirk-context.interface.js';
 
 /**
  * Creates a ClirkContext based on the provided CLI options.
@@ -20,16 +17,28 @@ import { parseStringInput } from './parse-string-input.js';
  * - normalizing description, examples, usage, parameters, and options
  * - resolving aliases and flag types (boolean/string)
  *
- * @param cliOptions - The user-supplied options for the CLI definition.
+ * @param parsedOptions - The parsed options for the CLI.
  * @returns A promise that resolves to a ClirkContextWithoutMessages object.
  * @throws If `importMetaDirname` is not provided.
  */
-export async function createClirkContext(cliOptions: ClirkOptions): Promise<ClirkContextWithoutMessages> {
-  if (!cliOptions.importMetaDirname) {
-    throw new Error('The importMetaDirname option is required.');
-  }
-
-  const importPath = cliOptions.importMetaDirname;
+export async function createClirkContext(parsedOptions: ParsedOptions): Promise<ClirkContextWithoutMessages> {
+  const {
+    importMetaDirname: importPath,
+    argsOptions,
+    title,
+    name: binName,
+    icon,
+    description,
+    examples,
+    usage,
+    usageLabel,
+    parameters: parametersArray,
+    parametersLabel,
+    options: optionsArray,
+    optionsLabel,
+    sigintHandler,
+    sigintMessage,
+  } = parsedOptions;
 
   const pkg = await findUpPackage({
     workingDir: importPath,
@@ -40,25 +49,22 @@ export async function createClirkContext(cliOptions: ClirkOptions): Promise<Clir
     throw new Error(`Could not find package for path: ${importPath}`);
   }
 
+  if (description.length === 0 && pkg.packageJson.description) {
+    description.push(pkg.packageJson.description);
+  }
+
   const commandName = basename(argv[1]);
 
-  const {
-    argsOptions = {},
-    title,
-    name,
-    description = pkg.packageJson.description,
-    icon,
-    usage = [],
-    usageLabel = 'USAGE',
-    parametersLabel = 'PARAMETERS',
-    optionsLabel = 'OPTIONS',
-  } = cliOptions;
+  const parameters = getParametersMap(parametersArray);
+  const options = getOptionsMap(argsOptions, optionsArray);
+
+  const name = binName ?? (typeof pkg.packageJson.bin === 'object' ? Object.keys(pkg.packageJson.bin)[0] : commandName);
+
+  if (examples.length === 0) {
+    examples.push(`${name} [OPTIONS]${parameters.size > 0 ? ` <${[...parameters.keys()].join('> <')}>` : ''}`);
+  }
 
   const args = minimist(argv.slice(2), argsOptions);
-  const parameters = getParametersMap(cliOptions);
-  const options = getOptionsMap(cliOptions);
-  const examples = getExamples(cliOptions);
-  const { sigintHandler, sigintMessage } = getSigintHandler(cliOptions);
 
   return {
     importPath,
@@ -68,9 +74,9 @@ export async function createClirkContext(cliOptions: ClirkOptions): Promise<Clir
     name,
     commandName,
     package: pkg,
-    description: parseStringInput(description),
+    description,
     examples,
-    usage: parseStringInput(usage),
+    usage,
     usageLabel,
     parameters,
     parametersLabel,
@@ -83,82 +89,35 @@ export async function createClirkContext(cliOptions: ClirkOptions): Promise<Clir
 }
 
 /**
- * Parses the parameters from the CLI options.
+ * Creates the parameters map for the clirk context.
  *
- * This function extracts the parameters and their descriptions from the `parameters`
- * field of the CLI options.
- *
- * @param cliOptions - The user-supplied options for the CLI definition.
+ * @param parameters - The user-supplied options for the CLI definition.
  * @returns A Map of parameter names to their descriptions.
  */
-function getParametersMap(cliOptions: ClirkOptions): Map<string, CliParameter> {
-  const { parameters = {} } = cliOptions;
-  return new Map(Object.entries(parameters).map(([key, value]) => [key, { description: parseStringInput(value) }]));
+function getParametersMap(parameters: Record<string, string[]>): Map<string, CliParameter> {
+  return new Map(Object.entries(parameters).map(([key, value]) => [key, { description: value }]));
 }
 
 /**
- * Parses the options from the CLI options.
+ * Creates the options map for the clirk context.
  *
- * This function extracts the options and their properties from the `options`
- * and `argsOptions` fields of the CLI options.
- *
- * @param cliOptions - The user-supplied options for the CLI definition.
+ * @param argsOptions - The parsed arguments options.
+ * @param options - The records of options descriptions.
  * @returns A Map of option names to their descriptions and properties.
  */
-function getOptionsMap(cliOptions: ClirkOptions): Map<string, CliOption> {
-  const { argsOptions = {}, options = {} } = cliOptions;
+function getOptionsMap(argsOptions: ParsedMinimistOptions, options: Record<string, string[]>): Map<string, CliOption> {
   return new Map(
-    Object.entries(options).map(([key, value]) => {
-      const optionDescription = parseStringInput(value);
-      const aliases = argsOptions.alias?.[key]
-        ? new Set<string>(Array.isArray(argsOptions.alias[key]) ? argsOptions.alias[key] : [argsOptions.alias[key]])
-        : new Set<string>();
-      const isBoolean =
-        argsOptions.boolean === true || (Array.isArray(argsOptions.boolean) && argsOptions.boolean.includes(key));
-      const isString = Array.isArray(argsOptions.string) && argsOptions.string.includes(key);
-      return [key, { description: optionDescription, aliases, isBoolean, isString }];
+    Object.entries(options).map(([key, description]) => {
+      const aliases = new Set<string>(argsOptions.alias[key] ?? []);
+      const type = argsOptions.boolean.includes(key)
+        ? 'boolean'
+        : argsOptions.string.includes(key)
+          ? 'string'
+          : undefined;
+      if (type === undefined) {
+        throw new Error(`Option not configured: "${key}"`);
+      }
+      return [key, { description, aliases, type }];
     }),
   );
-}
-
-/**
- * Parses the examples from the CLI options.
- *
- * If no examples are provided, it defaults to using the command name.
- * If examples are provided as a string, they are split into an array.
- *
- * @param cliOptions - The user-supplied options for the CLI definition.
- * @returns An array of example strings.
- */
-function getExamples(cliOptions: ClirkOptions): string[] {
-  const { name, examples = [] } = cliOptions;
-  const parsedExamples = parseStringInput(examples);
-  return parsedExamples.length === 0 ? [name] : parsedExamples;
-}
-
-/**
- * Returns the SIGINT handler and message based on the provided CLI options.
- *
- * If a custom handler function is provided, it will be used.
- * If `sigintHandler` is set to false, no handler will be created.
- * If no custom handler is provided, a default handler will log a message and
- * exit gracefully.
- *
- * @param cliOptions - The user-supplied options for the CLI definition.
- * @returns An object containing the sigintHandler function and sigintMessage
- * string.
- */
-function getSigintHandler(cliOptions: ClirkOptions): { sigintHandler?: () => void; sigintMessage: string } {
-  const { sigintHandler: fn, sigintMessage: msg } = cliOptions;
-  const sigintMessage = typeof msg === 'string' && msg.length > 0 ? msg : terminated('Received SIGINT');
-  const sigintHandler =
-    fn === false
-      ? undefined
-      : typeof fn === 'function'
-        ? fn
-        : async () => {
-            log(sigintMessage);
-            await gracefulExit(undefined, 1);
-          };
-  return { sigintHandler, sigintMessage };
 }

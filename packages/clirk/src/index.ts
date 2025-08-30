@@ -1,4 +1,6 @@
 export * from './clirk.js';
-export type * from './clirk.types.js';
+export type * from './types/clirk-context.interface.js';
+export type * from './types/clirk-options.interface.js';
+export type * from './types/minimist-options.interface.js';
 
-export type { Opts, ParsedArgs } from 'minimist';
+export type { ParsedArgs } from 'minimist';
