@@ -117,7 +117,7 @@ describe('createValidationFunction', () => {
     const schema = z.object({
       title: z.string().min(1),
       count: z.number().int().nonnegative(),
-      items: z.array(z.object({ id: z.string().uuid() })),
+      items: z.array(z.object({ id: z.uuid() })),
     });
 
     const validate = createValidationFunction(schema);
