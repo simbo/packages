@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@simbo/tsconfig/node",
+  "include": [
+    "**/*.ts",
+    "../git/src/lib/find-repository-root.test.ts",
+    "../git/src/lib/find-repository-root.ts",
+    "../git/src/lib/is-repository-root.test.ts",
+    "../git/src/lib/is-repository-root.ts"
+  ],
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true
+  }
+}
