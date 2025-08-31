@@ -1,5 +1,5 @@
 import { log } from 'node:console';
-import { on } from 'node:process';
+import process from 'node:process';
 
 import { failure } from '@simbo/cli-output';
 import { looseGracefulExit } from '@simbo/graceful-exit';
@@ -13,7 +13,7 @@ import type { ClirkContext, SigIntHandler } from '../types/clirk-context.interfa
  * @param context - The Clirk context.
  */
 export function applySigintHandler(context: ClirkContext): void {
-  on('SIGINT', () => {
+  process.on('SIGINT', () => {
     (async () => {
       await (context.sigintHandler as SigIntHandler)(context);
     })().catch((error: unknown) => {

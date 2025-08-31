@@ -10,7 +10,7 @@ vi.mock('node:console', () => ({
 }));
 
 vi.mock('node:process', () => ({
-  on: vi.fn(),
+  default: { on: vi.fn() },
 }));
 
 vi.mock('@simbo/graceful-exit', () => ({
@@ -34,13 +34,15 @@ vi.mock('../schemas/options-defaults.js', () => ({
   DEFAULT_SIGINT_HANDLER: vi.fn(),
 }));
 
-const { on } = vi.mocked(await import('node:process'));
+const {
+  default: { on },
+} = vi.mocked(await import('node:process')) as unknown as { default: { on: Mock } };
 const { log } = vi.mocked(await import('node:console'));
 const { looseGracefulExit } = vi.mocked(await import('@simbo/graceful-exit'));
 
 const handler = vi.fn();
 
-(on as Mock).mockImplementation((_event: never, listener: () => void) => {
+on.mockImplementation((_event: never, listener: () => void) => {
   handler.mockReset().mockImplementation(listener);
 });
 
