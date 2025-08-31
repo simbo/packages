@@ -2,4 +2,4 @@
 '@simbo/cspell-config': minor
 ---
 
-add "Zodpack" to dictionary
+add "Zodpak" to dictionary
