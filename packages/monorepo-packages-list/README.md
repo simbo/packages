@@ -59,14 +59,14 @@ Produces:
 ```md
 There are currently _**2**_ packages managed in this repository:
 
-- 📂 **pkg-a**
+- 📂 **`pkg-a`**
   - **Package A**
 
     > A sample package
 
     📦 `@scope/pkg-a` @ `1.2.3`
 
-- 📂 **pkg-b**
+- 📂 **`pkg-b`**
   - **Package B**
 
     > Another sample package
@@ -91,7 +91,7 @@ const list = await monorepoPackagesList({
     packageUrlFn: (workspace: WorkspaceMetadata) =>
       `https://www.npmjs.com/package/${workspace.name}`,
     docsUrlFn: (workspace: WorkspaceMetadata) =>
-      `https://user.github.io/repo/modules/${workspace.name.replaceAll(/[^a-z0-9-]/gi, '_')}`,
+      `https://user.github.io/repo/modules/${workspace.name.replaceAll(/[^\da-z-]/gi, '_')}`,
     readmeUrlFn: (workspace: WorkspaceMetadata) =>
       `https://github.com/user/repo/blob/main/${workspace.relativePath}/README.md`,
     changelogUrlFn: (workspace: WorkspaceMetadata) =>
@@ -105,7 +105,7 @@ Produces a list with clickable links:
 ```md
 There are currently _**2**_ packages managed in this repository:
 
-- 📂 [**pkg-a**](https://github.com/user/repo/tree/main/packages/pkg-a/)
+- 📂 [**`pkg-a`**](https://github.com/user/repo/tree/main/packages/pkg-a/)
   - **Package A**
 
     > A sample package
@@ -116,7 +116,7 @@ There are currently _**2**_ packages managed in this repository:
     [CHANGELOG.md](https://github.com/user/repo/blob/main/packages/pkg-a/CHANGELOG.md)  • 
     [Documentation](https://user.github.io/repo/modules/_scope_pkg-a)
 
-- 📂 [**pkg-b**](https://github.com/user/repo/tree/main/packages/pkg-b/)
+- 📂 [**`pkg-b`**](https://github.com/user/repo/tree/main/packages/pkg-b/)
   - **Package B**
 
     > Another sample package

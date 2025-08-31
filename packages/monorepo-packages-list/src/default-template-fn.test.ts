@@ -18,7 +18,7 @@ describe('defaultTemplateFn', () => {
 
     expect(result).not.toContain('undefined');
     expect(result).toBe(
-      `- 📂 **pkg-a**
+      `- 📂 **\`pkg-a\`**
 
   - **Package A**
 
@@ -52,20 +52,20 @@ describe('defaultTemplateFn', () => {
     const result = await defaultTemplateFn(workspace, data);
 
     const expectedLinks = [
-      `[README.md](${await data.readmeUrlFn(workspace)})`,
-      `[CHANGELOG.md](${await data.changelogUrlFn(workspace)})`,
-      `[Documentation](${await data.docsUrlFn(workspace)})`,
+      `[README.md](${(await data.readmeUrlFn(workspace)) as string})`,
+      `[CHANGELOG.md](${(await data.changelogUrlFn(workspace)) as string})`,
+      `[Documentation](${(await data.docsUrlFn(workspace)) as string})`,
     ];
 
     expect(result).not.toContain('undefined');
     expect(result).toBe(
-      `- 📂 [**pkg-a**](${await data.repoUrlFn(workspace)})
+      `- 📂 [**\`pkg-a\`**](${(await data.repoUrlFn(workspace)) as string})
 
   - **Package A**
 
     > A sample package
 
-    📦 [\`@scope/pkg-a\`](${await data.packageUrlFn(workspace)}) @ \`1.0.0\`
+    📦 [\`@scope/pkg-a\`](${(await data.packageUrlFn(workspace)) as string}) @ \`1.0.0\`
 
     ${expectedLinks.join('  •  ')}`,
     );

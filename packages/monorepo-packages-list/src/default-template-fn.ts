@@ -19,7 +19,7 @@ export async function defaultTemplateFn(workspace: WorkspaceMetadata, data: Temp
   const readmeUrl = typeof readmeUrlFn === 'function' ? await readmeUrlFn(workspace) : undefined;
   const changelogUrl = typeof changelogUrlFn === 'function' ? await changelogUrlFn(workspace) : undefined;
 
-  const folder = repoUrl ? `[**${folderName}**](${repoUrl})` : `**${folderName}**`;
+  const folder = repoUrl ? `[**\`${folderName}\`**](${repoUrl})` : `**\`${folderName}\`**`;
   const pkg = packageUrl ? `[\`${name}\`](${packageUrl})` : `\`${name}\``;
 
   const links: string[] = [];

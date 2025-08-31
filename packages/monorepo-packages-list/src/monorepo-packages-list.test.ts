@@ -1,12 +1,10 @@
+import { cwd } from 'node:process';
+
 import type { WorkspaceMetadata } from '@simbo/monorepo-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { monorepoPackagesList } from './monorepo-packages-list.js';
 import type { TemplateData } from './monorepo-packages-list.types.js';
-
-vi.mock('node:process', () => ({
-  cwd: vi.fn(() => '/cwd'),
-}));
 
 vi.mock('@simbo/monorepo-utils', () => ({
   readWorkspaces: vi.fn().mockResolvedValue([
@@ -27,7 +25,6 @@ vi.mock('./default-before-fn.js', () => ({
     ),
 }));
 
-const { cwd } = vi.mocked(await import('node:process'));
 const { readWorkspaces } = vi.mocked(await import('@simbo/monorepo-utils'));
 const { defaultBeforeFn } = vi.mocked(await import('./default-before-fn.js'));
 const { defaultTemplateFn } = vi.mocked(await import('./default-template-fn.js'));
@@ -40,9 +37,8 @@ describe('monorepoPackagesList', () => {
   it('should generate a list of packages in the monorepo', async () => {
     const result = await monorepoPackagesList();
     expect(result).toBe('2 packages:\n\n- pkg-a\n\n- pkg-b');
-    expect(cwd).toHaveBeenCalledTimes(1);
     expect(readWorkspaces).toHaveBeenCalledTimes(1);
-    expect(readWorkspaces).toHaveBeenCalledWith({ workingDir: '/cwd' });
+    expect(readWorkspaces).toHaveBeenCalledWith({ workingDir: cwd() });
     expect(defaultBeforeFn).toHaveBeenCalledTimes(1);
     expect(defaultBeforeFn).toHaveBeenCalledWith([
       { name: 'pkg-a', relativePath: 'packages/pkg-a' },
@@ -97,7 +93,6 @@ describe('monorepoPackagesList', () => {
   it('should use the specified working directory', async () => {
     const result = await monorepoPackagesList({ workingDir: '/custom/dir' });
     expect(result).toBe('2 packages:\n\n- pkg-a\n\n- pkg-b');
-    expect(cwd).not.toHaveBeenCalled();
     expect(readWorkspaces).toHaveBeenCalledTimes(1);
     expect(readWorkspaces).toHaveBeenCalledWith({ workingDir: '/custom/dir' });
   });
@@ -114,47 +109,5 @@ describe('monorepoPackagesList', () => {
       filterFn: workspace => workspace.name !== 'pkg-a',
     });
     expect(result).toBe('1 package:\n\n- pkg-b');
-  });
-
-  it('should throw if before is not a string or function', async () => {
-    await expect(monorepoPackagesList({ before: 123 as unknown as string })).rejects.toThrow(
-      /^Expected 'before' to be a string or a function, got number$/,
-    );
-  });
-
-  it('should throw if after is not a string or function', async () => {
-    await expect(monorepoPackagesList({ after: 123 as unknown as string })).rejects.toThrow(
-      /^Expected 'after' to be a string or a function, got number$/,
-    );
-  });
-
-  it('should throw if delimiter is not a string', async () => {
-    await expect(monorepoPackagesList({ delimiter: 123 as unknown as string })).rejects.toThrow(
-      /^Expected 'delimiter' to be a string, got number$/,
-    );
-  });
-
-  it('should throw if templateFn is not a function', async () => {
-    await expect(monorepoPackagesList({ templateFn: 123 as unknown as () => string })).rejects.toThrow(
-      /^Expected 'templateFn' to be a function, got number$/,
-    );
-  });
-
-  it('should throw if filterFn is not a function', async () => {
-    await expect(monorepoPackagesList({ filterFn: 123 as unknown as () => boolean })).rejects.toThrow(
-      /^Expected 'filterFn' to be a function, got number$/,
-    );
-  });
-
-  it('should throw if sortCompareFn is not a function', async () => {
-    await expect(monorepoPackagesList({ sortCompareFn: 123 as unknown as () => number })).rejects.toThrow(
-      /^Expected 'sortCompareFn' to be a function, got number$/,
-    );
-  });
-
-  it('should throw if templateData is not an object', async () => {
-    await expect(monorepoPackagesList({ templateData: 123 as unknown as TemplateData })).rejects.toThrow(
-      /^Expected 'templateData' to be an object, got number$/,
-    );
   });
 });

@@ -26,7 +26,7 @@ export interface Options {
    * The default value is to sort by `workspace.relativePath` in natural
    * language order.
    */
-  sortCompareFn?: (a: WorkspaceMetadata, b: WorkspaceMetadata) => number;
+  sortCompareFn?: SortCompareFn;
 
   /**
    * A function to filter the workspaces to include in the list.
@@ -35,7 +35,7 @@ export interface Options {
    *
    * @default (workspace) => true
    */
-  filterFn?: (workspace: WorkspaceMetadata) => boolean;
+  filterFn?: FilterFn;
 
   /**
    * The working directory to list packages from.
@@ -58,7 +58,7 @@ export interface Options {
    * Can be a static string or a function that receives all workspaces metadata and returns a string.
    * Defaults to a line of text mentioning the count of packages.
    */
-  before?: string | ((workspaces: WorkspaceMetadata[]) => string | Promise<string>);
+  before?: string | BeforeAfterFn;
 
   /**
    * A string to add after the list.
@@ -66,7 +66,7 @@ export interface Options {
    *
    * @default ""
    */
-  after?: string | ((workspaces: WorkspaceMetadata[]) => string | Promise<string>);
+  after?: string | BeforeAfterFn;
 }
 
 /**
@@ -110,6 +110,26 @@ export interface TemplateData {
 }
 
 /**
- * A function that receives the workspace metadata and returns a string to be used in the template.
+ * A function that generates a string value to be used in the template.
  */
-export type TemplateDataFn = (workspace: WorkspaceMetadata) => string | Promise<string>;
+export type TemplateDataFn = (workspace: WorkspaceMetadata) => string | undefined | Promise<string | undefined>;
+
+/**
+ * A function to generate a string for a package list item.
+ */
+export type TemplateFn = (workspaceMetadata: WorkspaceMetadata, templateData: TemplateData) => string | Promise<string>;
+
+/**
+ * A function to sort an array of workspace metadata objects.
+ */
+export type SortCompareFn = (a: WorkspaceMetadata, b: WorkspaceMetadata) => number;
+
+/**
+ * A function to filter an array of workspace metadata objects.
+ */
+export type FilterFn = (workspace: WorkspaceMetadata) => boolean;
+
+/**
+ * A function to generate a string to insert before/after the list of packages.
+ */
+export type BeforeAfterFn = (workspaces: WorkspaceMetadata[]) => string | Promise<string>;

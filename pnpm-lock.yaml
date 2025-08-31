@@ -1065,6 +1065,12 @@ importers:
       '@simbo/monorepo-utils':
         specifier: workspace:*
         version: link:../monorepo-utils
+      '@simbo/zodpak':
+        specifier: workspace:*
+        version: link:../zodpak
+      zod:
+        specifier: catalog:packages
+        version: 4.1.3
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: catalog:core
