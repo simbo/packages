@@ -61,7 +61,7 @@ describe('validateOptions', () => {
       importMetaDirname: '',
     };
     expect(() => validateOptions(options)).toThrow(
-      'Validation error: Expected a non-empty string at "importMetaDirname"',
+      'Validation error: Expected non-empty string at "importMetaDirname"',
     );
   });
 
@@ -70,7 +70,7 @@ describe('validateOptions', () => {
       title: '',
       importMetaDirname: '/path/to/pkg',
     };
-    expect(() => validateOptions(options)).toThrow('Validation error: Expected a non-empty string at "title"');
+    expect(() => validateOptions(options)).toThrow('Validation error: Expected non-empty string at "title"');
   });
 
   it('should throw if title is an empty string', () => {
@@ -78,7 +78,7 @@ describe('validateOptions', () => {
       title: '',
       importMetaDirname: '/path/to/pkg',
     };
-    expect(() => validateOptions(options)).toThrow('Validation error: Expected a non-empty string at "title"');
+    expect(() => validateOptions(options)).toThrow('Validation error: Expected non-empty string at "title"');
   });
 
   it('should accept optional name and icon when provided', () => {
@@ -100,7 +100,7 @@ describe('validateOptions', () => {
       name: '',
     } as unknown as ClirkOptions;
 
-    expect(() => validateOptions(options)).toThrow('Validation error: Expected a non-empty string at "name"');
+    expect(() => validateOptions(options)).toThrow('Validation error: Expected non-empty string at "name"');
   });
 
   it('should throw if optional icon is an empty string when provided', () => {
@@ -110,7 +110,7 @@ describe('validateOptions', () => {
       icon: '',
     } as unknown as ClirkOptions;
 
-    expect(() => validateOptions(options)).toThrow('Validation error: Expected a non-empty string at "icon"');
+    expect(() => validateOptions(options)).toThrow('Validation error: Expected non-empty string at "icon"');
   });
 
   it('should normalize single string values to arrays for description/examples/usage', () => {
@@ -219,7 +219,7 @@ describe('validateOptions', () => {
     } as unknown as ClirkOptions;
 
     expect(() => validateOptions(options)).toThrow(
-      /Validation error: Expected a non-empty string.*argsOptions\.string\[1]/,
+      /Validation error: Expected non-empty string.*argsOptions\.string\[1]/,
     );
   });
 
@@ -231,7 +231,7 @@ describe('validateOptions', () => {
     } as unknown as ClirkOptions;
 
     expect(() => validateOptions(options)).toThrow(
-      /Validation error: Expected a non-empty string.*argsOptions\.boolean\[0]/,
+      /Validation error: Expected non-empty string.*argsOptions\.boolean\[0]/,
     );
   });
 
@@ -243,7 +243,7 @@ describe('validateOptions', () => {
     } as unknown as ClirkOptions;
 
     expect(() => validateOptions(withEmptyKey)).toThrow(
-      /^Validation error: Expected a non-empty string at "argsOptions.alias.x"; Unexpected key in record at "argsOptions.alias\[""]"$/,
+      /^Validation error: Expected non-empty string at "argsOptions.alias.x"; Unexpected key in record at "argsOptions.alias\[""]"$/,
     );
 
     const withEmptyValue = {
@@ -253,7 +253,7 @@ describe('validateOptions', () => {
     } as unknown as ClirkOptions;
 
     expect(() => validateOptions(withEmptyValue)).toThrow(
-      /Validation error: Expected a non-empty string.*argsOptions\.alias\.a\[1]/,
+      /Validation error: Expected non-empty string.*argsOptions\.alias\.a\[1]/,
     );
   });
 
