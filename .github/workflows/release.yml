@@ -84,7 +84,10 @@ jobs:
           # Output the packages
           echo "packages=${packages[*]}" >> $GITHUB_OUTPUT
 
-      - name: 📝 Commit & Push Changes
+      - name: 📝 Update Packages List Docs
+        run: pnpm run packages-list
+
+      - name: 📤 Commit & Push Changes
         run: |
           set -euo pipefail
 

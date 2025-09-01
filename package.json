@@ -32,6 +32,7 @@
     "clean:turbo": "rm -rf packages/*/.turbo .turbo",
     "fix:eslint": "pnpm run check:eslint --fix",
     "fix:format": "pnpm run x:prettier --write .",
+    "packages-list": "pnpm run build --filter=@simbo/monorepo-packages-list-cli && ./packages/monorepo-packages-list-cli/dist/cli.js",
     "preflight": "pnpm install --frozen-lockfile && pnpm run build && pnpm run check && pnpm run test && pnpm run build:docs && echo 'CvCfn6IgG1sxOzMybUFsbCBDaGVja3MgUGFzc2VkIRtbMG0K' | base64 --decode",
     "prepare": "husky",
     "serve:docs": "npx --yes http-server -c-1 ./docs",
