@@ -29,6 +29,8 @@ catalogs:
     '@types/minimist': ^1.2.5
     '@types/normalize-package-data': ^2.4.4
     '@typescript-eslint/utils': ^8.39.1
+    cosmiconfig: ^9.0.0
+    cosmiconfig-typescript-loader: ^6.1.0
     cspell: ^9.2.0
     escape-string-regexp: ^5.0.0
     eslint-config-prettier: ^10.1.8
