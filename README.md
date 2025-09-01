@@ -10,9 +10,8 @@ There are currently _**27**_ packages managed in this repository.
 
 <!-- /PACKAGES -->
 
-See the
-[`./PACKAGES.md`](https://github.com/simbo/packages/blob/main/PACKAGES.md) for a
-comprehensive list of all packages.
+See the [`PACKAGES.md`](https://github.com/simbo/packages/blob/main/PACKAGES.md)
+for a comprehensive list of all packages.
 
 ## Development
 
