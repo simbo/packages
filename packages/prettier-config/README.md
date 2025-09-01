@@ -1,6 +1,7 @@
 # Simbo's Prettier Configuration
 
-[📦 **`@simbo/prettier-config`**](https://npmjs.com/package/@simbo/prettier-config)
+📦
+[**`@simbo/prettier-config`**](https://npmjs.com/package/@simbo/prettier-config)
 
 A shared [Prettier](https://prettier.io/) configuration.
 

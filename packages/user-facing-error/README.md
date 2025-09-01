@@ -1,6 +1,7 @@
 # User Facing Error
 
-[📦 **`@simbo/user-facing-error`**](https://npmjs.com/package/@simbo/user-facing-error)
+📦
+[**`@simbo/user-facing-error`**](https://npmjs.com/package/@simbo/user-facing-error)
 
 A custom `Error` class for creating **user-facing error messages**.
 

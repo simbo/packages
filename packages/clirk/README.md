@@ -1,6 +1,6 @@
 # Clirk - The CLI Clerk
 
-[📦 **`@simbo/clirk`**](https://npmjs.com/package/@simbo/clirk)
+📦 [**`@simbo/clirk`**](https://npmjs.com/package/@simbo/clirk)
 
 A utility that **makes creating Node.js CLIs easier** by providing common
 functionality out of the box, with excellent performance and a minimal

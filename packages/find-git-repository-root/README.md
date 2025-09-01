@@ -1,6 +1,7 @@
 # Find Git Repository Root
 
-[📦 **`@simbo/find-git-repository-root`**](https://npmjs.com/package/@simbo/find-git-repository-root)
+📦
+[**`@simbo/find-git-repository-root`**](https://npmjs.com/package/@simbo/find-git-repository-root)
 
 A lightweight utility for locating the **root directory of a Git repository**.
 

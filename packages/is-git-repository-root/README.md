@@ -1,6 +1,7 @@
 # Is Git Repository Root
 
-[📦 **`@simbo/is-git-repository-root`**](https://npmjs.com/package/@simbo/is-git-repository-root)
+📦
+[**`@simbo/is-git-repository-root`**](https://npmjs.com/package/@simbo/is-git-repository-root)
 
 A lightweight utility for checking whether a directory is the root of a Git
 repository.

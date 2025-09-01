@@ -1,6 +1,6 @@
 # Zodpak
 
-[📦 **`@simbo/zodpak`**](https://npmjs.com/package/@simbo/zodpak)
+📦 [**`@simbo/zodpak`**](https://npmjs.com/package/@simbo/zodpak)
 
 A collection of utilities for Zod.
 

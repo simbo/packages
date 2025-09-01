@@ -1,6 +1,6 @@
 # Accessible
 
-[📦 **`@simbo/accessible`**](https://npmjs.com/package/@simbo/accessible)
+📦 [**`@simbo/accessible`**](https://npmjs.com/package/@simbo/accessible)
 
 A lightweight utility library that provides reliable checks for file system
 accessibility.

@@ -1,6 +1,6 @@
 # Package Utilities
 
-[📦 **`@simbo/package-json`**](https://npmjs.com/package/@simbo/package-json)
+📦 [**`@simbo/package-json`**](https://npmjs.com/package/@simbo/package-json)
 
 A set of utilities for working with package.json files.
 

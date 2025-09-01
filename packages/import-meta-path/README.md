@@ -1,6 +1,7 @@
 # Import Meta Path
 
-[📦 **`@simbo/import-meta-path`**](https://npmjs.com/package/@simbo/import-meta-path)
+📦
+[**`@simbo/import-meta-path`**](https://npmjs.com/package/@simbo/import-meta-path)
 
 A small utility for safely deriving absolute file and directory paths from
 `import.meta` in Node.js, with a consistent fallback order.

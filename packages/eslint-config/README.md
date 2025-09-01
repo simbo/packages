@@ -1,6 +1,6 @@
 # Simbo's ESLint Configurations
 
-[📦 **`@simbo/eslint-config`**][`@simbo/eslint-config`]
+📦 [**`@simbo/eslint-config`**][`@simbo/eslint-config`]
 
 Shared [ESLint] configurations for different environments and technology stacks
 with utilities for configuration customization.

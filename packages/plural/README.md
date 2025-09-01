@@ -1,6 +1,6 @@
 # Plural
 
-[📦 **`@simbo/plural`**](https://npmjs.com/package/@simbo/plural)
+📦 [**`@simbo/plural`**](https://npmjs.com/package/@simbo/plural)
 
 A lightweight utility for pluralizing words based on a count.
 

@@ -1,6 +1,7 @@
 # Simbo's Commitlint Configuration
 
-[📦 **`@simbo/commitlint-config`**](https://npmjs.com/package/@simbo/commitlint-config)
+📦
+[**`@simbo/commitlint-config`**](https://npmjs.com/package/@simbo/commitlint-config)
 
 A shared [commitlint](https://commitlint.js.org/) configuration based on the
 [conventional commits](https://www.conventionalcommits.org/) standard.

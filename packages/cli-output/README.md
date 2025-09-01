@@ -1,6 +1,6 @@
 # CLI Output
 
-[📦 **`@simbo/cli-output`**](https://npmjs.com/package/@simbo/cli-output)
+📦 [**`@simbo/cli-output`**](https://npmjs.com/package/@simbo/cli-output)
 
 A collection utilities for common CLI messages and output.
 

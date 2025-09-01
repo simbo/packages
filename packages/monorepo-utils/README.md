@@ -1,6 +1,7 @@
 # Monorepo Utilities
 
-[📦 **`@simbo/monorepo-utils`**](https://npmjs.com/package/@simbo/monorepo-utils)
+📦
+[**`@simbo/monorepo-utils`**](https://npmjs.com/package/@simbo/monorepo-utils)
 
 A set of utilities for inspecting and working with **monorepo workspaces**.
 

@@ -1,6 +1,6 @@
 # Git Constants
 
-[📦 **`@simbo/git-constants`**](https://npmjs.com/package/@simbo/git-constants)
+📦 [**`@simbo/git-constants`**](https://npmjs.com/package/@simbo/git-constants)
 
 A small collection of Git-related constants that can be reused across Node.js
 and TypeScript projects.

@@ -1,6 +1,7 @@
 # Globby Has Matches
 
-[📦 **`@simbo/globby-has-matches`**](https://npmjs.com/package/@simbo/globby-has-matches)
+📦
+[**`@simbo/globby-has-matches`**](https://npmjs.com/package/@simbo/globby-has-matches)
 
 A utility to glob using [globby](https://github.com/sindresorhus/globby) and
 **exit early once a match is found**.

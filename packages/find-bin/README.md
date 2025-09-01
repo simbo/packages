@@ -1,6 +1,6 @@
 # Find Bin
 
-[📦 **`@simbo/find-bin`**](https://npmjs.com/package/@simbo/find-bin)
+📦 [**`@simbo/find-bin`**](https://npmjs.com/package/@simbo/find-bin)
 
 A lightweight utility to locate the executable path of a command.
 

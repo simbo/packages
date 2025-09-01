@@ -1,6 +1,7 @@
 # Inject Between HTML Comments
 
-[📦 **`@simbo/inject-between-html-comments`**](https://npmjs.com/package/@simbo/inject-between-html-comments)
+📦
+[**`@simbo/inject-between-html-comments`**](https://npmjs.com/package/@simbo/inject-between-html-comments)
 
 Inject content between HTML comment markers inside a string.
 

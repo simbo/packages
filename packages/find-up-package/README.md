@@ -1,6 +1,7 @@
 # Find Up Package
 
-[📦 **`@simbo/find-up-package`**](https://npmjs.com/package/@simbo/find-up-package)
+📦
+[**`@simbo/find-up-package`**](https://npmjs.com/package/@simbo/find-up-package)
 
 A utility for finding an npm package in the directory hierarchy that matches
 specific criteria.

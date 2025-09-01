@@ -1,6 +1,6 @@
 # Call Prettier
 
-[📦 **`@simbo/call-prettier`**](https://npmjs.com/package/@simbo/call-prettier)
+📦 [**`@simbo/call-prettier`**](https://npmjs.com/package/@simbo/call-prettier)
 
 A lightweight utility for finding and invoking the
 [Prettier](https://prettier.io/) binary on files, using the appropriate

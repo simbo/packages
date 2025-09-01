@@ -1,6 +1,7 @@
 # Stringify Error
 
-[📦 **`@simbo/stringify-error`**](https://npmjs.com/package/@simbo/stringify-error)
+📦
+[**`@simbo/stringify-error`**](https://npmjs.com/package/@simbo/stringify-error)
 
 A lightweight utility that converts any error-like value into a safe,
 human-readable string.

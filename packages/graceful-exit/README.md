@@ -1,6 +1,6 @@
 # Graceful Exit
 
-[📦 **`@simbo/graceful-exit`**](https://npmjs.com/package/@simbo/graceful-exit)
+📦 [**`@simbo/graceful-exit`**](https://npmjs.com/package/@simbo/graceful-exit)
 
 Gracefully terminate a Node.js process with **predictable exit codes**, **clear
 console output**, and **optional teardown steps**.

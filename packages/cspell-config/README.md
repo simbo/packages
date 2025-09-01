@@ -1,6 +1,6 @@
 # Simbo's CSpell Configuration
 
-[📦 **`@simbo/cspell-config`**](https://npmjs.com/package/@simbo/cspell-config)
+📦 [**`@simbo/cspell-config`**](https://npmjs.com/package/@simbo/cspell-config)
 
 A shared [CSpell](https://cspell.org/) configuration.
 

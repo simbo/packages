@@ -1,6 +1,7 @@
 # Monorepo Packages List
 
-[📦 **`@simbo/monorepo-packages-list`**](https://npmjs.com/package/@simbo/monorepo-packages-list)
+📦
+[**`@simbo/monorepo-packages-list`**](https://npmjs.com/package/@simbo/monorepo-packages-list)
 
 A utility library that generates a **list of monorepo packages with metadata**.
 
