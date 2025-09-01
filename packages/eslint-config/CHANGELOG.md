@@ -1,5 +1,11 @@
 # @simbo/eslint-config
 
+## 1.0.3
+
+### Patch Changes
+
+- f1bc146: fix selector settings for `@typescript-eslint/naming-convention`
+
 ## 1.0.2
 
 ### Patch Changes

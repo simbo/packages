@@ -1,7 +1,7 @@
 {
   "name": "@simbo/graceful-exit",
   "description": "Gracefully terminate a Node.js process with predictable exit codes, clear console output, and optional teardown steps.",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "keywords": [
     "graceful",
     "exit",

@@ -1,7 +1,7 @@
 {
   "name": "@simbo/import-meta-path",
   "description": "A small utility for safely deriving absolute file and directory paths from import.meta in Node.js, with a consistent fallback order.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "keywords": [
     "import.meta",
     "esm",

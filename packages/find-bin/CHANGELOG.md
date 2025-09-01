@@ -1,5 +1,13 @@
 # @simbo/find-bin
 
+## 1.0.1
+
+### Patch Changes
+
+- aeaa010: update readme
+- Updated dependencies [aeaa010]
+  - @simbo/accessible@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

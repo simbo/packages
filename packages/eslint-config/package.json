@@ -1,7 +1,7 @@
 {
   "name": "@simbo/eslint-config",
   "description": "Shared ESLint configurations for different environments and technology stacks with utilities for configuration customization.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "eslint",
     "eslintconfig",

@@ -1,5 +1,11 @@
 # @simbo/cspell-config
 
+## 1.2.0
+
+### Minor Changes
+
+- d0d7db1: add "Zodpak" to dictionary
+
 ## 1.1.2
 
 ### Patch Changes

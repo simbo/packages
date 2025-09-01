@@ -1,7 +1,7 @@
 {
   "name": "@simbo/plural",
   "description": "A utility for pluralizing words based on a count.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "plural",
     "pluralize",

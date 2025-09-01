@@ -1,7 +1,7 @@
 {
   "name": "@simbo/call-prettier",
   "description": "A utility for finding and calling Prettier on files using their contextual settings.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "prettier",
     "call",

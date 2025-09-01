@@ -1,5 +1,14 @@
 # @simbos-packages/changelog
 
+## 1.4.2
+
+### Patch Changes
+
+- 3e6b3eb: automatically generate markdown list of packages
+- 51cdb8a: improve vscode performance by setting `search.followSymlinks` to
+  false
+- ba94173: let docs build fail on warnings
+
 ## 1.4.1
 
 ### Patch Changes

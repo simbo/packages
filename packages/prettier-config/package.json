@@ -1,7 +1,7 @@
 {
   "name": "@simbo/prettier-config",
   "description": "Simbo's shared Prettier configuration.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "prettier",
     "config",

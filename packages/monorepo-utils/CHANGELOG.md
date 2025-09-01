@@ -1,5 +1,15 @@
 # @simbo/monorepo-utils
 
+## 1.0.2
+
+### Patch Changes
+
+- db186da: update readme regarding related packages
+- Updated dependencies [aeaa010]
+  - @simbo/accessible@1.0.1
+  - @simbo/package-json@0.1.2
+  - @simbo/stringify-error@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @simbo/stringify-error
 
+## 1.0.2
+
+### Patch Changes
+
+- aeaa010: update readme
+
 ## 1.0.1
 
 ### Patch Changes

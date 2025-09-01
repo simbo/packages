@@ -1,5 +1,27 @@
 # @simbo/clirk
 
+## 1.1.0
+
+### Minor Changes
+
+- 65e941c: refactor and use zod for validation
+
+### Patch Changes
+
+- 44fea53: fix package exports for `@simbo/cli-output`
+- 7cd61a5: fix `import.meta` handling and provide import path in context
+- Updated dependencies [d10c598]
+- Updated dependencies [44fea53]
+- Updated dependencies [aeaa010]
+- Updated dependencies [44fea53]
+- Updated dependencies [9844824]
+  - @simbo/zodpak@0.1.0
+  - @simbo/graceful-exit@1.1.0
+  - @simbo/find-up-package@1.0.2
+  - @simbo/plural@1.0.1
+  - @simbo/stringify-error@1.0.2
+  - @simbo/cli-output@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes

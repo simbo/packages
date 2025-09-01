@@ -1,7 +1,7 @@
 {
   "name": "@simbo/tsconfig",
   "description": "Simbo's shared TypeScript configurations.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "typescript",
     "tsconfig",

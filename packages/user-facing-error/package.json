@@ -1,7 +1,7 @@
 {
   "name": "@simbo/user-facing-error",
   "description": "A custom Error class for creating user-facing error messages with an optional hint to guide users toward resolving issues.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "error",
     "error-handling",

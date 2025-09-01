@@ -1,7 +1,7 @@
 {
   "name": "@simbo/commitlint-config",
   "description": "Simbo's shared commitlint configuration based on the conventional commits standard.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "commitlint",
     "config",

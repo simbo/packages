@@ -1,5 +1,11 @@
 # @simbo/tsconfig
 
+## 1.0.4
+
+### Patch Changes
+
+- aeaa010: update readme
+
 ## 1.0.3
 
 ### Patch Changes

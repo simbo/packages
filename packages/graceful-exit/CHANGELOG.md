@@ -1,5 +1,20 @@
 # @simbo/graceful-exit
 
+## 1.1.0
+
+### Minor Changes
+
+- 9844824: add `looseGracefulExit()` function
+
+### Patch Changes
+
+- 44fea53: fix package exports for `@simbo/cli-output`
+- Updated dependencies [aeaa010]
+- Updated dependencies [44fea53]
+  - @simbo/stringify-error@1.0.2
+  - @simbo/user-facing-error@1.0.2
+  - @simbo/cli-output@1.0.1
+
 ## 1.0.2
 
 ### Patch Changes

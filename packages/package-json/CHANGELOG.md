@@ -1,5 +1,13 @@
 # @simbo/package-json
 
+## 0.1.2
+
+### Patch Changes
+
+- aeaa010: update readme
+- Updated dependencies [aeaa010]
+  - @simbo/stringify-error@1.0.2
+
 ## 0.1.1
 
 ### Patch Changes

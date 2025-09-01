@@ -1,5 +1,14 @@
 # @simbo/call-prettier
 
+## 1.0.1
+
+### Patch Changes
+
+- eff2035: fix formatting of parameters passed to `execa`
+- Updated dependencies [aeaa010]
+  - @simbo/accessible@1.0.1
+  - @simbo/find-bin@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

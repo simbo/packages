@@ -1,7 +1,7 @@
 {
   "name": "@simbo/accessible",
   "description": "A set of helper functions to check if files or directories are existing, readable, writable, or executable.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "fs",
     "file",

@@ -1,5 +1,13 @@
 # @simbo/user-facing-error
 
+## 1.0.2
+
+### Patch Changes
+
+- aeaa010: update readme
+- Updated dependencies [aeaa010]
+  - @simbo/stringify-error@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

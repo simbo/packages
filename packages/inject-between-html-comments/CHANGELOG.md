@@ -1,5 +1,11 @@
 # @simbo/inject-between-html-comments
 
+## 1.0.2
+
+### Patch Changes
+
+- aeaa010: update readme
+
 ## 1.0.1
 
 ### Patch Changes

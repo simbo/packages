@@ -1,7 +1,7 @@
 {
   "name": "@simbo/git-constants",
   "description": "A small collection of Git-related constants for working with Git references, branches, tags, and commit identifiers in a consistent way.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "git",
     "constants",

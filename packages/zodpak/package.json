@@ -1,7 +1,7 @@
 {
   "name": "@simbo/zodpak",
   "description": "A collection of utilities for Zod.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "http://github.com/simbo/packages/tree/main/packages/zodpak",
