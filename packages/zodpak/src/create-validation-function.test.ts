@@ -60,7 +60,6 @@ describe('createValidationFunction', () => {
     const validate = createValidationFunction(schema);
 
     try {
-      // @ts-expect-error - testing runtime validation
       validate('not-a-number');
       // If no error is thrown, fail the test explicitly.
       expect.unreachable('Expected ValidationError to be thrown');
@@ -166,7 +165,7 @@ describe('createValidationFunction', () => {
     expect(n2).toBe(6);
 
     // Type-level checks
-    expectTypeOf<Parameters<typeof validate>[0]>().toEqualTypeOf<string | number>();
+    expectTypeOf<Parameters<typeof validate>[0]>().toEqualTypeOf<unknown>();
     expectTypeOf<ReturnType<typeof validate>>().toEqualTypeOf<number>();
   });
 });

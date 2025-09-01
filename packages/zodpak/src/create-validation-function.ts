@@ -15,7 +15,7 @@ z.config({ customError: ERROR_MAP });
  * @param schema - The Zod schema to validate against.
  * @returns A function that validates input against the schema.
  */
-export function createValidationFunction<S extends z.ZodType>(schema: S): (input: z.input<S>) => z.output<S> {
+export function createValidationFunction<S extends z.ZodType>(schema: S): (input: unknown) => z.output<S> {
   /**
    * Validates the input against the schema.
    * If validation fails, a user-friendly ValidationError is thrown.
@@ -24,7 +24,7 @@ export function createValidationFunction<S extends z.ZodType>(schema: S): (input
    * @returns The validated output.
    * @throws {ValidationError} If the input is invalid.
    */
-  return (input: z.input<S>) => {
+  return (input: unknown) => {
     const result = schema.safeParse(input);
     if (!result.success) {
       throw fromError(result.error);
