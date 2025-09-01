@@ -1,21 +1,6 @@
-# Simbo's Packages
+# 📦 Simbo's Packages
 
-A monorepo for my packages.
-
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [Packages](#packages)
-- [Development](#development)
-  - [Requirements](#requirements)
-  - [Setup](#setup)
-  - [Toolset](#toolset)
-  - [Usage](#usage)
-  - [Releases and Publishing](#releases-and-publishing)
-- [License](#license)
-
-<!-- /TOC -->
-
----
+> A monorepo for my packages.
 
 ## Packages
 
@@ -33,7 +18,8 @@ TBD
 
 ```bash
 git clone git@github.com:simbo/packages.git
-cd simbos-packages
+cd packages
+nvm install
 pnpm install
 pnpm run build
 ```
@@ -135,12 +121,12 @@ pnpm run build:docs
 pnpm run serve:docs
 ```
 
-### Releases and Publishing
+### Releases
 
 Adding changesets to the main branch will automatically create releases for the
 affected packages and publish them to the registry.
 
-<details><summary>🚀 <strong><em>Continuous Integration Flow</em></strong></summary>
+#### Continuous Integration Flow
 
 ```mermaid
 flowchart LR
@@ -209,8 +195,6 @@ flowchart LR
   classDef gate stroke:#E67E22,stroke-width:2px,fill:transparent
   class IsPrivate,ChecksPassed,Changesets gate
 ```
-
-</details>
 
 ## License
 
