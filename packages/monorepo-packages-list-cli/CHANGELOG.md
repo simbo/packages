@@ -1,5 +1,22 @@
 # @simbo/monorepo-packages-list-cli
 
+## 1.0.1
+
+### Patch Changes
+
+- c999daf: upgrade dependencies
+- Updated dependencies [c999daf]
+  - @simbo/clirk@1.1.1
+  - @simbo/monorepo-packages-list@1.1.1
+  - @simbo/zodpak@0.1.1
+  - @simbo/accessible@1.0.1
+  - @simbo/call-prettier@1.0.1
+  - @simbo/cli-output@1.0.1
+  - @simbo/find-git-repository-root@1.0.1
+  - @simbo/inject-between-html-comments@1.0.2
+  - @simbo/monorepo-utils@1.0.2
+  - @simbo/user-facing-error@1.0.2
+
 ## 1.0.0
 
 ### Major Changes

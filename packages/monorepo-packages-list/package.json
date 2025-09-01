@@ -1,7 +1,7 @@
 {
   "name": "@simbo/monorepo-packages-list",
   "description": "A utility library that generates a list of monorepo packages with metadata.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "keywords": [
     "monorepo",
     "packages",

@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.4.3
+
+### Patch Changes
+
+- c999daf: combine dependency catalogs to the default catalog
+
 ## 1.4.2
 
 ### Patch Changes

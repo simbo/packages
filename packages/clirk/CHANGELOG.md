@@ -1,5 +1,18 @@
 # @simbo/clirk
 
+## 1.1.1
+
+### Patch Changes
+
+- c999daf: upgrade dependencies
+- Updated dependencies [c999daf]
+  - @simbo/zodpak@0.1.1
+  - @simbo/cli-output@1.0.1
+  - @simbo/find-up-package@1.0.2
+  - @simbo/graceful-exit@1.1.0
+  - @simbo/plural@1.0.1
+  - @simbo/stringify-error@1.0.2
+
 ## 1.1.0
 
 ### Minor Changes

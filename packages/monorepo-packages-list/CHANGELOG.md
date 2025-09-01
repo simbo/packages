@@ -1,5 +1,14 @@
 # @simbo/monorepo-packages-list
 
+## 1.1.1
+
+### Patch Changes
+
+- c999daf: upgrade dependencies
+- Updated dependencies [c999daf]
+  - @simbo/zodpak@0.1.1
+  - @simbo/monorepo-utils@1.0.2
+
 ## 1.1.0
 
 ### Minor Changes
