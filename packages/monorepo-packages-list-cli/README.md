@@ -97,7 +97,7 @@ export default defineConfig({
 This example uses a full custom template and edits two files:
 
 - `README.md` with a one-liner including a package count
-- `README-PACKAGES.md` with a full list of packages and their details
+- `PACKAGES.md` with a full list of packages and their details
 
 ```ts
 import {
@@ -115,7 +115,7 @@ export default defineConfig([
       `There ${workspaces.length === 1 ? 'is' : 'are'} currently _**${workspaces.length}**_ package${workspaces.length === 1 ? '' : 's'} managed in this repository.`,
   },
   {
-    targetFile: 'README-PACKAGES.md',
+    targetFile: 'PACKAGES.md',
     templateFn: async (
       workspace: WorkspaceMetadata,
       data: TemplateData,
