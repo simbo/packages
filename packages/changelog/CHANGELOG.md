@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.4.5
+
+### Patch Changes
+
+- b5fbe82: update pnpm to 10.15.1
+
 ## 1.4.4
 
 ### Patch Changes
