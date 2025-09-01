@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.4.4
+
+### Patch Changes
+
+- eb60745: add packages-list script to preflight checks
+
 ## 1.4.3
 
 ### Patch Changes
