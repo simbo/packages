@@ -129,6 +129,9 @@ catalogs:
     typedoc-plugin-mdn-links:
       specifier: ^5.0.9
       version: 5.0.9
+    typedoc-plugin-umami-analytics:
+      specifier: ^1.0.1
+      version: 1.0.1
     typescript:
       specifier: ^5.9.2
       version: 5.9.2
@@ -218,6 +221,9 @@ importers:
       typedoc-plugin-mdn-links:
         specifier: 'catalog:'
         version: 5.0.9(typedoc@0.28.12(typescript@5.9.2))
+      typedoc-plugin-umami-analytics:
+        specifier: 'catalog:'
+        version: 1.0.1(typedoc@0.28.12(typescript@5.9.2))
       typescript:
         specifier: 'catalog:'
         version: 5.9.2
@@ -3980,6 +3986,12 @@ packages:
     peerDependencies:
       typedoc: 0.27.x || 0.28.x
 
+  typedoc-plugin-umami-analytics@1.0.1:
+    resolution: {integrity: sha512-/hQHfSVupXHtsZuttr/ckoH6sF4xzkYLZPmM4GUChB9WGU6izPKM7s4nQbWKDbBajoePhTFzvLginWsjexrO8A==}
+    engines: {node: ^18 || ^20 || ^22 || >=23}
+    peerDependencies:
+      typedoc: ^0.26.11 || ^0.27.2 || ^0.28.0
+
   typedoc@0.28.12:
     resolution: {integrity: sha512-H5ODu4f7N+myG4MfuSp2Vh6wV+WLoZaEYxKPt2y8hmmqNEMVrH69DAjjdmYivF4tP/C2jrIZCZhPalZlTU/ipA==}
     engines: {node: '>= 18', pnpm: '>= 10'}
@@ -6691,6 +6703,10 @@ snapshots:
       typedoc: 0.28.12(typescript@5.9.2)
 
   typedoc-plugin-mdn-links@5.0.9(typedoc@0.28.12(typescript@5.9.2)):
+    dependencies:
+      typedoc: 0.28.12(typescript@5.9.2)
+
+  typedoc-plugin-umami-analytics@1.0.1(typedoc@0.28.12(typescript@5.9.2)):
     dependencies:
       typedoc: 0.28.12(typescript@5.9.2)
 

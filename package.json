@@ -65,6 +65,7 @@
     "typedoc": "catalog:",
     "typedoc-github-theme": "catalog:",
     "typedoc-plugin-mdn-links": "catalog:",
+    "typedoc-plugin-umami-analytics": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

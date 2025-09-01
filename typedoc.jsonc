@@ -4,7 +4,7 @@
   "cleanOutputDir": true,
   "entryPoints": ["packages/*"],
   "entryPointStrategy": "packages",
-  "plugin": ["typedoc-github-theme", "typedoc-plugin-mdn-links"],
+  "plugin": ["typedoc-github-theme", "typedoc-plugin-mdn-links", "typedoc-plugin-umami-analytics"],
   "exclude": ["packages/tsconfig/", "packages/changelog/"],
   "treatWarningsAsErrors": true,
 
@@ -36,6 +36,9 @@
     "gitRevision": "main",
     "basePath": "./src",
   },
+
+  "umamiScriptURL": "https://trk.simbo.de/script.js",
+  "umamiWebsiteID": "b926386e-a0ec-4a43-90aa-2a039e939a8e",
 
   "highlightLanguages": [
     "angular-html",
