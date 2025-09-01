@@ -48,24 +48,24 @@
   "dependencies": {
     "@simbo/accessible": "workspace:*",
     "@simbo/package-json": "workspace:*",
-    "find-up": "catalog:packages",
-    "normalize-package-data": "catalog:packages",
-    "type-fest": "catalog:packages"
+    "find-up": "catalog:",
+    "normalize-package-data": "catalog:",
+    "type-fest": "catalog:"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "catalog:core",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:",
     "@simbo/eslint-config": "workspace:*",
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "catalog:core",
-    "@types/normalize-package-data": "catalog:packages",
-    "@vitest/coverage-v8": "catalog:core",
-    "@vitest/ui": "catalog:core",
-    "eslint": "catalog:core",
-    "jiti": "catalog:core",
-    "prettier": "catalog:core",
-    "prettier-plugin-organize-attributes": "catalog:core",
-    "typescript": "catalog:core",
-    "vitest": "catalog:core"
+    "@types/node": "catalog:",
+    "@types/normalize-package-data": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "eslint": "catalog:",
+    "jiti": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-organize-attributes": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

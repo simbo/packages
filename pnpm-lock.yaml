@@ -5,38 +5,13 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  core:
-    '@ianvs/prettier-plugin-sort-imports':
-      specifier: ^4.6.2
-      version: 4.6.2
-    '@types/node':
-      specifier: ^20.19.11
-      version: 20.19.11
-    '@vitest/coverage-v8':
-      specifier: ^3.2.4
-      version: 3.2.4
-    '@vitest/ui':
-      specifier: ^3.2.4
-      version: 3.2.4
-    eslint:
-      specifier: ^9.34.0
-      version: 9.34.0
-    jiti:
-      specifier: ^2.5.1
-      version: 2.5.1
-    prettier:
-      specifier: ^3.6.2
-      version: 3.6.2
-    prettier-plugin-organize-attributes:
-      specifier: ^1.0.0
-      version: 1.0.0
-    typescript:
-      specifier: ^5.9.2
-      version: 5.9.2
-    vitest:
-      specifier: ^3.2.4
-      version: 3.2.4
-  packages:
+  default:
+    '@changesets/cli':
+      specifier: ^2.29.6
+      version: 2.29.6
+    '@commitlint/cli':
+      specifier: ^19.8.1
+      version: 19.8.1
     '@commitlint/config-conventional':
       specifier: ^19.8.1
       version: 19.8.1
@@ -50,8 +25,8 @@ catalogs:
       specifier: ^19.8.1
       version: 19.8.1
     '@cspell/cspell-types':
-      specifier: ^9.2.0
-      version: 9.2.0
+      specifier: ^9.2.1
+      version: 9.2.1
     '@eslint/config-helpers':
       specifier: ^0.3.1
       version: 0.3.1
@@ -61,12 +36,24 @@ catalogs:
     '@eslint/js':
       specifier: ^9.33.0
       version: 9.34.0
+    '@ianvs/prettier-plugin-sort-imports':
+      specifier: ^4.7.0
+      version: 4.7.0
     '@types/minimist':
       specifier: ^1.2.5
       version: 1.2.5
+    '@types/node':
+      specifier: ^20.19.11
+      version: 20.19.11
     '@types/normalize-package-data':
       specifier: ^2.4.4
       version: 2.4.4
+    '@vitest/coverage-v8':
+      specifier: ^3.2.4
+      version: 3.2.4
+    '@vitest/ui':
+      specifier: ^3.2.4
+      version: 3.2.4
     cosmiconfig:
       specifier: ^9.0.0
       version: 9.0.0
@@ -74,11 +61,14 @@ catalogs:
       specifier: ^6.1.0
       version: 6.1.0
     cspell:
-      specifier: ^9.2.0
-      version: 9.2.0
+      specifier: ^9.2.1
+      version: 9.2.1
     escape-string-regexp:
       specifier: ^5.0.0
       version: 5.0.0
+    eslint:
+      specifier: ^9.34.0
+      version: 9.34.0
     eslint-config-prettier:
       specifier: ^10.1.8
       version: 10.1.8
@@ -103,6 +93,12 @@ catalogs:
     globby:
       specifier: ^14.1.0
       version: 14.1.0
+    husky:
+      specifier: ^9.1.7
+      version: 9.1.7
+    jiti:
+      specifier: ^2.5.1
+      version: 2.5.1
     minimist:
       specifier: ^1.2.8
       version: 1.2.8
@@ -112,12 +108,36 @@ catalogs:
     p-queue:
       specifier: ^8.1.0
       version: 8.1.0
+    prettier:
+      specifier: ^3.6.2
+      version: 3.6.2
+    prettier-plugin-organize-attributes:
+      specifier: ^1.0.0
+      version: 1.0.0
+    turbo:
+      specifier: ^2.5.6
+      version: 2.5.6
     type-fest:
       specifier: ^4.41.0
       version: 4.41.0
+    typedoc:
+      specifier: ^0.28.12
+      version: 0.28.12
+    typedoc-github-theme:
+      specifier: ^0.3.1
+      version: 0.3.1
+    typedoc-plugin-mdn-links:
+      specifier: ^5.0.9
+      version: 5.0.9
+    typescript:
+      specifier: ^5.9.2
+      version: 5.9.2
     typescript-eslint:
-      specifier: ^8.39.1
-      version: 8.40.0
+      specifier: ^8.41.0
+      version: 8.41.0
+    vitest:
+      specifier: ^3.2.4
+      version: 3.2.4
     yaml:
       specifier: ^2.8.1
       version: 2.8.1
@@ -125,50 +145,25 @@ catalogs:
       specifier: ^2.1.1
       version: 2.1.2
     zod:
-      specifier: ^4.1.3
-      version: 4.1.3
+      specifier: ^4.1.5
+      version: 4.1.5
     zod-validation-error:
       specifier: ^4.0.1
       version: 4.0.1
-  root:
-    '@changesets/cli':
-      specifier: ^2.29.6
-      version: 2.29.6
-    '@commitlint/cli':
-      specifier: ^19.8.1
-      version: 19.8.1
-    cspell:
-      specifier: ^9.2.0
-      version: 9.2.0
-    husky:
-      specifier: ^9.1.7
-      version: 9.1.7
-    turbo:
-      specifier: ^2.5.6
-      version: 2.5.6
-    typedoc:
-      specifier: ^0.28.10
-      version: 0.28.10
-    typedoc-github-theme:
-      specifier: ^0.3.1
-      version: 0.3.1
-    typedoc-plugin-mdn-links:
-      specifier: ^5.0.9
-      version: 5.0.9
 
 importers:
 
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: catalog:root
+        specifier: 'catalog:'
         version: 2.29.6(@types/node@20.19.11)
       '@commitlint/cli':
-        specifier: catalog:root
+        specifier: 'catalog:'
         version: 19.8.1(@types/node@20.19.11)(typescript@5.9.2)
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/commitlint-config':
         specifier: workspace:*
         version: link:packages/commitlint-config
@@ -185,56 +180,56 @@ importers:
         specifier: workspace:*
         version: link:packages/tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       cspell:
-        specifier: catalog:root
-        version: 9.2.0
+        specifier: 'catalog:'
+        version: 9.2.1
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       husky:
-        specifier: catalog:root
+        specifier: 'catalog:'
         version: 9.1.7
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       turbo:
-        specifier: catalog:root
+        specifier: 'catalog:'
         version: 2.5.6
       typedoc:
-        specifier: catalog:root
-        version: 0.28.10(typescript@5.9.2)
+        specifier: 'catalog:'
+        version: 0.28.12(typescript@5.9.2)
       typedoc-github-theme:
-        specifier: catalog:root
-        version: 0.3.1(typedoc@0.28.10(typescript@5.9.2))
+        specifier: 'catalog:'
+        version: 0.3.1(typedoc@0.28.12(typescript@5.9.2))
       typedoc-plugin-mdn-links:
-        specifier: catalog:root
-        version: 5.0.9(typedoc@0.28.10(typescript@5.9.2))
+        specifier: 'catalog:'
+        version: 5.0.9(typedoc@0.28.12(typescript@5.9.2))
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/accessible:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -245,31 +240,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/call-prettier:
@@ -281,12 +276,12 @@ importers:
         specifier: workspace:*
         version: link:../find-bin
       execa:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 9.6.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -297,34 +292,34 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       type-fest:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 4.41.0
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/changelog: {}
@@ -332,12 +327,12 @@ importers:
   packages/cli-output:
     dependencies:
       yoctocolors:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 2.1.2
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -348,31 +343,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/clirk:
@@ -396,18 +391,18 @@ importers:
         specifier: workspace:*
         version: link:../zodpak
       minimist:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 1.2.8
       yoctocolors:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 2.1.2
       zod:
-        specifier: catalog:packages
-        version: 4.1.3
+        specifier: 'catalog:'
+        version: 4.1.5
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -418,34 +413,34 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/minimist':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 1.2.5
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/commitlint-config:
@@ -454,21 +449,21 @@ importers:
         specifier: ^19
         version: 19.8.1(@types/node@20.19.11)(typescript@5.9.2)
       '@commitlint/config-conventional':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 19.8.1
     devDependencies:
       '@commitlint/lint':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 19.8.1
       '@commitlint/load':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 19.8.1(@types/node@20.19.11)(typescript@5.9.2)
       '@commitlint/types':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 19.8.1
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -479,41 +474,41 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/cspell-config:
     devDependencies:
       '@cspell/cspell-types':
-        specifier: catalog:packages
-        version: 9.2.0
+        specifier: 'catalog:'
+        version: 9.2.1
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -524,69 +519,69 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       cspell:
-        specifier: catalog:packages
-        version: 9.2.0
+        specifier: 'catalog:'
+        version: 9.2.1
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/eslint-config:
     dependencies:
       '@eslint/config-helpers':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 0.3.1
       '@eslint/js':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 9.34.0
       eslint-config-prettier:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 10.1.8(eslint@9.34.0(jiti@2.5.1))
       eslint-plugin-jsdoc:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 54.1.1(eslint@9.34.0(jiti@2.5.1))
       eslint-plugin-n:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 17.21.3(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
       eslint-plugin-unicorn:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 60.0.0(eslint@9.34.0(jiti@2.5.1))
       globals:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 16.3.0
       typescript-eslint:
-        specifier: catalog:packages
-        version: 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+        specifier: 'catalog:'
+        version: 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
     devDependencies:
       '@eslint/config-inspector':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 1.2.0(eslint@9.34.0(jiti@2.5.1))
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/prettier-config':
         specifier: workspace:*
         version: link:../prettier-config
@@ -594,31 +589,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/find-bin:
@@ -627,15 +622,15 @@ importers:
         specifier: workspace:*
         version: link:../accessible
       execa:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 9.6.0
       find-up:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 7.0.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -646,31 +641,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/find-git-repository-root:
@@ -679,12 +674,12 @@ importers:
         specifier: workspace:*
         version: link:../is-git-repository-root
       find-up:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 7.0.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -695,31 +690,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/find-up-package:
@@ -731,18 +726,18 @@ importers:
         specifier: workspace:*
         version: link:../package-json
       find-up:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 7.0.0
       normalize-package-data:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 8.0.0
       type-fest:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 4.41.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -753,41 +748,41 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@types/normalize-package-data':
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 2.4.4
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/git-constants:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -798,31 +793,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/globby-has-matches:
@@ -831,12 +826,12 @@ importers:
         specifier: workspace:*
         version: link:../stringify-error
       globby:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 14.1.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -847,31 +842,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/graceful-exit:
@@ -886,12 +881,12 @@ importers:
         specifier: workspace:*
         version: link:../user-facing-error
       yoctocolors:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 2.1.2
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -902,38 +897,38 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/import-meta-path:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -944,42 +939,42 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/inject-between-html-comments:
     dependencies:
       escape-string-regexp:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 5.0.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -990,31 +985,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/is-git-repository-root:
@@ -1027,8 +1022,8 @@ importers:
         version: link:../git-constants
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1039,31 +1034,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/monorepo-packages-list:
@@ -1075,12 +1070,12 @@ importers:
         specifier: workspace:*
         version: link:../zodpak
       zod:
-        specifier: catalog:packages
-        version: 4.1.3
+        specifier: 'catalog:'
+        version: 4.1.5
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1091,31 +1086,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/monorepo-packages-list-cli:
@@ -1151,21 +1146,21 @@ importers:
         specifier: workspace:*
         version: link:../zodpak
       cosmiconfig:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 9.0.0(typescript@5.9.2)
       cosmiconfig-typescript-loader:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 6.1.0(@types/node@20.19.11)(cosmiconfig@9.0.0(typescript@5.9.2))(typescript@5.9.2)
       yoctocolors:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 2.1.2
       zod:
-        specifier: catalog:packages
-        version: 4.1.3
+        specifier: 'catalog:'
+        version: 4.1.5
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1176,31 +1171,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/monorepo-utils:
@@ -1215,21 +1210,21 @@ importers:
         specifier: workspace:*
         version: link:../stringify-error
       globby:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 14.1.0
       p-queue:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 8.1.0
       type-fest:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 4.41.0
       yaml:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 2.8.1
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1240,31 +1235,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/package-json:
@@ -1273,12 +1268,12 @@ importers:
         specifier: workspace:*
         version: link:../stringify-error
       type-fest:
-        specifier: catalog:packages
+        specifier: 'catalog:'
         version: 4.41.0
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1289,38 +1284,38 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/plural:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1331,74 +1326,74 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/prettier-config:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/stringify-error:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1409,31 +1404,31 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/tsconfig:
@@ -1443,13 +1438,13 @@ importers:
         version: 5.9.2
     devDependencies:
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/user-facing-error:
@@ -1459,8 +1454,8 @@ importers:
         version: link:../stringify-error
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1471,38 +1466,38 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
 
   packages/zodpak:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: catalog:core
-        version: 4.6.2(prettier@3.6.2)
+        specifier: 'catalog:'
+        version: 4.7.0(prettier@3.6.2)
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -1513,38 +1508,38 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 20.19.11
       '@vitest/coverage-v8':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       '@vitest/ui':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(vitest@3.2.4)
       eslint:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 9.34.0(jiti@2.5.1)
       jiti:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 2.5.1
       prettier:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.6.2
       prettier-plugin-organize-attributes:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.6.2)
       typescript:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.9.2
       vitest:
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 3.2.4(@types/node@20.19.11)(@vitest/ui@3.2.4)(jiti@2.5.1)(yaml@2.8.1)
       zod:
-        specifier: catalog:packages
-        version: 4.1.3
+        specifier: 'catalog:'
+        version: 4.1.5
       zod-validation-error:
-        specifier: catalog:packages
-        version: 4.0.1(zod@4.1.3)
+        specifier: 'catalog:'
+        version: 4.0.1(zod@4.1.5)
 
 packages:
 
@@ -1721,28 +1716,28 @@ packages:
     resolution: {integrity: sha512-/yCrWGCoA1SVKOks25EGadP9Pnj0oAIHGpl2wH2M2Y46dPM2ueb8wyCVOD7O3WCTkaJ0IkKvzhl1JY7+uCT2Dw==}
     engines: {node: '>=v18'}
 
-  '@cspell/cspell-bundled-dicts@9.2.0':
-    resolution: {integrity: sha512-e4qb78SQWqHkRw47W8qFJ3RPijhSLkADF+T0oH8xl3r/golq1RGp2/KrWOqGRRofUSTiIKYqaMX7mbAyFnOxyA==}
+  '@cspell/cspell-bundled-dicts@9.2.1':
+    resolution: {integrity: sha512-85gHoZh3rgZ/EqrHIr1/I4OLO53fWNp6JZCqCdgaT7e3sMDaOOG6HoSxCvOnVspXNIf/1ZbfTCDMx9x79Xq0AQ==}
     engines: {node: '>=20'}
 
-  '@cspell/cspell-json-reporter@9.2.0':
-    resolution: {integrity: sha512-qHdkW8eyknCSDEsqCG8OHBMal03LQf21H2LVWhtwszEQ4BQRKcWctc+VIgkO69F/jLaN2wi/yhhMufXWHAEzIg==}
+  '@cspell/cspell-json-reporter@9.2.1':
+    resolution: {integrity: sha512-LiiIWzLP9h2etKn0ap6g2+HrgOGcFEF/hp5D8ytmSL5sMxDcV13RrmJCEMTh1axGyW0SjQEFjPnYzNpCL1JjGA==}
     engines: {node: '>=20'}
 
-  '@cspell/cspell-pipe@9.2.0':
-    resolution: {integrity: sha512-RO3adcsr7Ek+4511nyEOWDhOYYU1ogRs1Mo5xx3kDIdcKAJzhFdGry35T2wqft4dPASLCXcemBrhoS+hdQ+z+Q==}
+  '@cspell/cspell-pipe@9.2.1':
+    resolution: {integrity: sha512-2N1H63If5cezLqKToY/YSXon4m4REg/CVTFZr040wlHRbbQMh5EF3c7tEC/ue3iKAQR4sm52ihfqo1n4X6kz+g==}
     engines: {node: '>=20'}
 
-  '@cspell/cspell-resolver@9.2.0':
-    resolution: {integrity: sha512-0Xvwq0iezfO71Alw+DjsGxacAzydqOAxdXnY4JknHuxt2l8GTSMjRwj65QAflv3PN6h1QoRZEeWdiKtusceWAw==}
+  '@cspell/cspell-resolver@9.2.1':
+    resolution: {integrity: sha512-fRPQ6GWU5eyh8LN1TZblc7t24TlGhJprdjJkfZ+HjQo+6ivdeBPT7pC7pew6vuMBQPS1oHBR36hE0ZnJqqkCeg==}
     engines: {node: '>=20'}
 
-  '@cspell/cspell-service-bus@9.2.0':
-    resolution: {integrity: sha512-ZDvcOTFk3cCVW+OjlkljeP7aSuV8tIguVn+GMco1/A+961hsEP20hngK9zJtyfpXqyvJKtvCVlyzS+z8VRrZGg==}
+  '@cspell/cspell-service-bus@9.2.1':
+    resolution: {integrity: sha512-k4M6bqdvWbcGSbcfLD7Lf4coZVObsISDW+sm/VaWp9aZ7/uwiz1IuGUxL9WO4JIdr9CFEf7Ivmvd2txZpVOCIA==}
     engines: {node: '>=20'}
 
-  '@cspell/cspell-types@9.2.0':
-    resolution: {integrity: sha512-hL4ltFwiARpFxlfXt4GiTWQxIFyZp4wrlp7dozZbitYO6QlYc5fwQ8jBc5zFUqknuH4gx/sCMLNXhAv3enNGZQ==}
+  '@cspell/cspell-types@9.2.1':
+    resolution: {integrity: sha512-FQHgQYdTHkcpxT0u1ddLIg5Cc5ePVDcLg9+b5Wgaubmc5I0tLotgYj8c/mvStWuKsuZIs6sUopjJrE91wk6Onw==}
     engines: {node: '>=20'}
 
   '@cspell/dict-ada@4.1.1':
@@ -1751,17 +1746,17 @@ packages:
   '@cspell/dict-al@1.1.1':
     resolution: {integrity: sha512-sD8GCaZetgQL4+MaJLXqbzWcRjfKVp8x+px3HuCaaiATAAtvjwUQ5/Iubiqwfd1boIh2Y1/3EgM3TLQ7Q8e0wQ==}
 
-  '@cspell/dict-aws@4.0.14':
-    resolution: {integrity: sha512-qLPR+OFmpzyUcuUYyCQFIURDDUGIlQsdGirPyvaIrXxs2giCKG97cAuFz5EleL3/Lo7uJAVDw0lt4Ka7wIRhjQ==}
+  '@cspell/dict-aws@4.0.15':
+    resolution: {integrity: sha512-aPY7VVR5Os4rz36EaqXBAEy14wR4Rqv+leCJ2Ug/Gd0IglJpM30LalF3e2eJChnjje3vWoEC0Rz3+e5gpZG+Kg==}
 
   '@cspell/dict-bash@4.2.1':
     resolution: {integrity: sha512-SBnzfAyEAZLI9KFS7DUG6Xc1vDFuLllY3jz0WHvmxe8/4xV3ufFE3fGxalTikc1VVeZgZmxYiABw4iGxVldYEg==}
 
-  '@cspell/dict-companies@3.2.4':
-    resolution: {integrity: sha512-36NoOjW3Vl1Sl+ccEvD6NDA4YhaKo2mg2zAyah8n7tpaFXf5QNBlnZsPCgRwPM6aG1UfN30jiyd2hIVOeoKj9A==}
+  '@cspell/dict-companies@3.2.5':
+    resolution: {integrity: sha512-H51R0w7c6RwJJPqH7Gs65tzP6ouZsYDEHmmol6MIIk0kQaOIBuFP2B3vIxHLUr2EPRVFZsMW8Ni7NmVyaQlwsg==}
 
-  '@cspell/dict-cpp@6.0.9':
-    resolution: {integrity: sha512-Xdq9MwGh0D5rsnbOqFW24NIClXXRhN11KJdySMibpcqYGeomxB2ODFBuhj1H7azO7kVGkGH0Okm4yQ2TRzBx0g==}
+  '@cspell/dict-cpp@6.0.12':
+    resolution: {integrity: sha512-N4NsCTttVpMqQEYbf0VQwCj6np+pJESov0WieCN7R/0aByz4+MXEiDieWWisaiVi8LbKzs1mEj4ZTw5K/6O2UQ==}
 
   '@cspell/dict-cryptocurrencies@5.0.5':
     resolution: {integrity: sha512-R68hYYF/rtlE6T/dsObStzN5QZw+0aQBinAXuWCVqwdS7YZo0X33vGMfChkHaiCo3Z2+bkegqHlqxZF4TD3rUA==}
@@ -1790,14 +1785,14 @@ packages:
   '@cspell/dict-elixir@4.0.8':
     resolution: {integrity: sha512-CyfphrbMyl4Ms55Vzuj+mNmd693HjBFr9hvU+B2YbFEZprE5AG+EXLYTMRWrXbpds4AuZcvN3deM2XVB80BN/Q==}
 
-  '@cspell/dict-en-common-misspellings@2.1.3':
-    resolution: {integrity: sha512-v1I97Hr1OrK+mwHsVzbY4vsPxx6mA5quhxzanF6XuRofz00wH4HPz8Q3llzRHxka5Wl/59gyan04UkUrvP4gdA==}
+  '@cspell/dict-en-common-misspellings@2.1.5':
+    resolution: {integrity: sha512-hlRDSjul7wGTDXeLBADoyTGIZjWWZn6/SP+pt0lG3PRtqF0MWH/QEDgUkS+Yev7ZhHCHVLvwBZtDxOd1uw06Tw==}
 
-  '@cspell/dict-en-gb-mit@3.1.6':
-    resolution: {integrity: sha512-3JJGxuPhDK5rMDYPzJYAdjjsBddEyV54rXfUQpOCl7c7weMhNDWfC2q4h3cKNDj7Isud1q2RM+DlSxQWf40OTw==}
+  '@cspell/dict-en-gb-mit@3.1.8':
+    resolution: {integrity: sha512-wrZDRl6TKd1wReepGDPuT1JNbnRjHLvtAVrozp0DUkFlcDgnrB+YSd/Ne4aKnkXl5qpyVQ2GG7a4Z7INKCX+fw==}
 
-  '@cspell/dict-en_us@4.4.16':
-    resolution: {integrity: sha512-/R47sUbUmba2dG/0LZyE6P6gX/DRF1sCcYNQNWyPk/KeidQRNZG+FH9U0KRvX42/2ZzMge6ebXH3WAJ52w0Vqw==}
+  '@cspell/dict-en_us@4.4.18':
+    resolution: {integrity: sha512-6Le961Q0AIfVp3nKuSJJD/9NfnTYA1N/MLAaeWKCABEvhzhopeyGrykwejd0SA4m64WBUNEfSlsgselYWoDSjQ==}
 
   '@cspell/dict-filetypes@3.0.13':
     resolution: {integrity: sha512-g6rnytIpQlMNKGJT1JKzWkC+b3xCliDKpQ3ANFSq++MnR4GaLiifaC4JkVON11Oh/UTplYOR1nY3BR4X30bswA==}
@@ -1873,8 +1868,8 @@ packages:
   '@cspell/dict-node@5.0.8':
     resolution: {integrity: sha512-AirZcN2i84ynev3p2/1NCPEhnNsHKMz9zciTngGoqpdItUb2bDt1nJBjwlsrFI78GZRph/VaqTVFwYikmncpXg==}
 
-  '@cspell/dict-npm@5.2.14':
-    resolution: {integrity: sha512-amZCBJIqzRmPq5uKh0v2fdejt9AJQsQwx0spPFQaBZ2cRoE6qlqstPWLLc5lhz668QgSQeZ7mlURtCEWWlOtPw==}
+  '@cspell/dict-npm@5.2.15':
+    resolution: {integrity: sha512-kb9oX/N5FUlJYoqc5G+tIP/0SolteFMz2VhOVKG2qiXUS/1AybVTjUEo4gZ4uEveUhLzUDcfpZbn40EoUVBVrg==}
 
   '@cspell/dict-php@4.0.15':
     resolution: {integrity: sha512-iepGB2gtToMWSTvybesn4/lUp4LwXcEm0s8vasJLP76WWVkq1zYjmeS+WAIzNgsuURyZ/9mGqhS0CWMuo74ODw==}
@@ -1903,8 +1898,8 @@ packages:
   '@cspell/dict-shell@1.1.1':
     resolution: {integrity: sha512-T37oYxE7OV1x/1D4/13Y8JZGa1QgDCXV7AVt3HLXjn0Fe3TaNDvf5sU0fGnXKmBPqFFrHdpD3uutAQb1dlp15g==}
 
-  '@cspell/dict-software-terms@5.1.5':
-    resolution: {integrity: sha512-MX5beBP3pLmIM0mjqfrHbie3EEfyLWZ8ZqW56jcLuRlLoDcfC0FZsr66NCARgCgEwsWiidHFe87+7fFsnwqY6A==}
+  '@cspell/dict-software-terms@5.1.7':
+    resolution: {integrity: sha512-CfNFQCVx8R/D8RfFdFTwSjDvXcSXY0tO+VN2N6TEbNTL1GCmqyzhwm4YI+ZbO3MUmMAMjwu9jZyoLk5BaJkXcg==}
 
   '@cspell/dict-sql@2.2.1':
     resolution: {integrity: sha512-qDHF8MpAYCf4pWU8NKbnVGzkoxMNrFqBHyG/dgrlic5EQiKANCLELYtGlX5auIMDLmTf1inA0eNtv74tyRJ/vg==}
@@ -1924,20 +1919,20 @@ packages:
   '@cspell/dict-vue@3.0.5':
     resolution: {integrity: sha512-Mqutb8jbM+kIcywuPQCCaK5qQHTdaByoEO2J9LKFy3sqAdiBogNkrplqUK0HyyRFgCfbJUgjz3N85iCMcWH0JA==}
 
-  '@cspell/dynamic-import@9.2.0':
-    resolution: {integrity: sha512-2/k4LR8CQqbgIPQGELbCdt9xgg9+aQ7pMwOtllKvnFYBtwNiwqcZjlzAam2gtvD5DghKX2qrcSHG5A7YP5cX9A==}
+  '@cspell/dynamic-import@9.2.1':
+    resolution: {integrity: sha512-izYQbk7ck0ffNA1gf7Gi3PkUEjj+crbYeyNK1hxHx5A+GuR416ozs0aEyp995KI2v9HZlXscOj3SC3wrWzHZeA==}
     engines: {node: '>=20'}
 
-  '@cspell/filetypes@9.2.0':
-    resolution: {integrity: sha512-6wmCa3ZyI647H7F4w6kb9PCJ703JKSgFTB8EERTdIoGySbgVp5+qMIIoZ//wELukdjgcufcFZ5pBrhRDRsemRA==}
+  '@cspell/filetypes@9.2.1':
+    resolution: {integrity: sha512-Dy1y1pQ+7hi2gPs+jERczVkACtYbUHcLodXDrzpipoxgOtVxMcyZuo+84WYHImfu0gtM0wU2uLObaVgMSTnytw==}
     engines: {node: '>=20'}
 
-  '@cspell/strong-weak-map@9.2.0':
-    resolution: {integrity: sha512-5mpIMiIOCu4cBqy1oCTXISgJuOCQ6R/e38AkvnYWfmMIx7fCdx8n+mF52wX9m61Ng28Sq8VL253xybsWcCxHug==}
+  '@cspell/strong-weak-map@9.2.1':
+    resolution: {integrity: sha512-1HsQWZexvJSjDocVnbeAWjjgqWE/0op/txxzDPvDqI2sE6pY0oO4Cinj2I8z+IP+m6/E6yjPxdb23ydbQbPpJQ==}
     engines: {node: '>=20'}
 
-  '@cspell/url@9.2.0':
-    resolution: {integrity: sha512-plB0wwdAESqBl4xDAT2db2/K1FZHJXfYlJTiV6pkn0XffTGyg4UGLaSCm15NzUoPxdSmzqj5jQb7y+mB9kFK8g==}
+  '@cspell/url@9.2.1':
+    resolution: {integrity: sha512-9EHCoGKtisPNsEdBQ28tKxKeBmiVS3D4j+AN8Yjr+Dmtu+YACKGWiMOddNZG2VejQNIdFx7FwzU00BGX68ELhA==}
     engines: {node: '>=20'}
 
   '@es-joy/jsdoccomment@0.53.0':
@@ -2144,8 +2139,8 @@ packages:
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@gerrit0/mini-shiki@3.9.2':
-    resolution: {integrity: sha512-Tvsj+AOO4Z8xLRJK900WkyfxHsZQu+Zm1//oT1w443PO6RiYMoq/4NGOhaNuZoUMYsjKIAPVQ6eOFMddj6yphQ==}
+  '@gerrit0/mini-shiki@3.12.0':
+    resolution: {integrity: sha512-CF1vkfe2ViPtmoFEvtUWilEc4dOCiFzV8+J7/vEISSsslKQ97FjeTPNMCqUhZEiKySmKRgK3UO/CxtkyOp7DvA==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2167,8 +2162,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@ianvs/prettier-plugin-sort-imports@4.6.2':
-    resolution: {integrity: sha512-kHiL1IghIodo43clNQaJJU2rPqXEioPG+Ink4/T5za46A0ggSNvIx4NM3hGgciQ2VpDaR/X8cTJIZDKRurWjPw==}
+  '@ianvs/prettier-plugin-sort-imports@4.7.0':
+    resolution: {integrity: sha512-soa2bPUJAFruLL4z/CnMfSEKGznm5ebz29fIa9PxYtu8HHyLKNE1NXAs6dylfw1jn/ilEIfO2oLLN6uAafb7DA==}
     peerDependencies:
       '@prettier/plugin-oxc': ^0.0.4
       '@vue/compiler-sfc': 2.7.x || 3.x
@@ -2355,17 +2350,17 @@ packages:
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
-  '@shikijs/engine-oniguruma@3.9.2':
-    resolution: {integrity: sha512-Vn/w5oyQ6TUgTVDIC/BrpXwIlfK6V6kGWDVVz2eRkF2v13YoENUvaNwxMsQU/t6oCuZKzqp9vqtEtEzKl9VegA==}
+  '@shikijs/engine-oniguruma@3.12.1':
+    resolution: {integrity: sha512-hbYq+XOc55CU7Irkhsgwh8WgQbx2W5IVzHV4l+wZ874olMLSNg5o3F73vo9m4SAhimFyqq/86xnx9h+T30HhhQ==}
 
-  '@shikijs/langs@3.9.2':
-    resolution: {integrity: sha512-X1Q6wRRQXY7HqAuX3I8WjMscjeGjqXCg/Sve7J2GWFORXkSrXud23UECqTBIdCSNKJioFtmUGJQNKtlMMZMn0w==}
+  '@shikijs/langs@3.12.1':
+    resolution: {integrity: sha512-Y1MbMfVO5baRz7Boo7EoD36TmzfUx/I5n8e+wZumx6SlUA81Zj1ZwNJL871iIuSHrdsheV4AxJtHQ9mlooklmg==}
 
-  '@shikijs/themes@3.9.2':
-    resolution: {integrity: sha512-6z5lBPBMRfLyyEsgf6uJDHPa6NAGVzFJqH4EAZ+03+7sedYir2yJBRu2uPZOKmj43GyhVHWHvyduLDAwJQfDjA==}
+  '@shikijs/themes@3.12.1':
+    resolution: {integrity: sha512-9JrAm9cA5hqM/YXymA3oAAZdnCgQf1zyrNDtsnM105nNEoEpux4dyzdoOjc2KawEKj1iUs/WH2ota6Atp7GYkQ==}
 
-  '@shikijs/types@3.9.2':
-    resolution: {integrity: sha512-/M5L0Uc2ljyn2jKvj4Yiah7ow/W+DJSglVafvWAJ/b8AZDeeRAdMu3c2riDzB7N42VD+jSnWxeP9AKtd4TfYVw==}
+  '@shikijs/types@3.12.1':
+    resolution: {integrity: sha512-Is/p+1vTss22LIsGCJTmGrxu7ZC1iBL9doJFYLaZ4aI8d0VDXb7Mn0kBzhkc7pdsRpmUbQLQ5HXwNpa3H6F8og==}
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
@@ -2411,63 +2406,63 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@typescript-eslint/eslint-plugin@8.40.0':
-    resolution: {integrity: sha512-w/EboPlBwnmOBtRbiOvzjD+wdiZdgFeo17lkltrtn7X37vagKKWJABvyfsJXTlHe6XBzugmYgd4A4nW+k8Mixw==}
+  '@typescript-eslint/eslint-plugin@8.41.0':
+    resolution: {integrity: sha512-8fz6oa6wEKZrhXWro/S3n2eRJqlRcIa6SlDh59FXJ5Wp5XRZ8B9ixpJDcjadHq47hMx0u+HW6SNa6LjJQ6NLtw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      '@typescript-eslint/parser': ^8.40.0
+      '@typescript-eslint/parser': ^8.41.0
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/parser@8.40.0':
-    resolution: {integrity: sha512-jCNyAuXx8dr5KJMkecGmZ8KI61KBUhkCob+SD+C+I5+Y1FWI2Y3QmY4/cxMCC5WAsZqoEtEETVhUiUMIGCf6Bw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0
-      typescript: '>=4.8.4 <6.0.0'
-
-  '@typescript-eslint/project-service@8.40.0':
-    resolution: {integrity: sha512-/A89vz7Wf5DEXsGVvcGdYKbVM9F7DyFXj52lNYUDS1L9yJfqjW/fIp5PgMuEJL/KeqVTe2QSbXAGUZljDUpArw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.0.0'
-
-  '@typescript-eslint/scope-manager@8.40.0':
-    resolution: {integrity: sha512-y9ObStCcdCiZKzwqsE8CcpyuVMwRouJbbSrNuThDpv16dFAj429IkM6LNb1dZ2m7hK5fHyzNcErZf7CEeKXR4w==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/tsconfig-utils@8.40.0':
-    resolution: {integrity: sha512-jtMytmUaG9d/9kqSl/W3E3xaWESo4hFDxAIHGVW/WKKtQhesnRIJSAJO6XckluuJ6KDB5woD1EiqknriCtAmcw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.0.0'
-
-  '@typescript-eslint/type-utils@8.40.0':
-    resolution: {integrity: sha512-eE60cK4KzAc6ZrzlJnflXdrMqOBaugeukWICO2rB0KNvwdIMaEaYiywwHMzA1qFpTxrLhN9Lp4E/00EgWcD3Ow==}
+  '@typescript-eslint/parser@8.41.0':
+    resolution: {integrity: sha512-gTtSdWX9xiMPA/7MV9STjJOOYtWwIJIYxkQxnSV1U3xcE+mnJSH3f6zI0RYP+ew66WSlZ5ed+h0VCxsvdC1jJg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/types@8.40.0':
-    resolution: {integrity: sha512-ETdbFlgbAmXHyFPwqUIYrfc12ArvpBhEVgGAxVYSwli26dn8Ko+lIo4Su9vI9ykTZdJn+vJprs/0eZU0YMAEQg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/typescript-estree@8.40.0':
-    resolution: {integrity: sha512-k1z9+GJReVVOkc1WfVKs1vBrR5MIKKbdAjDTPvIK3L8De6KbFfPFt6BKpdkdk7rZS2GtC/m6yI5MYX+UsuvVYQ==}
+  '@typescript-eslint/project-service@8.41.0':
+    resolution: {integrity: sha512-b8V9SdGBQzQdjJ/IO3eDifGpDBJfvrNTp2QD9P2BeqWTGrRibgfgIlBSw6z3b6R7dPzg752tOs4u/7yCLxksSQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/utils@8.40.0':
-    resolution: {integrity: sha512-Cgzi2MXSZyAUOY+BFwGs17s7ad/7L+gKt6Y8rAVVWS+7o6wrjeFN4nVfTpbE25MNcxyJ+iYUXflbs2xR9h4UBg==}
+  '@typescript-eslint/scope-manager@8.41.0':
+    resolution: {integrity: sha512-n6m05bXn/Cd6DZDGyrpXrELCPVaTnLdPToyhBoFkLIMznRUQUEQdSp96s/pcWSQdqOhrgR1mzJ+yItK7T+WPMQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@typescript-eslint/tsconfig-utils@8.41.0':
+    resolution: {integrity: sha512-TDhxYFPUYRFxFhuU5hTIJk+auzM/wKvWgoNYOPcOf6i4ReYlOoYN8q1dV5kOTjNQNJgzWN3TUUQMtlLOcUgdUw==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      typescript: '>=4.8.4 <6.0.0'
+
+  '@typescript-eslint/type-utils@8.41.0':
+    resolution: {integrity: sha512-63qt1h91vg3KsjVVonFJWjgSK7pZHSQFKH6uwqxAH9bBrsyRhO6ONoKyXxyVBzG1lJnFAJcKAcxLS54N1ee1OQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/visitor-keys@8.40.0':
-    resolution: {integrity: sha512-8CZ47QwalyRjsypfwnbI3hKy5gJDPmrkLjkgMxhi0+DZZ2QNx2naS6/hWoVYUHU7LU2zleF68V9miaVZvhFfTA==}
+  '@typescript-eslint/types@8.41.0':
+    resolution: {integrity: sha512-9EwxsWdVqh42afLbHP90n2VdHaWU/oWgbH2P0CfcNfdKL7CuKpwMQGjwev56vWu9cSKU7FWSu6r9zck6CVfnag==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@typescript-eslint/typescript-estree@8.41.0':
+    resolution: {integrity: sha512-D43UwUYJmGhuwHfY7MtNKRZMmfd8+p/eNSfFe6tH5mbVDto+VQCayeAt35rOx3Cs6wxD16DQtIKw/YXxt5E0UQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      typescript: '>=4.8.4 <6.0.0'
+
+  '@typescript-eslint/utils@8.41.0':
+    resolution: {integrity: sha512-udbCVstxZ5jiPIXrdH+BZWnPatjlYwJuJkDA4Tbo3WyYLh8NvB+h/bKeSZHDOFKfphsZYJQqaFtLeXEqurQn1A==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
+      typescript: '>=4.8.4 <6.0.0'
+
+  '@typescript-eslint/visitor-keys@8.41.0':
+    resolution: {integrity: sha512-+GeGMebMCy0elMNg67LRNoVnUFPIm37iu5CmHESVx56/9Jsfdpsvbv605DQ81Pi/x11IdKUsS5nzgTYbCQU9fg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@vitest/coverage-v8@3.2.4':
@@ -2643,8 +2638,8 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
-  chalk@5.5.0:
-    resolution: {integrity: sha512-1tm8DTaJhPBG3bIkVeZt1iZM9GfSX2lzOeDVZH9R9ffRHpmHvxZ/QhgQH/aDTkswQVt+YHdXAdS/In/30OjCbg==}
+  chalk@5.6.0:
+    resolution: {integrity: sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   change-case@5.4.4:
@@ -2755,42 +2750,42 @@ packages:
   crossws@0.3.5:
     resolution: {integrity: sha512-ojKiDvcmByhwa8YYqbQI/hg7MEU0NC03+pSdEq4ZUnZR9xXpwk7E43SMNGkn+JxJGPFtNvQ48+vV2p+P1ml5PA==}
 
-  cspell-config-lib@9.2.0:
-    resolution: {integrity: sha512-Yc8+hT+uIWWCi6WMhOL6HDYbBCP2qig1tgKGThHVeOx6GviieV10TZ5kQ+P7ONgoqw2nmm7uXIC19dGYx3DblQ==}
+  cspell-config-lib@9.2.1:
+    resolution: {integrity: sha512-qqhaWW+0Ilc7493lXAlXjziCyeEmQbmPMc1XSJw2EWZmzb+hDvLdFGHoX18QU67yzBtu5hgQsJDEDZKvVDTsRA==}
     engines: {node: '>=20'}
 
-  cspell-dictionary@9.2.0:
-    resolution: {integrity: sha512-lV4VtjsDtxu8LyCcb6DY7Br4e/Aw1xfR8QvjYhHaJ8t03xry9STey5Rkfp+lz+hlVevNcn3lfCaacGuXyD+lLg==}
+  cspell-dictionary@9.2.1:
+    resolution: {integrity: sha512-0hQVFySPsoJ0fONmDPwCWGSG6SGj4ERolWdx4t42fzg5zMs+VYGXpQW4BJneQ5Tfxy98Wx8kPhmh/9E8uYzLTw==}
     engines: {node: '>=20'}
 
-  cspell-gitignore@9.2.0:
-    resolution: {integrity: sha512-gXDQZ7czTPwmEg1qtsUIjVEFm9IfgTO8rA02O8eYIveqjFixbSV3fIYOgoxZSZYxjt3O44m8+/zAFC1RE4CM/Q==}
-    engines: {node: '>=20'}
-    hasBin: true
-
-  cspell-glob@9.2.0:
-    resolution: {integrity: sha512-viycZDyegzW2AKPFqvX5RveqTrB0sKgexlCu2A8z8eumpYYor5sD1NP05VDOqkAF4hDuiGqkHn6iNo0L1wNgLw==}
-    engines: {node: '>=20'}
-
-  cspell-grammar@9.2.0:
-    resolution: {integrity: sha512-qthAmWcNHpYAmufy7YWVg9xwrYANkVlI40bgC2uGd8EnKssm/qOPhqXXNS+kLf+q0NmJM5nMgRLhCC23xSp3JA==}
+  cspell-gitignore@9.2.1:
+    resolution: {integrity: sha512-WPnDh03gXZoSqVyXq4L7t9ljx6lTDvkiSRUudb125egEK5e9s04csrQpLI3Yxcnc1wQA2nzDr5rX9XQVvCHf7g==}
     engines: {node: '>=20'}
     hasBin: true
 
-  cspell-io@9.2.0:
-    resolution: {integrity: sha512-oxKiqFLcz629FmOId8UpdDznpMvCgpuktg4nkD2G9pYpRh+fRLZpP4QtZPyvJqvpUIzFhIOznMeHjsiBYHOZUA==}
+  cspell-glob@9.2.1:
+    resolution: {integrity: sha512-CrT/6ld3rXhB36yWFjrx1SrMQzwDrGOLr+wYEnrWI719/LTYWWCiMFW7H+qhsJDTsR+ku8+OAmfRNBDXvh9mnQ==}
     engines: {node: '>=20'}
 
-  cspell-lib@9.2.0:
-    resolution: {integrity: sha512-RnhDIsETw6Ex0UaK3PFoJ2FwWMWfJPtdpNpv1qgmJwoGD4CzwtIqPOLtZ24zqdCP8ZnNTF/lwV/9rZVqifYjsw==}
+  cspell-grammar@9.2.1:
+    resolution: {integrity: sha512-10RGFG7ZTQPdwyW2vJyfmC1t8813y8QYRlVZ8jRHWzer9NV8QWrGnL83F+gTPXiKR/lqiW8WHmFlXR4/YMV+JQ==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  cspell-io@9.2.1:
+    resolution: {integrity: sha512-v9uWXtRzB+RF/Mzg5qMzpb8/yt+1bwtTt2rZftkLDLrx5ybVvy6rhRQK05gFWHmWVtWEe0P/pIxaG2Vz92C8Ag==}
     engines: {node: '>=20'}
 
-  cspell-trie-lib@9.2.0:
-    resolution: {integrity: sha512-6GHL1KvLQzcPBSNY6QWOabq8YwRJAnNKamA0O/tRKy+11Hy99ysD4xvfu3kKYPAcobp5ZykX4nudHxy8yrEvng==}
+  cspell-lib@9.2.1:
+    resolution: {integrity: sha512-KeB6NHcO0g1knWa7sIuDippC3gian0rC48cvO0B0B0QwhOxNxWVp8cSmkycXjk4ijBZNa++IwFjeK/iEqMdahQ==}
     engines: {node: '>=20'}
 
-  cspell@9.2.0:
-    resolution: {integrity: sha512-AKzaFMem2jRcGpAY2spKP0z15jpZeX1WTDNHCDsB8/YvnhnOfWXc0S5AF+4sfU1cQgHWYGFOolMuTri0ZQdV+Q==}
+  cspell-trie-lib@9.2.1:
+    resolution: {integrity: sha512-qOtbL+/tUzGFHH0Uq2wi7sdB9iTy66QNx85P7DKeRdX9ZH53uQd7qC4nEk+/JPclx1EgXX26svxr0jTGISJhLw==}
+    engines: {node: '>=20'}
+
+  cspell@9.2.1:
+    resolution: {integrity: sha512-PoKGKE9Tl87Sn/jwO4jvH7nTqe5Xrsz2DeJT5CkulY7SoL2fmsAqfbImQOFS2S0s36qD98t6VO+Ig2elEEcHew==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -3205,8 +3200,8 @@ packages:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
 
-  import-meta-resolve@4.1.0:
-    resolution: {integrity: sha512-I6fiaX09Xivtk+THaMfAwnA3MVA5Big1WHF1Dfx9hFuvNIWpXnorlkzhcQf6ehrqQiiZECRt1poOAkPmer3ruw==}
+  import-meta-resolve@4.2.0:
+    resolution: {integrity: sha512-Iqv2fzaTQN28s/FwZAoFq0ZSs/7hMAHJVX+w8PZl3cY19Pxk6jFFalxQoIfW2826i/fDLXv8IiEZRIT0lDuWcg==}
 
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
@@ -3985,15 +3980,15 @@ packages:
     peerDependencies:
       typedoc: 0.27.x || 0.28.x
 
-  typedoc@0.28.10:
-    resolution: {integrity: sha512-zYvpjS2bNJ30SoNYfHSRaFpBMZAsL7uwKbWwqoCNFWjcPnI3e/mPLh2SneH9mX7SJxtDpvDgvd9/iZxGbo7daw==}
+  typedoc@0.28.12:
+    resolution: {integrity: sha512-H5ODu4f7N+myG4MfuSp2Vh6wV+WLoZaEYxKPt2y8hmmqNEMVrH69DAjjdmYivF4tP/C2jrIZCZhPalZlTU/ipA==}
     engines: {node: '>= 18', pnpm: '>= 10'}
     hasBin: true
     peerDependencies:
       typescript: 5.0.x || 5.1.x || 5.2.x || 5.3.x || 5.4.x || 5.5.x || 5.6.x || 5.7.x || 5.8.x || 5.9.x
 
-  typescript-eslint@8.40.0:
-    resolution: {integrity: sha512-Xvd2l+ZmFDPEt4oj1QEXzA4A2uUK6opvKu3eGN9aGjB8au02lIVcLyi375w94hHyejTOmzIU77L8ol2sRg9n7Q==}
+  typescript-eslint@8.41.0:
+    resolution: {integrity: sha512-n66rzs5OBXW3SFSnZHr2T685q1i4ODm2nulFJhMZBotaTavsS8TrI3d7bDlRSs9yWo7HmyWrN9qDu14Qv7Y0Dw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
@@ -4196,8 +4191,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@4.1.3:
-    resolution: {integrity: sha512-1neef4bMce1hNTrxvHVKxWjKfGDn0oAli3Wy1Uwb7TRO1+wEwoZUZNP1NXIEESybOBiFnBOhI6a4m6tCLE8dog==}
+  zod@4.1.5:
+    resolution: {integrity: sha512-rcUUZqlLJgBC33IT3PNMgsCq6TzLQEG/Ei/KTCU0PedSWRMAXoOUN+4t/0H+Q8bdnLPdqUYnvboJT0bn/229qg==}
 
 snapshots:
 
@@ -4438,7 +4433,7 @@ snapshots:
   '@commitlint/format@19.8.1':
     dependencies:
       '@commitlint/types': 19.8.1
-      chalk: 5.5.0
+      chalk: 5.6.0
 
   '@commitlint/is-ignored@19.8.1':
     dependencies:
@@ -4458,7 +4453,7 @@ snapshots:
       '@commitlint/execute-rule': 19.8.1
       '@commitlint/resolve-extends': 19.8.1
       '@commitlint/types': 19.8.1
-      chalk: 5.5.0
+      chalk: 5.6.0
       cosmiconfig: 9.0.0(typescript@5.9.2)
       cosmiconfig-typescript-loader: 6.1.0(@types/node@20.19.11)(cosmiconfig@9.0.0(typescript@5.9.2))(typescript@5.9.2)
       lodash.isplainobject: 4.0.6
@@ -4489,7 +4484,7 @@ snapshots:
       '@commitlint/config-validator': 19.8.1
       '@commitlint/types': 19.8.1
       global-directory: 4.0.1
-      import-meta-resolve: 4.1.0
+      import-meta-resolve: 4.2.0
       lodash.mergewith: 4.6.2
       resolve-from: 5.0.0
 
@@ -4509,16 +4504,16 @@ snapshots:
   '@commitlint/types@19.8.1':
     dependencies:
       '@types/conventional-commits-parser': 5.0.1
-      chalk: 5.5.0
+      chalk: 5.6.0
 
-  '@cspell/cspell-bundled-dicts@9.2.0':
+  '@cspell/cspell-bundled-dicts@9.2.1':
     dependencies:
       '@cspell/dict-ada': 4.1.1
       '@cspell/dict-al': 1.1.1
-      '@cspell/dict-aws': 4.0.14
+      '@cspell/dict-aws': 4.0.15
       '@cspell/dict-bash': 4.2.1
-      '@cspell/dict-companies': 3.2.4
-      '@cspell/dict-cpp': 6.0.9
+      '@cspell/dict-companies': 3.2.5
+      '@cspell/dict-cpp': 6.0.12
       '@cspell/dict-cryptocurrencies': 5.0.5
       '@cspell/dict-csharp': 4.0.7
       '@cspell/dict-css': 4.0.18
@@ -4528,9 +4523,9 @@ snapshots:
       '@cspell/dict-docker': 1.1.16
       '@cspell/dict-dotnet': 5.0.10
       '@cspell/dict-elixir': 4.0.8
-      '@cspell/dict-en-common-misspellings': 2.1.3
-      '@cspell/dict-en-gb-mit': 3.1.6
-      '@cspell/dict-en_us': 4.4.16
+      '@cspell/dict-en-common-misspellings': 2.1.5
+      '@cspell/dict-en-gb-mit': 3.1.8
+      '@cspell/dict-en_us': 4.4.18
       '@cspell/dict-filetypes': 3.0.13
       '@cspell/dict-flutter': 1.1.1
       '@cspell/dict-fonts': 4.0.5
@@ -4554,7 +4549,7 @@ snapshots:
       '@cspell/dict-markdown': 2.0.12(@cspell/dict-css@4.0.18)(@cspell/dict-html-symbol-entities@4.0.4)(@cspell/dict-html@4.0.12)(@cspell/dict-typescript@3.2.3)
       '@cspell/dict-monkeyc': 1.0.11
       '@cspell/dict-node': 5.0.8
-      '@cspell/dict-npm': 5.2.14
+      '@cspell/dict-npm': 5.2.15
       '@cspell/dict-php': 4.0.15
       '@cspell/dict-powershell': 5.0.15
       '@cspell/dict-public-licenses': 2.0.15
@@ -4564,7 +4559,7 @@ snapshots:
       '@cspell/dict-rust': 4.0.12
       '@cspell/dict-scala': 5.0.8
       '@cspell/dict-shell': 1.1.1
-      '@cspell/dict-software-terms': 5.1.5
+      '@cspell/dict-software-terms': 5.1.7
       '@cspell/dict-sql': 2.2.1
       '@cspell/dict-svelte': 1.0.7
       '@cspell/dict-swift': 2.0.6
@@ -4572,33 +4567,33 @@ snapshots:
       '@cspell/dict-typescript': 3.2.3
       '@cspell/dict-vue': 3.0.5
 
-  '@cspell/cspell-json-reporter@9.2.0':
+  '@cspell/cspell-json-reporter@9.2.1':
     dependencies:
-      '@cspell/cspell-types': 9.2.0
+      '@cspell/cspell-types': 9.2.1
 
-  '@cspell/cspell-pipe@9.2.0': {}
+  '@cspell/cspell-pipe@9.2.1': {}
 
-  '@cspell/cspell-resolver@9.2.0':
+  '@cspell/cspell-resolver@9.2.1':
     dependencies:
       global-directory: 4.0.1
 
-  '@cspell/cspell-service-bus@9.2.0': {}
+  '@cspell/cspell-service-bus@9.2.1': {}
 
-  '@cspell/cspell-types@9.2.0': {}
+  '@cspell/cspell-types@9.2.1': {}
 
   '@cspell/dict-ada@4.1.1': {}
 
   '@cspell/dict-al@1.1.1': {}
 
-  '@cspell/dict-aws@4.0.14': {}
+  '@cspell/dict-aws@4.0.15': {}
 
   '@cspell/dict-bash@4.2.1':
     dependencies:
       '@cspell/dict-shell': 1.1.1
 
-  '@cspell/dict-companies@3.2.4': {}
+  '@cspell/dict-companies@3.2.5': {}
 
-  '@cspell/dict-cpp@6.0.9': {}
+  '@cspell/dict-cpp@6.0.12': {}
 
   '@cspell/dict-cryptocurrencies@5.0.5': {}
 
@@ -4618,11 +4613,11 @@ snapshots:
 
   '@cspell/dict-elixir@4.0.8': {}
 
-  '@cspell/dict-en-common-misspellings@2.1.3': {}
+  '@cspell/dict-en-common-misspellings@2.1.5': {}
 
-  '@cspell/dict-en-gb-mit@3.1.6': {}
+  '@cspell/dict-en-gb-mit@3.1.8': {}
 
-  '@cspell/dict-en_us@4.4.16': {}
+  '@cspell/dict-en_us@4.4.18': {}
 
   '@cspell/dict-filetypes@3.0.13': {}
 
@@ -4675,7 +4670,7 @@ snapshots:
 
   '@cspell/dict-node@5.0.8': {}
 
-  '@cspell/dict-npm@5.2.14': {}
+  '@cspell/dict-npm@5.2.15': {}
 
   '@cspell/dict-php@4.0.15': {}
 
@@ -4697,7 +4692,7 @@ snapshots:
 
   '@cspell/dict-shell@1.1.1': {}
 
-  '@cspell/dict-software-terms@5.1.5': {}
+  '@cspell/dict-software-terms@5.1.7': {}
 
   '@cspell/dict-sql@2.2.1': {}
 
@@ -4711,21 +4706,21 @@ snapshots:
 
   '@cspell/dict-vue@3.0.5': {}
 
-  '@cspell/dynamic-import@9.2.0':
+  '@cspell/dynamic-import@9.2.1':
     dependencies:
-      '@cspell/url': 9.2.0
-      import-meta-resolve: 4.1.0
+      '@cspell/url': 9.2.1
+      import-meta-resolve: 4.2.0
 
-  '@cspell/filetypes@9.2.0': {}
+  '@cspell/filetypes@9.2.1': {}
 
-  '@cspell/strong-weak-map@9.2.0': {}
+  '@cspell/strong-weak-map@9.2.1': {}
 
-  '@cspell/url@9.2.0': {}
+  '@cspell/url@9.2.1': {}
 
   '@es-joy/jsdoccomment@0.53.0':
     dependencies:
       '@types/estree': 1.0.8
-      '@typescript-eslint/types': 8.40.0
+      '@typescript-eslint/types': 8.41.0
       comment-parser: 1.4.1
       esquery: 1.6.0
       jsdoc-type-pratt-parser: 4.8.0
@@ -4875,12 +4870,12 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@gerrit0/mini-shiki@3.9.2':
+  '@gerrit0/mini-shiki@3.12.0':
     dependencies:
-      '@shikijs/engine-oniguruma': 3.9.2
-      '@shikijs/langs': 3.9.2
-      '@shikijs/themes': 3.9.2
-      '@shikijs/types': 3.9.2
+      '@shikijs/engine-oniguruma': 3.12.1
+      '@shikijs/langs': 3.12.1
+      '@shikijs/themes': 3.12.1
+      '@shikijs/types': 3.12.1
       '@shikijs/vscode-textmate': 10.0.2
 
   '@humanfs/core@0.19.1': {}
@@ -4896,7 +4891,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.6.2(prettier@3.6.2)':
+  '@ianvs/prettier-plugin-sort-imports@4.7.0(prettier@3.6.2)':
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.3
@@ -5046,20 +5041,20 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
-  '@shikijs/engine-oniguruma@3.9.2':
+  '@shikijs/engine-oniguruma@3.12.1':
     dependencies:
-      '@shikijs/types': 3.9.2
+      '@shikijs/types': 3.12.1
       '@shikijs/vscode-textmate': 10.0.2
 
-  '@shikijs/langs@3.9.2':
+  '@shikijs/langs@3.12.1':
     dependencies:
-      '@shikijs/types': 3.9.2
+      '@shikijs/types': 3.12.1
 
-  '@shikijs/themes@3.9.2':
+  '@shikijs/themes@3.12.1':
     dependencies:
-      '@shikijs/types': 3.9.2
+      '@shikijs/types': 3.12.1
 
-  '@shikijs/types@3.9.2':
+  '@shikijs/types@3.12.1':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
@@ -5100,14 +5095,14 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
-  '@typescript-eslint/eslint-plugin@8.40.0(@typescript-eslint/parser@8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
+  '@typescript-eslint/eslint-plugin@8.41.0(@typescript-eslint/parser@8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
-      '@typescript-eslint/parser': 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
-      '@typescript-eslint/scope-manager': 8.40.0
-      '@typescript-eslint/type-utils': 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
-      '@typescript-eslint/utils': 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
-      '@typescript-eslint/visitor-keys': 8.40.0
+      '@typescript-eslint/parser': 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/scope-manager': 8.41.0
+      '@typescript-eslint/type-utils': 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/utils': 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/visitor-keys': 8.41.0
       eslint: 9.34.0(jiti@2.5.1)
       graphemer: 1.4.0
       ignore: 7.0.5
@@ -5117,41 +5112,41 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
+  '@typescript-eslint/parser@8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
     dependencies:
-      '@typescript-eslint/scope-manager': 8.40.0
-      '@typescript-eslint/types': 8.40.0
-      '@typescript-eslint/typescript-estree': 8.40.0(typescript@5.9.2)
-      '@typescript-eslint/visitor-keys': 8.40.0
+      '@typescript-eslint/scope-manager': 8.41.0
+      '@typescript-eslint/types': 8.41.0
+      '@typescript-eslint/typescript-estree': 8.41.0(typescript@5.9.2)
+      '@typescript-eslint/visitor-keys': 8.41.0
       debug: 4.4.1
       eslint: 9.34.0(jiti@2.5.1)
       typescript: 5.9.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.40.0(typescript@5.9.2)':
+  '@typescript-eslint/project-service@8.41.0(typescript@5.9.2)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.40.0(typescript@5.9.2)
-      '@typescript-eslint/types': 8.40.0
+      '@typescript-eslint/tsconfig-utils': 8.41.0(typescript@5.9.2)
+      '@typescript-eslint/types': 8.41.0
       debug: 4.4.1
       typescript: 5.9.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/scope-manager@8.40.0':
+  '@typescript-eslint/scope-manager@8.41.0':
     dependencies:
-      '@typescript-eslint/types': 8.40.0
-      '@typescript-eslint/visitor-keys': 8.40.0
+      '@typescript-eslint/types': 8.41.0
+      '@typescript-eslint/visitor-keys': 8.41.0
 
-  '@typescript-eslint/tsconfig-utils@8.40.0(typescript@5.9.2)':
+  '@typescript-eslint/tsconfig-utils@8.41.0(typescript@5.9.2)':
     dependencies:
       typescript: 5.9.2
 
-  '@typescript-eslint/type-utils@8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
+  '@typescript-eslint/type-utils@8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
     dependencies:
-      '@typescript-eslint/types': 8.40.0
-      '@typescript-eslint/typescript-estree': 8.40.0(typescript@5.9.2)
-      '@typescript-eslint/utils': 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/types': 8.41.0
+      '@typescript-eslint/typescript-estree': 8.41.0(typescript@5.9.2)
+      '@typescript-eslint/utils': 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
       debug: 4.4.1
       eslint: 9.34.0(jiti@2.5.1)
       ts-api-utils: 2.1.0(typescript@5.9.2)
@@ -5159,14 +5154,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/types@8.40.0': {}
+  '@typescript-eslint/types@8.41.0': {}
 
-  '@typescript-eslint/typescript-estree@8.40.0(typescript@5.9.2)':
+  '@typescript-eslint/typescript-estree@8.41.0(typescript@5.9.2)':
     dependencies:
-      '@typescript-eslint/project-service': 8.40.0(typescript@5.9.2)
-      '@typescript-eslint/tsconfig-utils': 8.40.0(typescript@5.9.2)
-      '@typescript-eslint/types': 8.40.0
-      '@typescript-eslint/visitor-keys': 8.40.0
+      '@typescript-eslint/project-service': 8.41.0(typescript@5.9.2)
+      '@typescript-eslint/tsconfig-utils': 8.41.0(typescript@5.9.2)
+      '@typescript-eslint/types': 8.41.0
+      '@typescript-eslint/visitor-keys': 8.41.0
       debug: 4.4.1
       fast-glob: 3.3.3
       is-glob: 4.0.3
@@ -5177,20 +5172,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
+  '@typescript-eslint/utils@8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)':
     dependencies:
       '@eslint-community/eslint-utils': 4.7.0(eslint@9.34.0(jiti@2.5.1))
-      '@typescript-eslint/scope-manager': 8.40.0
-      '@typescript-eslint/types': 8.40.0
-      '@typescript-eslint/typescript-estree': 8.40.0(typescript@5.9.2)
+      '@typescript-eslint/scope-manager': 8.41.0
+      '@typescript-eslint/types': 8.41.0
+      '@typescript-eslint/typescript-estree': 8.41.0(typescript@5.9.2)
       eslint: 9.34.0(jiti@2.5.1)
       typescript: 5.9.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/visitor-keys@8.40.0':
+  '@typescript-eslint/visitor-keys@8.41.0':
     dependencies:
-      '@typescript-eslint/types': 8.40.0
+      '@typescript-eslint/types': 8.41.0
       eslint-visitor-keys: 4.2.1
 
   '@vitest/coverage-v8@3.2.4(vitest@3.2.4)':
@@ -5379,14 +5374,14 @@ snapshots:
 
   chalk-template@1.1.0:
     dependencies:
-      chalk: 5.5.0
+      chalk: 5.6.0
 
   chalk@4.1.2:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chalk@5.5.0: {}
+  chalk@5.6.0: {}
 
   change-case@5.4.4: {}
 
@@ -5493,59 +5488,59 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  cspell-config-lib@9.2.0:
+  cspell-config-lib@9.2.1:
     dependencies:
-      '@cspell/cspell-types': 9.2.0
+      '@cspell/cspell-types': 9.2.1
       comment-json: 4.2.5
       smol-toml: 1.4.2
       yaml: 2.8.1
 
-  cspell-dictionary@9.2.0:
+  cspell-dictionary@9.2.1:
     dependencies:
-      '@cspell/cspell-pipe': 9.2.0
-      '@cspell/cspell-types': 9.2.0
-      cspell-trie-lib: 9.2.0
+      '@cspell/cspell-pipe': 9.2.1
+      '@cspell/cspell-types': 9.2.1
+      cspell-trie-lib: 9.2.1
       fast-equals: 5.2.2
 
-  cspell-gitignore@9.2.0:
+  cspell-gitignore@9.2.1:
     dependencies:
-      '@cspell/url': 9.2.0
-      cspell-glob: 9.2.0
-      cspell-io: 9.2.0
+      '@cspell/url': 9.2.1
+      cspell-glob: 9.2.1
+      cspell-io: 9.2.1
 
-  cspell-glob@9.2.0:
+  cspell-glob@9.2.1:
     dependencies:
-      '@cspell/url': 9.2.0
+      '@cspell/url': 9.2.1
       picomatch: 4.0.3
 
-  cspell-grammar@9.2.0:
+  cspell-grammar@9.2.1:
     dependencies:
-      '@cspell/cspell-pipe': 9.2.0
-      '@cspell/cspell-types': 9.2.0
+      '@cspell/cspell-pipe': 9.2.1
+      '@cspell/cspell-types': 9.2.1
 
-  cspell-io@9.2.0:
+  cspell-io@9.2.1:
     dependencies:
-      '@cspell/cspell-service-bus': 9.2.0
-      '@cspell/url': 9.2.0
+      '@cspell/cspell-service-bus': 9.2.1
+      '@cspell/url': 9.2.1
 
-  cspell-lib@9.2.0:
+  cspell-lib@9.2.1:
     dependencies:
-      '@cspell/cspell-bundled-dicts': 9.2.0
-      '@cspell/cspell-pipe': 9.2.0
-      '@cspell/cspell-resolver': 9.2.0
-      '@cspell/cspell-types': 9.2.0
-      '@cspell/dynamic-import': 9.2.0
-      '@cspell/filetypes': 9.2.0
-      '@cspell/strong-weak-map': 9.2.0
-      '@cspell/url': 9.2.0
+      '@cspell/cspell-bundled-dicts': 9.2.1
+      '@cspell/cspell-pipe': 9.2.1
+      '@cspell/cspell-resolver': 9.2.1
+      '@cspell/cspell-types': 9.2.1
+      '@cspell/dynamic-import': 9.2.1
+      '@cspell/filetypes': 9.2.1
+      '@cspell/strong-weak-map': 9.2.1
+      '@cspell/url': 9.2.1
       clear-module: 4.1.2
       comment-json: 4.2.5
-      cspell-config-lib: 9.2.0
-      cspell-dictionary: 9.2.0
-      cspell-glob: 9.2.0
-      cspell-grammar: 9.2.0
-      cspell-io: 9.2.0
-      cspell-trie-lib: 9.2.0
+      cspell-config-lib: 9.2.1
+      cspell-dictionary: 9.2.1
+      cspell-glob: 9.2.1
+      cspell-grammar: 9.2.1
+      cspell-io: 9.2.1
+      cspell-trie-lib: 9.2.1
       env-paths: 3.0.0
       fast-equals: 5.2.2
       gensequence: 7.0.0
@@ -5555,28 +5550,28 @@ snapshots:
       vscode-uri: 3.1.0
       xdg-basedir: 5.1.0
 
-  cspell-trie-lib@9.2.0:
+  cspell-trie-lib@9.2.1:
     dependencies:
-      '@cspell/cspell-pipe': 9.2.0
-      '@cspell/cspell-types': 9.2.0
+      '@cspell/cspell-pipe': 9.2.1
+      '@cspell/cspell-types': 9.2.1
       gensequence: 7.0.0
 
-  cspell@9.2.0:
+  cspell@9.2.1:
     dependencies:
-      '@cspell/cspell-json-reporter': 9.2.0
-      '@cspell/cspell-pipe': 9.2.0
-      '@cspell/cspell-types': 9.2.0
-      '@cspell/dynamic-import': 9.2.0
-      '@cspell/url': 9.2.0
-      chalk: 5.5.0
+      '@cspell/cspell-json-reporter': 9.2.1
+      '@cspell/cspell-pipe': 9.2.1
+      '@cspell/cspell-types': 9.2.1
+      '@cspell/dynamic-import': 9.2.1
+      '@cspell/url': 9.2.1
+      chalk: 5.6.0
       chalk-template: 1.1.0
       commander: 14.0.0
-      cspell-config-lib: 9.2.0
-      cspell-dictionary: 9.2.0
-      cspell-gitignore: 9.2.0
-      cspell-glob: 9.2.0
-      cspell-io: 9.2.0
-      cspell-lib: 9.2.0
+      cspell-config-lib: 9.2.1
+      cspell-dictionary: 9.2.1
+      cspell-gitignore: 9.2.1
+      cspell-glob: 9.2.1
+      cspell-io: 9.2.1
+      cspell-lib: 9.2.1
       fast-json-stable-stringify: 2.1.0
       flatted: 3.3.3
       semver: 7.7.2
@@ -6045,7 +6040,7 @@ snapshots:
       parent-module: 1.0.1
       resolve-from: 4.0.0
 
-  import-meta-resolve@4.1.0: {}
+  import-meta-resolve@4.2.0: {}
 
   imurmurhash@0.1.4: {}
 
@@ -6691,29 +6686,29 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  typedoc-github-theme@0.3.1(typedoc@0.28.10(typescript@5.9.2)):
+  typedoc-github-theme@0.3.1(typedoc@0.28.12(typescript@5.9.2)):
     dependencies:
-      typedoc: 0.28.10(typescript@5.9.2)
+      typedoc: 0.28.12(typescript@5.9.2)
 
-  typedoc-plugin-mdn-links@5.0.9(typedoc@0.28.10(typescript@5.9.2)):
+  typedoc-plugin-mdn-links@5.0.9(typedoc@0.28.12(typescript@5.9.2)):
     dependencies:
-      typedoc: 0.28.10(typescript@5.9.2)
+      typedoc: 0.28.12(typescript@5.9.2)
 
-  typedoc@0.28.10(typescript@5.9.2):
+  typedoc@0.28.12(typescript@5.9.2):
     dependencies:
-      '@gerrit0/mini-shiki': 3.9.2
+      '@gerrit0/mini-shiki': 3.12.0
       lunr: 2.3.9
       markdown-it: 14.1.0
       minimatch: 9.0.5
       typescript: 5.9.2
       yaml: 2.8.1
 
-  typescript-eslint@8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2):
+  typescript-eslint@8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 8.40.0(@typescript-eslint/parser@8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
-      '@typescript-eslint/parser': 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
-      '@typescript-eslint/typescript-estree': 8.40.0(typescript@5.9.2)
-      '@typescript-eslint/utils': 8.40.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/eslint-plugin': 8.41.0(@typescript-eslint/parser@8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/parser': 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
+      '@typescript-eslint/typescript-estree': 8.41.0(typescript@5.9.2)
+      '@typescript-eslint/utils': 8.41.0(eslint@9.34.0(jiti@2.5.1))(typescript@5.9.2)
       eslint: 9.34.0(jiti@2.5.1)
       typescript: 5.9.2
     transitivePeerDependencies:
@@ -6884,8 +6879,8 @@ snapshots:
 
   yoctocolors@2.1.2: {}
 
-  zod-validation-error@4.0.1(zod@4.1.3):
+  zod-validation-error@4.0.1(zod@4.1.5):
     dependencies:
-      zod: 4.1.3
+      zod: 4.1.5
 
-  zod@4.1.3: {}
+  zod@4.1.5: {}

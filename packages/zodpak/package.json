@@ -33,24 +33,24 @@
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "zod": "catalog:packages",
-    "zod-validation-error": "catalog:packages"
+    "zod": "catalog:",
+    "zod-validation-error": "catalog:"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "catalog:core",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:",
     "@simbo/eslint-config": "workspace:*",
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "catalog:core",
-    "@vitest/coverage-v8": "catalog:core",
-    "@vitest/ui": "catalog:core",
-    "eslint": "catalog:core",
-    "jiti": "catalog:core",
-    "prettier": "catalog:core",
-    "prettier-plugin-organize-attributes": "catalog:core",
-    "typescript": "catalog:core",
-    "vitest": "catalog:core",
-    "zod": "catalog:packages",
-    "zod-validation-error": "catalog:packages"
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "eslint": "catalog:",
+    "jiti": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-organize-attributes": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:",
+    "zod-validation-error": "catalog:"
   }
 }

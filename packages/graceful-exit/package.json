@@ -51,21 +51,21 @@
     "@simbo/cli-output": "workspace:*",
     "@simbo/stringify-error": "workspace:*",
     "@simbo/user-facing-error": "workspace:*",
-    "yoctocolors": "catalog:packages"
+    "yoctocolors": "catalog:"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "catalog:core",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:",
     "@simbo/eslint-config": "workspace:*",
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "catalog:core",
-    "@vitest/coverage-v8": "catalog:core",
-    "@vitest/ui": "catalog:core",
-    "eslint": "catalog:core",
-    "jiti": "catalog:core",
-    "prettier": "catalog:core",
-    "prettier-plugin-organize-attributes": "catalog:core",
-    "typescript": "catalog:core",
-    "vitest": "catalog:core"
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "eslint": "catalog:",
+    "jiti": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-organize-attributes": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

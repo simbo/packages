@@ -62,28 +62,28 @@
     "eslint": "^9"
   },
   "dependencies": {
-    "@eslint/config-helpers": "catalog:packages",
-    "@eslint/js": "catalog:packages",
-    "eslint-config-prettier": "catalog:packages",
-    "eslint-plugin-jsdoc": "catalog:packages",
-    "eslint-plugin-n": "catalog:packages",
-    "eslint-plugin-unicorn": "catalog:packages",
-    "globals": "catalog:packages",
-    "typescript-eslint": "catalog:packages"
+    "@eslint/config-helpers": "catalog:",
+    "@eslint/js": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-jsdoc": "catalog:",
+    "eslint-plugin-n": "catalog:",
+    "eslint-plugin-unicorn": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:"
   },
   "devDependencies": {
-    "@eslint/config-inspector": "catalog:packages",
-    "@ianvs/prettier-plugin-sort-imports": "catalog:core",
+    "@eslint/config-inspector": "catalog:",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:",
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "catalog:core",
-    "@vitest/coverage-v8": "catalog:core",
-    "@vitest/ui": "catalog:core",
-    "eslint": "catalog:core",
-    "jiti": "catalog:core",
-    "prettier": "catalog:core",
-    "prettier-plugin-organize-attributes": "catalog:core",
-    "typescript": "catalog:core",
-    "vitest": "catalog:core"
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "eslint": "catalog:",
+    "jiti": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-organize-attributes": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

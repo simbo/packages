@@ -44,8 +44,8 @@
     "typescript": "^5"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "catalog:core",
-    "@vitest/ui": "catalog:core",
-    "vitest": "catalog:core"
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "vitest": "catalog:"
   }
 }
