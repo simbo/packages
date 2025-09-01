@@ -32,6 +32,11 @@ Install `@simbo/monorepo-utils` from the npm registry:
 npm i [-D] @simbo/monorepo-utils
 ```
 
+## Related Packages
+
+- [`@simbo/monorepo-packages-list`](https://npmjs.com/package/@simbo/monorepo-packages-list)
+- [`@simbo/monorepo-packages-list-cli`](https://npmjs.com/package/@simbo/monorepo-packages-list-cli)
+
 ## Usage
 
 For a complete API reference, see the

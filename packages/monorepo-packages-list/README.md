@@ -9,6 +9,10 @@ It works with [npm](https://docs.npmjs.com/cli/v11/using-npm/workspaces) and
 [pnpm](https://pnpm.io/) workspaces and is built on top of
 [`@simbo/monorepo-utils`](https://npmjs.com/package/@simbo/monorepo-utils).
 
+See
+[@simbo/monorepo-packages-list-cli](https://npmjs.com/package/@simbo/monorepo-packages-list-cli)
+for the corresponding CLI.
+
 ## Features
 
 - Collects workspace metadata from npm or pnpm monorepos
@@ -128,6 +132,11 @@ There are currently _**2**_ packages managed in this repository:
     [CHANGELOG.md](https://github.com/user/repo/blob/main/packages/pkg-b/CHANGELOG.md)  • 
     [Documentation](https://user.github.io/repo/modules/_scope_pkg-b)
 ```
+
+## Related Packages
+
+- [`@simbo/monorepo-packages-list-cli`](https://npmjs.com/package/@simbo/monorepo-packages-list-cli)
+- [`@simbo/monorepo-utils`](https://npmjs.com/package/@simbo/monorepo-utils)
 
 ## License
 
