@@ -1,6 +1,6 @@
 # 📦 Simbo's Packages
 
-> A monorepo for my packages.
+> A monorepo for my npm packages.
 
 ## Packages
 
