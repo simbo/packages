@@ -2,8 +2,7 @@ name: Release
 
 on:
   repository_dispatch:
-    types:
-      - trigger-release-workflow
+    types: [release-changes]
 
 run-name: |
   ${{ format('[{0}] {1}', github.workflow, github.event.client_payload.ref || github.ref_name) }}
@@ -81,7 +80,8 @@ jobs:
             exit 1
           fi
 
-          # Output the packages
+          # Print and output the packages
+          echo "packages=${packages[*]}"
           echo "packages=${packages[*]}" >> $GITHUB_OUTPUT
 
       - name: 📝 Update Packages List Docs
@@ -115,15 +115,9 @@ jobs:
             git push origin "$tag" --no-verify
           done
 
-      - name: 🚀 Trigger Docs Publishing
-        run: |
-          set -euo pipefail
-
-          # Send a 'trigger-docs-publishing' as repository_dispatch event to the same repo
-          curl -sS -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-            -H "Content-Type: application/json" \
-            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
-            -d "$(jq -n --arg ref "${{ github.event.client_payload.ref || github.ref_name }}" \
-                '{event_type:"trigger-docs-publishing", client_payload:{ref:$ref}}')"
+      - name: 🎉 Changes Released (Event)
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: changes-released
+          token: ${{ secrets.GH_PAT }}
+          client-payload: '{"ref": "${{ github.event.client_payload.ref || github.ref_name }}"}'

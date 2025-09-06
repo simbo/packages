@@ -143,7 +143,7 @@ flowchart LR
     Checks["Run all Checks and Tests"]
     ChecksPassed{"All<br>Passed?"}
     Changesets{"Changesets<br>Present?"}
-    ReleaseEventDispatch["Dispatch<br>🎉 Release Event"]
+    ReleaseEventDispatch["Dispatch<br>🎉 Release Changes"]
 
     direction TB
     PushToMain --> Checks
@@ -153,7 +153,7 @@ flowchart LR
   end
 
   subgraph ReleaseWorkflow["<code>.github/workflows/release.yml</code>"]
-    ReleaseEvent@{ shape: rounded, label: "🎉 Release Event" }
+    ReleaseEvent@{ shape: rounded, label: "🎉 Release Changes" }
     IntegrateChangesets["Integrate Changesets"]
     IncrementVersions["Increment Versions"]
     CollectPackages["Collect affected Packages<br><small>(Direct and Transitive)</small>"]

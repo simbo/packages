@@ -1,20 +1,20 @@
 name: Publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      workspace:
-        description: 'Workspace folder (e.g. prettier-config)'
-        type: string
-        required: true
-      version:
-        description: 'Version (e.g. 1.2.3)'
-        type: string
-        required: true
   push:
     tags:
       - '*/v*.*.*'
       - '!changelog/v*'
+  workflow_dispatch:
+    inputs:
+      workspace:
+        description: 'Workspace folder (e.g. "my-pkg")'
+        type: string
+        required: true
+      version:
+        description: 'Version (e.g. "1.2.3")'
+        type: string
+        required: true
 
 run-name: |
   ${{ format('[{0}] {1}', github.workflow, github.event_name == 'push' && github.ref_name || github.event_name == 'workflow_dispatch' && format('{0}/v{1}', github.event.inputs.workspace, github.event.inputs.version) || github.ref_name) }}
@@ -55,26 +55,18 @@ jobs:
           fi
 
           # Fail if no parameters are set
-          if [[ -z "$workspace" ]]; then
-            echo "::error title=Missing Workspace::Workspace must be set."
-            exit 1
-          fi
-          if [[ -z "$version" ]]; then
-            echo "::error title=Missing Version::Version must be set."
-            exit 1
-          fi
-          if [[ -z "$tag" ]]; then
-            echo "::error title=Missing Tag::Tag must be set."
-            exit 1
-          fi
+          for var in workspace version tag; do
+            if [[ -z "${!var}" ]]; then
+              echo "::error title=Missing ${var^}::${var^} must be set."
+              exit 1
+            fi
+          done
 
           # Print and output params
-          echo "workspace=$workspace"
-          echo "workspace=${workspace}" >> $GITHUB_OUTPUT
-          echo "version=$version"
-          echo "version=${version}" >> $GITHUB_OUTPUT
-          echo "tag=$tag"
-          echo "tag=${tag}" >> $GITHUB_OUTPUT
+          for var in workspace version tag; do
+            echo "$var=${!var}"
+            echo "$var=${!var}" >> $GITHUB_OUTPUT
+          done
 
       - name: 🛎️ Checkout
         uses: actions/checkout@v4
@@ -104,7 +96,9 @@ jobs:
           packageName=$(jq -r '.name' "packages/${{ steps.params.outputs.workspace }}/package.json")
           packagePrivate=$(jq -r '.private // false' "packages/${{ steps.params.outputs.workspace }}/package.json")
 
+          echo "name=${packageName}"
           echo "name=${packageName}" >> $GITHUB_OUTPUT
+          echo "private=${packagePrivate}"
           echo "private=${packagePrivate}" >> $GITHUB_OUTPUT
 
       - name: 🧾 Get Release Date and Description
@@ -139,8 +133,10 @@ jobs:
             exit 1
           fi
 
-          # Output date and description
+          # Print and output date and description
+          echo "date=${releaseDate}"
           echo "date=${releaseDate}" >> $GITHUB_OUTPUT
+          echo "description=${description}"
           {
             echo "description<<EOF"
             echo "$description"

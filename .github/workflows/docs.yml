@@ -2,8 +2,7 @@ name: Docs
 
 on:
   repository_dispatch:
-    types:
-      - trigger-docs-publishing
+    types: [changes-released]
 
 run-name: |
   ${{ format('[{0}] {1}', github.workflow, github.event.client_payload.ref || github.ref_name) }}
