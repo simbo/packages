@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.4.6
+
+### Patch Changes
+
+- 7540366: improve dispatch events and outputs handling
+
 ## 1.4.5
 
 ### Patch Changes
