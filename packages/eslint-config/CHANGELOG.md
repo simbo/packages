@@ -1,5 +1,11 @@
 # @simbo/eslint-config
 
+## 1.1.1
+
+### Patch Changes
+
+- ad6370a: fix jsdoc config for vue files
+
 ## 1.1.0
 
 ### Minor Changes
