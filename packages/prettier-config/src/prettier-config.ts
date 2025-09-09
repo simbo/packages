@@ -31,7 +31,7 @@ export const config: Config = {
       },
     },
     {
-      files: ['*.html', '*.vue'],
+      files: ['*.html'],
       options: {
         plugins: ['prettier-plugin-organize-attributes'],
         ...sortAttributesOptions,
