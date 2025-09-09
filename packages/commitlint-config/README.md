@@ -27,6 +27,26 @@ extends:
   - '@simbo/commitlint-config'
 ```
 
+### Setup Git Hooks for Commitlint with Husky
+
+- Install [husky](https://npmjs.com/package/husky):
+
+  ```bash
+  npm i -D husky
+  ```
+
+- Add `husky` command to your `package.json` scripts:
+
+  ```json
+      "prepare": "husky",
+  ```
+
+- Create `.husky/pre-commit`:
+
+  ```bash
+  ./node_modules/.bin/commitlint --edit $1
+  ```
+
 ## License
 
 [MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
