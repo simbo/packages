@@ -1,5 +1,11 @@
 # @simbo/commitlint-config
 
+## 1.0.5
+
+### Patch Changes
+
+- 1b44321: add git hooks setup to readme
+
 ## 1.0.4
 
 ### Patch Changes

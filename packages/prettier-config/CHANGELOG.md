@@ -1,5 +1,11 @@
 # @simbo/prettier-config
 
+## 1.0.6
+
+### Patch Changes
+
+- 8afb7d1: add package scripts to readme
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @simbo/cspell-config
 
+## 1.3.0
+
+### Minor Changes
+
+- 65efab1: add words "Tauri" and "unpushed"
+
+### Patch Changes
+
+- e6ee8cc: add package scripts to readme
+
 ## 1.2.0
 
 ### Minor Changes
