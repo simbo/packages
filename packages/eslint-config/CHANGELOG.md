@@ -1,5 +1,11 @@
 # @simbo/eslint-config
 
+## 1.1.0
+
+### Minor Changes
+
+- d63b895: re-export parser from typescript-eslint
+
 ## 1.0.4
 
 ### Patch Changes
