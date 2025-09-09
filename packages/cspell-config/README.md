@@ -23,6 +23,12 @@ For example, a `.cspell.yml`:
 import: '@simbo/cspell-config'
 ```
 
+Add `cspell` command to your `package.json` scripts:
+
+```json
+    "check:spelling": "cspell",
+```
+
 ## License
 
 [MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
