@@ -20,7 +20,7 @@ Create a [Prettier configuration file](https://prettier.io/docs/configuration)
 in the root of your project.
 
 ```bash
-echo "@simbo/prettier-config" > .prettierrc
+echo '"@simbo/prettier-config"' > .prettierrc
 ```
 
 And your done. 🍻
