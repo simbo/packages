@@ -23,6 +23,13 @@ in the root of your project.
 echo '"@simbo/prettier-config"' > .prettierrc
 ```
 
+Add `prettier` commands to your `package.json` scripts:
+
+```json
+    "check:format": "prettier --check .",
+    "fix:format": "prettier --write .",
+```
+
 And your done. 🍻
 
 ### Example `.prettierrc`
