@@ -29,7 +29,7 @@ const recommended = defineConfig(
     rules,
   },
   {
-    files: ['**/*.+(js|jsx|mjs|cjs|vue)'],
+    files: ['**/*.+(js|jsx|mjs|cjs)'],
     extends: [eslintPluginJsdoc.configs['flat/recommended-error'], eslintPluginJsdoc.configs['flat/recommended-error']],
     rules,
   },
