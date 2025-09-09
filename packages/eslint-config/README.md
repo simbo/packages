@@ -152,6 +152,10 @@ Utilities can be imported from either `@simbo/eslint-config` or
 
   Re-export from [`globals`].
 
+- **`parser`**
+
+  Re-exports from [`@typescript-eslint/parser`].
+
 ## Examples
 
 ### Node.js Project
@@ -263,6 +267,8 @@ export default defineConfig([
 [`@eslint/config-helpers`]: https://npmjs.com/package/@eslint/config-helpers
 [`@eslint/config-inspector`]: https://npmjs.com/package/@eslint/config-inspector
 [`typescript-eslint`]: https://npmjs.com/package/typescript-eslint
+[`@typescript-eslint/parser`]:
+  https://npmjs.com/package/@typescript-eslint/parser
 [`eslint-plugin-unicorn`]: https://npmjs.com/package/eslint-plugin-unicorn
 [`eslint-plugin-n`]: https://npmjs.com/package/eslint-plugin-n
 [`eslint-plugin-jsdoc`]: https://npmjs.com/package/eslint-plugin-jsdoc
