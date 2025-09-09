@@ -3,5 +3,7 @@ Lepel
 Simbo
 Simbos
 stringifying
+Tauri
 Turborepo
 Zodpak
+unpushed
