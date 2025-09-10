@@ -1,5 +1,11 @@
 # @simbo/cspell-config
 
+## 1.4.0
+
+### Minor Changes
+
+- 9834c67: add "DMG" to dictionary
+
 ## 1.3.0
 
 ### Minor Changes

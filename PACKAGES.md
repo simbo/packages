@@ -106,7 +106,7 @@ There are currently _**27**_ packages managed in this repository:
 
   📦
   [`@simbo/cspell-config`](https://www.npmjs.com/package/@simbo/cspell-config) @
-  `1.3.0`
+  `1.4.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/cspell-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/cspell-config/CHANGELOG.md)  • 
