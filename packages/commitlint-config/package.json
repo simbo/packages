@@ -45,7 +45,7 @@
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "@commitlint/cli": "^19"
+    "@commitlint/cli": "catalog:"
   },
   "dependencies": {
     "@commitlint/config-conventional": "catalog:"
