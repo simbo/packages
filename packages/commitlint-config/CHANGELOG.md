@@ -1,5 +1,11 @@
 # @simbo/commitlint-config
 
+## 1.0.6
+
+### Patch Changes
+
+- 6457f71: upgrade dependencies
+
 ## 1.0.5
 
 ### Patch Changes

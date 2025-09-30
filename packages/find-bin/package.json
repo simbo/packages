@@ -1,7 +1,7 @@
 {
   "name": "@simbo/find-bin",
   "description": "A lightweight utility to locate the executable path of a command.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "find",
     "bin",

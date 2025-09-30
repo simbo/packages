@@ -1,5 +1,15 @@
 # @simbo/eslint-config
 
+## 2.0.0
+
+### Major Changes
+
+- 6457f71: remove re-exports of `defineConfig()` and `globalIgnores()`
+
+### Patch Changes
+
+- 6457f71: upgrade dependencies
+
 ## 1.1.1
 
 ### Patch Changes

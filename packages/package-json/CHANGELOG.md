@@ -1,5 +1,12 @@
 # @simbo/package-json
 
+## 0.1.3
+
+### Patch Changes
+
+- 6457f71: upgrade dependencies
+  - @simbo/stringify-error@1.0.2
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @simbo/clirk
 
+## 1.1.2
+
+### Patch Changes
+
+- 6457f71: upgrade dependencies
+- Updated dependencies [6457f71]
+  - @simbo/find-up-package@1.0.3
+  - @simbo/zodpak@0.1.2
+  - @simbo/cli-output@1.0.1
+  - @simbo/graceful-exit@1.1.0
+  - @simbo/plural@1.0.1
+  - @simbo/stringify-error@1.0.2
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @simbo/call-prettier
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [6457f71]
+  - @simbo/find-bin@1.0.2
+  - @simbo/accessible@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes

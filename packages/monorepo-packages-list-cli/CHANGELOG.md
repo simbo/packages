@@ -1,5 +1,23 @@
 # @simbo/monorepo-packages-list-cli
 
+## 1.0.2
+
+### Patch Changes
+
+- 6457f71: fix arguments schema
+- 6457f71: upgrade dependencies
+- Updated dependencies [6457f71]
+  - @simbo/clirk@1.1.2
+  - @simbo/find-git-repository-root@1.0.2
+  - @simbo/monorepo-packages-list@1.1.2
+  - @simbo/monorepo-utils@1.0.3
+  - @simbo/zodpak@0.1.2
+  - @simbo/accessible@1.0.1
+  - @simbo/call-prettier@1.0.2
+  - @simbo/cli-output@1.0.1
+  - @simbo/inject-between-html-comments@1.0.2
+  - @simbo/user-facing-error@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @simbo/find-bin
 
+## 1.0.2
+
+### Patch Changes
+
+- 6457f71: upgrade dependencies
+  - @simbo/accessible@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes

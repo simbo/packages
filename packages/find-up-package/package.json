@@ -1,7 +1,7 @@
 {
   "name": "@simbo/find-up-package",
   "description": "A utility for finding an npm package in the directory hierarchy that matches specific criteria.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "find-up",
     "package",

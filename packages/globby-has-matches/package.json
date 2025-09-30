@@ -1,7 +1,7 @@
 {
   "name": "@simbo/globby-has-matches",
   "description": "A utility to glob using globby and exit early if there are any findings.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "globby",
     "glob",

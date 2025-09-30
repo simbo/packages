@@ -1,5 +1,13 @@
 # @simbos-packages/changelog
 
+## 1.4.7
+
+### Patch Changes
+
+- 6457f71: update all eslint configs regarding changed exports for defineConfig
+  and globalIgnores
+- 6457f71: upgrade dependencies
+
 ## 1.4.6
 
 ### Patch Changes
