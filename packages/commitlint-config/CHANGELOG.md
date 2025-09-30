@@ -1,5 +1,11 @@
 # @simbo/commitlint-config
 
+## 1.0.7
+
+### Patch Changes
+
+- 2c35936: bind commitlint cli peer dependency to catalog version
+
 ## 1.0.6
 
 ### Patch Changes
