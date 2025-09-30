@@ -1,4 +1,6 @@
-import { configs, defineConfig, globals } from '../src/index.js';
+import { defineConfig } from 'eslint/config';
+
+import { configs, globals } from '../src/index.js';
 
 export default defineConfig({
   languageOptions: {

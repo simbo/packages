@@ -1,4 +1,5 @@
-import { configs, defineConfig, globalIgnores, globals } from '@simbo/eslint-config';
+import { configs, globals } from '@simbo/eslint-config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   globalIgnores(['dist/', 'coverage/']),

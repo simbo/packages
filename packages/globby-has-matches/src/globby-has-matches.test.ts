@@ -1,3 +1,4 @@
+import type { GlobbyStream } from 'globby';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { globbyHasMatches } from './globby-has-matches.js';
@@ -8,14 +9,14 @@ vi.mock('globby', () => ({
 
 const { globbyStream } = vi.mocked(await import('globby'));
 
-const createMockStream = (values: unknown[]): NodeJS.ReadableStream =>
+const createMockStream = (values: unknown[]): GlobbyStream =>
   ({
     *[Symbol.asyncIterator]() {
       for (const value of values) {
         yield value;
       }
     },
-  }) as unknown as NodeJS.ReadableStream;
+  }) as unknown as GlobbyStream;
 
 describe('globbyHasMatches', () => {
   beforeEach(() => {

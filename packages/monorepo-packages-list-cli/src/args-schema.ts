@@ -10,8 +10,7 @@ const argsSchema = z
      */
     config: nonEmptyStringOrArrayOfStringsSchema
       .optional()
-      .transform(value => (Array.isArray(value) ? value[0] : value))
-      .default(undefined),
+      .transform(value => (Array.isArray(value) ? value[0] : value)),
 
     /**
      * One or more target files to inject the content into.

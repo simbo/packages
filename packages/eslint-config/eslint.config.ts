@@ -1,4 +1,6 @@
-import { configs, defineConfig, globalIgnores, globals } from './src/index.js';
+import { defineConfig, globalIgnores } from 'eslint/config';
+
+import { configs, globals } from './src/index.js';
 
 export default defineConfig([
   globalIgnores(['dist/', 'coverage/']),

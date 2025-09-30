@@ -10,7 +10,6 @@ with utilities for configuration customization.
 This package includes a curated set of ESLint-related dependencies:
 
 - [`@eslint/js`]
-- [`@eslint/config-helpers`]
 - [`typescript-eslint`]
 - [`eslint-plugin-unicorn`]
 - [`eslint-plugin-n`]
@@ -144,10 +143,6 @@ Utilities can be imported from either `@simbo/eslint-config` or
   use of all global variables in a specific context, with an optional
   allow-list.
 
-- **`defineConfig`** and **`globalIgnores`**
-
-  Re-exports from [`@eslint/config-helpers`].
-
 - **`globals`**
 
   Re-export from [`globals`].
@@ -164,7 +159,8 @@ Using the recommended configuration for Node.js projects:
 
 <!-- prettier-ignore -->
 ```ts
-import { configs, globals, defineConfig, globalIgnores } from '@simbo/eslint-config';
+import { configs, globals } from '@simbo/eslint-config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   globalIgnores(['**/dist/', '**/coverage/']),
@@ -194,7 +190,8 @@ Using the recommended configuration for browser projects:
 
 <!-- prettier-ignore -->
 ```ts
-import { configs, globals, defineConfig, globalIgnores } from '@simbo/eslint-config';
+import { configs, globals } from '@simbo/eslint-config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   globalIgnores(['**/dist/', '**/coverage/']),
@@ -225,10 +222,11 @@ with support for JavaScript, TypeScript, and Prettier.
 
 <!-- prettier-ignore -->
 ```ts
-import { eslintJsConfigs } from '@simbo/eslint-config/eslint-js';
+import { eslintJsConfigs } from '@simbo/eslint-confi^g/eslint-js';
 import { typescriptEslintConfigs } from '@simbo/eslint-config/typescript-eslint';
 import { prettierConfigs } from '@simbo/eslint-config/prettier';
-import { globals, defineConfig, globalIgnores } from '@simbo/eslint-config/utils';
+import { globals } from '@simbo/eslint-config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   globalIgnores(['**/dist/', '**/coverage/']),
