@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - name: 🛎️ Checkout
