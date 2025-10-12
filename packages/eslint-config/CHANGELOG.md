@@ -1,5 +1,11 @@
 # @simbo/eslint-config
 
+## 2.0.2
+
+### Patch Changes
+
+- adedf36: upgrade dependencies
+
 ## 2.0.1
 
 ### Patch Changes

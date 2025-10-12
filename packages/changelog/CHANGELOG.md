@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.4.8
+
+### Patch Changes
+
+- adedf36: upgrade dependencies
+
 ## 1.4.7
 
 ### Patch Changes

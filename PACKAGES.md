@@ -47,7 +47,7 @@ There are currently _**27**_ packages managed in this repository:
   📂
   [**`./packages/changelog`**](https://github.com/simbo/packages/tree/main/packages/changelog/)
 
-  📦 `changelog` @ `1.4.7`
+  📦 `changelog` @ `1.4.8`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/changelog/CHANGELOG.md)
@@ -122,7 +122,7 @@ There are currently _**27**_ packages managed in this repository:
 
   📦
   [`@simbo/eslint-config`](https://www.npmjs.com/package/@simbo/eslint-config) @
-  `2.0.1`
+  `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/eslint-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/eslint-config/CHANGELOG.md)  • 
