@@ -11,4 +11,4 @@ export default defineConfig({
     },
   },
   extends: [configs.browser.recommended],
-});
+}) as unknown;

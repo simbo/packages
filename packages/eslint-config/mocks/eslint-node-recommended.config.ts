@@ -11,4 +11,4 @@ export default defineConfig({
     },
   },
   extends: [configs.node.recommended],
-});
+}) as unknown;

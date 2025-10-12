@@ -21,4 +21,4 @@ export default defineConfig([
       'n/no-unpublished-import': 'off',
     },
   },
-]);
+]) as unknown;
