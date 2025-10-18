@@ -90,6 +90,16 @@ import { getWorkspacePatterns } from '@simbo/monorepo-utils';
 const patterns = await getWorkspacePatterns();
 ```
 
+#### Get Package Path by Name
+
+Get the file system path of a package by its name.
+
+```ts
+import { getPackagePath } from '@simbo/monorepo-utils';
+
+const packagePath = await getPackagePath({ packageName: 'my-package' });
+```
+
 ## License
 
 [MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
