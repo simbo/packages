@@ -1,5 +1,11 @@
 # @simbo/monorepo-utils
 
+## 1.0.4
+
+### Patch Changes
+
+- 033b8b5: add `getPackagePathByName`
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@simbo/monorepo-utils",
   "description": "A set of utilities for inspecting and working with monorepo workspaces.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "monorepo",
     "workspace",

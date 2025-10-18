@@ -1,5 +1,12 @@
 # @simbo/monorepo-packages-list
 
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [033b8b5]
+  - @simbo/monorepo-utils@1.0.4
+
 ## 1.1.2
 
 ### Patch Changes
