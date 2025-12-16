@@ -1,28 +1,59 @@
-name: Release
+name: ' Release 🏷️'
 
 on:
   repository_dispatch:
-    types: [release-changes]
+    types:
+      - workflow:release
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Ref
+        type: string
+        required: true
+        default: 'main'
 
-run-name: |
-  ${{ format('[{0}] {1}', github.workflow, github.event.client_payload.ref || github.ref_name) }}
+run-name: >
+  ${{
+    format(
+      '{0} Branch {1}',
+      github.workflow,
+      github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
+    )
+  }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.client_payload.ref || github.ref_name }}
   cancel-in-progress: false
+  group: >
+    ${{
+      format(
+        '{0}--{1}',
+        github.workflow,
+        github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
+      )
+    }}
 
 permissions:
   contents: write
+
+env:
+  REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: 🪪 Retrieve Credentials
+        id: credentials
+        uses: simbo-actions/actions/actions/github-app-credentials@main
+        with:
+          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
+          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+
       - name: 🛎️ Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_PAT }}
-          ref: ${{ github.event.client_payload.ref || github.ref_name }}
+          token: ${{ steps.credentials.outputs.token }}
+          ref: ${{ env.REF }}
 
       - name: 🚚 Install pnpm
         uses: pnpm/action-setup@v4
@@ -30,8 +61,9 @@ jobs:
       - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
+          token: ${{ steps.credentials.outputs.token }}
+          cache: pnpm
+          node-version-file: .nvmrc
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -49,8 +81,8 @@ jobs:
           # update lockfile
           pnpm install
 
-      - name: 🧾 Aggregate Package Versions for Release
-        id: releases
+      - name: 🧾 Get Bumped Packages
+        id: bumped-packages
         run: |
           set -euo pipefail
 
@@ -87,37 +119,24 @@ jobs:
       - name: 📝 Update Packages List Docs
         run: pnpm run packages-list
 
-      - name: 📤 Commit & Push Changes
-        run: |
-          set -euo pipefail
-
-          # Set git user data
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-
-          # Stage all changes
-          git add .
-
-          # Prepare release tag list and commit message
-          releases="${{ steps.releases.outputs.packages }}"
-          message="ci(release): ${releases}"
-
-          # Commit the releases.
-          git commit -m "$message" --no-verify
-
-          # Push the changes
-          git push origin "${{ github.event.client_payload.ref || github.ref_name }}" --no-verify
-
-          # Add and push a tag for every package release
-          for tag in $releases; do
-            git tag -a "$tag" -m "$tag"
-            # ! Tags need to be pushed separately to ensure separate workflow triggers
-            git push origin "$tag" --no-verify
-          done
+      - name: 💾 Commit & Push Changes
+        uses: simbo-actions/actions/actions/commit-and-push@main
+        with:
+          ref: ${{ env.REF }}
+          name: ${{ steps.credentials.outputs.name }}
+          email: ${{ steps.credentials.outputs.email }}
+          message: 'ci(release): ${{ steps.bumped-packages.outputs.packages }}'
+          tags: ${{ steps.bumped-packages.outputs.packages }}
 
       - name: 🎉 Changes Released (Event)
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: changes-released
-          token: ${{ secrets.GH_PAT }}
-          client-payload: '{"ref": "${{ github.event.client_payload.ref || github.ref_name }}"}'
+          event-type: release
+          token: ${{ steps.credentials.outputs.token }}
+          client-payload: >
+            ${{
+              format(
+                '{{ "ref": {0} }}',
+                toJson(env.REF)
+              )
+            }}

@@ -1,34 +1,65 @@
-name: Docs
+name: Docs 📘
 
 on:
   repository_dispatch:
-    types: [changes-released]
+    types:
+      - release
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Ref
+        required: false
+        default: 'main'
 
-run-name: |
-  ${{ format('[{0}] {1}', github.workflow, github.event.client_payload.ref || github.ref_name) }}
+run-name: >
+  ${{
+    format(
+      '[{0}] {1}',
+      github.workflow,
+      github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
+    )
+  }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.client_payload.ref || github.ref_name }}
   cancel-in-progress: false
+  group: >
+    ${{
+      format(
+        '{0}--{1}',
+        github.workflow,
+        github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
+      )
+    }}
+
+env:
+  REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
 
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛎️ Checkout
-        uses: actions/checkout@v4
+      - name: 🪪 Retrieve Credentials
+        id: credentials
+        uses: simbo-actions/actions/actions/github-app-credentials@main
         with:
-          token: ${{ secrets.GH_PAT }}
-          ref: ${{ github.event.client_payload.ref || github.ref_name }}
+          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
+          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.credentials.outputs.token }}
+          ref: ${{ env.REF }}
 
       - name: 🚚 Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
+          token: ${{ steps.credentials.outputs.token }}
+          cache: pnpm
+          node-version-file: .nvmrc
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -42,9 +73,9 @@ jobs:
       - name: 🚚 Deploy Docs
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GH_PAT }}
-          git-config-name: '${{ github.actor }}'
-          git-config-email: '${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com'
+          token: ${{ steps.credentials.outputs.token }}
+          git-config-name: ${{ steps.credentials.outputs.name }}
+          git-config-email: ${{ steps.credentials.outputs.email }}
           folder: docs
           branch: gh-pages
           clean: true

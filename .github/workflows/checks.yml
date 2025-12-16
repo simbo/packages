@@ -1,40 +1,71 @@
-name: Checks
+name: ' Checks 🧐'
 
 on:
   push:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
-run-name: |
-  ${{ format('[{0}] {1}', github.workflow, github.event_name == 'push' && github.event.head_commit.message || github.event_name == 'pull_request' && github.event.pull_request.title || github.ref_name) }}
+run-name: >
+  ${{
+    format(
+      '{0} {1}',
+      github.workflow,
+      github.event_name == 'pull_request'
+        && format('PR#{0} "{1}"', github.event.pull_request.number, github.event.pull_request.title)
+        || format('Branch {0} "{1}"', github.ref_name, github.event.head_commit.message)
+    )
+  }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: >
+    ${{
+      format(
+        '{0}--{1}',
+        github.workflow,
+        github.event_name == 'pull_request'
+          && github.event.pull_request.number
+          || github.ref_name
+      )
+    }}
 
 permissions:
   contents: write
+
+env:
+  REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
 
 jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛎️ Checkout
-        uses: actions/checkout@v4
+      - name: 🪪 Retrieve Credentials
+        id: credentials
+        uses: simbo-actions/actions/actions/github-app-credentials@main
         with:
-          token: ${{ secrets.GH_PAT }}
+          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
+          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.credentials.outputs.token }}
+          ref: ${{ env.REF }}
 
       - name: 🚚 Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
+          token: ${{ steps.credentials.outputs.token }}
+          cache: pnpm
+          node-version-file: .nvmrc
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -52,36 +83,37 @@ jobs:
         run: pnpm run build:docs
 
       - name: 📄 Check for Changesets
-        id: changesets
+        id: has-changesets
         run: |
           set -euo pipefail
-
-          # Check if there are any changesets present
-          hasChangesets=$([[ -d .changeset ]] && find .changeset -type f -name '*.md' -print -quit | grep -q . && echo true || echo false)
-
-          # Print and output if there are changesets
-          echo "has-changesets=$hasChangesets"
-          echo "has-changesets=${hasChangesets}" >> $GITHUB_OUTPUT
+          result=$([[ -d .changeset ]] && find .changeset -type f -name '*.md' -print -quit | grep -q . && echo true || echo false)
+          echo "result=${result}" >> $GITHUB_OUTPUT
 
       - name: 👮‍♂️ Pull Requests Must Have Changesets
         if: >
           github.event_name == 'pull_request' &&
           github.event.pull_request.draft == false
+        env:
+          RESULT: ${{ steps.has-changesets.outputs.result }}
         run: |
           set -euo pipefail
-
-          # Error if there are no changesets in the pull request
-          if [[ "${{ steps.changesets.outputs.has-changesets }}" != "true" ]]; then
+          if [[ "$RESULT" != "true" ]]; then
             echo "::error title=Missing Changeset::Pull requests must have changesets."
             exit 1
           fi
 
-      - name: 🎉 Release Changes (Event)
+      - name: '🎉 Workflow: Release (Event)'
         if: >
           github.event_name == 'push' &&
-          steps.changesets.outputs.has-changesets == 'true'
+          steps.has-changesets.outputs.result == 'true'
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: release-changes
-          token: ${{ secrets.GH_PAT }}
-          client-payload: '{"ref": "${{ github.ref_name }}"}'
+          event-type: workflow:release
+          token: ${{ steps.credentials.outputs.token }}
+          client-payload: >
+            ${{
+              format(
+                '{{ "ref": {0} }}',
+                toJson(env.REF)
+              )
+            }}

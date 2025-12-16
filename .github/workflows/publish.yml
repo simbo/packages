@@ -1,4 +1,4 @@
-name: Publish
+name: Publish 🚛
 
 on:
   push:
@@ -16,40 +16,70 @@ on:
         type: string
         required: true
 
-run-name: |
-  ${{ format('[{0}] {1}', github.workflow, github.event_name == 'push' && github.ref_name || github.event_name == 'workflow_dispatch' && format('{0}/v{1}', github.event.inputs.workspace, github.event.inputs.version) || github.ref_name) }}
+run-name: >
+  ${{
+    format(
+      '{0} {1}',
+      github.workflow,
+      github.event_name == 'workflow_dispatch'
+        && format('{0}/v{1}', github.event.inputs.workspace, github.event.inputs.version)
+        || github.ref_name
+    )
+  }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workspace || github.ref_name }}
   cancel-in-progress: false
+  group: >
+    ${{
+      format(
+        '{0}--{1}',
+        github.workflow,
+        github.event_name == 'workflow_dispatch'
+        && format('{0}/v{1}', github.event.inputs.workspace, github.event.inputs.version)
+        || github.ref_name
+      )
+    }}
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: 🪪 Retrieve Credentials
+        id: credentials
+        uses: simbo-actions/actions/actions/github-app-credentials@main
+        with:
+          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
+          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+
       - name: 🧾 Prepare Publish Params
         id: params
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          WORKSPACE: ${{ github.event.inputs.workspace }}
+          VERSION: ${{ github.event.inputs.version }}
         run: |
           set -euo pipefail
 
           # Set tag, version and workspace based on the event type
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            workspace="${{ github.event.inputs.workspace }}"
+          if [[ "${EVENT_NAME}" == "workflow_dispatch" ]]; then
+            workspace="${WORKSPACE}"
             if [[ "$workspace" =~ [^a-zA-Z0-9._-] ]]; then
               echo "::error title=Invalid Workspace::Workspace may only contain letters, numbers, dot, underscore, hyphen."
               exit 1
             fi
-            version="${{ github.event.inputs.version }}"
+            version="${VERSION}"
             if [[ "$version" =~ [^0-9.] ]]; then
               echo "::error title=Invalid Version::Version may only contain numbers and dots."
               exit 1
             fi
             tag="${workspace}/v${version}"
           else
-            tag="${{ github.ref_name }}"
+            tag="${REF_NAME}"
             workspace="${tag%%/v*}"
             version="${tag##*/v}"
           fi
@@ -62,52 +92,54 @@ jobs:
             fi
           done
 
-          # Print and output params
+          # Output params
           for var in workspace version tag; do
-            echo "$var=${!var}"
             echo "$var=${!var}" >> $GITHUB_OUTPUT
           done
 
       - name: 🛎️ Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ steps.credentials.outputs.token }}
           ref: ${{ steps.params.outputs.tag }}
 
       - name: 🚚 Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
+          token: ${{ steps.credentials.outputs.token }}
           cache: 'pnpm'
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org
-          always-auth: true
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
       - name: 🧾 Get Package Name and Private Field
         id: package
+        env:
+          WORKSPACE: ${{ steps.params.outputs.workspace }}
         run: |
           set -euo pipefail
 
-          packageName=$(jq -r '.name' "packages/${{ steps.params.outputs.workspace }}/package.json")
-          packagePrivate=$(jq -r '.private // false' "packages/${{ steps.params.outputs.workspace }}/package.json")
+          packageName=$(jq -r '.name' "packages/${WORKSPACE}/package.json")
+          packagePrivate=$(jq -r '.private // false' "packages/${WORKSPACE}/package.json")
 
-          echo "name=${packageName}"
           echo "name=${packageName}" >> $GITHUB_OUTPUT
-          echo "private=${packagePrivate}"
           echo "private=${packagePrivate}" >> $GITHUB_OUTPUT
 
       - name: 🧾 Get Release Date and Description
         id: release
+        env:
+          WORKSPACE: ${{ steps.params.outputs.workspace }}
+          VERSION: ${{ steps.params.outputs.version }}
         run: |
           set -euo pipefail
 
-          workspace="${{ steps.params.outputs.workspace }}"
-          version="${{ steps.params.outputs.version }}"
+          workspace="${WORKSPACE}"
+          version="${VERSION}"
           changelogFile="packages/${workspace}/CHANGELOG.md"
           releaseDate=$(TZ="Europe/Berlin" date +%Y-%m-%d\ %H:%M:%S\ %Z)
           description=""
@@ -133,32 +165,33 @@ jobs:
             exit 1
           fi
 
-          # Print and output date and description
-          echo "date=${releaseDate}"
+          # Output date and description
           echo "date=${releaseDate}" >> $GITHUB_OUTPUT
-          echo "description=${description}"
           {
             echo "description<<EOF"
             echo "$description"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: 👷‍♂️ Build Package
-        run: pnpm run build --filter="${{ steps.package.outputs.name }}"
-
-      - name: 📤 Publish to Registry
-        if: ${{ steps.package.outputs.private == 'false' }}
+      - name: 📦 Build Package
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm publish --filter="${{ steps.package.outputs.name }}" --no-git-checks --access public
+          PACKAGE: ${{ steps.package.outputs.name }}
+        run: pnpm run build --filter="${PACKAGE}"
+
+      - name: 🚛 Publish to Registry
+        if: ${{ steps.package.outputs.private == 'false' }}
+        working-directory: packages/${{ steps.params.outputs.workspace }}
+        run: npm publish
 
       - name: ⚫️ Create Tarball
         id: tarball
+        env:
+          PACKAGE: ${{ steps.package.outputs.name }}
         run: |
           set -euo pipefail
 
           # Create a tarball and get the tarball path
-          tarballAbsPath=$(pnpm pack --filter="${{ steps.package.outputs.name }}" | tail -n 1)
+          tarballAbsPath=$(pnpm pack --filter="${PACKAGE}" | tail -n 1)
           tarballRelPath=$(realpath --relative-to=$(pwd) $tarballAbsPath)
 
           # Fail if the tarball file does not exist
@@ -180,5 +213,5 @@ jobs:
 
             ${{ steps.release.outputs.description }}
           artifacts: ${{ steps.tarball.outputs.path }}
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ steps.credentials.outputs.token }}
           makeLatest: true
