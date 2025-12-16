@@ -1,0 +1,7 @@
+packageManager: pnpm
+reject:
+  - npm
+workspaces: true
+root: true
+install: never
+cooldown: 2

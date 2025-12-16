@@ -45,27 +45,27 @@
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "@commitlint/cli": "catalog:"
+    "@commitlint/cli": "^20.1.0"
   },
   "dependencies": {
-    "@commitlint/config-conventional": "catalog:"
+    "@commitlint/config-conventional": "^20.0.0"
   },
   "devDependencies": {
-    "@commitlint/lint": "catalog:",
-    "@commitlint/load": "catalog:",
-    "@commitlint/types": "catalog:",
-    "@ianvs/prettier-plugin-sort-imports": "catalog:",
+    "@commitlint/lint": "^20.0.0",
+    "@commitlint/load": "^20.1.0",
+    "@commitlint/types": "^20.0.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@simbo/eslint-config": "workspace:*",
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "@vitest/ui": "catalog:",
-    "eslint": "catalog:",
-    "jiti": "catalog:",
-    "prettier": "catalog:",
-    "prettier-plugin-organize-attributes": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "@types/node": "^20.19.18",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.37.0",
+    "jiti": "^2.6.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   }
 }
