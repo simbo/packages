@@ -3,7 +3,7 @@ name: ' Docs 📘'
 on:
   repository_dispatch:
     types:
-      - release
+      - release-commit-created
   workflow_dispatch:
     inputs:
       ref:

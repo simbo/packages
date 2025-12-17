@@ -128,15 +128,16 @@ jobs:
           message: 'ci(release): ${{ steps.bumped-packages.outputs.packages }}'
           tags: ${{ steps.bumped-packages.outputs.packages }}
 
-      - name: 🎉 Changes Released (Event)
+      - name: 🎉 Release Commit Created (Event)
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: release
+          event-type: release-commit-created
           token: ${{ steps.credentials.outputs.token }}
           client-payload: >
             ${{
               format(
-                '{{ "ref": {0} }}',
-                toJson(env.REF)
+                '{{ "ref": {0}, "packages": {1} }}',
+                toJson(env.REF),
+                toJson(steps.bumped-packages.outputs.packages)
               )
             }}
