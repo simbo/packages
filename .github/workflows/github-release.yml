@@ -83,6 +83,7 @@ jobs:
         run: |
           set -euo pipefail
 
+          version="$PACKAGE_VERSION"
           changelog="package/CHANGELOG.md"
           releaseDate=$(TZ="Europe/Berlin" date +%Y-%m-%d\ %H:%M:%S\ %Z)
           description=""
