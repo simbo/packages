@@ -1,8 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@simbo/tsconfig/node",
-  "include": ["**/*.ts"],
-  "exclude": ["docs"],
+  "include": ["*.ts"],
   "compilerOptions": {
     "rootDir": ".",
     "noEmit": true

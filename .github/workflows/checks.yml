@@ -70,17 +70,20 @@ jobs:
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 👷 Build Packages
-        run: pnpm run build
+      - name: 👷 Build
+        run: pnpm run each:build
 
-      - name: 🧐 Run Checks
-        run: pnpm run check
+      - name: 📦 Bundle
+        run: pnpm run each:bundle
 
-      - name: 🧑‍🔬 Run Tests
+      - name: 👨‍🔬 Tests
         run: pnpm run test
 
-      - name: 📘 Build Docs
-        run: pnpm run build:docs
+      - name: 👨‍🏫 Checks
+        run: pnpm run each:check && pnpm run check
+
+      - name: 📘 Docs
+        run: pnpm run docs
 
       - name: 📄 Check for Changesets
         id: has-changesets

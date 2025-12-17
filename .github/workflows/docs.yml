@@ -65,10 +65,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 👷‍♂️ Build Packages
-        run: pnpm run build
+        run: pnpm run each:build
 
       - name: 📘 Build Docs
-        run: pnpm run build:docs
+        run: pnpm run docs
 
       - name: 🚚 Deploy Docs
         uses: JamesIves/github-pages-deploy-action@v4
