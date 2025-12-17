@@ -83,10 +83,19 @@ jobs:
         run: |
           set -euo pipefail
 
+
+          name="$PACKAGE_NAME"
           version="$PACKAGE_VERSION"
           changelog="package/CHANGELOG.md"
           releaseDate=$(TZ="Europe/Berlin" date +%Y-%m-%d\ %H:%M:%S\ %Z)
           description=""
+
+          # Get unscoped package name (workspace name)
+          if [[ "$name" == @*/* ]]; then
+            workspace="${name#*/}"
+          else
+            workspace="$name"
+          fi
 
           # Fail if the changelog file does not exist
           if [[ ! -f "$changelog" ]]; then
@@ -111,6 +120,7 @@ jobs:
 
           # Output date and description
           echo "date=${releaseDate}" >> $GITHUB_OUTPUT
+          echo "workspace=${workspace}" >> $GITHUB_OUTPUT
           {
             echo "description<<EOF"
             echo "$description"
@@ -120,7 +130,7 @@ jobs:
       - name: 🎁 Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ env.PACKAGE_NAME }}/v${{ env.PACKAGE_VERSION }}
+          tag: ${{ steps.info.outputs.workspace }}/v${{ env.PACKAGE_VERSION }}
           name: ${{ env.PACKAGE_NAME }} v${{ env.PACKAGE_VERSION }}
           body: |
             _${{ steps.info.outputs.date }}_
