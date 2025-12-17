@@ -1,0 +1,131 @@
+name: ' GitHub Release 🎁'
+
+on:
+  repository_dispatch:
+    types:
+      - package-published
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Package Name
+        type: string
+        required: true
+      version:
+        description: Package Version
+        type: string
+        required: true
+
+run-name: >
+  ${{
+    format(
+      '{0} {1}/v{2}',
+      github.workflow,
+      github.event_name == 'repository_dispatch'
+        && github.event.client_payload.name || github.event.inputs.name,
+      github.event_name == 'repository_dispatch'
+        && github.event.client_payload.version || github.event.inputs.version
+    )
+  }}
+
+concurrency:
+  cancel-in-progress: false
+  group: >
+    ${{
+      format(
+        '{0}--{1}/v{2}',
+        github.workflow,
+        github.event_name == 'repository_dispatch'
+          && github.event.client_payload.name || github.event.inputs.name,
+        github.event_name == 'repository_dispatch'
+          && github.event.client_payload.version || github.event.inputs.version
+      )
+    }}
+
+env:
+  PACKAGE_NAME: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.name || github.event.inputs.name }}
+  PACKAGE_VERSION: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.version || github.event.inputs.version }}
+
+permissions:
+  contents: write
+
+jobs:
+  github-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🪪 Retrieve Credentials
+        id: credentials
+        uses: simbo-actions/actions/actions/github-app-credentials@main
+        with:
+          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
+          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          token: ${{ steps.credentials.outputs.token }}
+          node-version: 24
+
+      - name: ⚫️ Fetch Tarball
+        id: fetch-tarball
+        run: |
+          set -euo pipefail
+          npm pack "${PACKAGE_NAME}@${PACKAGE_VERSION}"
+          filename="$(ls *.tgz | head -n 1)"
+          echo "filename=$filename" >> $GITHUB_OUTPUT
+
+      - name: 📦 Unpack Tarball
+        run: |
+          set -euo pipefail
+          mkdir package
+          tar -xzf "${{ steps.fetch-tarball.outputs.filename }}" -C package --strip-components=1
+
+      - name: 🧾 Get Release Info
+        id: info
+        run: |
+          set -euo pipefail
+
+          changelog="package/CHANGELOG.md"
+          releaseDate=$(TZ="Europe/Berlin" date +%Y-%m-%d\ %H:%M:%S\ %Z)
+          description=""
+
+          # Fail if the changelog file does not exist
+          if [[ ! -f "$changelog" ]]; then
+            echo "::error title=Missing Changelog File::Changelog file not found: $changelog"
+            exit 1
+          fi
+
+          # Extract the respective version's section from the changelog and remove leading and trailing whitespace
+          description=$(awk -v ver="## ${version}" '
+              $0 == ver { found=1; next }
+              found && /^## / { exit }
+              found { print }
+            ' "$changelog" | \
+            awk 'BEGIN{found=0} NF{found=1} found{print}' | tac | \
+            awk 'BEGIN{found=0} NF{found=1} found{print}' | tac)
+
+          # Fail if no description is set
+          if [[ -z "$description" ]]; then
+            echo "::error title=Missing Changelog Section::Section for ${version} could not be found in changelog: $changelog"
+            exit 1
+          fi
+
+          # Output date and description
+          echo "date=${releaseDate}" >> $GITHUB_OUTPUT
+          {
+            echo "description<<EOF"
+            echo "$description"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: 🎁 Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.PACKAGE_NAME }}/v${{ env.PACKAGE_VERSION }}
+          name: ${{ env.PACKAGE_NAME }} v${{ env.PACKAGE_VERSION }}
+          body: |
+            _${{ steps.info.outputs.date }}_
+
+            ${{ steps.info.outputs.description }}
+          artifacts: ${{ steps.fetch-tarball.outputs.filename }}
+          token: ${{ steps.credentials.outputs.token }}
+          makeLatest: true

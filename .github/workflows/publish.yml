@@ -57,45 +57,46 @@ jobs:
 
       - name: 🧾 Prepare Publish Params
         id: params
+        uses: actions/github-script@v8
         env:
-          EVENT_NAME: ${{ github.event_name }}
-          REF_NAME: ${{ github.ref_name }}
-          WORKSPACE: ${{ github.event.inputs.workspace }}
-          VERSION: ${{ github.event.inputs.version }}
-        run: |
-          set -euo pipefail
+          EVENT_NAME: ${{ github.event_name || '' }}
+          REF_NAME: ${{ github.ref_name || '' }}
+          WORKSPACE: ${{ github.event.inputs.workspace || '' }}
+          VERSION: ${{ github.event.inputs.version || '' }}
+        with:
+          script: |
+            const eventName = process.env.EVENT_NAME.trim();
 
-          # Set tag, version and workspace based on the event type
-          if [[ "${EVENT_NAME}" == "workflow_dispatch" ]]; then
-            workspace="${WORKSPACE}"
-            if [[ "$workspace" =~ [^a-zA-Z0-9._-] ]]; then
-              echo "::error title=Invalid Workspace::Workspace may only contain letters, numbers, dot, underscore, hyphen."
-              exit 1
-            fi
-            version="${VERSION}"
-            if [[ "$version" =~ [^0-9.] ]]; then
-              echo "::error title=Invalid Version::Version may only contain numbers and dots."
-              exit 1
-            fi
-            tag="${workspace}/v${version}"
-          else
-            tag="${REF_NAME}"
-            workspace="${tag%%/v*}"
-            version="${tag##*/v}"
-          fi
+            let workspace, version;
 
-          # Fail if no parameters are set
-          for var in workspace version tag; do
-            if [[ -z "${!var}" ]]; then
-              echo "::error title=Missing ${var^}::${var^} must be set."
-              exit 1
-            fi
-          done
+            switch (eventName) {
+              case 'workflow_dispatch':
+                workspace = process.env.WORKSPACE.trim();
+                version = process.env.VERSION.trim();
+                break;
+              case 'push':
+                const ref = process.env.REF_NAME.trim();
+                workspace = ref.split('/v')[0];
+                version = ref.split('/v')[1];
+                break;
+              default:
+                throw new Error(`Unsupported event name: ${eventName}`);
+            }
 
-          # Output params
-          for var in workspace version tag; do
-            echo "$var=${!var}" >> $GITHUB_OUTPUT
-          done
+            if (!/^[\da-z._-]+$/i.test(workspace)) {
+              core.setFailed(`Invalid Workspace: Workspace may only contain letters, numbers, dot, underscore, hyphen.`);
+              return;
+            }
+            if (!/^[\d.]+$/.test(version)) {
+              core.setFailed(`Invalid Version: Version may only contain numbers and dots.`);
+              return;
+            }
+
+            const tag = `${workspace}/v${version}`;
+
+            core.setOutput('workspace', workspace);
+            core.setOutput('version', version);
+            core.setOutput('tag', tag);
 
       - name: 🛎️ Checkout
         uses: actions/checkout@v6
@@ -130,49 +131,6 @@ jobs:
           echo "name=${packageName}" >> $GITHUB_OUTPUT
           echo "private=${packagePrivate}" >> $GITHUB_OUTPUT
 
-      - name: 🧾 Get Release Date and Description
-        id: release
-        env:
-          WORKSPACE: ${{ steps.params.outputs.workspace }}
-          VERSION: ${{ steps.params.outputs.version }}
-        run: |
-          set -euo pipefail
-
-          workspace="${WORKSPACE}"
-          version="${VERSION}"
-          changelogFile="packages/${workspace}/CHANGELOG.md"
-          releaseDate=$(TZ="Europe/Berlin" date +%Y-%m-%d\ %H:%M:%S\ %Z)
-          description=""
-
-          # Fail if the changelog file does not exist
-          if [[ ! -f "$changelogFile" ]]; then
-            echo "::error title=Missing Changelog File::Changelog file not found: $changelogFile"
-            exit 1
-          fi
-
-          # Extract the respective version's section from the changelog and remove leading and trailing whitespace
-          description=$(awk -v ver="## ${version}" '
-              $0 == ver { found=1; next }
-              found && /^## / { exit }
-              found { print }
-            ' "$changelogFile" | \
-            awk 'BEGIN{found=0} NF{found=1} found{print}' | tac | \
-            awk 'BEGIN{found=0} NF{found=1} found{print}' | tac)
-
-          # Fail if no description is set
-          if [[ -z "$description" ]]; then
-            echo "::error title=Missing Changelog Section::Section for ${version} could not be found in changelog: $changelogFile"
-            exit 1
-          fi
-
-          # Output date and description
-          echo "date=${releaseDate}" >> $GITHUB_OUTPUT
-          {
-            echo "description<<EOF"
-            echo "$description"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
       - name: 📦 Build Package
         env:
           PACKAGE: ${{ steps.package.outputs.name }}
@@ -183,35 +141,16 @@ jobs:
         working-directory: packages/${{ steps.params.outputs.workspace }}
         run: npm publish
 
-      - name: ⚫️ Create Tarball
-        id: tarball
-        env:
-          PACKAGE: ${{ steps.package.outputs.name }}
-        run: |
-          set -euo pipefail
-
-          # Create a tarball and get the tarball path
-          tarballAbsPath=$(pnpm pack --filter="${PACKAGE}" | tail -n 1)
-          tarballRelPath=$(realpath --relative-to=$(pwd) $tarballAbsPath)
-
-          # Fail if the tarball file does not exist
-          if [[ ! -f "$tarballRelPath" ]]; then
-            echo "::error title=Missing Tarball::Tarball not found: $tarballRelPath"
-            exit 1
-          fi
-
-          # Output tarball path
-          echo "path=${tarballRelPath}" >> $GITHUB_OUTPUT
-
-      - name: 🎁 Create GitHub Release
-        uses: ncipollo/release-action@v1
+      - name: 🎉 Package Published (Event)
+        uses: peter-evans/repository-dispatch@v3
         with:
-          tag: ${{ steps.params.outputs.tag }}
-          name: ${{ steps.package.outputs.name }} v${{ steps.params.outputs.version }}
-          body: |
-            _${{ steps.release.outputs.date }}_
-
-            ${{ steps.release.outputs.description }}
-          artifacts: ${{ steps.tarball.outputs.path }}
+          event-type: package-published
           token: ${{ steps.credentials.outputs.token }}
-          makeLatest: true
+          client-payload: >
+            ${{
+              format(
+                '{{ "name": {0}, "version": {1} }}',
+                toJson(steps.package.outputs.name),
+                toJson(steps.params.outputs.version)
+              )
+            }}
