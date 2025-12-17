@@ -1,5 +1,14 @@
 # @simbo/monorepo-packages-list
 
+## 1.1.4
+
+### Patch Changes
+
+- faa5cdc: upgrade dependencies and fix linting issues
+- Updated dependencies [faa5cdc]
+  - @simbo/monorepo-utils@1.0.5
+  - @simbo/zodpak@0.1.3
+
 ## 1.1.3
 
 ### Patch Changes

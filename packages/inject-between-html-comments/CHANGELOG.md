@@ -1,5 +1,11 @@
 # @simbo/inject-between-html-comments
 
+## 1.0.3
+
+### Patch Changes
+
+- faa5cdc: upgrade dependencies and fix linting issues
+
 ## 1.0.2
 
 ### Patch Changes

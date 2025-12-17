@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.5.1
+
+### Patch Changes
+
+- faa5cdc: upgrade dependencies
+
 ## 1.5.0
 
 ### Minor Changes

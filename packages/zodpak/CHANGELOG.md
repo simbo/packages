@@ -1,5 +1,11 @@
 # @simbo/zodpak
 
+## 0.1.3
+
+### Patch Changes
+
+- faa5cdc: upgrade dependencies
+
 ## 0.1.2
 
 ### Patch Changes

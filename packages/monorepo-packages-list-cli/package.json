@@ -1,7 +1,7 @@
 {
   "name": "@simbo/monorepo-packages-list-cli",
   "description": "A CLI that generates a list of a monorepo's packages details and injects it into a markdown file.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "monorepo",
     "packages",

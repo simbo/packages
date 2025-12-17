@@ -1,5 +1,14 @@
 # @simbo/monorepo-utils
 
+## 1.0.5
+
+### Patch Changes
+
+- faa5cdc: upgrade dependencies
+  - @simbo/accessible@1.0.1
+  - @simbo/package-json@0.1.3
+  - @simbo/stringify-error@1.0.2
+
 ## 1.0.4
 
 ### Patch Changes

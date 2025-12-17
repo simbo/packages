@@ -1,5 +1,22 @@
 # @simbo/monorepo-packages-list-cli
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [faa5cdc]
+- Updated dependencies [faa5cdc]
+  - @simbo/clirk@1.1.3
+  - @simbo/inject-between-html-comments@1.0.3
+  - @simbo/monorepo-packages-list@1.1.4
+  - @simbo/monorepo-utils@1.0.5
+  - @simbo/zodpak@0.1.3
+  - @simbo/accessible@1.0.1
+  - @simbo/call-prettier@1.0.2
+  - @simbo/cli-output@1.0.1
+  - @simbo/find-git-repository-root@1.0.2
+  - @simbo/user-facing-error@1.0.2
+
 ## 1.0.3
 
 ### Patch Changes
