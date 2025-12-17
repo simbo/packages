@@ -1,5 +1,11 @@
 # @simbo/prettier-config
 
+## 2.0.0
+
+### Major Changes
+
+- dcdeee1: remove usage of plugin-prettier-organize-attributes
+
 ## 1.0.6
 
 ### Patch Changes
