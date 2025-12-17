@@ -40,7 +40,7 @@ export function injectBetweenHtmlComments(content: string, inject: string, optio
   const glue = inline ? '' : '\n\n';
 
   const regex = (flags = ''): RegExp =>
-    new RegExp(`<!--\\s*${escapedText}\\s*-->[\\s\\S]*?<!--\\s*/${escapedText}\\s*-->`, `m${flags}`);
+    new RegExp(String.raw`<!--\s*${escapedText}\s*-->[\s\S]*?<!--\s*/${escapedText}\s*-->`, `m${flags}`);
 
   const injectedContent = `${opening}${glue}${inject}${glue}${closing}`;
 

@@ -37,7 +37,7 @@ describe('Options Schema', () => {
 
       it('should throw an error for an invalid directory path', () => {
         expect(() => validateOptions({ workingDir: '' })).toThrow(
-          'Validation error: String must contain at least 1 character(s) at "workingDir"',
+          'Validation error: Expected string to contain at least 1 character(s) at "workingDir"',
         );
       });
     });

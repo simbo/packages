@@ -108,7 +108,7 @@ function getParametersMap(parameters: Record<string, string[]>): Map<string, Cli
 function getOptionsMap(argsOptions: ParsedMinimistOptions, options: Record<string, string[]>): Map<string, CliOption> {
   return new Map(
     Object.entries(options).map(([key, description]) => {
-      const aliases = new Set<string>(argsOptions.alias[key] ?? []);
+      const aliases = new Set<string>(argsOptions.alias[key]);
       const type = argsOptions.boolean.includes(key)
         ? 'boolean'
         : argsOptions.string.includes(key)
