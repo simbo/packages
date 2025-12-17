@@ -93,6 +93,7 @@ export const typescriptEslintRules: Linter.RulesRecord = {
     {
       // These selectors should have no formatting checks
       selector: ['import', 'objectLiteralProperty', 'typeProperty'],
+      // eslint-disable-next-line unicorn/no-null
       format: null,
     },
     {

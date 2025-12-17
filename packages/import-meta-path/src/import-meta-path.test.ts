@@ -17,6 +17,7 @@ vi.mock('node:url', async () => {
 });
 
 const { dirname } = vi.mocked(await import('node:path'));
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { fileURLToPath } = vi.mocked(await import('node:url'));
 
 const defineImportMeta = (meta: Record<string, string>): ImportMetaObject => meta as unknown as ImportMetaObject;

@@ -21,7 +21,7 @@ export interface ImportMetaObject {
  *   1. `importMeta.filename` (if present)
  *   2. `fileURLToPath(importMeta.url)`
  *
- * @param importMeta -  An object resembling `import.meta`, containing at least a `url` property as a `file:` URL.
+ * @param importMeta - An object resembling `import.meta`, containing at least a `url` property as a `file:` URL.
  * @param type - The type of path to retrieve: `'dir'` for directory or `'file'` for file path. Defaults to `'dir'`.
  * @returns The derived directory or file path as a string.
  * @throws {TypeError} If the `type` argument is not `'dir'` or `'file'`.

@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-extraneous-import
 import { defineConfig } from 'eslint/config';
 
 import { configs, globals } from '../src/index.js';

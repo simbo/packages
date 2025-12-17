@@ -19,7 +19,7 @@ import type { CliOption, CliParameter, ClirkContextWithoutMessages } from '../ty
  *
  * @param parsedOptions - The parsed options for the CLI.
  * @returns A promise that resolves to a ClirkContextWithoutMessages object.
- * @throws If `importMetaDirname` is not provided.
+ * @throws {Error} If `importMetaDirname` is not provided.
  */
 export async function createClirkContext(parsedOptions: ParsedOptions): Promise<ClirkContextWithoutMessages> {
   const {
