@@ -110,9 +110,19 @@ jobs:
       - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v6
         with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
+          cache: pnpm
+          node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org
+
+      - name: 🔎 Debug npm auth (sanity)
+        run: |
+          set -euo pipefail
+          node --version
+          npm --version
+          npm config get registry
+          npm config get //registry.npmjs.org/:_authToken || true
+          cat "$NPM_CONFIG_USERCONFIG" || true
+          rm -f "$NPM_CONFIG_USERCONFIG"
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
