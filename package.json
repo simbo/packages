@@ -72,7 +72,6 @@
     "jiti": "^2.6.1",
     "npm-check-updates": "^19.2.0",
     "prettier": "3.6.2",
-    "prettier-plugin-organize-attributes": "^1.0.0",
     "turbo": "^2.5.8",
     "typedoc": "^0.28.14",
     "typedoc-github-theme": "^0.3.1",

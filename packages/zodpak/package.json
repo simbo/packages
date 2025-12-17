@@ -53,7 +53,6 @@
     "eslint": "^9.37.0",
     "jiti": "^2.6.1",
     "prettier": "^3.6.2",
-    "prettier-plugin-organize-attributes": "^1.0.0",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
     "zod": "^4.1.12",

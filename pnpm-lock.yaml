@@ -59,9 +59,6 @@ importers:
       prettier:
         specifier: 3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       turbo:
         specifier: ^2.5.8
         version: 2.5.8
@@ -119,9 +116,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -174,9 +168,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       type-fest:
         specifier: ^5.0.1
         version: 5.0.1
@@ -228,9 +219,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -304,9 +292,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -365,9 +350,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -416,9 +398,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -486,9 +465,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -541,9 +517,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -593,9 +566,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -657,9 +627,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -702,9 +669,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -754,9 +718,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -812,9 +773,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -857,9 +815,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -906,9 +861,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -958,9 +910,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1013,9 +962,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1101,9 +1047,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1168,9 +1111,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1220,9 +1160,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1265,9 +1202,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1304,9 +1238,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1349,9 +1280,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1414,9 +1342,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1459,9 +1384,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
-        version: 1.0.0(prettier@3.6.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -3622,12 +3544,6 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
-
-  prettier-plugin-organize-attributes@1.0.0:
-    resolution: {integrity: sha512-+NmameaLxbCcylEXsKPmawtzla5EE6ECqvGkpfQz4KM847fXDifB1gFnPQEpoADAq6IXg+cMI8Z0ISJEXa6fhg==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      prettier: ^3.0.0
 
   prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
@@ -6435,10 +6351,6 @@ snapshots:
       source-map-js: 1.2.1
 
   prelude-ls@1.2.1: {}
-
-  prettier-plugin-organize-attributes@1.0.0(prettier@3.6.2):
-    dependencies:
-      prettier: 3.6.2
 
   prettier@2.8.8: {}
 

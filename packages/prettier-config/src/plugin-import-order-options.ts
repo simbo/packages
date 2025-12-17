@@ -1,5 +1,5 @@
 /**
- * Plugin Options for @ianvs/prettier-plugin-sort-imports
+ * Plugin Options for `@ianvs/prettier-plugin-sort-imports`
  *
  * @see {@link https://github.com/ianvs/prettier-plugin-sort-imports Sort Imports Plugin}
  */

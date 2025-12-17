@@ -1,7 +1,6 @@
 import type { Config } from 'prettier';
 
 import { importOrderOptions } from './plugin-import-order-options.js';
-import { sortAttributesOptions } from './plugin-sort-attributes-options.js';
 
 /**
  * Simbo's shared Prettier configuration.
@@ -25,16 +24,8 @@ export const config: Config = {
     {
       files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.mjs', '*.cjs', '*.vue'],
       options: {
-        plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-organize-attributes'],
+        plugins: ['@ianvs/prettier-plugin-sort-imports'],
         ...importOrderOptions,
-        ...sortAttributesOptions,
-      },
-    },
-    {
-      files: ['*.html'],
-      options: {
-        plugins: ['prettier-plugin-organize-attributes'],
-        ...sortAttributesOptions,
       },
     },
     {
