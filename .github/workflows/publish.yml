@@ -134,7 +134,7 @@ jobs:
       - name: 📦 Build Package
         env:
           PACKAGE: ${{ steps.package.outputs.name }}
-        run: pnpm run build --filter="${PACKAGE}"
+        run: pnpm exec turbo run build --filter="${PACKAGE}"
 
       - name: 🚛 Publish to Registry
         if: ${{ steps.package.outputs.private == 'false' }}

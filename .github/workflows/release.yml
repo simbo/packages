@@ -73,7 +73,7 @@ jobs:
           set -euo pipefail
 
           # changesets need a working prettier config, therefor the prettier-config package needs to be build first
-          pnpm run build --filter='@simbo/prettier-config'
+          pnpm exec turbo run build --filter='@simbo/prettier-config'
 
           # integrate changesets
           pnpm exec changeset version
