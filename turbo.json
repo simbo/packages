@@ -6,6 +6,11 @@
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
+    "bundle": {
+      "dependsOn": ["^bundle"],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only"
+    },
     "clean": {
       "cache": false,
       "outputLogs": "none"
