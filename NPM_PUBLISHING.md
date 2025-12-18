@@ -38,7 +38,8 @@ npm login
 # publish the package
 pnpm publish --filter=PACKAGE_NAME --no-git-checks --access public
 
-# wait some minutes for npm registry to update...
+# First-time publishes may need some minutes to propagate on npm servers.
+# Wait a bit before proceeding...
 
 # login to github.com
 gh auth login
