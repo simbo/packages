@@ -1,5 +1,18 @@
 # @simbo/clirk
 
+## 1.1.4
+
+### Patch Changes
+
+- 39c0ab9: fix pnpm workspace dependencies
+- Updated dependencies [39c0ab9]
+  - @simbo/zodpak@0.1.4
+  - @simbo/cli-output@1.0.1
+  - @simbo/find-up-package@1.0.3
+  - @simbo/graceful-exit@1.1.0
+  - @simbo/plural@1.0.1
+  - @simbo/stringify-error@1.0.2
+
 ## 1.1.3
 
 ### Patch Changes

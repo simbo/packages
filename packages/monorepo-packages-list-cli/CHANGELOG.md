@@ -1,5 +1,22 @@
 # @simbo/monorepo-packages-list-cli
 
+## 1.0.5
+
+### Patch Changes
+
+- 39c0ab9: fix pnpm workspace dependencies
+- Updated dependencies [39c0ab9]
+  - @simbo/clirk@1.1.4
+  - @simbo/inject-between-html-comments@1.0.4
+  - @simbo/monorepo-packages-list@1.1.5
+  - @simbo/monorepo-utils@1.0.6
+  - @simbo/zodpak@0.1.4
+  - @simbo/accessible@1.0.1
+  - @simbo/call-prettier@1.0.2
+  - @simbo/cli-output@1.0.1
+  - @simbo/find-git-repository-root@1.0.2
+  - @simbo/user-facing-error@1.0.2
+
 ## 1.0.4
 
 ### Patch Changes

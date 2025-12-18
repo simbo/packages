@@ -1,5 +1,11 @@
 # @simbo/zodpak
 
+## 0.1.4
+
+### Patch Changes
+
+- 39c0ab9: fix pnpm workspace dependencies
+
 ## 0.1.3
 
 ### Patch Changes

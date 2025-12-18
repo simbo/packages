@@ -1,5 +1,12 @@
 # @simbo/globby-has-matches
 
+## 1.0.5
+
+### Patch Changes
+
+- 39c0ab9: fix pnpm workspace dependencies
+  - @simbo/stringify-error@1.0.2
+
 ## 1.0.4
 
 ### Patch Changes

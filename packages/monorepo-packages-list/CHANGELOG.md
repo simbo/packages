@@ -1,5 +1,14 @@
 # @simbo/monorepo-packages-list
 
+## 1.1.5
+
+### Patch Changes
+
+- 39c0ab9: fix pnpm workspace dependencies
+- Updated dependencies [39c0ab9]
+  - @simbo/monorepo-utils@1.0.6
+  - @simbo/zodpak@0.1.4
+
 ## 1.1.4
 
 ### Patch Changes

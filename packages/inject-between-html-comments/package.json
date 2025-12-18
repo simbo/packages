@@ -1,7 +1,7 @@
 {
   "name": "@simbo/inject-between-html-comments",
   "description": "Inject content between HTML comment markers inside a string.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "inject",
     "html",
