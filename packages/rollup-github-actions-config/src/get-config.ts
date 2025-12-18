@@ -20,7 +20,11 @@ const json = jsonDefault as unknown as typeof jsonDefault.default;
  * Suppress known warnings in Rollup build.
  * Map of warning codes to keywords in the warning message.
  */
-const KNOWN_WARNINGS = {};
+const KNOWN_WARNINGS = {
+  CIRCULAR_DEPENDENCY: [
+    '/@actions/core/', // has circular dependencies within its oidc module.
+  ],
+};
 
 /**
  * Get a Rollup configuration for building GitHub Actions using Typescript.
