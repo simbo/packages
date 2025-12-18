@@ -32,16 +32,17 @@ pnpm run preflight
 # build the package
 pnpm exec turbo run build --filter=PACKAGE_NAME
 
-# go to the package directory
-cd packages/PACKAGE_WORKSPACE
-
 # login to npm
 npm login
+
 # publish the package
-npm publish --access public
+pnpm publish --filter=PACKAGE_NAME --no-git-checks --access public
+
+# wait some minutes for npm registry to update...
 
 # login to github.com
 gh auth login
+
 # dispatch a repository event to trigger post-publish actions
 gh api repos/simbo/packages/dispatches \
   --method POST \

@@ -12,3 +12,5 @@ minimumReleaseAge: 2880
 
 minimumReleaseAgeExclude:
   - '@simbo/*'
+
+trustPolicy: no-downgrade

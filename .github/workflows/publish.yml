@@ -136,8 +136,9 @@ jobs:
 
       - name: 🚛 Publish to Registry
         if: ${{ steps.package.outputs.private == 'false' }}
-        working-directory: packages/${{ steps.params.outputs.workspace }}
-        run: npm publish
+        env:
+          PACKAGE: ${{ steps.package.outputs.name }}
+        run: pnpm publish --filter="${PACKAGE}" --no-git-checks --provenance
 
       - name: 🎉 Package Published (Event)
         uses: peter-evans/repository-dispatch@v3
