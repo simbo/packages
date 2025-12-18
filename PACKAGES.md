@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**27**_ packages managed in this repository:
+There are currently _**29**_ packages managed in this repository:
 
 - ### **Accessible**
 
@@ -172,6 +172,21 @@ There are currently _**27**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/CHANGELOG.md)  • 
   [Documentation](https://simbo.codes/packages/modules/_simbo_find-up-package/)
+
+- ### **Git Changes**
+
+  > A library to read, parse and provide Git changes information from
+  > `git status` for a local repository.
+
+  📂
+  [**`./packages/git-changes`**](https://github.com/simbo/packages/tree/main/packages/git-changes/)
+
+  📦 [`@simbo/git-changes`](https://www.npmjs.com/package/@simbo/git-changes) @
+  `0.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/git-changes/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-changes/CHANGELOG.md)  • 
+  [Documentation](https://simbo.codes/packages/modules/_simbo_git-changes/)
 
 - ### **Git Constants**
 
@@ -354,6 +369,22 @@ There are currently _**27**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/prettier-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/prettier-config/CHANGELOG.md)  • 
   [Documentation](https://simbo.codes/packages/modules/_simbo_prettier-config/)
+
+- ### **Rollup GitHub Actions Config**
+
+  > A rollup configuration for building GitHub Actions written in
+  > TypeScript/ESM.
+
+  📂
+  [**`./packages/rollup-github-actions-config`**](https://github.com/simbo/packages/tree/main/packages/rollup-github-actions-config/)
+
+  📦
+  [`@simbo/rollup-github-actions-config`](https://www.npmjs.com/package/@simbo/rollup-github-actions-config)
+  @ `0.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/CHANGELOG.md)  • 
+  [Documentation](https://simbo.codes/packages/modules/_simbo_rollup-github-actions-config/)
 
 - ### **Stringify Error**
 

@@ -1,0 +1,71 @@
+{
+  "name": "@simbo/git-changes",
+  "description": "A library to read, parse and provide Git changes information from `git status` for a local repository.",
+  "version": "0.0.0",
+  "keywords": [
+    "git",
+    "changes",
+    "diff",
+    "commits",
+    "repository",
+    "read",
+    "parse",
+    "utility",
+    "node",
+    "typescript"
+  ],
+  "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
+  "license": "MIT",
+  "homepage": "http://github.com/simbo/packages/tree/main/packages/git-changes",
+  "repository": "github:simbo/packages",
+  "bugs": "https://github.com/simbo/packages/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "check": "pnpm run check:eslint && pnpm run check:format && pnpm run check:types",
+    "check:eslint": "eslint --config ./eslint.config.ts --max-warnings 0",
+    "check:format": "prettier --check .",
+    "check:types": "tsc --noEmit",
+    "clean": "pnpm run clean:dist && pnpm run clean:coverage && pnpm run clean:turbo && pnpm run clean:node_modules",
+    "clean:dist": "rm -rf dist",
+    "clean:node_modules": "rm -rf node_modules",
+    "clean:turbo": "rm -rf .turbo",
+    "clean:coverage": "rm -rf coverage",
+    "fix:eslint": "pnpm run check:eslint --fix",
+    "fix:format": "prettier --write .",
+    "test": "vitest run --coverage",
+    "test:ui": "pnpm run test:watch --ui",
+    "test:watch": "vitest dev --coverage"
+  },
+  "dependencies": {
+    "@simbo/find-git-repository-root": "workspace:*",
+    "execa": "^9.6.1"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@simbo/eslint-config": "workspace:*",
+    "@simbo/prettier-config": "workspace:*",
+    "@simbo/tsconfig": "workspace:*",
+    "@types/node": "^24.10.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "baseline-browser-mapping": "^2.9.8",
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

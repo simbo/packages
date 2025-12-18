@@ -6,7 +6,7 @@
 
 <!-- PACKAGES -->
 
-There are currently _**27**_ packages managed in this repository.
+There are currently _**29**_ packages managed in this repository.
 
 <!-- /PACKAGES -->
 
