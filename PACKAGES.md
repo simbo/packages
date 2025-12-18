@@ -380,7 +380,7 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/rollup-github-actions-config`](https://www.npmjs.com/package/@simbo/rollup-github-actions-config)
-  @ `1.0.1`
+  @ `1.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/CHANGELOG.md)  • 
