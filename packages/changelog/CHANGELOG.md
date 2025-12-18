@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.5.2
+
+### Patch Changes
+
+- cf94f67: upgrade dependencies
+
 ## 1.5.1
 
 ### Patch Changes

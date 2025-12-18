@@ -1,7 +1,7 @@
 {
   "name": "@simbo/rollup-github-actions-config",
   "description": "A rollup configuration for building GitHub Actions written in TypeScript/ESM.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "keywords": [
     "rollup",
     "github",
