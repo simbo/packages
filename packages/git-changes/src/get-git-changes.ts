@@ -3,7 +3,7 @@ import { cwd } from 'node:process';
 import { findGitRepositoryRoot } from '@simbo/find-git-repository-root';
 import { execa, ExecaError } from 'execa';
 
-import type { GitChange } from './git-change.interface.js';
+import type { GitChange } from './git-changes.types.js';
 import { parseGitStatusOutput } from './parse-git-status-output.js';
 
 /**

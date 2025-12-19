@@ -1,5 +1,5 @@
 import { GitChangeStatus } from './git-change-status.enum.js';
-import type { GitChange } from './git-change.interface.js';
+import type { GitChange } from './git-changes.types.js';
 import { ENTRY_PATH_INDEX, ENTRY_SEPARATOR, ENTRY_STATUS_INDEX, ENTRY_STATUS_LENGTH } from './git-status-constants.js';
 import { parseGitChangeStatus } from './parse-git-change-status.js';
 
