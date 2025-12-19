@@ -1,5 +1,8 @@
 import type { GitChangeStatus } from './git-change-status.enum.js';
 
+/**
+ * Staged git change statuses.
+ */
 export type GitChangeStagedStatus =
   | GitChangeStatus.Added
   | GitChangeStatus.Modified
@@ -7,6 +10,9 @@ export type GitChangeStagedStatus =
   | GitChangeStatus.Renamed
   | GitChangeStatus.Copied;
 
+/**
+ * Unstaged git change statuses.
+ */
 export type GitChangeUnstagedStatus =
   | GitChangeStatus.Untracked
   | GitChangeStatus.Modified
@@ -28,7 +34,6 @@ export interface GitChange<
 
   /**
    * The origin file path if the change is a rename or copy.
-   * This is only set for changes that involve renaming or copying files.
    */
   originPath?: Staged extends GitChangeStatus.Renamed | GitChangeStatus.Copied
     ? string
