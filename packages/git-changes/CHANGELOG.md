@@ -1,5 +1,11 @@
 # @simbo/git-changes
 
+## 1.0.3
+
+### Patch Changes
+
+- fcd0224: improve types to reflect staged and unstaged states
+
 ## 1.0.2
 
 ### Patch Changes

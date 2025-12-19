@@ -1,7 +1,7 @@
 {
   "name": "@simbo/git-changes",
   "description": "A library to read, parse and provide Git changes information from `git status` for a local repository.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "git",
     "changes",
