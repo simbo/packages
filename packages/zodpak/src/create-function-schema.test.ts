@@ -28,7 +28,7 @@ describe('createFunctionSchema', () => {
     expect(schema.parse(f1)).toBe(f1);
     expect(schema.parse(f2)).toBe(f2);
     expect(schema.parse(f3)).toBe(f3 as unknown as (...args: unknown[]) => unknown);
-    expect(schema.parse(f4)).toBe(f4 as unknown as (...args: unknown[]) => unknown);
+    expect(schema.parse(f4)).toBe(f4 as (...args: unknown[]) => unknown);
     expect(schema.parse(f5)).toBe(f5 as unknown as (...args: unknown[]) => unknown);
 
     // safeParse happy paths
@@ -43,7 +43,7 @@ describe('createFunctionSchema', () => {
     const schema = createFunctionSchema(); // default "Expected a function"
 
     for (const value of [null, undefined, 0, 1, '', 'fn', true, false, {}, [], new Date(), /re/]) {
-      const res = schema.safeParse(value as unknown);
+      const res = schema.safeParse(value);
       expect(res.success).toBe(false);
       if (!res.success) {
         // z.custom emits code "custom"
@@ -55,7 +55,7 @@ describe('createFunctionSchema', () => {
 
   it('uses a custom error message when provided', () => {
     const schema = createFunctionSchema('Nope, not a function');
-    const res = schema.safeParse(123 as unknown);
+    const res = schema.safeParse(123);
     expect(res.success).toBe(false);
     if (!res.success) {
       expect(res.error.issues[0]?.message).toBe('Nope, not a function');
