@@ -29,7 +29,7 @@ npm i [-D] @simbo/plural
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_plural/).
+[documentation](https://simbo.de/packages/modules/_simbo_plural/).
 
 ### Examples
 

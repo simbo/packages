@@ -23,7 +23,7 @@ const changes = await getGitChanges('/path/to/repo');
 ```
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_git-changes/).
+[documentation](https://simbo.de/packages/modules/_simbo_git-changes/).
 
 ## License
 

@@ -37,7 +37,7 @@ npm i [-D] @simbo/find-up-package
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_find-up-package/).
+[documentation](https://simbo.de/packages/modules/_simbo_find-up-package/).
 
 ### Example
 

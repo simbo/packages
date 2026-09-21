@@ -31,7 +31,7 @@ npm i [-D] @simbo/user-facing-error
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_user-facing-error/).
+[documentation](https://simbo.de/packages/modules/_simbo_user-facing-error/).
 
 ### Examples
 

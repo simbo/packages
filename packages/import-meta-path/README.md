@@ -25,7 +25,7 @@ npm i [-D] @simbo/import-meta-path
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_import-meta-path/).
+[documentation](https://simbo.de/packages/modules/_simbo_import-meta-path/).
 
 ### Example
 

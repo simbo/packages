@@ -36,12 +36,12 @@ npm i [-D] @simbo/clirk
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_clirk/).
+[documentation](https://simbo.de/packages/modules/_simbo_clirk/).
 
 ### Define Your CLI
 
 The
-[`ClirkOptions`](https://simbo.codes/packages/interfaces/_simbo_clirk..ClirkOptions/)
+[`ClirkOptions`](https://simbo.de/packages/interfaces/_simbo_clirk..ClirkOptions/)
 interface provides flexible configuration for parsing arguments, generating help
 and version output, and customizing overall CLI behavior.
 
@@ -70,10 +70,10 @@ export const CLI_CONFIG: ClirkOptions = {
 #### Bootstrap Your CLI
 
 The
-[`ClirkContext`](https://simbo.codes/packages/interfaces/_simbo_clirk..ClirkContext/)
+[`ClirkContext`](https://simbo.de/packages/interfaces/_simbo_clirk..ClirkContext/)
 returned by
-[`clirk()`](https://simbo.codes/packages/functions/_simbo_clirk..clirk/)
-contains the parsed arguments and relevant CLI metadata.
+[`clirk()`](https://simbo.de/packages/functions/_simbo_clirk..clirk/) contains
+the parsed arguments and relevant CLI metadata.
 
 📄 **`./main.ts`**
 
@@ -92,8 +92,8 @@ export async function main() {
 ## Error Handling with `clitch`
 
 In your entrypoint script, wrap the main function with
-[`clitch()`](https://simbo.codes/packages/functions/_simbo_clirk.clitch.clitch/)
-to log errors consistently and exit the process gracefully.
+[`clitch()`](https://simbo.de/packages/functions/_simbo_clirk.clitch.clitch/) to
+log errors consistently and exit the process gracefully.
 
 📄 **`./cli.ts`** _(set as `bin` in `package.json`)_
 

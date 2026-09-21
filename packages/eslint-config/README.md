@@ -272,25 +272,24 @@ export default defineConfig([
 [`eslint-plugin-jsdoc`]: https://npmjs.com/package/eslint-plugin-jsdoc
 [`eslint-config-prettier`]: https://npmjs.com/package/eslint-config-prettier
 [`globals`]: https://npmjs.com/package/globals
-[API reference]:
-  https://simbo.codes/simbos-packages/modules/_simbo_eslint-config/
+[API reference]: https://simbo.de/simbos-packages/modules/_simbo_eslint-config/
 [`ConfigsRecord`]:
-  https://simbo.codes/simbos-packages/interfaces/_simbo_eslint-config..ConfigsRecord/
+  https://simbo.de/simbos-packages/interfaces/_simbo_eslint-config..ConfigsRecord/
 [`eslintJsConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.eslint-js.eslintJsConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.eslint-js.eslintJsConfigs/
 [`typescriptEslintConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.typescript-eslint.typescriptEslintConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.typescript-eslint.typescriptEslintConfigs/
 [`unicornConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.unicorn.unicornConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.unicorn.unicornConfigs/
 [`jsdocConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.jsdoc.jsdocConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.jsdoc.jsdocConfigs/
 [`nConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.n.nConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.n.nConfigs/
 [`prettierConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.prettier.prettierConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.prettier.prettierConfigs/
 [`testingConfigs`]:
-  https://simbo.codes/simbos-packages/variables/_simbo_eslint-config.testing.testingConfigs/
+  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.testing.testingConfigs/
 [`noRestrictedGlobalsRule`]:
-  https://simbo.codes/simbos-packages/functions/_simbo_eslint-config..noRestrictedGlobalsRule/
+  https://simbo.de/simbos-packages/functions/_simbo_eslint-config..noRestrictedGlobalsRule/
 [`setRulesToOff`]:
-  https://simbo.codes/simbos-packages/functions/_simbo_eslint-config..setRulesToOff/
+  https://simbo.de/simbos-packages/functions/_simbo_eslint-config..setRulesToOff/

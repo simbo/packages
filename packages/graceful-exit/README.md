@@ -44,7 +44,7 @@ npm i [-D] @simbo/graceful-exit
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_graceful_exit/).
+[documentation](https://simbo.de/packages/modules/_simbo_graceful_exit/).
 
 ### Basic
 

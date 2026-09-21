@@ -29,7 +29,7 @@ npm i [-D] @simbo/accessible
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_accessible/).
+[documentation](https://simbo.de/packages/modules/_simbo_accessible/).
 
 Use the provided functions in your code:
 

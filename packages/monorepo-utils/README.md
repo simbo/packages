@@ -40,7 +40,7 @@ npm i [-D] @simbo/monorepo-utils
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_monorepo-utils/).
+[documentation](https://simbo.de/packages/modules/_simbo_monorepo-utils/).
 
 ### Examples
 
@@ -105,4 +105,4 @@ const packagePath = await getPackagePath({ packageName: 'my-package' });
 [MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
 
 [`WorkspaceMetadata`]:
-  https://simbo.codes/packages/interfaces/_simbo_monorepo-utils.WorkspaceMetadata/
+  https://simbo.de/packages/interfaces/_simbo_monorepo-utils.WorkspaceMetadata/

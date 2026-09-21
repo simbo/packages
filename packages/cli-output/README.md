@@ -15,7 +15,7 @@ npm i [-D] @simbo/cli-output
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_cli-output/).
+[documentation](https://simbo.de/packages/modules/_simbo_cli-output/).
 
 ### Examples
 

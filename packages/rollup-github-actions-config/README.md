@@ -30,7 +30,7 @@ In your `package.json`, add a build script:
 ```
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_rollup_github_actions_config/).
+[documentation](https://simbo.de/packages/modules/_simbo_rollup_github_actions_config/).
 
 ## License
 

@@ -33,7 +33,7 @@ npm i [-D] @simbo/stringify-error
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_stringify-error/).
+[documentation](https://simbo.de/packages/modules/_simbo_stringify-error/).
 
 ### Example
 

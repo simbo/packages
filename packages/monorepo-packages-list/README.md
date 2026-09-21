@@ -37,13 +37,13 @@ npm i [-D] @simbo/monorepo-packages-list
 
 ## Usage
 
-[`monorepoPackagesList()`](https://simbo.codes/packages/functions/_simbo_monorepo-packages-list.monorepoPackagesList/)
+[`monorepoPackagesList()`](https://simbo.de/packages/functions/_simbo_monorepo-packages-list.monorepoPackagesList/)
 uses metadata from your monorepo and returns a Markdown list as string.
 
 🎨 The output can be completely customized.
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_monorepo-packages-list/).
+[documentation](https://simbo.de/packages/modules/_simbo_monorepo-packages-list/).
 
 ### Examples
 

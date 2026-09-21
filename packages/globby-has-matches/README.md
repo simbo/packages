@@ -30,7 +30,7 @@ npm i [-D] @simbo/globby-has-matches
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_globby-has-matches/).
+[documentation](https://simbo.de/packages/modules/_simbo_globby-has-matches/).
 
 ### Example
 
