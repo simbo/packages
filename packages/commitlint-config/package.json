@@ -50,15 +50,15 @@
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "@commitlint/cli": "^20.1.0"
+    "@commitlint/cli": "^21.2.3"
   },
   "dependencies": {
-    "@commitlint/config-conventional": "^20.5.3"
+    "@commitlint/config-conventional": "^21.2.3"
   },
   "devDependencies": {
-    "@commitlint/lint": "^20.5.3",
-    "@commitlint/load": "^20.5.3",
-    "@commitlint/types": "^20.5.0",
+    "@commitlint/lint": "^21.2.3",
+    "@commitlint/load": "^21.2.3",
+    "@commitlint/types": "^21.2.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@simbo/eslint-config": "workspace:*",
     "@simbo/prettier-config": "workspace:*",
