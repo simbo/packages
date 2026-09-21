@@ -16,10 +16,10 @@ import type { Options } from './call-prettier.types.js';
  * @throws {TypeError} If the provided mode is not 'write' or 'check'.
  */
 export async function callPrettier(glob: string, options: Options = {}): Promise<void> {
-  const { workingDir = cwd(), mode = 'write' as unknown, disableIgnores = false } = options;
+  const { workingDir = cwd(), mode = 'write', disableIgnores = false } = options;
 
-  if (mode !== 'write' && mode !== 'check') {
-    throw new TypeError(`Invalid mode '${String(mode)}'. Expected 'write' or 'check'.`);
+  if (mode !== 'write' && (mode as string) !== 'check') {
+    throw new TypeError(`Invalid mode '${mode}'. Expected 'write' or 'check'.`);
   }
 
   const binPath = await getPrettierBinPath({ ...options, workingDir });
