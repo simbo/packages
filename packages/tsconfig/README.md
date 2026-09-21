@@ -2,7 +2,7 @@
 
 📦 [**`@simbo/tsconfig`**](https://npmjs.com/package/@simbo/tsconfig)
 
-Shared TypeScript configurations.
+Shared TypeScript configurations for TypeScript 5 and 6.
 
 ## Installation
 
@@ -22,6 +22,11 @@ npm i -D @simbo/tsconfig
 
 - `@simbo/tsconfig/browser` Browser specific configuration (see
   [tsconfig.browser.json](./tsconfig.browser.json))
+
+The Node.js configuration explicitly includes `@types/node`. Install it
+alongside TypeScript when using `@simbo/tsconfig/node`. If your project needs
+additional global types, list them together with `node` in
+`compilerOptions.types`.
 
 ## Example
 
