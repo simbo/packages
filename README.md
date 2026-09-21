@@ -18,8 +18,8 @@ for a comprehensive list of all packages.
 ### Requirements
 
 - a linux-based operating system
-- node.js (v22) via [nvm](https://github.com/nvm-sh/nvm)
-- [pnpm](https://pnpm.io/) (v10)
+- node.js (v24) via [nvm](https://github.com/nvm-sh/nvm)
+- [pnpm](https://pnpm.io/) (v12)
 
 ### Setup
 
