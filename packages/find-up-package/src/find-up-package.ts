@@ -4,7 +4,6 @@ import { readPackageJson } from '@simbo/package-json';
 import { findUp } from 'find-up';
 
 import type {
-  MatchFn,
   Options,
   OptionsWithNormalize,
   OptionsWithoutNormalize,
@@ -24,11 +23,7 @@ import type {
 export async function findUpPackage(options: OptionsWithNormalize): Promise<PackageNormalized | undefined>;
 export async function findUpPackage(options: OptionsWithoutNormalize): Promise<Package | undefined>;
 export async function findUpPackage(options: Options = {}): Promise<Package | PackageNormalized | undefined> {
-  const {
-    matchFn = (result => !!(result.path && result.packageJson)) as MatchFn,
-    workingDir = cwd(),
-    normalize = false,
-  } = options;
+  const { matchFn = result => !!(result.path && result.packageJson), workingDir = cwd(), normalize = false } = options;
 
   let matchedPackage: Package | undefined;
 
