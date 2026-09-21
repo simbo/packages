@@ -22,10 +22,10 @@ export function injectBetweenHtmlComments(content: string, inject: string, optio
   const { name, text: textOption, inline = false, trim = true } = options;
 
   if (typeof content !== 'string' || content.length === 0) {
-    throw new TypeError(`Content must be a non-empty string: '${String(content as unknown)}'`);
+    throw new TypeError(`Content must be a non-empty string: '${content}'`);
   }
   if (typeof inject !== 'string') {
-    throw new TypeError(`Injection content must be a string: '${String(inject as unknown)}'`);
+    throw new TypeError(`Injection content must be a string: '${String(inject)}'`);
   }
 
   if (trim) {
@@ -86,7 +86,7 @@ function getCommentText(textOption?: TextOption, name?: string): string {
   }
 
   if (typeof text !== 'string' || text.length === 0) {
-    throw new TypeError(`Comment text must be a non-empty string: '${String(text as unknown)}'`);
+    throw new TypeError(`Comment text must be a non-empty string: '${text}'`);
   }
 
   return text;
