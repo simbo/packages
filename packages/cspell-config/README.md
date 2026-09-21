@@ -12,6 +12,9 @@ Install cspell and `@simbo/cspell-config` from the npm registry:
 npm i -D cspell @simbo/cspell-config
 ```
 
+CSpell 9 and 10 are supported. CSpell 10 requires Node.js 22.18 or newer. Use
+CSpell 9 if your project still runs on Node.js 20.
+
 ## Usage
 
 Create a [CSpell configuration](https://cspell.org/docs/Configuration) file in
