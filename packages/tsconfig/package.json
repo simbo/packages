@@ -21,7 +21,7 @@
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {
