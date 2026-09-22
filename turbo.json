@@ -11,6 +11,22 @@
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
+    "check": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "check:eslint": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "check:types": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "check:format": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
     "clean": {
       "cache": false,
       "outputLogs": "none"
@@ -32,22 +48,6 @@
       "outputLogs": "none"
     },
     "test": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:eslint": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:types": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:format": {
       "dependsOn": ["^build"],
       "cache": false
     }
