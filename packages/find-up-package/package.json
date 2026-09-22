@@ -54,7 +54,7 @@
     "@simbo/accessible": "workspace:*",
     "@simbo/package-json": "workspace:*",
     "find-up": "^8.0.0",
-    "normalize-package-data": "^8.0.0",
+    "normalize-package-data": "^9.0.0",
     "type-fest": "^5.10.0"
   },
   "devDependencies": {

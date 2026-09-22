@@ -38,8 +38,8 @@
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "zod": "^4.1.12",
-    "zod-validation-error": "^4.0.2"
+    "zod": "^4",
+    "zod-validation-error": "^5"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",

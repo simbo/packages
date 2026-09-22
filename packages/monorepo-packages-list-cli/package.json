@@ -65,7 +65,7 @@
     "@simbo/monorepo-utils": "workspace:*",
     "@simbo/user-facing-error": "workspace:*",
     "@simbo/zodpak": "workspace:*",
-    "cosmiconfig": "^9.0.2",
+    "cosmiconfig": "^10.0.1",
     "cosmiconfig-typescript-loader": "^6.3.0",
     "yoctocolors": "^2.2.0",
     "zod": "^4.6.5"

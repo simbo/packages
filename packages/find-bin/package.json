@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@simbo/accessible": "workspace:*",
-    "execa": "^9.6.1",
+    "execa": "^10.0.1",
     "find-up": "^8.0.0"
   },
   "devDependencies": {
