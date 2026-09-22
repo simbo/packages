@@ -1,5 +1,11 @@
 # @simbos-packages/changelog
 
+## 1.5.4
+
+### Patch Changes
+
+- 1c58f82: cleanup tsconfig files and turbo.json tasks
+
 ## 1.5.3
 
 ### Patch Changes

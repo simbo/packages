@@ -1,5 +1,11 @@
 # @simbo/git-changes
 
+## 2.1.0
+
+### Minor Changes
+
+- 50850c2: simplify types for git changes
+
 ## 2.0.0
 
 ### Major Changes

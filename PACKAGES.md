@@ -47,7 +47,7 @@ There are currently _**29**_ packages managed in this repository:
   📂
   [**`./packages/changelog`**](https://github.com/simbo/packages/tree/main/packages/changelog/)
 
-  📦 `changelog` @ `1.5.3`
+  📦 `changelog` @ `1.5.4`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/changelog/CHANGELOG.md)
@@ -182,7 +182,7 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/git-changes`**](https://github.com/simbo/packages/tree/main/packages/git-changes/)
 
   📦 [`@simbo/git-changes`](https://www.npmjs.com/package/@simbo/git-changes) @
-  `2.0.0`
+  `2.1.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-changes/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-changes/CHANGELOG.md)  • 
