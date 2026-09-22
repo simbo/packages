@@ -21,6 +21,10 @@ template modifications where placeholders are wrapped in comments.
 
 - Fully typed with TypeScript
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/inject-between-html-comments` from the npm registry:
@@ -32,7 +36,10 @@ npm i [-D] @simbo/inject-between-html-comments
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_inject-between-html-comments/).
+[documentation](https://simbo.de/packages/modules/_simbo_inject-between-html-comments/).
+
+Injected content is inserted literally: replacement sequences such as `$&` and
+`$$` are preserved.
 
 ### Example
 

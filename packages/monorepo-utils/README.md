@@ -24,6 +24,10 @@ with package manifests.
 
 - Fully typed with TypeScript
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/monorepo-utils` from the npm registry:
@@ -40,7 +44,7 @@ npm i [-D] @simbo/monorepo-utils
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_monorepo-utils/).
+[documentation](https://simbo.de/packages/modules/_simbo_monorepo-utils/).
 
 ### Examples
 
@@ -95,9 +99,9 @@ const patterns = await getWorkspacePatterns();
 Get the file system path of a package by its name.
 
 ```ts
-import { getPackagePath } from '@simbo/monorepo-utils';
+import { getPackagePathByName } from '@simbo/monorepo-utils';
 
-const packagePath = await getPackagePath({ packageName: 'my-package' });
+const packagePath = await getPackagePathByName('my-package');
 ```
 
 ## License
@@ -105,4 +109,4 @@ const packagePath = await getPackagePath({ packageName: 'my-package' });
 [MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
 
 [`WorkspaceMetadata`]:
-  https://simbo.codes/packages/interfaces/_simbo_monorepo-utils.WorkspaceMetadata/
+  https://simbo.de/packages/interfaces/_simbo_monorepo-utils.WorkspaceMetadata/

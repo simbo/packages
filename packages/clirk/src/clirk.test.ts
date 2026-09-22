@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import type { ParsedOptions } from './schemas/options-schema.js';
 import type { ClirkOptions } from './types/clirk-options.interface.js';
@@ -89,10 +89,6 @@ const { default: minimist } = vi.mocked(await import('minimist'));
 const { clirk } = await import('./clirk.js');
 
 describe('clirk', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('walks the happy path with minimal options', async () => {
     const options = {
       importMetaDirname: '/test',

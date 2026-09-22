@@ -36,18 +36,18 @@ describe('nonEmptyStringSchema', () => {
       const result = nonEmptyStringSchema.safeParse(value);
       expect(result.success).toBe(false);
 
-      if (!result.success) {
-        const issues = result.error.issues;
+      if (result.success) return;
 
-        // For the empty string, assert our custom message is present.
-        if (value === '') {
-          expect(issues[0]?.message).toBe('Expected non-empty string');
-          // The code for min(1) is "too_small" for strings; assert defensively:
-          expect(issues[0]?.code).toBe('too_small');
-        } else {
-          // For non-string inputs we at least assert we got an error.
-          expect(issues.length).toBeGreaterThan(0);
-        }
+      const issues = result.error.issues;
+
+      // For the empty string, assert our custom message is present.
+      if (value === '') {
+        expect(issues[0]?.message).toBe('Expected non-empty string');
+        // The code for min(1) is "too_small" for strings; assert defensively:
+        expect(issues[0]?.code).toBe('too_small');
+      } else {
+        // For non-string inputs we at least assert we got an error.
+        expect(issues.length).toBeGreaterThan(0);
       }
     });
   });

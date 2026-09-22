@@ -5,12 +5,16 @@
 
 A rollup configuration for building GitHub Actions written in TypeScript/ESM.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/rollup-github-actions-config` from the npm registry:
 
 ```bash
-npm i -D @simbo/rollup-github-actions-config
+npm i -D rollup typescript @simbo/rollup-github-actions-config
 ```
 
 ## Usage
@@ -30,7 +34,7 @@ In your `package.json`, add a build script:
 ```
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_rollup_github_actions_config/).
+[documentation](https://simbo.de/packages/modules/_simbo_rollup-github-actions-config/).
 
 ## License
 

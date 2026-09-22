@@ -22,7 +22,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/accessible/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/accessible/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_accessible/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_accessible/)
 
 - ### **Call Prettier**
 
@@ -38,7 +38,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/call-prettier/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/call-prettier/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_call-prettier/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_call-prettier/)
 
 - ### **Simbo's Packages — Changelog**
 
@@ -64,7 +64,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/cli-output/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/cli-output/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_cli-output/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_cli-output/)
 
 - ### **Clirk - The CLI Clerk**
 
@@ -79,7 +79,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/clirk/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/clirk/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_clirk/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_clirk/)
 
 - ### **Simbo's Commitlint Configuration**
 
@@ -95,7 +95,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/commitlint-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/commitlint-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_commitlint-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_commitlint-config/)
 
 - ### **Simbo's CSpell Configuration**
 
@@ -110,7 +110,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/cspell-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/cspell-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_cspell-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_cspell-config/)
 
 - ### **Simbo's ESLint Configurations**
 
@@ -126,7 +126,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/eslint-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/eslint-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_eslint-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_eslint-config/)
 
 - ### **Find Bin**
 
@@ -140,7 +140,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-bin/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-bin/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_find-bin/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_find-bin/)
 
 - ### **Find Git Repository Root**
 
@@ -155,7 +155,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-git-repository-root/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-git-repository-root/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_find-git-repository-root/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_find-git-repository-root/)
 
 - ### **Find Up Package**
 
@@ -171,7 +171,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_find-up-package/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_find-up-package/)
 
 - ### **Git Changes**
 
@@ -186,7 +186,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-changes/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-changes/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_git-changes/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_git-changes/)
 
 - ### **Git Constants**
 
@@ -202,7 +202,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-constants/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-constants/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_git-constants/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_git-constants/)
 
 - ### **Globby Has Matches**
 
@@ -217,7 +217,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/globby-has-matches/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/globby-has-matches/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_globby-has-matches/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_globby-has-matches/)
 
 - ### **Graceful Exit**
 
@@ -233,7 +233,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/graceful-exit/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/graceful-exit/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_graceful-exit/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_graceful-exit/)
 
 - ### **Import Meta Path**
 
@@ -249,7 +249,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_import-meta-path/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_import-meta-path/)
 
 - ### **Inject Between HTML Comments**
 
@@ -264,7 +264,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/inject-between-html-comments/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/inject-between-html-comments/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_inject-between-html-comments/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_inject-between-html-comments/)
 
 - ### **Is Git Repository Root**
 
@@ -280,7 +280,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/is-git-repository-root/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/is-git-repository-root/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_is-git-repository-root/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_is-git-repository-root/)
 
 - ### **Monorepo Packages List**
 
@@ -295,7 +295,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_monorepo-packages-list/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_monorepo-packages-list/)
 
 - ### **Monorepo Packages List CLI**
 
@@ -311,7 +311,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_monorepo-packages-list-cli/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_monorepo-packages-list-cli/)
 
 - ### **Monorepo Utilities**
 
@@ -326,7 +326,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_monorepo-utils/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_monorepo-utils/)
 
 - ### **Package Utilities**
 
@@ -340,7 +340,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/package-json/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/package-json/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_package-json/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_package-json/)
 
 - ### **Plural**
 
@@ -353,7 +353,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/plural/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/plural/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_plural/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_plural/)
 
 - ### **Simbo's Prettier Configuration**
 
@@ -368,7 +368,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/prettier-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/prettier-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_prettier-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_prettier-config/)
 
 - ### **Rollup GitHub Actions Config**
 
@@ -384,7 +384,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_rollup-github-actions-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_rollup-github-actions-config/)
 
 - ### **Stringify Error**
 
@@ -400,7 +400,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/stringify-error/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/stringify-error/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_stringify-error/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_stringify-error/)
 
 - ### **Simbo's TypeScript Configurations**
 
@@ -429,7 +429,7 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_user-facing-error/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_user-facing-error/)
 
 - ### **Zodpak**
 
@@ -442,6 +442,6 @@ There are currently _**29**_ packages managed in this repository:
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/zodpak/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/zodpak/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_zodpak/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_zodpak/)
 
 <!-- /PACKAGES -->

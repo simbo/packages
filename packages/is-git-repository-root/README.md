@@ -22,6 +22,10 @@ It simply checks for the presence of a `.git` folder in the given directory.
 
 ⚠️ Git submodules and worktrees are not considered repository roots.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/is-git-repository-root` from the npm registry:
@@ -33,7 +37,7 @@ npm i [-D] @simbo/is-git-repository-root
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_is-git-repository-root/).
+[documentation](https://simbo.de/packages/modules/_simbo_is-git-repository-root/).
 
 ### Example
 

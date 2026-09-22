@@ -33,6 +33,10 @@ errors.
   - Unknown values → passed through
     [`stringifyError()`](https://www.npmjs.com/package/@simbo/stringify-error).
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/graceful-exit` from the npm registry:
@@ -44,7 +48,7 @@ npm i [-D] @simbo/graceful-exit
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_graceful_exit/).
+[documentation](https://simbo.de/packages/modules/_simbo_graceful-exit/).
 
 ### Basic
 

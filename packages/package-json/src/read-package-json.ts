@@ -20,7 +20,7 @@ export async function readPackageJson(path = cwd()): Promise<PackageJson> {
     const content = await readFile(packageJsonPath, 'utf8');
     packageJson = JSON.parse(content) as PackageJson;
   } catch (error) {
-    throw new Error(`Failed to read ${NAME}: ${stringifyError(error)}`);
+    throw new Error(`Failed to read ${NAME}: ${stringifyError(error)}`, { cause: error });
   }
   return packageJson;
 }

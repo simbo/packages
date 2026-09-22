@@ -20,6 +20,10 @@ maintaining full compatibility with standard JavaScript `Error` behavior.
 - One dependency
   ([`@simbo/stringify-error`](https://npmjs.com/package/@simbo/stringify-error))
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/user-facing-error` from the npm registry:
@@ -31,7 +35,7 @@ npm i [-D] @simbo/user-facing-error
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_user-facing-error/).
+[documentation](https://simbo.de/packages/modules/_simbo_user-facing-error/).
 
 ### Examples
 

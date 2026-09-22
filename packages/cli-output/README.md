@@ -2,7 +2,11 @@
 
 📦 [**`@simbo/cli-output`**](https://npmjs.com/package/@simbo/cli-output)
 
-A collection utilities for common CLI messages and output.
+A collection of utilities for common CLI messages and output.
+
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
 
 ## Installation
 
@@ -15,7 +19,7 @@ npm i [-D] @simbo/cli-output
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_cli-output/).
+[documentation](https://simbo.de/packages/modules/_simbo_cli-output/).
 
 ### Examples
 

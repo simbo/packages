@@ -6,6 +6,7 @@ const ERROR_MAP = createErrorMap();
 /**
  * Set a custom error map to create more user-friendly error messages.
  */
+// eslint-disable-next-line unicorn/no-top-level-side-effects -- Register the documented shared Zod error map.
 z.config({ customError: ERROR_MAP });
 
 /**

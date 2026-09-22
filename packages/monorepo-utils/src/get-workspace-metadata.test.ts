@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { getWorkspaceMetadata } from './get-workspace-metadata.js';
 
@@ -34,10 +34,6 @@ const { readPackageJson } = vi.mocked(await import('@simbo/package-json'));
 const { readFile } = vi.mocked(await import('node:fs/promises'));
 
 describe('getWorkspaceMetadata', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it("should return the package's metadata", async () => {
     const metadata = await getWorkspaceMetadata('packages/test-package');
 

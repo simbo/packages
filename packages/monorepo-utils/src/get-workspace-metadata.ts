@@ -104,7 +104,7 @@ async function aggregateReadmeData(
     readme = await readFile(join(absolutePath, 'README.md'), 'utf8');
     title = /^#\s+(.+)$/m.exec(readme)?.[1].trim();
   } catch (error) {
-    throw new Error(`Failed to read README.md at ${relativePath}: ${stringifyError(error)}`);
+    throw new Error(`Failed to read README.md at ${relativePath}: ${stringifyError(error)}`, { cause: error });
   }
 
   if (typeof title !== 'string' || title.length === 0) {

@@ -1,5 +1,5 @@
 import { UserFacingError } from '@simbo/user-facing-error';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { gracefulExit } from './graceful-exit.js';
 
@@ -29,10 +29,6 @@ const { log } = vi.mocked(await import('node:console'));
 const { exitWithTeardown } = vi.mocked(await import('./exit-with-teardown.js'));
 
 describe('gracefulExit', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('exits with 0 when undefined is passed', async () => {
     await gracefulExit();
 
@@ -89,6 +85,7 @@ describe('gracefulExit', () => {
 
   it('logs ExitPromptError message and exits with 1', async () => {
     const err = new Error('ExitPromptError');
+    // eslint-disable-next-line unicorn/no-error-property-assignment -- Simulate a named external error.
     err.name = 'ExitPromptError';
     await gracefulExit(err);
 

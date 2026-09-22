@@ -35,8 +35,6 @@ describe('loadConfig', () => {
   let configObj: Record<string, unknown> | undefined;
 
   beforeEach(() => {
-    vi.clearAllMocks();
-
     (cosmiconfig as Mock).mockImplementation(
       (
         _name: never,
@@ -97,6 +95,6 @@ describe('loadConfig', () => {
     const loadConfig = createConfigLoader('/monorepo');
     configObj = { someConfig: false };
 
-    await expect(loadConfig()).rejects.toThrowError(`Failed to parse the config file: ./file (Validation error)`);
+    await expect(loadConfig()).rejects.toThrow(`Failed to parse the config file: ./file (Validation error)`);
   });
 });

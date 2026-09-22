@@ -3,6 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { plural } from './plural.js';
 
 describe('plural', () => {
+  it('keeps replacement tokens in words literal', () => {
+    expect(plural(1, '$& $$')).toBe('1 $& $$');
+    expect(plural(2, 'item', '$& $$')).toBe('2 $& $$');
+  });
+
   it('uses singular form for count === 1', () => {
     expect(plural(1, 'apple')).toBe('1 apple');
   });

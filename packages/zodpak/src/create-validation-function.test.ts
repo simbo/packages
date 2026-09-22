@@ -71,12 +71,13 @@ describe('createValidationFunction', () => {
   });
 
   it('throws a ValidationError with useful path info for nested schemas', () => {
+    const profileSchema = z.object({
+      age: z.number().int().min(18),
+      email: z.email(),
+    });
     const schema = z.object({
       user: z.object({
-        profile: z.object({
-          age: z.number().int().min(18),
-          email: z.email(),
-        }),
+        profile: profileSchema,
       }),
     });
 
@@ -113,10 +114,11 @@ describe('createValidationFunction', () => {
   });
 
   it('surfaces multiple issues in a single thrown ValidationError', () => {
+    const itemSchema = z.object({ id: z.uuid() });
     const schema = z.object({
       title: z.string().min(1),
       count: z.number().int().nonnegative(),
-      items: z.array(z.object({ id: z.uuid() })),
+      items: z.array(itemSchema),
     });
 
     const validate = createValidationFunction(schema);

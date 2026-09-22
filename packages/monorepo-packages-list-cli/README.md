@@ -10,6 +10,10 @@ Uses
 [`@simbo/monorepo-packages-list`](https://npmjs.com/package/@simbo/monorepo-packages-list)
 as a library.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/monorepo-packages-list-cli` from the npm registry:

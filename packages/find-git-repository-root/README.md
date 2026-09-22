@@ -6,7 +6,7 @@
 A lightweight utility for locating the **root directory of a Git repository**.
 
 It searches upward from a given directory until it finds a valid repository root
-(a directory containing a `.git `folder).
+(a directory containing a `.git` folder).
 
 This package builds on [find-up](https://npmjs.com/package/find-up) and
 [`@simbo/is-git-repository-root`](https://npmjs.com/package/@simbo/is-git-repository-root).
@@ -24,6 +24,10 @@ This package builds on [find-up](https://npmjs.com/package/find-up) and
 
 - Fully typed with TypeScript
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/find-git-repository-root` from the npm registry:
@@ -35,7 +39,7 @@ npm i [-D] @simbo/find-git-repository-root
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_find-git-repository-root/).
+[documentation](https://simbo.de/packages/modules/_simbo_find-git-repository-root/).
 
 ### Example
 

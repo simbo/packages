@@ -10,7 +10,7 @@ import { parseGitStatusOutput } from './parse-git-status-output.js';
  * @returns A Record with the same entries as the map.
  */
 function toRecord(map: ReadonlyMap<string, unknown>): Record<string, unknown> {
-  return Object.fromEntries(map.entries());
+  return Object.fromEntries(map);
 }
 
 describe('parseGitStatusOutput()', () => {

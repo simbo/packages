@@ -45,6 +45,6 @@ export async function getGitChanges(workingDir = cwd()): Promise<ReadonlyMap<str
         : error instanceof Error
           ? error.message
           : `Unknown error (${String(error)})`;
-    throw new Error(`Failed to get Git changes: ${reason}`);
+    throw new Error(`Failed to get Git changes: ${reason}`, { cause: error });
   }
 }

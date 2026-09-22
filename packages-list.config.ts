@@ -58,7 +58,7 @@ export default defineConfig([
 
       docsUrlFn: (workspace: WorkspaceMetadata): string | undefined => {
         if (PACKAGES_EXCLUDED_FROM_DOCS.has(workspace.folderName)) return;
-        return `https://simbo.codes/packages/modules/${workspace.name.replaceAll(/[^\da-z-]/gi, '_')}/`;
+        return `https://simbo.de/packages/modules/${workspace.name.replaceAll(/[^\da-z-]/gi, '_')}/`;
       },
 
       readmeUrlFn: (workspace: WorkspaceMetadata) =>

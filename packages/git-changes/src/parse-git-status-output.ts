@@ -4,9 +4,9 @@ import { ENTRY_PATH_INDEX, ENTRY_SEPARATOR, ENTRY_STATUS_INDEX, ENTRY_STATUS_LEN
 import { parseGitChangeStatus } from './parse-git-change-status.js';
 
 /**
- * Parses the output of the git status command and returns a map of Git changes.
+ * Parses the output of the Git status command and returns a map of Git changes.
  *
- * @param output - The output string from the git status command.
+ * @param output - The output string from the Git status command.
  * @returns A ReadonlyMap of file paths to their corresponding GitChange objects.
  */
 export function parseGitStatusOutput(output: string): ReadonlyMap<string, GitChange> {
@@ -26,7 +26,7 @@ export function parseGitStatusOutput(output: string): ReadonlyMap<string, GitCha
 
     const path = entry.slice(ENTRY_PATH_INDEX);
 
-    if ((!staged && !unstaged) || !path) {
+    if (!path || (!staged && !unstaged)) {
       continue;
     }
 

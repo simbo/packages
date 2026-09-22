@@ -1,5 +1,5 @@
-import { defineConfig } from '@eslint/config-helpers';
 import eslintPluginNode from 'eslint-plugin-n';
+import { defineConfig } from 'eslint/config';
 
 import type { ConfigsRecord } from '../configs-record.interface.js';
 

@@ -1,5 +1,5 @@
 import type { Jsonifiable } from 'type-fest';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { getWorkspacePatterns } from './get-workspace-patterns.js';
 
@@ -38,10 +38,6 @@ const { isReadableFile } = vi.mocked(await import('@simbo/accessible'));
 const { parse, stringify } = vi.mocked(await import('yaml'));
 
 describe('getWorkspacePatterns', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should return an array of workspace patterns from pnpm-workspace.yaml', async () => {
     const yamlString = stringify({ packages: ['packages/*'] });
     readFile.mockResolvedValueOnce(yamlString);
@@ -103,7 +99,7 @@ describe('getWorkspacePatterns', () => {
     const invalidYamlString = `}`;
     readFile.mockResolvedValueOnce(invalidYamlString);
 
-    await expect(getWorkspacePatterns()).rejects.toThrowError(/^Error reading pnpm-workspace.yaml: Unexpected /);
+    await expect(getWorkspacePatterns()).rejects.toThrow(/^Error reading pnpm-workspace.yaml: Unexpected /);
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenNthCalledWith(1, '/cwd', '/cwd/pnpm-workspace.yaml');
@@ -121,7 +117,7 @@ describe('getWorkspacePatterns', () => {
     isReadableFile.mockResolvedValueOnce(false);
     readFile.mockResolvedValueOnce('}');
 
-    await expect(getWorkspacePatterns()).rejects.toThrowError(/^Error reading package.json: Unexpected /);
+    await expect(getWorkspacePatterns()).rejects.toThrow(/^Error reading package.json: Unexpected /);
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenNthCalledWith(1, '/cwd', '/cwd/package.json');
@@ -139,7 +135,7 @@ describe('getWorkspacePatterns', () => {
   it('should throw if readFile fails', async () => {
     readFile.mockRejectedValueOnce(new Error('readFile Failure'));
 
-    await expect(getWorkspacePatterns()).rejects.toThrowError(/^Error reading pnpm-workspace.yaml: readFile Failure/);
+    await expect(getWorkspacePatterns()).rejects.toThrow(/^Error reading pnpm-workspace.yaml: readFile Failure/);
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenNthCalledWith(1, '/cwd', '/cwd/pnpm-workspace.yaml');
@@ -156,7 +152,7 @@ describe('getWorkspacePatterns', () => {
     const yamlString = stringify({ packages: [] });
     readFile.mockResolvedValueOnce(yamlString);
 
-    await expect(getWorkspacePatterns()).rejects.toThrowError('No workspace patterns found in pnpm-workspace.yaml');
+    await expect(getWorkspacePatterns()).rejects.toThrow('No workspace patterns found in pnpm-workspace.yaml');
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenNthCalledWith(1, '/cwd', '/cwd/pnpm-workspace.yaml');
@@ -174,7 +170,7 @@ describe('getWorkspacePatterns', () => {
     const yamlString = stringify({});
     readFile.mockResolvedValueOnce(yamlString);
 
-    await expect(getWorkspacePatterns()).rejects.toThrowError('No workspace patterns found in pnpm-workspace.yaml');
+    await expect(getWorkspacePatterns()).rejects.toThrow('No workspace patterns found in pnpm-workspace.yaml');
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenCalledTimes(1);
     expect(relative).toHaveBeenNthCalledWith(1, '/cwd', '/cwd/pnpm-workspace.yaml');
@@ -191,7 +187,7 @@ describe('getWorkspacePatterns', () => {
   it('should throw when no configuration files where found', async () => {
     isReadableFile.mockResolvedValueOnce(false).mockResolvedValueOnce(false);
 
-    await expect(getWorkspacePatterns()).rejects.toThrowError('No configuration files found in /cwd');
+    await expect(getWorkspacePatterns()).rejects.toThrow('No configuration files found in /cwd');
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(relative).not.toHaveBeenCalled();
     expect(join).toHaveBeenCalledTimes(2);

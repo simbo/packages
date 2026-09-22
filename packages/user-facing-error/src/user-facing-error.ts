@@ -26,6 +26,7 @@ export class UserFacingError extends Error {
    * @param options - Optional hint or ErrorOptions.
    */
   public constructor(message: string, options?: SecondParam) {
+    // eslint-disable-next-line unicorn/custom-error-definition -- The public API also accepts a hint instead of ErrorOptions.
     super(message, typeof options === 'object' ? options : undefined);
     this.hint = this.#getHintValue(options);
   }

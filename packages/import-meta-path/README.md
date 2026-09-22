@@ -14,6 +14,10 @@ A small utility for safely deriving absolute file and directory paths from
   `__filename`
 - Zero dependencies
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/import-meta-path` from the npm registry:
@@ -25,7 +29,10 @@ npm i [-D] @simbo/import-meta-path
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_import-meta-path/).
+[documentation](https://simbo.de/packages/modules/_simbo_import-meta-path/).
+
+Fallbacks apply only to `null` or `undefined`. An explicitly supplied empty
+`dirname` or `filename` is not treated as missing.
 
 ### Example
 

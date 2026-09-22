@@ -13,13 +13,19 @@ There are currently _**29**_ packages managed in this repository.
 See the [`PACKAGES.md`](https://github.com/simbo/packages/blob/main/PACKAGES.md)
 for a comprehensive list of all packages.
 
+## Package Requirements
+
+All packages require Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`. Node.js 20 is
+no longer supported. See individual package READMEs for peer dependencies and
+configuration requirements.
+
 ## Development
 
 ### Requirements
 
 - a linux-based operating system
-- node.js (v22) via [nvm](https://github.com/nvm-sh/nvm)
-- [pnpm](https://pnpm.io/) (v10)
+- Node.js 24.21.0 (see `.nvmrc`) via [nvm](https://github.com/nvm-sh/nvm)
+- [pnpm](https://pnpm.io/) 12.5.1 (see `packageManager` in `package.json`)
 
 ### Setup
 
@@ -28,7 +34,7 @@ git clone git@github.com:simbo/packages.git
 cd packages
 nvm install
 pnpm install
-pnpm run build
+pnpm run each:build
 ```
 
 ### Toolset
@@ -54,10 +60,10 @@ pnpm run build
 
 ```bash
 # build all packages
-pnpm run build
+pnpm run each:build
 
 # build a package
-pnpm run build --filter=<TURBO_SELECTOR>
+pnpm run each:build --filter=<TURBO_SELECTOR>
 ```
 
 #### Dependencies
@@ -72,7 +78,7 @@ pnpm add --filter=<PNPM_SELECTOR> [-D] <DEPENDENCY>
 # remove a dependency from a workspace
 pnpm remove --filter=<PNPM_SELECTOR> <DEPENDENCY>
 
-# interactively update the dependency catalogs for all workspaces
+# interactively update dependency versions
 pnpm update --recursive --interactive --latest
 ```
 
@@ -91,13 +97,20 @@ pnpm run [--filter=<PNPM_SELECTOR>] test:watch
 pnpm run [--filter=<PNPM_SELECTOR>] test:ui
 ```
 
+Vitest 5 clears mock call history before each test. Coverage includes all source
+files selected by `coverage.include`, including untested files. To open the test
+UI, use the URL containing the authentication token printed by Vitest.
+
 #### Checks
 
 ```bash
 # run all possible checks, builds, and tests
 pnpm run preflight
 
-# run all checks for all packages
+# run checks for all packages
+pnpm run each:check
+
+# run repository-level checks
 pnpm run check
 
 # prettier
@@ -109,20 +122,20 @@ pnpm run [--filter=<PNPM_SELECTOR>] check:eslint
 pnpm run [--filter=<PNPM_SELECTOR>] fix:eslint
 
 # cspell
-pnpm run [--filter=<PNPM_SELECTOR>] check:spelling
+pnpm run check:spelling
 
 # types
 pnpm run [--filter=<PNPM_SELECTOR>] check:types
 
 # workspace boundaries
-pnpm run [--filter=<PNPM_SELECTOR>] check:boundaries
+pnpm run check:boundaries
 ```
 
 #### Docs
 
 ```bash
 # generate API docs for all packages using typedoc
-pnpm run build:docs
+pnpm run docs
 
 # serve the documentation locally
 pnpm run serve:docs

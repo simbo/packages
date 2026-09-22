@@ -8,12 +8,8 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov'],
-      exclude: [
-        '{dist,tests,mocks,coverage}/**/*',
-        'src/**/*.{type,types,interface,interfaces,enum}.ts',
-        'src/**/index.ts',
-        '*.config.ts',
-      ],
+      include: ['src/**/*.ts'],
+      exclude: ['src/**/*.{type,types,interface,interfaces,enum}.ts', 'src/**/index.ts'],
     },
   },
 });

@@ -23,6 +23,10 @@ in a consistent way.
 
 - Zero dependencies
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/git-constants` from the npm registry:
@@ -34,7 +38,7 @@ npm i [-D] @simbo/git-constants
 ## Usage
 
 For a complete API reference, see the
-[documentation](https://simbo.codes/packages/modules/_simbo_git-constants/).
+[documentation](https://simbo.de/packages/modules/_simbo_git-constants/).
 
 ```ts
 import {

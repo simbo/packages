@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+import { describe, expect, it, vi, type Mock } from 'vitest';
 
 import { findUpPackage } from './find-up-package.js';
 
@@ -22,10 +22,6 @@ type MatcherReturn = string | undefined | Promise<string | undefined>;
 type Matcher = (directory: string) => MatcherReturn;
 
 describe('findUpPackage', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('returns the matched package', async () => {
     readPackageJson.mockResolvedValueOnce({ name: 'test', version: '1.0.0' });
     findUp.mockImplementationOnce((matcher: Matcher): MatcherReturn => matcher('/fake/path'));
