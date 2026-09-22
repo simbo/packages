@@ -1,5 +1,5 @@
 import { GitChangeStatus } from './git-change-status.enum.js';
-import type { GitChangeStagedStatus, GitChangeUnstagedStatus } from './git-changes.types.js';
+import type { GitChange, GitChangeStagedStatus, GitChangeUnstagedStatus } from './git-changes.types.js';
 import { KNOWN_GIT_CHANGE_STATUSES } from './git-status-constants.js';
 
 /**
@@ -16,10 +16,7 @@ import { KNOWN_GIT_CHANGE_STATUSES } from './git-status-constants.js';
  * @param status - A two-character string representing the Git change status.
  * @returns An object containing the staged and unstaged statuses.
  */
-export function parseGitChangeStatus(status: string): {
-  staged: GitChangeStagedStatus | undefined;
-  unstaged: GitChangeUnstagedStatus | undefined;
-} {
+export function parseGitChangeStatus(status: string): Pick<GitChange, 'staged' | 'unstaged'> {
   if (typeof status !== 'string' || status.length < 2) {
     return { staged: undefined, unstaged: undefined };
   }
