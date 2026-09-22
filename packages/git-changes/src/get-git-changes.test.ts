@@ -71,7 +71,7 @@ describe('getGitChanges', () => {
   it('should throw an error if the git command fails', async () => {
     executor.mockRejectedValueOnce(new Error('git error'));
 
-    await expect(getGitChanges()).rejects.toThrowError('Failed to get Git changes: git error');
+    await expect(getGitChanges()).rejects.toThrow('Failed to get Git changes: git error');
 
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
@@ -84,7 +84,7 @@ describe('getGitChanges', () => {
     const execaError = new ExecaError();
     execaError.shortMessage = 'short execa error message';
     executor.mockRejectedValueOnce(execaError);
-    await expect(getGitChanges()).rejects.toThrowError('Failed to get Git changes: short execa error message');
+    await expect(getGitChanges()).rejects.toThrow('Failed to get Git changes: short execa error message');
 
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
@@ -95,7 +95,7 @@ describe('getGitChanges', () => {
 
   it('should handle unknown error types', async () => {
     executor.mockRejectedValueOnce(42);
-    await expect(getGitChanges()).rejects.toThrowError('Failed to get Git changes: Unknown error (42)');
+    await expect(getGitChanges()).rejects.toThrow('Failed to get Git changes: Unknown error (42)');
 
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
@@ -107,7 +107,7 @@ describe('getGitChanges', () => {
   it('should throw an error if the working directory is not part of a Git repository', async () => {
     findGitRepositoryRoot.mockResolvedValueOnce(undefined);
 
-    await expect(getGitChanges('/not/a/repo')).rejects.toThrowError(
+    await expect(getGitChanges('/not/a/repo')).rejects.toThrow(
       'The directory "/not/a/repo" is not part of a Git repository.',
     );
 

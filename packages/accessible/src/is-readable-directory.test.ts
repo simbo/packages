@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { isReadableDirectory } from './is-readable-directory.js';
 
@@ -9,10 +9,6 @@ vi.mock('./is-accessible.js', () => ({
 const { isAccessible } = vi.mocked(await import('./is-accessible.js'));
 
 describe('isReadableDirectory', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('returns true for a readable directory', async () => {
     isAccessible.mockResolvedValueOnce(true);
     expect(await isReadableDirectory('/some/readable-dir')).toBe(true);

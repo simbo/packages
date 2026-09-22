@@ -30,7 +30,6 @@ const { teardownSteps } = vi.mocked(await import('./teardown/teardown-steps.js')
 
 describe('exitWithTeardown', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     teardownSteps.clear();
   });
 

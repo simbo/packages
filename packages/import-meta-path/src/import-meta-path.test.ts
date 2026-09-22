@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { importMetaPath, type ImportMetaObject } from './import-meta-path.js';
 
@@ -23,10 +23,6 @@ const { fileURLToPath } = vi.mocked(await import('node:url'));
 const defineImportMeta = (meta: Record<string, string>): ImportMetaObject => meta as unknown as ImportMetaObject;
 
 describe('importMetaPath', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should return the correct path for a directory from import.meta.dirname', () => {
     const meta = defineImportMeta({ dirname: '/dir' });
     const result = importMetaPath(meta);

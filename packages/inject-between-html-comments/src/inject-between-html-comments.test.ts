@@ -98,32 +98,28 @@ describe('injectBetweenHtmlComments', () => {
     const content = undefined as unknown as string;
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject)).toThrowError(
-      `Content must be a non-empty string: 'undefined'`,
-    );
+    expect(() => injectBetweenHtmlComments(content, inject)).toThrow(`Content must be a non-empty string: 'undefined'`);
   });
 
   it('should throw if content is empty', () => {
     const content = '';
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject)).toThrowError(`Content must be a non-empty string: ''`);
+    expect(() => injectBetweenHtmlComments(content, inject)).toThrow(`Content must be a non-empty string: ''`);
   });
 
   it('should throw if injection content is not a string', () => {
     const content = '<!-- INJECT --><!-- /INJECT -->';
     const inject = 123 as unknown as string;
 
-    expect(() => injectBetweenHtmlComments(content, inject)).toThrowError(
-      `Injection content must be a string: 'number'`,
-    );
+    expect(() => injectBetweenHtmlComments(content, inject)).toThrow(`Injection content must be a string: 'number'`);
   });
 
   it('should throw if the comment is not found', () => {
     const content = 'Foo!';
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject)).toThrowError(
+    expect(() => injectBetweenHtmlComments(content, inject)).toThrow(
       `Injection comment not found in content: '<!-- INJECT -->…<!-- /INJECT -->'`,
     );
   });
@@ -132,7 +128,7 @@ describe('injectBetweenHtmlComments', () => {
     const content = '<!-- INJECT:example --><!-- /INJECT:example -->';
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject, { name: 123 as unknown as string })).toThrowError(
+    expect(() => injectBetweenHtmlComments(content, inject, { name: 123 as unknown as string })).toThrow(
       `Comment name must be a string: '123'`,
     );
   });
@@ -141,16 +137,14 @@ describe('injectBetweenHtmlComments', () => {
     const content = '<!-- INJECT:example --><!-- /INJECT:example -->';
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject, { name: '' })).toThrowError(
-      `Comment name must not be empty`,
-    );
+    expect(() => injectBetweenHtmlComments(content, inject, { name: '' })).toThrow(`Comment name must not be empty`);
   });
 
   it('should throw if the text option is not a string or function', () => {
     const content = '<!-- INJECT:example --><!-- /INJECT:example -->';
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject, { text: 123 as unknown as string })).toThrowError(
+    expect(() => injectBetweenHtmlComments(content, inject, { text: 123 as unknown as string })).toThrow(
       `Text option must be a string or a function: '123'`,
     );
   });
@@ -159,7 +153,7 @@ describe('injectBetweenHtmlComments', () => {
     const content = '<!-- INJECT:example --><!-- /INJECT:example -->';
     const inject = 'INJECTED';
 
-    expect(() => injectBetweenHtmlComments(content, inject, { text: () => '' })).toThrowError(
+    expect(() => injectBetweenHtmlComments(content, inject, { text: () => '' })).toThrow(
       `Comment text must be a non-empty string: ''`,
     );
   });

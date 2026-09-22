@@ -26,7 +26,6 @@ describe('readPackageJson', () => {
   let pkg: Record<string, unknown>;
 
   beforeEach(() => {
-    vi.clearAllMocks();
     pkg = { name: 'mocked-package' };
     readFile.mockResolvedValue(JSON.stringify(pkg));
   });
@@ -69,12 +68,12 @@ describe('readPackageJson', () => {
   it('should throw an error if readFile fails', async () => {
     readFile.mockRejectedValue(new Error('readFile Error'));
 
-    await expect(readPackageJson()).rejects.toThrowError(/^Failed to read package.json: readFile Error/);
+    await expect(readPackageJson()).rejects.toThrow(/^Failed to read package.json: readFile Error/);
   });
 
   it('should throw an error if the package.json is invalid', async () => {
     readFile.mockResolvedValue('invalid json');
 
-    await expect(readPackageJson()).rejects.toThrowError(/^Failed to read package.json: Unexpected token/);
+    await expect(readPackageJson()).rejects.toThrow(/^Failed to read package.json: Unexpected token/);
   });
 });

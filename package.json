@@ -64,8 +64,8 @@
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.13.6",
-    "@vitest/coverage-v8": "^3.2.7",
-    "@vitest/ui": "^3.2.7",
+    "@vitest/coverage-v8": "^5.0.1",
+    "@vitest/ui": "^5.0.1",
     "cspell": "^10.3.3",
     "eslint": "^10.11.0",
     "husky": "^9.1.7",
@@ -78,6 +78,6 @@
     "typedoc-plugin-mdn-links": "^5.1.1",
     "typedoc-plugin-umami-analytics": "^1.0.1",
     "typescript": "^6.0.3",
-    "vitest": "^3.2.7"
+    "vitest": "^5.0.1"
   }
 }

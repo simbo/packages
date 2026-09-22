@@ -36,7 +36,6 @@ const { queueOptions } = vi.mocked(await import('p-queue')) as unknown as { queu
 
 describe('readWorkspaces', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     delete env.CI;
   });
 
@@ -107,7 +106,7 @@ describe('readWorkspaces', () => {
   });
 
   it('should throw if concurrency is not a number', async () => {
-    await expect(readWorkspaces({ concurrency: 'invalid' as unknown as number })).rejects.toThrowError(
+    await expect(readWorkspaces({ concurrency: 'invalid' as unknown as number })).rejects.toThrow(
       'Concurrency must be a positive number',
     );
 
@@ -117,7 +116,7 @@ describe('readWorkspaces', () => {
   });
 
   it('should throw if concurrency is not a positive number', async () => {
-    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrowError('Concurrency must be a positive number');
+    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrow('Concurrency must be a positive number');
 
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).not.toHaveBeenCalled();
@@ -127,9 +126,7 @@ describe('readWorkspaces', () => {
   it('should throw if a workspace failed to be read', async () => {
     getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
 
-    await expect(readWorkspaces()).rejects.toThrowError(
-      /^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/,
-    );
+    await expect(readWorkspaces()).rejects.toThrow(/^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/);
 
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
@@ -140,7 +137,7 @@ describe('readWorkspaces', () => {
     getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
     getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
 
-    await expect(readWorkspaces()).rejects.toThrowError(
+    await expect(readWorkspaces()).rejects.toThrow(
       /^Failed to read workspaces: packages\/pkg-a \(metadata failure\), packages\/pkg-b \(metadata failure\)$/,
     );
 

@@ -1,5 +1,5 @@
 import type { ClirkContext } from '@simbo/clirk';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import 'node:test';
 
@@ -79,10 +79,6 @@ const { createConfigLoader } = vi.mocked(await import('./config-loader.js'));
 const { monorepoPackagesListCli } = await import('./monorepo-packages-list-cli.js');
 
 describe('monorepoPackagesListCli', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('walks the happy path', async () => {
     await monorepoPackagesListCli();
 

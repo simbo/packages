@@ -1,5 +1,5 @@
 import type { GlobbyStream } from 'globby';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { globbyHasMatches } from './globby-has-matches.js';
 
@@ -19,10 +19,6 @@ const createMockStream = (values: unknown[]): GlobbyStream =>
   }) as unknown as GlobbyStream;
 
 describe('globbyHasMatches', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('returns true if at least one file matches (no matcher)', async () => {
     globbyStream.mockReturnValue(createMockStream(['file-a.js', 'file-b.js']));
 
