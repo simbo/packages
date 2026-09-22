@@ -1,5 +1,17 @@
 # @simbos-packages/changelog
 
+## 1.5.3
+
+### Patch Changes
+
+- 2ded9ff: Update documentation links from `simbo.codes` to `simbo.de`. Refresh
+  repository setup, build, test and publishing instructions, and align the
+  documented CI flow with the current workflows.
+- 2ded9ff: Upgrade the repository's test tooling to Vitest 5.0.1, including the
+  V8 coverage provider and Vitest UI. Explicitly include source files in
+  coverage reports, use automatic mock clearing and replace deprecated
+  `toThrowError` assertions with `toThrow`.
+
 ## 1.5.2
 
 ### Patch Changes
