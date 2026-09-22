@@ -4,6 +4,10 @@
 
 A set of utilities for working with package.json files.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/package-json` from the npm registry:

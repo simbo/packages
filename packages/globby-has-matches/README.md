@@ -19,6 +19,10 @@ A utility to glob using [globby](https://github.com/sindresorhus/globby) and
 
 - Fully typed with TypeScript
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/globby-has-matches` from the npm registry:
@@ -35,14 +39,15 @@ For a complete API reference, see the
 ### Example
 
 ```ts
-import { globbyHasMatches } from 'globby-has-matches';
+import { globbyHasMatches } from '@simbo/globby-has-matches';
 
-const hasMatches = await globbyHasMatches('.changesets/*.md');
+const hasMatches = await globbyHasMatches('.changeset/*.md');
 
 if (hasMatches) {
   console.log('Found Changesets');
 } else {
   console.log('No Changesets found');
+}
 ```
 
 ## License

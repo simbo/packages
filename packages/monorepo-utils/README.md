@@ -24,6 +24,10 @@ with package manifests.
 
 - Fully typed with TypeScript
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/monorepo-utils` from the npm registry:
@@ -95,9 +99,9 @@ const patterns = await getWorkspacePatterns();
 Get the file system path of a package by its name.
 
 ```ts
-import { getPackagePath } from '@simbo/monorepo-utils';
+import { getPackagePathByName } from '@simbo/monorepo-utils';
 
-const packagePath = await getPackagePath({ packageName: 'my-package' });
+const packagePath = await getPackagePathByName('my-package');
 ```
 
 ## License

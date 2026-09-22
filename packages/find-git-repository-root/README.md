@@ -6,7 +6,7 @@
 A lightweight utility for locating the **root directory of a Git repository**.
 
 It searches upward from a given directory until it finds a valid repository root
-(a directory containing a `.git `folder).
+(a directory containing a `.git` folder).
 
 This package builds on [find-up](https://npmjs.com/package/find-up) and
 [`@simbo/is-git-repository-root`](https://npmjs.com/package/@simbo/is-git-repository-root).
@@ -23,6 +23,10 @@ This package builds on [find-up](https://npmjs.com/package/find-up) and
 - Async and Promise-based API
 
 - Fully typed with TypeScript
+
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
 
 ## Installation
 

@@ -4,6 +4,10 @@
 
 A shared [CSpell](https://cspell.org/) configuration.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install cspell and `@simbo/cspell-config` from the npm registry:
@@ -12,8 +16,8 @@ Install cspell and `@simbo/cspell-config` from the npm registry:
 npm i -D cspell @simbo/cspell-config
 ```
 
-CSpell 9 and 10 are supported. CSpell 10 requires Node.js 22.18 or newer. Use
-CSpell 9 if your project still runs on Node.js 20.
+CSpell 9 and 10 are supported. Both require the Node.js version specified above
+when used with this configuration; Node.js 20 is no longer supported.
 
 ## Usage
 

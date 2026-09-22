@@ -18,6 +18,10 @@ It supports irregular forms and custom output formatting.
 
 - Zero dependencies.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/plural` from the npm registry:
@@ -30,6 +34,14 @@ npm i [-D] @simbo/plural
 
 For a complete API reference, see the
 [documentation](https://simbo.de/packages/modules/_simbo_plural/).
+
+String counts are converted with `Number` and truncated toward zero. Invalid
+strings fall back to zero: `"2items"` becomes `0`, while `"1e2"` becomes `100`.
+Numeric counts are used as provided. To apply a different parsing strategy,
+convert the string yourself before calling `plural`.
+
+Words are inserted literally, including dollar-sign sequences such as `$&` and
+`$$`. Each call replaces only the first `%d` and `%s` placeholder.
 
 ### Examples
 

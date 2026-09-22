@@ -5,8 +5,7 @@
 Shared [ESLint] configurations for different environments and technology stacks
 with utilities for configuration customization.
 
-Requires **ESLint 10.4 or newer within v10** (flat config), and **Node.js
-22.22.2+ within v22 or Node.js 24.15.0+**.
+Requires **ESLint 10.4 or newer within v10** (flat config).
 
 This package includes a curated set of ESLint-related dependencies:
 
@@ -20,6 +19,10 @@ This package includes a curated set of ESLint-related dependencies:
 
 Installing `@simbo/eslint-config` automatically includes these dependencies —
 you do not need to add them separately.
+
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
 
 ## Installation
 
@@ -185,7 +188,6 @@ export default defineConfig([
       parserOptions: {
         project: ['./tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
-        allowDefaultProject: ['*.config.js', '.*.js'],
       },
     },
     // Extend the recommended Node.js configuration.
@@ -216,7 +218,6 @@ export default defineConfig([
       parserOptions: {
         project: ['./tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
-        allowDefaultProject: ['*.config.js', '.*.js'],
       },
     },
     // Extend the recommended browser configuration.
@@ -236,7 +237,7 @@ with support for JavaScript, TypeScript, and Prettier.
 
 <!-- prettier-ignore -->
 ```ts
-import { eslintJsConfigs } from '@simbo/eslint-confi^g/eslint-js';
+import { eslintJsConfigs } from '@simbo/eslint-config/eslint-js';
 import { typescriptEslintConfigs } from '@simbo/eslint-config/typescript-eslint';
 import { prettierConfigs } from '@simbo/eslint-config/prettier';
 import { globals } from '@simbo/eslint-config';
@@ -251,14 +252,13 @@ export default defineConfig([
       parserOptions: {
         project: ['./tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
-        allowDefaultProject: ['*.config.js', '.*.js'],
       },
     },
     // Extend combinable configuration supersets for browser.
     extends: [
       eslintJsConfigs.browser.recommended,
       typescriptEslintConfigs.browser.recommended,
-      prettierConfigs.recommended,
+      prettierConfigs.browser.recommended,
     ],
     rules: {
       // Your rule overrides can be added here.
@@ -276,7 +276,6 @@ export default defineConfig([
 [`no-restricted-globals`]: https://eslint.org/docs/rules/no-restricted-globals
 [`@simbo/eslint-config`]: https://npmjs.com/package/@simbo/eslint-config
 [`@eslint/js`]: https://npmjs.com/package/@eslint/js
-[`@eslint/config-helpers`]: https://npmjs.com/package/@eslint/config-helpers
 [`@eslint/config-inspector`]: https://npmjs.com/package/@eslint/config-inspector
 [`typescript-eslint`]: https://npmjs.com/package/typescript-eslint
 [`@typescript-eslint/parser`]:
@@ -286,24 +285,24 @@ export default defineConfig([
 [`eslint-plugin-jsdoc`]: https://npmjs.com/package/eslint-plugin-jsdoc
 [`eslint-config-prettier`]: https://npmjs.com/package/eslint-config-prettier
 [`globals`]: https://npmjs.com/package/globals
-[API reference]: https://simbo.de/simbos-packages/modules/_simbo_eslint-config/
+[API reference]: https://simbo.de/packages/modules/_simbo_eslint-config/
 [`ConfigsRecord`]:
-  https://simbo.de/simbos-packages/interfaces/_simbo_eslint-config..ConfigsRecord/
+  https://simbo.de/packages/interfaces/_simbo_eslint-config..ConfigsRecord/
 [`eslintJsConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.eslint-js.eslintJsConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.eslint-js.eslintJsConfigs/
 [`typescriptEslintConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.typescript-eslint.typescriptEslintConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.typescript-eslint.typescriptEslintConfigs/
 [`unicornConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.unicorn.unicornConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.unicorn.unicornConfigs/
 [`jsdocConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.jsdoc.jsdocConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.jsdoc.jsdocConfigs/
 [`nConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.n.nConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.n.nConfigs/
 [`prettierConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.prettier.prettierConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.prettier.prettierConfigs/
 [`testingConfigs`]:
-  https://simbo.de/simbos-packages/variables/_simbo_eslint-config.testing.testingConfigs/
+  https://simbo.de/packages/variables/_simbo_eslint-config.testing.testingConfigs/
 [`noRestrictedGlobalsRule`]:
-  https://simbo.de/simbos-packages/functions/_simbo_eslint-config..noRestrictedGlobalsRule/
+  https://simbo.de/packages/functions/_simbo_eslint-config..noRestrictedGlobalsRule/
 [`setRulesToOff`]:
-  https://simbo.de/simbos-packages/functions/_simbo_eslint-config..setRulesToOff/
+  https://simbo.de/packages/functions/_simbo_eslint-config..setRulesToOff/

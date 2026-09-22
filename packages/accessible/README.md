@@ -18,6 +18,10 @@ It helps you determine whether files or directories are **existing**,
 
 - Fully typed TypeScript API
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/accessible` from the npm registry:

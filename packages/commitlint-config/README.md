@@ -6,6 +6,12 @@
 A shared [commitlint](https://commitlint.js.org/) configuration based on the
 [conventional commits](https://www.conventionalcommits.org/) standard.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
+Use `@commitlint/cli` ^21.2.3 with this configuration.
+
 ## Installation
 
 Install commitlint and the `@simbo/commitlint-config` from the npm registry:
@@ -41,10 +47,10 @@ extends:
       "prepare": "husky",
   ```
 
-- Create `.husky/pre-commit`:
+- Create `.husky/commit-msg`:
 
   ```bash
-  ./node_modules/.bin/commitlint --edit $1
+  ./node_modules/.bin/commitlint --edit "$1"
   ```
 
 ## License

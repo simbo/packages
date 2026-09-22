@@ -4,12 +4,14 @@ Notes on publishing packages from this monorepo to the npm registry.
 
 ## Trusted Publishing
 
-The npm registry requires _OIDC Trusted Publication_ for publishing packages.
+This repository uses _OIDC Trusted Publishing_ for automated npm releases.
 
 📘
 [npm Docs: Trusted publishing for npm packages](https://docs.npmjs.com/trusted-publishers)
 
-Trusted publishing requires `npm >= 11.5.1` (`nodejs >= 24.5.0`).
+When publishing with the npm CLI, trusted publishing requires npm 11.5.1 or
+later and Node.js 22.14.0 or later. This repository uses pnpm 12 and the Node.js
+version in `.nvmrc`; its package engine requirements also apply.
 
 Once a package has been published manually, subsequent releases can be done via
 the automated GitHub workflows.

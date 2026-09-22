@@ -22,6 +22,10 @@ Designed for robust error handling in logs, CLI output, or user-facing messages.
 
 - Zero dependencies
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install `@simbo/stringify-error` from the npm registry:
@@ -54,14 +58,14 @@ try {
 The following table is a simplified view of how `stringifyError` tests the input
 and creates respective output:
 
-| Input (`error: unknown`)            | Output (`string`)                                |
-| ----------------------------------- | ------------------------------------------------ |
-| Object with a `message` string      | `error.message`                                  |
-| Object with a `toString` method     | `error.toString()`                               |
-| Other object                        | `` `Unknown Error (${JSON.stringify(error)})` `` |
-| Non-string primitive (number, etc.) | `` `Unknown Error (${String(error)})` ``         |
-| Empty string                        | `` `Unknown Error ("")` ``                       |
-| Non-empty string                    | `error`                                          |
+| Input (`error: unknown`)             | Output (`string`)                                |
+| ------------------------------------ | ------------------------------------------------ |
+| Object with a `message` string       | `error.message`                                  |
+| Object with an own `toString` method | `error.toString()`                               |
+| Other object                         | `` `Unknown Error (${JSON.stringify(error)})` `` |
+| Non-string primitive (number, etc.)  | `` `Unknown Error (${String(error)})` ``         |
+| Empty string                         | `` `Unknown Error ("")` ``                       |
+| Non-empty string                     | `error`                                          |
 
 ## Related Packages
 

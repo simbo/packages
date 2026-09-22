@@ -5,6 +5,10 @@
 
 A shared [Prettier](https://prettier.io/) configuration.
 
+## Requirements
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+
 ## Installation
 
 Install Prettier, the required plugins, and the `@simbo/prettier-config` from
@@ -30,7 +34,7 @@ Add `prettier` commands to your `package.json` scripts:
     "fix:format": "prettier --write .",
 ```
 
-And your done. 🍻
+And you are done. 🍻
 
 ### Example `.prettierrc`
 

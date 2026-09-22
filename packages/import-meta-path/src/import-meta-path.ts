@@ -11,6 +11,7 @@ export interface ImportMetaObject {
  * Deriving absolute directory or file path from import.meta with a consistent fallback order.
  *
  * This function is Node.js-only and expects the `url` property to be a `file:` URL.
+ * Fallbacks apply only to null or undefined, preserving explicitly supplied empty strings.
  *
  * For type `'dir'`, the fallback order is:
  *   1. `importMeta.dirname` (if present)
