@@ -8,7 +8,7 @@ import type { Options, TextOption } from './inject-between-html-comments.types.j
 const BASE_TEXT = 'INJECT';
 
 /**
- * Injects content between two html comments in a the given string content.
+ * Injects content between two HTML comments in a the given string content.
  *
  * All occurrences of HTML comments matching the respective comment text will be
  * processed.
@@ -25,7 +25,7 @@ export function injectBetweenHtmlComments(content: string, inject: string, optio
     throw new TypeError(`Content must be a non-empty string: '${content}'`);
   }
   if (typeof inject !== 'string') {
-    throw new TypeError(`Injection content must be a string: '${String(inject)}'`);
+    throw new TypeError(`Injection content must be a string: '${typeof inject}'`);
   }
 
   if (trim) {
@@ -48,7 +48,7 @@ export function injectBetweenHtmlComments(content: string, inject: string, optio
     throw new Error(`Injection comment not found in content: '${opening}…${closing}'`);
   }
 
-  const updatedContent = content.replaceAll(regex('g'), injectedContent);
+  const updatedContent = content.replaceAll(regex('g'), () => injectedContent);
 
   return updatedContent;
 }

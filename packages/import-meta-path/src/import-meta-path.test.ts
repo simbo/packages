@@ -73,7 +73,9 @@ describe('importMetaPath', () => {
 
   it('throws a clear error on unknown type (defensive default branch)', () => {
     const meta = defineImportMeta({});
-    expect(() => importMetaPath(meta, 'weird' as string as 'dir')).toThrow(/^Unknown Type: weird/);
+    expect(() => importMetaPath(meta, 'weird' as string as 'dir')).toThrow(
+      /^Unknown Type \(should be 'dir' or 'file'\)/,
+    );
   });
 
   it('propagates errors from fileUrlToPath', () => {

@@ -1,7 +1,7 @@
 import type { GitChangeStatus } from './git-change-status.enum.js';
 
 /**
- * Common git change statuses for both staged and unstaged changes.
+ * Common Git change statuses for both staged and unstaged changes.
  */
 export type GitChangeStatusCommon = GitChangeStatus.Modified | GitChangeStatus.Deleted;
 
@@ -11,12 +11,12 @@ export type GitChangeStatusCommon = GitChangeStatus.Modified | GitChangeStatus.D
 export type GitChangeStatusWithOriginPath = GitChangeStatus.Renamed | GitChangeStatus.Copied;
 
 /**
- * Added git change status (only for staged changes).
+ * Added Git change status (only for staged changes).
  */
 export type GitChangeStatusAdded = GitChangeStatus.Added;
 
 /**
- * Untracked git change status (only for unstaged changes).
+ * Untracked Git change status (only for unstaged changes).
  */
 export type GitChangeStatusUntracked = GitChangeStatus.Untracked;
 

@@ -1,4 +1,4 @@
-import { defineConfig } from '@eslint/config-helpers';
+import { defineConfig } from 'eslint/config';
 
 import type { ConfigsRecord } from '../configs-record.interface.js';
 import { setRulesToOff } from '../utils/set-rules-to-off.js';
@@ -12,18 +12,7 @@ const recommended = defineConfig({
     /**
      * Rules completely off for test files:
      */
-    ...setRulesToOff([
-      '@typescript-eslint/no-magic-numbers',
-      '@typescript-eslint/require-await',
-      'unicorn/no-null',
-      // TODO: maybe remove these completely:
-      // '@typescript-eslint/no-unsafe-assignment',
-      // '@typescript-eslint/no-unsafe-call',
-      // '@typescript-eslint/no-unsafe-member-access',
-      // 'n/no-extraneous-import',
-      // 'n/no-unpublished-import',
-      // 'unicorn/no-useless-undefined',
-    ]),
+    ...setRulesToOff(['@typescript-eslint/no-magic-numbers', '@typescript-eslint/require-await', 'unicorn/no-null']),
 
     /**
      * Rules that are adjusted for test files:

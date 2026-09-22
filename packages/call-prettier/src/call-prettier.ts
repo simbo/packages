@@ -43,23 +43,21 @@ async function getPrettierBinPath(options: SetRequired<Options, 'workingDir'>): 
   if (typeof binPathOption === 'string') {
     if (await isExecutableFile(binPathOption)) {
       return binPathOption;
-    } else {
-      if (throwIfNotFound) {
-        throw new Error(`The provided prettier binary path '${binPathOption}' is not executable.`);
-      }
-      return undefined;
     }
-  } else {
-    const binPath = await findBin('prettier', { workingDir });
-
-    if (!binPath) {
-      if (throwIfNotFound) {
-        throw new Error('Could not determine Prettier binary path.');
-      } else {
-        return;
-      }
+    if (throwIfNotFound) {
+      throw new Error(`The provided prettier binary path '${binPathOption}' is not executable.`);
     }
-
-    return binPath;
+    return undefined;
   }
+
+  const binPath = await findBin('prettier', { workingDir });
+
+  if (!binPath) {
+    if (throwIfNotFound) {
+      throw new Error('Could not determine Prettier binary path.');
+    }
+    return;
+  }
+
+  return binPath;
 }

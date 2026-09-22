@@ -89,6 +89,7 @@ describe('gracefulExit', () => {
 
   it('logs ExitPromptError message and exits with 1', async () => {
     const err = new Error('ExitPromptError');
+    // eslint-disable-next-line unicorn/no-error-property-assignment -- Simulate a named external error.
     err.name = 'ExitPromptError';
     await gracefulExit(err);
 

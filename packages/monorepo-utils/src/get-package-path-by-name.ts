@@ -72,10 +72,12 @@ export async function getPackagePathByName(
     queue
       .add(async () => {
         const pkgJson = await readPackageJson(workspacePath);
-        if (pkgJson.name === packageName) {
-          absPackagePath = workspacePath;
-          queue.clear();
+        if (pkgJson.name !== packageName) {
+          return;
         }
+
+        absPackagePath = workspacePath;
+        queue.clear();
       })
       .catch((error: unknown) => {
         queueErrors.set(relative(workingDir, workspacePath), error);
@@ -91,9 +93,9 @@ export async function getPackagePathByName(
 
   await queue.onIdle();
 
-  if (queueErrors.size > 0 && failOnError) {
+  if (failOnError && queueErrors.size > 0) {
     throw new Error(
-      `Failed to read package.json files: ${[...queueErrors.entries()]
+      `Failed to read package.json files: ${[...queueErrors]
         .map(([path, error]) => `${path} (${stringifyError(error)})`)
         .join(', ')}`,
     );
@@ -103,9 +105,5 @@ export async function getPackagePathByName(
     throw new Error(`Package "${packageName}" not found in workspaces.`);
   }
 
-  if (absolute) {
-    return absPackagePath;
-  }
-
-  return relative(workingDir, absPackagePath);
+  return absolute ? absPackagePath : relative(workingDir, absPackagePath);
 }

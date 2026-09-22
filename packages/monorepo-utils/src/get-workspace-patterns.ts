@@ -124,11 +124,13 @@ function filterWorkspacesOptions(option: unknown): string[] {
     return patterns;
   }
   for (const item of option) {
-    if (typeof item === 'string') {
-      const trimmed = item.trim();
-      if (trimmed) {
-        patterns.push(trimmed);
-      }
+    if (typeof item !== 'string') {
+      continue;
+    }
+
+    const trimmed = item.trim();
+    if (trimmed) {
+      patterns.push(trimmed);
     }
   }
   return patterns;

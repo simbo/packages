@@ -74,7 +74,7 @@ export async function readWorkspaces(options: ReadWorkspacesOptions = {}): Promi
 
   if (queueErrors.size > 0) {
     throw new Error(
-      `Failed to read workspace${queueErrors.size > 1 ? 's' : ''}: ${[...queueErrors.entries()]
+      `Failed to read workspace${queueErrors.size > 1 ? 's' : ''}: ${[...queueErrors]
         .map(([path, error]) => `${path} (${stringifyError(error)})`)
         .join(', ')}`,
     );

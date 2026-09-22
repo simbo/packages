@@ -16,16 +16,16 @@
  */
 export function plural(count: number | string, singularWord: string, pluralWord?: string, template = '%d %s'): string {
   if (typeof count === 'string') {
-    count = Number.parseInt(count.trim(), 10);
+    count = Math.trunc(Number(count.trim()));
   }
 
   if (typeof count !== 'number' || Number.isNaN(count)) {
     count = 0;
   }
 
-  pluralWord = pluralWord ?? `${singularWord}s`;
+  pluralWord ??= `${singularWord}s`;
 
   const word = Math.abs(count) === 1 ? singularWord : pluralWord;
 
-  return template.replace('%d', String(count)).replace('%s', word);
+  return template.replace('%d', () => String(count)).replace('%s', () => word);
 }

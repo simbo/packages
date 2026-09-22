@@ -29,22 +29,13 @@ export interface ImportMetaObject {
 export function importMetaPath(importMeta: ImportMetaObject, type: 'dir' | 'file' = 'dir'): string {
   switch (type) {
     case 'dir': {
-      if (importMeta.dirname) {
-        return importMeta.dirname;
-      }
-      if (importMeta.filename) {
-        return dirname(importMeta.filename);
-      }
-      return dirname(fileURLToPath(importMeta.url));
+      return importMeta.dirname ?? dirname(importMeta.filename ?? fileURLToPath(importMeta.url));
     }
     case 'file': {
-      if (importMeta.filename) {
-        return importMeta.filename;
-      }
-      return fileURLToPath(importMeta.url);
+      return importMeta.filename ?? fileURLToPath(importMeta.url);
     }
     default: {
-      throw new TypeError(`Unknown Type: ${String(type)}`);
+      throw new TypeError(`Unknown Type (should be 'dir' or 'file')`);
     }
   }
 }

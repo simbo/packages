@@ -43,8 +43,10 @@ describe('commitlint config', () => {
     expect(Array.isArray(ignores)).toBe(true);
     expect(ignores?.length).toBeGreaterThan(0);
 
-    for (const ignore of ignores ?? []) {
-      expect(typeof ignore('foo')).toBe('boolean');
+    if (ignores != null) {
+      for (const ignore of ignores) {
+        expect(typeof ignore('foo')).toBe('boolean');
+      }
     }
   });
 });

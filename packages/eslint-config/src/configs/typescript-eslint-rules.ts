@@ -117,7 +117,7 @@ export const typescriptEslintRules: Linter.RulesRecord = {
     {
       selector: 'parameter',
       format: ['strictCamelCase'],
-      // allow leading underscores for unused parameters (typescript internal convention)
+      // allow leading underscores for unused parameters (TypeScript internal convention)
       leadingUnderscore: 'allow',
       trailingUnderscore: 'forbid',
     },
@@ -135,7 +135,7 @@ export const typescriptEslintRules: Linter.RulesRecord = {
   /**
    * Replacement Rules
    *
-   * Replacement rules are rules that replace native eslint rules with
+   * Replacement rules are rules that replace native ESLint rules with
    * typescript-eslint rules.
    */
   'default-param-last': 'off',

@@ -3,6 +3,13 @@ import { describe, expect, it } from 'vitest';
 import { injectBetweenHtmlComments } from './inject-between-html-comments.js';
 
 describe('injectBetweenHtmlComments', () => {
+  it('keeps replacement tokens in injected content literal', () => {
+    const content = '<!-- INJECT -->old<!-- /INJECT -->';
+    expect(injectBetweenHtmlComments(content, '$& $$ $1', { inline: true })).toBe(
+      '<!-- INJECT -->$& $$ $1<!-- /INJECT -->',
+    );
+  });
+
   it('should inject content between HTML comments', () => {
     const content = '<!-- INJECT -->\n<!-- /INJECT -->';
     const inject = 'INJECTED';
@@ -107,7 +114,9 @@ describe('injectBetweenHtmlComments', () => {
     const content = '<!-- INJECT --><!-- /INJECT -->';
     const inject = 123 as unknown as string;
 
-    expect(() => injectBetweenHtmlComments(content, inject)).toThrowError(`Injection content must be a string: '123'`);
+    expect(() => injectBetweenHtmlComments(content, inject)).toThrowError(
+      `Injection content must be a string: 'number'`,
+    );
   });
 
   it('should throw if the comment is not found', () => {

@@ -1,6 +1,6 @@
-import { defineConfig } from '@eslint/config-helpers';
 import eslintJs from '@eslint/js';
 import type { Linter } from 'eslint';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
 import type { ConfigsRecord } from '../configs-record.interface.js';

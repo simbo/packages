@@ -5,7 +5,8 @@
 Shared [ESLint] configurations for different environments and technology stacks
 with utilities for configuration customization.
 
-9️⃣ Requires **ESLint v9+** (_"flat config"_ format).
+Requires **ESLint 10.4 or newer within v10** (flat config), and **Node.js
+22.22.2+ within v22 or Node.js 24.15.0+**.
 
 This package includes a curated set of ESLint-related dependencies:
 
@@ -27,6 +28,19 @@ Install ESLint and `@simbo/eslint-config` from the npm registry:
 ```bash
 npm i -D eslint @simbo/eslint-config
 ```
+
+## Migration from v2
+
+Upgrade ESLint to v10 and use a supported Node.js version before installing v3.
+The configuration exports and Node.js/browser presets remain unchanged. Updated
+core and plugin presets enable new checks, so run ESLint and review any fixes
+before upgrading downstream projects.
+
+The Unicorn preset retains standard JSDoc comments and public barrel exports.
+Its naming and class-ordering checks do not override the existing TypeScript
+conventions, and it does not require `Temporal` or `RegExp.escape()`. The
+Node.js requirement above applies to running the linter, not to the code being
+linted.
 
 ## Usage
 
