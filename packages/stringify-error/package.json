@@ -1,7 +1,7 @@
 {
   "name": "@simbo/stringify-error",
   "description": "A lightweight utility that converts any error-like value into a safe, human-readable string.",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "keywords": [
     "error",
     "error-handling",
