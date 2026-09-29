@@ -41,6 +41,7 @@ const recommended = defineConfig({
       'unicorn/prefer-regexp-escape',
       'unicorn/prefer-temporal',
       'unicorn/prefer-iterator-to-array',
+      'unicorn/prefer-uint8array-base64',
     ]),
   },
 });
