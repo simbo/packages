@@ -17,7 +17,7 @@
   ],
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
-  "homepage": "http://github.com/simbo/packages/tree/main/packages/git-constants",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/git-constants",
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {

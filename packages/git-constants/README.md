@@ -58,4 +58,4 @@ console.log(GIT_SHA_SHORT_LENGTH); // 7
 
 ## License
 
-[MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
+[MIT © Simon Lepel](https://simbo.mit-license.org/2025/)

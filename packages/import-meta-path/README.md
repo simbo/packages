@@ -53,4 +53,4 @@ const filePath = importMetaPath(import.meta, 'file');
 
 ## License
 
-[MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
+[MIT © Simon Lepel](https://simbo.mit-license.org/2025/)

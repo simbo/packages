@@ -17,7 +17,7 @@
   ],
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
-  "homepage": "http://github.com/simbo/packages/tree/main/packages/stringify-error",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/stringify-error",
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {

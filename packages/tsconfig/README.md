@@ -47,4 +47,4 @@ In your `tsconfig.json`:
 
 ## License
 
-[MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
+[MIT © Simon Lepel](https://simbo.mit-license.org/2025/)

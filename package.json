@@ -3,10 +3,10 @@
   "description": "A monorepo for my packages.",
   "version": "0.0.0",
   "private": true,
-  "author": "Simon Lepel <simbo@simbo.de> (http://simbo.de)",
+  "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de)",
   "license": "MIT",
-  "homepage": "http://github.com/simbo/packages",
-  "bugs": "http://github.com/simbo/packages/issues",
+  "homepage": "https://github.com/simbo/packages",
+  "bugs": "https://github.com/simbo/packages/issues",
   "repository": "github:simbo/packages",
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"

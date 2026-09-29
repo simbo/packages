@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
-  "homepage": "http://github.com/simbo/packages/tree/main/packages/zodpak",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/zodpak",
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {

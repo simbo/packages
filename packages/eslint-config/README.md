@@ -270,7 +270,7 @@ export default defineConfig([
 
 ## License
 
-[MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
+[MIT © Simon Lepel](https://simbo.mit-license.org/2025/)
 
 [ESLint]: https://eslint.org/
 [`no-restricted-globals`]: https://eslint.org/docs/rules/no-restricted-globals

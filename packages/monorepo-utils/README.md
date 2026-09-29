@@ -106,7 +106,7 @@ const packagePath = await getPackagePathByName('my-package');
 
 ## License
 
-[MIT © Simon Lepel](http://simbo.mit-license.org/2025/)
+[MIT © Simon Lepel](https://simbo.mit-license.org/2025/)
 
 [`WorkspaceMetadata`]:
   https://simbo.de/packages/interfaces/_simbo_monorepo-utils.WorkspaceMetadata/
