@@ -1,5 +1,15 @@
 # @simbo/eslint-config
 
+## 3.1.0
+
+### Minor Changes
+
+- c68cba9: upgrade dependencies
+
+### Patch Changes
+
+- a6377f3: disable unicorn/prefer-uint8array-base64
+
 ## 3.0.0
 
 ### Major Changes

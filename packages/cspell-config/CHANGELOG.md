@@ -1,5 +1,11 @@
 # @simbo/cspell-config
 
+## 2.0.1
+
+### Patch Changes
+
+- fd76b01: add "Umami" to known words
+
 ## 2.0.0
 
 ### Major Changes

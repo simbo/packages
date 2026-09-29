@@ -1,5 +1,13 @@
 # @simbos-packages/changelog
 
+## 1.5.5
+
+### Patch Changes
+
+- 9b365b4: update/fix url schemas throughout the repo from http to https
+- bf8d6e2: update umami tracking scripts for docs
+- c68cba9: upgrade dependencies
+
 ## 1.5.4
 
 ### Patch Changes
