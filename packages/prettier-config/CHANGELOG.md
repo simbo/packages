@@ -1,5 +1,12 @@
 # @simbo/prettier-config
 
+## 3.0.1
+
+### Patch Changes
+
+- 757c441: Enable the JSX parser plugin for import sorting to correctly format
+  JSX and TSX files.
+
 ## 3.0.0
 
 ### Major Changes

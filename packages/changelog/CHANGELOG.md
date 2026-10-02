@@ -1,5 +1,13 @@
 # @simbos-packages/changelog
 
+## 1.5.6
+
+### Patch Changes
+
+- 4fb4825: minor dependency upgrades
+- 9f38803: Disable Turbo update notifications centrally in turbo.json for local
+  runs and CI.
+
 ## 1.5.5
 
 ### Patch Changes

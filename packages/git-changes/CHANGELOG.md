@@ -1,5 +1,14 @@
 # @simbo/git-changes
 
+## 2.1.1
+
+### Patch Changes
+
+- 48389a9: Parse Git status characters into enum members without unsafe type
+  assertions and allow the added status in the unstaged type to match existing
+  parser behavior.
+- @simbo/find-git-repository-root@2.0.0
+
 ## 2.1.0
 
 ### Minor Changes

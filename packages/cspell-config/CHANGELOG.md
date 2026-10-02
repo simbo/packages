@@ -1,5 +1,11 @@
 # @simbo/cspell-config
 
+## 2.1.0
+
+### Minor Changes
+
+- fcf5e8a: add "Magawa" to dictionary
+
 ## 2.0.1
 
 ### Patch Changes

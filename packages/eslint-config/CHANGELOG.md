@@ -1,5 +1,15 @@
 # @simbo/eslint-config
 
+## 3.2.0
+
+### Minor Changes
+
+- 4fb4825: minor dependency upgrades
+
+### Patch Changes
+
+- b7f4e25: disable 'unicorn/no-top-level-assignment-in-function'
+
 ## 3.1.0
 
 ### Minor Changes
