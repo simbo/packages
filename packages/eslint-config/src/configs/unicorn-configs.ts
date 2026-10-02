@@ -26,6 +26,7 @@ const recommended = defineConfig({
       'unicorn/no-await-expression-member',
       'unicorn/no-barrel-files',
       'unicorn/no-computed-property-existence-check',
+      'unicorn/no-top-level-assignment-in-function',
       'unicorn/no-unnecessary-global-this',
       'unicorn/no-unreadable-object-destructuring',
       'unicorn/no-useless-switch-case',
