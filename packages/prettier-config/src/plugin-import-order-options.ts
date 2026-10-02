@@ -5,6 +5,6 @@
  */
 export const importOrderOptions = {
   importOrder: ['<BUILTIN_MODULES>', '', '<THIRD_PARTY_MODULES>', '', '^src/', '', '^[.][.](/|$)', '', '^[.](/|$)'],
-  importOrderParserPlugins: ['typescript', 'decorators-legacy'],
+  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
   importOrderTypeScriptVersion: '5.8.2',
 };
