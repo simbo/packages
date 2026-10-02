@@ -11,7 +11,7 @@
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
-  "packageManager": "pnpm@12.5.1",
+  "packageManager": "pnpm@12.8.1",
   "workspaces": [
     "packages/*"
   ],
@@ -64,19 +64,19 @@
     "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.0",
-    "@vitest/coverage-v8": "^5.0.1",
-    "@vitest/ui": "^5.0.1",
-    "cspell": "^10.3.5",
+    "@vitest/coverage-v8": "^5.0.3",
+    "@vitest/ui": "^5.0.3",
+    "cspell": "^10.3.6",
     "eslint": "^10.11.0",
     "husky": "^9.1.7",
     "jiti": "^2.7.0",
     "npm-check-updates": "^23.1.0",
-    "prettier": "3.9.8",
-    "turbo": "^2.11.4",
+    "prettier": "3.9.9",
+    "turbo": "^2.11.5",
     "typedoc": "^0.28.20",
     "typedoc-github-theme": "^0.4.0",
     "typedoc-plugin-mdn-links": "^5.1.1",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.3"
   }
 }
