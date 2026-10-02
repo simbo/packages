@@ -1,6 +1,7 @@
 import { GitChangeStatus } from './git-change-status.enum.js';
-import type { GitChange, GitChangeStagedStatus, GitChangeUnstagedStatus } from './git-changes.types.js';
-import { KNOWN_GIT_CHANGE_STATUSES } from './git-status-constants.js';
+import type { GitChange } from './git-changes.types.js';
+
+const trackedStatuses = Object.values(GitChangeStatus).filter(value => value !== GitChangeStatus.Untracked);
 
 /**
  * Parses a Git change status string into staged and unstaged statuses.
@@ -25,9 +26,8 @@ export function parseGitChangeStatus(status: string): Pick<GitChange, 'staged' |
     return { staged: undefined, unstaged: GitChangeStatus.Untracked };
   }
 
-  const [staged, unstaged] = [status[0], status[1]].map(char =>
-    char && char !== '?' && KNOWN_GIT_CHANGE_STATUSES.has(char) ? char : undefined,
-  ) as [GitChangeStagedStatus | undefined, GitChangeUnstagedStatus | undefined];
+  const staged = trackedStatuses.find((value: string) => value === status[0]);
+  const unstaged = trackedStatuses.find((value: string) => value === status[1]);
 
   return { staged, unstaged };
 }

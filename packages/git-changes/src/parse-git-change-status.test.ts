@@ -13,6 +13,10 @@ describe.each([
   ['C ', { staged: GitChangeStatus.Copied, unstaged: undefined }],
   [' R', { staged: undefined, unstaged: GitChangeStatus.Renamed }],
   ['DA', { staged: GitChangeStatus.Deleted, unstaged: GitChangeStatus.Added }],
+  [' A', { staged: undefined, unstaged: GitChangeStatus.Added }],
+  ['AA', { staged: GitChangeStatus.Added, unstaged: GitChangeStatus.Added }],
+  ['?M', { staged: undefined, unstaged: GitChangeStatus.Modified }],
+  ['M?', { staged: GitChangeStatus.Modified, unstaged: undefined }],
 
   // special case
   ['??', { staged: undefined, unstaged: GitChangeStatus.Untracked }],

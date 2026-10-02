@@ -11,7 +11,7 @@ export type GitChangeStatusCommon = GitChangeStatus.Modified | GitChangeStatus.D
 export type GitChangeStatusWithOriginPath = GitChangeStatus.Renamed | GitChangeStatus.Copied;
 
 /**
- * Added Git change status (only for staged changes).
+ * Added Git change status.
  */
 export type GitChangeStatusAdded = GitChangeStatus.Added;
 
@@ -28,7 +28,8 @@ export type GitChangeStagedStatus = GitChangeStatusCommon | GitChangeStatusAdded
 /**
  * Combined type for unstaged changes field.
  */
-export type GitChangeUnstagedStatus = GitChangeStatusCommon | GitChangeStatusUntracked | GitChangeStatusWithOriginPath;
+export type GitChangeUnstagedStatus =
+  GitChangeStatusCommon | GitChangeStatusAdded | GitChangeStatusUntracked | GitChangeStatusWithOriginPath;
 
 /**
  * Interface for a change in a Git repository.
