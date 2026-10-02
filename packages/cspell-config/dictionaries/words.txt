@@ -1,5 +1,6 @@
 Clirk
 Lepel
+Magawa
 Simbo
 Simbos
 stringifying
