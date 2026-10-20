@@ -1,0 +1,73 @@
+{
+  "name": "@simbo/vite-plugin-nunjucks",
+  "description": "Render Nunjucks templates in Vite HTML entries with layouts, locals and automatic reloads.",
+  "version": "0.0.0",
+  "keywords": [
+    "vite-plugin",
+    "vite",
+    "nunjucks",
+    "html",
+    "templates"
+  ],
+  "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
+  "license": "MIT",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/vite-plugin-nunjucks",
+  "repository": "github:simbo/packages",
+  "bugs": "https://github.com/simbo/packages/issues",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "check": "pnpm run check:eslint && pnpm run check:format && pnpm run check:types",
+    "check:eslint": "eslint --config ./eslint.config.ts --max-warnings 0",
+    "check:format": "prettier --check .",
+    "check:types": "tsc --noEmit",
+    "clean": "pnpm run clean:dist && pnpm run clean:coverage && pnpm run clean:turbo && pnpm run clean:node_modules",
+    "clean:dist": "rm -rf dist",
+    "clean:node_modules": "rm -rf node_modules",
+    "clean:turbo": "rm -rf .turbo",
+    "clean:coverage": "rm -rf coverage",
+    "fix:eslint": "pnpm run check:eslint --fix",
+    "fix:format": "prettier --write .",
+    "test": "vitest run --coverage",
+    "test:ui": "pnpm run test:watch --ui",
+    "test:watch": "vitest dev --coverage"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.4",
+    "@types/nunjucks": "^3.2.6"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "@simbo/eslint-config": "workspace:*",
+    "@simbo/prettier-config": "workspace:*",
+    "@simbo/tsconfig": "workspace:*",
+    "@types/node": "^24.19.0",
+    "@vitest/coverage-v8": "^5.0.3",
+    "@vitest/ui": "^5.0.3",
+    "baseline-browser-mapping": "^2.11.26",
+    "eslint": "^10.11.0",
+    "jiti": "^2.7.0",
+    "prettier": "^3.9.9",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3",
+    "vite": "^8.3.4"
+  },
+  "peerDependencies": {
+    "vite": "^8.3.1"
+  }
+}

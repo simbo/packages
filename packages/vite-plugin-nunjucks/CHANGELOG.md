@@ -1,0 +1,1 @@
+# @simbo/vite-plugin-nunjucks

@@ -6,7 +6,7 @@
 
 <!-- PACKAGES -->
 
-There are currently _**29**_ packages managed in this repository.
+There are currently _**30**_ packages managed in this repository.
 
 <!-- /PACKAGES -->
 
@@ -25,7 +25,8 @@ configuration requirements.
 
 - a linux-based operating system
 - Node.js 24.21.0 (see `.nvmrc`) via [nvm](https://github.com/nvm-sh/nvm)
-- [pnpm](https://pnpm.io/) 12.5.1 (see `packageManager` in `package.json`)
+- [pnpm](https://pnpm.io/) 12 (see `packageManager` in `package.json` for the
+  exact version)
 
 ### Setup
 
@@ -183,19 +184,28 @@ flowchart LR
 
   subgraph PublishWorkflow["<code>.github/workflows/publish.yml</code>"]
     TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>" }
-    CreateTarball["Create Tarball"]
-    ExtractChangelogEntry["Extract Changelog Entry"]
-    CreateRelease["🎁 Create GitHub Release"]
+    BuildPackage["Build Package"]
     IsPrivate{"Package is<br>Private?"}
-    PublishToNpm[🚀 Publish to npm Registry]
+    PublishToNpm["🚀 Publish to npm Registry"]
+    PackagePublished["Package Published Event"]
 
     direction TB
-    TagEvent --> CreateTarball
-    CreateTarball --> ExtractChangelogEntry
-    ExtractChangelogEntry --> CreateRelease
-    CreateRelease --> IsPrivate
+    TagEvent --> BuildPackage
+    BuildPackage --> IsPrivate
     IsPrivate --"NO"--> PublishToNpm
+    PublishToNpm --> PackagePublished
   end
+
+  subgraph GitHubReleaseWorkflow["<code>.github/workflows/github-release.yml</code>"]
+    FetchTarball["Fetch Published npm Tarball"]
+    ExtractChangelogEntry["Extract Changelog Entry"]
+    CreateRelease["🎁 Create GitHub Release"]
+
+    direction TB
+    FetchTarball --> ExtractChangelogEntry
+    ExtractChangelogEntry --> CreateRelease
+  end
+  PackagePublished --> FetchTarball
 
   ChecksWorkflow Link1@=== ReleaseWorkflow
   ReleaseWorkflow Link2@=== PublishWorkflow
@@ -204,13 +214,13 @@ flowchart LR
   class Link1,Link2 animateLink
 
   classDef workflow stroke:#888888,fill:transparent;
-  class ChecksWorkflow,ReleaseWorkflow,PublishWorkflow workflow
+  class ChecksWorkflow,ReleaseWorkflow,PublishWorkflow,GitHubReleaseWorkflow workflow
 
   classDef event stroke:#B54BC8,stroke-width:2px,fill:transparent;
   class PushToMain,TagEvent,ReleaseEvent event
 
   classDef step stroke:#6366F1,stroke-width:2px,fill:transparent;
-  class Checks,ReleaseEventDispatch,IntegrateChangesets,IncrementVersions,CollectPackages,CommitAndPushChanges,PushReleaseTags,CreateTarball,ExtractChangelogEntry,CreateRelease,PublishToNpm step
+  class Checks,ReleaseEventDispatch,IntegrateChangesets,IncrementVersions,CollectPackages,CommitAndPushChanges,PushReleaseTags,BuildPackage,FetchTarball,PackagePublished,ExtractChangelogEntry,CreateRelease,PublishToNpm step
 
   classDef gate stroke:#E67E22,stroke-width:2px,fill:transparent
   class IsPrivate,ChecksPassed,Changesets gate

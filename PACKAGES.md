@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**29**_ packages managed in this repository:
+There are currently _**30**_ packages managed in this repository:
 
 - ### **Accessible**
 
@@ -430,6 +430,22 @@ There are currently _**29**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_user-facing-error/)
+
+- ### **Vite Plugin Nunjucks**
+
+  > Render Nunjucks templates in Vite HTML entries with layouts, locals and
+  > automatic reloads.
+
+  📂
+  [**`./packages/vite-plugin-nunjucks`**](https://github.com/simbo/packages/tree/main/packages/vite-plugin-nunjucks/)
+
+  📦
+  [`@simbo/vite-plugin-nunjucks`](https://www.npmjs.com/package/@simbo/vite-plugin-nunjucks)
+  @ `0.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_vite-plugin-nunjucks/)
 
 - ### **Zodpak**
 
