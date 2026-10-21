@@ -1,0 +1,161 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@simbo/vite-plugin-html-minifier - v1.0.1 | Documentation for Simbo&#39;s Packages</title><meta name="description" content="Documentation for Documentation for Simbo's Packages"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../../assets/style.css"/><link rel="stylesheet" href="../../assets/highlight.css"/><script defer src="../../assets/main.js"></script><script async src="../../assets/icons.js" id="tsd-icons-script"></script><script async src="../../assets/search.js" id="tsd-search-script"></script><script async src="../../assets/navigation.js" id="tsd-nav-script"></script><script async src="../../assets/hierarchy.js" id="tsd-hierarchy-script"></script><script defer src="https://trk.srvkist.net/trk.js" data-website-id="c9ce8bab-5c6d-45ae-8127-19de67d3dbb1"></script><script defer src="https://trk.srvkist.net/recorder.js" data-website-id="c9ce8bab-5c6d-45ae-8127-19de67d3dbb1"></script><link rel="stylesheet" href="../../assets/typedoc-github-style.css"/></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../../index.html" class="title">Documentation for Simbo&#39;s Packages</a>
+<div id="tsd-toolbar-links"><a href="https://github.com/simbo/packages">GitHub Repository</a></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="" aria-current="page">@simbo/vite-plugin-html-minifier</a></li></ul>
+<h1>Module @simbo/vite-plugin-html-minifier - v1.0.1</h1></div>
+<section class="tsd-panel tsd-typography"><h1 id="vite-plugin-html-minifier" class="tsd-anchor-link">Vite Plugin HTML Minifier<a href="#vite-plugin-html-minifier" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<p>📦
+<strong><a href="https://www.npmjs.com/package/@simbo/vite-plugin-html-minifier">@simbo/vite-plugin-html-minifier</a></strong></p>
+<p><strong>Render your pages, let Vite resolve their assets, then minify the finished
+HTML.</strong></p>
+<p>A small Vite wrapper around
+<a href="https://github.com/terser/html-minifier-terser">html-minifier-terser</a>. Use
+shared whitespace and comment defaults across production pages while keeping
+development HTML untouched. No minifier runtime is added to the browser bundle.</p>
+<h2 id="features" class="tsd-anchor-link">Features<a href="#features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li>✨ <strong>Shared defaults.</strong> Collapse whitespace and remove ordinary comments with
+one plugin registration.</li>
+<li>🎛️ <strong>Typed overrides.</strong> Pass engine options directly, including explicit
+<code>false</code> values for individual defaults.</li>
+<li>📄 <strong>Multi-page builds.</strong> Process emitted <code>.html</code> assets, including nested
+paths.</li>
+<li>🧩 <strong>Templates first.</strong> Combine with Nunjucks to minify rendered pages after
+Vite processes their scripts, styles and asset references.</li>
+</ul>
+<h2 id="requirements" class="tsd-anchor-link">Requirements<a href="#requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li>Node.js <code>^22.22.2 || ^24.15.0 || &gt;=26.0.0</code></li>
+<li>Vite <code>^8.3.1</code> (Vite 8 only)</li>
+<li>An ESM Vite configuration</li>
+</ul>
+<h2 id="quick-start" class="tsd-anchor-link">Quick start<a href="#quick-start" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<pre><code class="sh"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-6">--save-dev</span><span class="hl-1"> </span><span class="hl-2">vite</span><span class="hl-1"> </span><span class="hl-2">@simbo/vite-plugin-html-minifier</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The engine and its TypeScript definitions are installed automatically. Register
+the plugin in <code>vite.config.ts</code>:</p>
+<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">defineConfig</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;vite&#39;</span><span class="hl-1">;</span><br/><span class="hl-3">import</span><span class="hl-1"> </span><span class="hl-4">htmlMinifierPlugin</span><span class="hl-1"> </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@simbo/vite-plugin-html-minifier&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">export</span><span class="hl-1"> </span><span class="hl-3">default</span><span class="hl-1"> </span><span class="hl-0">defineConfig</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">plugins:</span><span class="hl-1"> [</span><span class="hl-0">htmlMinifierPlugin</span><span class="hl-1">()],</span><br/><span class="hl-1">});</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Run <code>npx vite build</code> to minify generated HTML. During <code>npx vite</code>, the plugin is
+excluded from the development pipeline and performs no HTML processing.</p>
+<h2 id="with-nunjucks" class="tsd-anchor-link">With Nunjucks<a href="#with-nunjucks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Install
+<a href="https://www.npmjs.com/package/@simbo/vite-plugin-nunjucks"><code>@simbo/vite-plugin-nunjucks</code></a>
+as a dev dependency and register it first:</p>
+<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">defineConfig</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;vite&#39;</span><span class="hl-1">;</span><br/><span class="hl-3">import</span><span class="hl-1"> </span><span class="hl-4">nunjucksPlugin</span><span class="hl-1"> </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@simbo/vite-plugin-nunjucks&#39;</span><span class="hl-1">;</span><br/><span class="hl-3">import</span><span class="hl-1"> </span><span class="hl-4">htmlMinifierPlugin</span><span class="hl-1"> </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@simbo/vite-plugin-html-minifier&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">export</span><span class="hl-1"> </span><span class="hl-3">default</span><span class="hl-1"> </span><span class="hl-0">defineConfig</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-0">nunjucksPlugin</span><span class="hl-1">({ </span><span class="hl-4">locals:</span><span class="hl-1"> { </span><span class="hl-4">title:</span><span class="hl-1"> </span><span class="hl-2">&#39;My website&#39;</span><span class="hl-1"> } }),</span><br/><span class="hl-1">    </span><span class="hl-0">htmlMinifierPlugin</span><span class="hl-1">(),</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">});</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Nunjucks renders templates and locals through Vite's early HTML pipeline. Vite
+then processes scripts, styles and asset URLs; the minifier processes the
+emitted HTML. This combination is covered by real multi-page build tests.</p>
+<h2 id="options" class="tsd-anchor-link">Options<a href="#options" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Options are passed directly to the engine, overriding these four defaults:</p>
+<pre><code class="ts"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-21">collapseWhitespace</span><span class="hl-1">: </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-21">conservativeCollapse</span><span class="hl-1">: </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-21">preserveLineBreaks</span><span class="hl-1">: </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-21">removeComments</span><span class="hl-1">: </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> </span><span class="hl-4">htmlMinifierPlugin</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-3">type</span><span class="hl-1"> </span><span class="hl-4">HtmlMinifierPluginOptions</span><span class="hl-1">,</span><br/><span class="hl-1">} </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@simbo/vite-plugin-html-minifier&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1">: </span><span class="hl-8">HtmlMinifierPluginOptions</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-4">removeComments:</span><span class="hl-1"> </span><span class="hl-6">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">preserveLineBreaks:</span><span class="hl-1"> </span><span class="hl-6">false</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-0">htmlMinifierPlugin</span><span class="hl-1">(</span><span class="hl-4">options</span><span class="hl-1">);</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The plugin does not mutate your options. All regular
+<a href="https://github.com/terser/html-minifier-terser#options-quick-reference">engine options</a>
+are available. <code>minifyCSS</code> and <code>minifyJS</code> are not enabled by the plugin;
+enabling them explicitly can add processing alongside Vite's own optimizations.
+The plugin does not enable removal of <code>console</code> or <code>debugger</code>.</p>
+<h3 id="whitespace-and-comments" class="tsd-anchor-link">Whitespace and comments<a href="#whitespace-and-comments" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>With these defaults, runs of whitespace collapse to one space, or one newline
+when the run contains line breaks. Spaces separating inline elements are
+retained: <code>&lt;span&gt;one&lt;/span&gt;   &lt;em&gt;two&lt;/em&gt;</code> becomes
+<code>&lt;span&gt;one&lt;/span&gt; &lt;em&gt;two&lt;/em&gt;</code>. Whitespace inside <code>&lt;pre&gt;</code> and <code>&lt;textarea&gt;</code> is
+preserved by the engine. Disabling <code>collapseWhitespace</code> also disables the
+associated conservative-collapse and line-break behavior.</p>
+<p>“Conservative” does not guarantee identical rendering for every document. HTML
+minification does not evaluate your CSS: whitespace-sensitive layouts, custom
+elements or CSS such as <code>white-space: pre-wrap</code> need review. Preserved line
+breaks are collapsed, not an exact copy of the original formatting.</p>
+<p>Ordinary comments are removed. The engine's default <code>ignoreCustomComments</code>
+protects comments beginning with <code>!</code> or optional whitespace followed by <code>#</code>;
+conditional comments are also retained. Set <code>ignoreCustomComments: []</code> to remove
+those custom protected comments, or <code>removeComments: false</code> to retain comments.
+Removing comments can affect tools or application code that use them as markers.</p>
+<h2 id="build-pipeline-and-scope" class="tsd-anchor-link">Build pipeline and scope<a href="#build-pipeline-and-scope" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>The plugin uses <code>apply: 'build'</code> and <code>enforce: 'post'</code> with the sequential
+<code>generateBundle</code> hook. In the tested Vite versions, Vite's own HTML output hook
+runs first, including normal and post <code>transformIndexHtml</code> hooks and final asset
+URL substitution. The minifier therefore sees emitted HTML with resolved script,
+stylesheet and image references. String sources are used directly; binary
+sources are decoded as UTF-8. Non-HTML assets and JavaScript chunks are left
+unchanged.</p>
+<p>All <code>.html</code> assets present at that point are processed. For multi-page sites,
+configure Vite's <code>build.rolldownOptions.input</code> as usual; nested entry paths
+remain nested in the output. Files copied directly from <code>public/</code> do not pass
+through the output bundle and are outside this plugin's scope.</p>
+<p>The plugin array orders plugins within Vite's enforcement groups; it does not
+provide a universal last-processing guarantee. Later output hooks can change
+HTML again or emit additional HTML. Hook-specific ordering in another plugin can
+also affect execution. No extra watcher, template renderer or cache is added.</p>
+<p>Engine failures abort the build with the affected HTML filename and the original
+error as its cause. The engine is a minifier rather than an HTML validator and
+accepts many malformed documents. <code>continueOnParseError: false</code> rejects parser
+errors (for example an unterminated quoted attribute); setting it to <code>true</code>
+explicitly permits parser recovery. Vite can reject invalid entry HTML earlier.</p>
+<h2 id="documentation" class="tsd-anchor-link">Documentation<a href="#documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li><a href="https://simbo.de/packages/modules/_simbo_vite-plugin-html-minifier/">Plugin API reference</a></li>
+<li><a href="https://github.com/terser/html-minifier-terser">Engine source and options</a></li>
+<li><a href="../../media/CHANGELOG.md">Changelog</a></li>
+<li><a href="https://github.com/simbo/packages/issues">Report an issue</a></li>
+</ul>
+<h2 id="license" class="tsd-anchor-link">License<a href="#license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><a href="../../media/LICENSE.md">MIT © Simon Lepel</a></p>
+</section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Type Aliases"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="type-aliases">Type Aliases<a href="#type-aliases" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="htmlminifierpluginoptions"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Type Alias"><use href="../../assets/icons.svg#icon-2097152"></use></svg><a href="../../types/_simbo_vite-plugin-html-minifier.HtmlMinifierPluginOptions/">HtmlMinifierPluginOptions</a><a href="#htmlminifierpluginoptions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="functions">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="default"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><a href="../../functions/_simbo_vite-plugin-html-minifier.default/">default</a><a href="#default" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#vite-plugin-html-minifier"><span>Vite <wbr/>Plugin <wbr/>HTML <wbr/>Minifier</span></a>
+<ul>
+<li><a href="#features"><span>Features</span></a></li>
+<li><a href="#requirements"><span>Requirements</span></a></li>
+<li><a href="#quick-start"><span>Quick start</span></a></li>
+<li><a href="#with-nunjucks"><span>With <wbr/>Nunjucks</span></a></li>
+<li><a href="#options"><span>Options</span></a></li>
+<li>
+<ul>
+<li><a href="#whitespace-and-comments"><span>Whitespace and comments</span></a></li></ul></li>
+<li><a href="#build-pipeline-and-scope"><span>Build pipeline and scope</span></a></li>
+<li><a href="#documentation"><span>Documentation</span></a></li>
+<li><a href="#license"><span>License</span></a></li></ul>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Type Aliases"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>Type Aliases</summary>
+<div><a href="#htmlminifierpluginoptions"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Type Alias"><use href="../../assets/icons.svg#icon-2097152"></use></svg><span>Html<wbr/>Minifier<wbr/>Plugin<wbr/>Options</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>
+<div><a href="#default"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><span>default</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav id="tsd-sidebar-links" class="tsd-navigation"><a href="https://github.com/simbo/packages" class="tsd-nav-link">GitHub Repository</a></nav>
+<nav class="tsd-navigation"><a href="../../modules.html">Documentation for Simbo&#39;s Packages</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer>
+<p><small><a style='color:#808080' href='https://simbo.mit-license.org/2025/'>MIT &copy; Simon Lepel</a></small> — <small><a style='color:#808080' href='https://simbo.de/'>simbo.de</a></small> — <small><a style='color:#808080' href='https://github.com/simbo'>github.com/simbo</a></small></p></footer>
+<div class="overlay"></div></body></html>
