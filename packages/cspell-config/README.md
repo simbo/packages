@@ -36,6 +36,20 @@ Add `cspell` command to your `package.json` scripts:
     "check:spelling": "cspell",
 ```
 
+## Ignored content
+
+Fenced code blocks and inline code are excluded from spelling checks.
+
+In `CHANGELOG.md` files, Git commit hashes of exactly seven hexadecimal
+characters at the start of list entries followed by a colon are also ignored,
+for example `- cebccff: Fix template rendering.` This covers
+Changesets-generated changelogs without excluding their descriptions from
+spelling checks.
+
+Hexadecimal strings in other Markdown prose remain checked: ordinary words can
+also consist entirely of hexadecimal letters. Use inline code for technical
+identifiers in prose.
+
 ## License
 
 [MIT © Simon Lepel](https://simbo.mit-license.org/2025/)

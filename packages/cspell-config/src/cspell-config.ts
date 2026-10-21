@@ -33,6 +33,14 @@ export const config: CSpellUserSettings = {
     '`[^`]*`',
   ],
 
+  // Changesets prefixes changelog entries with seven-character commit hashes.
+  overrides: [
+    {
+      filename: '**/CHANGELOG.md',
+      ignoreRegExpList: [String.raw`/^\s*- [0-9a-f]{7}(?=:)/gmi`],
+    },
+  ],
+
   // A word must be at least 3 characters long
   minWordLength: 3,
 
