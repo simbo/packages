@@ -1,7 +1,7 @@
 {
   "name": "@simbo/vite-plugin-html-minifier",
   "description": "Minify generated Vite HTML assets with shared defaults and typed html-minifier-terser options.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "vite-plugin",
     "vite",

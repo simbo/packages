@@ -441,7 +441,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📦
   [`@simbo/vite-plugin-html-minifier`](https://www.npmjs.com/package/@simbo/vite-plugin-html-minifier)
-  @ `1.0.0`
+  @ `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-html-minifier/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-html-minifier/CHANGELOG.md)  • 

@@ -1,5 +1,12 @@
 # @simbo/vite-plugin-html-minifier
 
+## 1.0.1
+
+### Patch Changes
+
+- a23c3c2: Publish a maintenance release to validate automated npm publishing.
+  No runtime changes.
+
 ## 1.0.0
 
 ### Major Changes
