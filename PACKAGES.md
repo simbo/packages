@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**30**_ packages managed in this repository:
+There are currently _**31**_ packages managed in this repository:
 
 - ### **Accessible**
 
@@ -430,6 +430,22 @@ There are currently _**30**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_user-facing-error/)
+
+- ### **Vite Plugin HTML Minifier**
+
+  > Minify generated Vite HTML assets with shared defaults and typed
+  > html-minifier-terser options.
+
+  📂
+  [**`./packages/vite-plugin-html-minifier`**](https://github.com/simbo/packages/tree/main/packages/vite-plugin-html-minifier/)
+
+  📦
+  [`@simbo/vite-plugin-html-minifier`](https://www.npmjs.com/package/@simbo/vite-plugin-html-minifier)
+  @ `0.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-html-minifier/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-html-minifier/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_vite-plugin-html-minifier/)
 
 - ### **Vite Plugin Nunjucks**
 
