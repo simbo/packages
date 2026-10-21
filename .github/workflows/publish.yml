@@ -1,10 +1,9 @@
 name: Publish 🚛
 
 on:
-  push:
-    tags:
-      - '*/v*.*.*'
-      - '!changelog/v*'
+  release:
+    types:
+      - published
   workflow_dispatch:
     inputs:
       workspace:
@@ -16,36 +15,28 @@ on:
         type: string
         required: true
 
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.workspace, inputs.version) || github.event.release.tag_name }}
+
 run-name: >
-  ${{
-    format(
-      '{0} {1}',
-      github.workflow,
-      github.event_name == 'workflow_dispatch'
-        && format('{0}/v{1}', github.event.inputs.workspace, github.event.inputs.version)
-        || github.ref_name
-    )
-  }}
+  ${{ format('{0} {1}', github.workflow,
+    github.event_name == 'workflow_dispatch'
+      && format('{0}/v{1}', inputs.workspace, inputs.version) || github.event.release.tag_name) }}
 
 concurrency:
   cancel-in-progress: false
   group: >
-    ${{
-      format(
-        '{0}--{1}',
-        github.workflow,
-        github.event_name == 'workflow_dispatch'
-        && format('{0}/v{1}', github.event.inputs.workspace, github.event.inputs.version)
-        || github.ref_name
-      )
-    }}
+    ${{ format('{0}--{1}', github.workflow,
+      github.event_name == 'workflow_dispatch'
+        && format('{0}/v{1}', inputs.workspace, inputs.version) || github.event.release.tag_name) }}
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 jobs:
   publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || (!github.event.release.prerelease && !startsWith(github.event.release.tag_name, 'changelog/')) }}
     runs-on: ubuntu-latest
     steps:
       - name: 🪪 Retrieve Credentials
@@ -55,54 +46,11 @@ jobs:
           app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
           app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
 
-      - name: 🧾 Prepare Publish Params
-        id: params
-        uses: actions/github-script@v8
-        env:
-          EVENT_NAME: ${{ github.event_name || '' }}
-          REF_NAME: ${{ github.ref_name || '' }}
-          WORKSPACE: ${{ github.event.inputs.workspace || '' }}
-          VERSION: ${{ github.event.inputs.version || '' }}
-        with:
-          script: |
-            const eventName = process.env.EVENT_NAME.trim();
-
-            let workspace, version;
-
-            switch (eventName) {
-              case 'workflow_dispatch':
-                workspace = process.env.WORKSPACE.trim();
-                version = process.env.VERSION.trim();
-                break;
-              case 'push':
-                const ref = process.env.REF_NAME.trim();
-                workspace = ref.split('/v')[0];
-                version = ref.split('/v')[1];
-                break;
-              default:
-                throw new Error(`Unsupported event name: ${eventName}`);
-            }
-
-            if (!/^[\da-z._-]+$/i.test(workspace)) {
-              core.setFailed(`Invalid Workspace: Workspace may only contain letters, numbers, dot, underscore, hyphen.`);
-              return;
-            }
-            if (!/^[\d.]+$/.test(version)) {
-              core.setFailed(`Invalid Version: Version may only contain numbers and dots.`);
-              return;
-            }
-
-            const tag = `${workspace}/v${version}`;
-
-            core.setOutput('workspace', workspace);
-            core.setOutput('version', version);
-            core.setOutput('tag', tag);
-
-      - name: 🛎️ Checkout
+      - name: 🛎️ Checkout Release Tag
         uses: actions/checkout@v6
         with:
           token: ${{ steps.credentials.outputs.token }}
-          ref: ${{ steps.params.outputs.tag }}
+          ref: refs/tags/${{ env.RELEASE_TAG }}
 
       - name: 🚚 Install pnpm
         uses: pnpm/action-setup@v4
@@ -110,46 +58,45 @@ jobs:
       - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v6
         with:
-          cache: pnpm
           node-version-file: .nvmrc
+          token: ${{ steps.credentials.outputs.token }}
 
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 🧾 Get Package Name and Private Field
+      - name: 🧾 Validate Package Identity
         id: package
-        env:
-          WORKSPACE: ${{ steps.params.outputs.workspace }}
-        run: |
-          set -euo pipefail
+        run: node scripts/release-package.js metadata "$RELEASE_TAG"
 
-          packageName=$(jq -r '.name' "packages/${WORKSPACE}/package.json")
-          packagePrivate=$(jq -r '.private // false' "packages/${WORKSPACE}/package.json")
+      - name: 🔒 Skip Private Package
+        if: ${{ steps.package.outputs.private == 'true' }}
+        run: echo '::notice title=Private Package::Skipping npm publish for a private workspace.'
 
-          echo "name=${packageName}" >> $GITHUB_OUTPUT
-          echo "private=${packagePrivate}" >> $GITHUB_OUTPUT
-
-      - name: 📦 Build Package
-        env:
-          PACKAGE: ${{ steps.package.outputs.name }}
-        run: pnpm exec turbo run build --filter="${PACKAGE}"
-
-      - name: 🚛 Publish to Registry
+      - name: 📥 Download Published Release Archive
         if: ${{ steps.package.outputs.private == 'false' }}
         env:
-          PACKAGE: ${{ steps.package.outputs.name }}
-        run: pnpm publish --filter="${PACKAGE}" --no-git-checks --provenance
+          GH_TOKEN: ${{ steps.credentials.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          ASSET_NAME: ${{ steps.package.outputs.asset }}
+          EXPECTED_RELEASE_ID: ${{ github.event.release.id }}
+        run: |
+          set -euo pipefail
+          encoded_tag=$(node -p 'encodeURIComponent(process.env.RELEASE_TAG)')
+          release=$(gh api "repos/$GH_REPO/releases/tags/$encoded_tag")
+          if ! jq -e --arg tag "$RELEASE_TAG" '.tag_name == $tag and .draft == false and .prerelease == false' <<< "$release" > /dev/null; then
+            echo '::error title=Invalid GitHub Release::Expected a published stable release for the requested tag.'
+            exit 1
+          fi
+          if [[ -n "$EXPECTED_RELEASE_ID" && "$(jq -r .id <<< "$release")" != "$EXPECTED_RELEASE_ID" ]]; then
+            echo '::error title=Release Identity Changed::The release no longer matches the triggering event.'
+            exit 1
+          fi
+          mkdir -p "$RUNNER_TEMP/package-release"
+          gh release download "$RELEASE_TAG" --pattern "$ASSET_NAME" --pattern SHA256SUMS --dir "$RUNNER_TEMP/package-release"
 
-      - name: 🎉 Package Published (Event)
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          event-type: package-published
-          token: ${{ steps.credentials.outputs.token }}
-          client-payload: >
-            ${{
-              format(
-                '{{ "name": {0}, "version": {1} }}',
-                toJson(steps.package.outputs.name),
-                toJson(steps.params.outputs.version)
-              )
-            }}
+      - name: 🔐 Verify Archive Identity and Checksum
+        if: ${{ steps.package.outputs.private == 'false' }}
+        run: node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
+
+      - name: 🚛 Publish Verified Tarball to npm
+        if: ${{ steps.package.outputs.private == 'false' }}
+        env:
+          ASSET_NAME: ${{ steps.package.outputs.asset }}
+        run: pnpm publish "$RUNNER_TEMP/package-release/$ASSET_NAME" --no-git-checks --access public --provenance

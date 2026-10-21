@@ -14,4 +14,13 @@ export default defineConfig([
     },
     extends: [configs.node.recommended],
   },
+  {
+    files: ['scripts/*.js'],
+    // JavaScript signatures use JSDoc; TypeScript syntax cannot be written here.
+    // Keep type-aware rules and the shared JavaScript JSDoc requirements active.
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+    },
+  },
 ]) as unknown;

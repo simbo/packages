@@ -8,9 +8,20 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov'],
-      include: ['packages/*/src/**/*.ts'],
+      include: ['packages/*/src/**/*.ts', 'scripts/*.js'],
       exclude: ['packages/*/src/**/*.{type,types,interface,interfaces,enum}.ts', 'packages/*/src/**/index.ts'],
     },
-    projects: ['packages/*'],
+    projects: [
+      'packages/*',
+      {
+        // Keep the root package include pattern out of this project.
+        extends: false,
+        test: {
+          name: 'scripts',
+          environment: 'node',
+          include: ['scripts/*.test.js'],
+        },
+      },
+    ],
   },
 });

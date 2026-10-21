@@ -96,6 +96,9 @@ pnpm run [--filter=<PNPM_SELECTOR>] test:watch
 
 # run tests in ui mode
 pnpm run [--filter=<PNPM_SELECTOR>] test:ui
+
+# run repository helper script tests
+pnpm run test --project scripts
 ```
 
 Vitest 5 clears mock call history before each test. Coverage includes all source
@@ -145,7 +148,9 @@ pnpm run serve:docs
 ### Releases
 
 Adding changesets to the main branch will automatically create releases for the
-affected packages and publish them to the registry.
+affected packages. Each package is built and packed once for its GitHub release;
+the npm publishing workflow verifies and uploads that same archive. See
+[NPM_PUBLISHING.md](./NPM_PUBLISHING.md) for first publishes and retries.
 
 #### Continuous Integration Flow
 
@@ -154,76 +159,91 @@ flowchart LR
 
   subgraph ChecksWorkflow["<code>.github/workflows/checks.yml</code>"]
     PushToMain@{ shape: rounded, label: "📥 Pushed to Main" }
-    Checks["Run all Checks and Tests"]
-    ChecksPassed{"All<br>Passed?"}
-    Changesets{"Changesets<br>Present?"}
-    ReleaseEventDispatch["Dispatch<br>🎉 Release Changes"]
+    BuildPackages["👷 Build Packages"]
+    RunTests["👨‍🔬 Run Tests"]
+    RunChecks["👨‍🏫 Run Checks"]
+    BuildDocs["📘 Build Docs"]
+    ChecksPassed{"✅ All Checks<br>Passed?"}
+    Changesets{"📄 Changesets<br>Present?"}
+    ReleaseEventDispatch["🎉 Dispatch Release Workflow"]
 
     direction TB
-    PushToMain --> Checks
-    Checks --> ChecksPassed
+    PushToMain --> BuildPackages
+    BuildPackages --> RunTests
+    RunTests --> RunChecks
+    RunChecks --> BuildDocs
+    BuildDocs --> ChecksPassed
     ChecksPassed --"YES"--> Changesets
     Changesets --"YES"--> ReleaseEventDispatch
   end
 
   subgraph ReleaseWorkflow["<code>.github/workflows/release.yml</code>"]
-    ReleaseEvent@{ shape: rounded, label: "🎉 Release Changes" }
-    IntegrateChangesets["Integrate Changesets"]
-    IncrementVersions["Increment Versions"]
-    CollectPackages["Collect affected Packages<br><small>(Direct and Transitive)</small>"]
-    CommitAndPushChanges["Commit and Push Changes"]
-    PushReleaseTags["🏷️ Push a Tag for each<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>"]
+    ReleaseEvent@{ shape: rounded, label: "🎉 Release Workflow Requested" }
+    IntegrateChangesets["🔄 Apply Changesets<br>and Sync Versions"]
+    CollectPackages["🧾 Find Changed Packages"]
+    UpdatePackageDocs["📝 Update Package Lists"]
+    CommitAndPushChanges["💾 Commit and Push Changes"]
+    PushReleaseTags["🏷️ Push Release Tags<br>for Bumped Packages<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>"]
 
     direction TB
     ReleaseEvent --> IntegrateChangesets
-    IntegrateChangesets --> IncrementVersions
-    IncrementVersions --> CollectPackages
-    CollectPackages --> CommitAndPushChanges
+    IntegrateChangesets --> CollectPackages
+    CollectPackages --> UpdatePackageDocs
+    UpdatePackageDocs --> CommitAndPushChanges
     CommitAndPushChanges --> PushReleaseTags
   end
 
-  subgraph PublishWorkflow["<code>.github/workflows/publish.yml</code>"]
-    TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>" }
-    BuildPackage["Build Package"]
-    IsPrivate{"Package is<br>Private?"}
-    PublishToNpm["🚀 Publish to npm Registry"]
-    PackagePublished["Package Published Event"]
-
-    direction TB
-    TagEvent --> BuildPackage
-    BuildPackage --> IsPrivate
-    IsPrivate --"NO"--> PublishToNpm
-    PublishToNpm --> PackagePublished
-  end
-
   subgraph GitHubReleaseWorkflow["<code>.github/workflows/github-release.yml</code>"]
-    FetchTarball["Fetch Published npm Tarball"]
-    ExtractChangelogEntry["Extract Changelog Entry"]
-    CreateRelease["🎁 Create GitHub Release"]
+    TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>" }
+    IsReleasePrivate{"Package is<br>Private?"}
+    BuildPackage["👷 Build Tagged Package"]
+    PackTarball["📦 Prepare Tarball with Checksum"]
+    ExtractChangelogEntry["📝 Extract Changelog Entry"]
+    UploadDraft["🎁 Create Draft Release<br>and Upload Assets"]
+    PublishRelease["🚀 Publish Final GitHub Release<br>with Tarball and Checksum"]
 
     direction TB
-    FetchTarball --> ExtractChangelogEntry
-    ExtractChangelogEntry --> CreateRelease
+    TagEvent --> IsReleasePrivate
+    IsReleasePrivate --"NO"--> BuildPackage
+    BuildPackage --> PackTarball
+    PackTarball --> ExtractChangelogEntry
+    ExtractChangelogEntry --> UploadDraft
+    UploadDraft --> PublishRelease
   end
-  PackagePublished --> FetchTarball
+
+  subgraph PublishWorkflow["<code>.github/workflows/publish.yml</code>"]
+    ReleasePublished@{ shape: rounded, label: "🎉 GitHub Release Published" }
+    DownloadArchive["📥 Fetch Release Tarball with Checksum"]
+    VerifyDownload["🔐 Verify Identity and Checksum"]
+    IsPrivate{"Package is<br>Private?"}
+    PublishToNpm["🚛 Publish Tarball to NPM"]
+
+    direction TB
+    ReleasePublished --> IsPrivate
+    IsPrivate --"NO"--> DownloadArchive
+    DownloadArchive --> VerifyDownload
+    VerifyDownload --> PublishToNpm
+  end
 
   ChecksWorkflow Link1@=== ReleaseWorkflow
-  ReleaseWorkflow Link2@=== PublishWorkflow
+  ReleaseWorkflow Link2@=== GitHubReleaseWorkflow
+  GitHubReleaseWorkflow Link3@=== PublishWorkflow
 
   classDef animateLink stroke: #888888,stroke-dasharray:9,5,stroke-dashoffset:900, animation: dash 25s linear infinite;
-  class Link1,Link2 animateLink
+  class Link1,Link2,Link3 animateLink
 
   classDef workflow stroke:#888888,fill:transparent;
-  class ChecksWorkflow,ReleaseWorkflow,PublishWorkflow,GitHubReleaseWorkflow workflow
+  class ChecksWorkflow,ReleaseWorkflow,GitHubReleaseWorkflow,PublishWorkflow workflow
 
   classDef event stroke:#B54BC8,stroke-width:2px,fill:transparent;
-  class PushToMain,TagEvent,ReleaseEvent event
+  class PushToMain,TagEvent,ReleaseEvent,ReleasePublished event
 
   classDef step stroke:#6366F1,stroke-width:2px,fill:transparent;
-  class Checks,ReleaseEventDispatch,IntegrateChangesets,IncrementVersions,CollectPackages,CommitAndPushChanges,PushReleaseTags,BuildPackage,FetchTarball,PackagePublished,ExtractChangelogEntry,CreateRelease,PublishToNpm step
+  class BuildPackages,RunTests,RunChecks,BuildDocs,ReleaseEventDispatch,IntegrateChangesets,CollectPackages,UpdatePackageDocs,CommitAndPushChanges,PushReleaseTags,BuildPackage,PackTarball,ExtractChangelogEntry,UploadDraft,PublishRelease,DownloadArchive,VerifyDownload,PublishToNpm step
 
   classDef gate stroke:#E67E22,stroke-width:2px,fill:transparent
-  class IsPrivate,ChecksPassed,Changesets gate
+  class IsReleasePrivate,IsPrivate,ChecksPassed,Changesets gate
+
 ```
 
 ## License

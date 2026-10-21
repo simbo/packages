@@ -1,86 +1,86 @@
-# Publishing Packages to NPM
+# Publishing Packages to npm
 
-Notes on publishing packages from this monorepo to the npm registry.
+## Release Pipeline
+
+```text
+<workspace>/v<version>
+  → github-release.yml: build → pack → verify → upload draft assets → publish release
+  → publish.yml: download → verify → publish the same .tgz to npm
+```
+
+The GitHub release contains `<workspace>-<version>.tgz` and `SHA256SUMS`. The
+package is built once. Publishing never rebuilds or repacks it. GitHub's
+automatic source ZIP/tar archives are not the npm package.
+
+A GitHub release can exist before npm makes the version installable. An npm
+failure does not remove the release. Both workflows support manual runs with
+`workspace` and `version`; the tag must exist and contain the workflow tooling.
+Published releases are preserved; incomplete drafts can be retried.
+
+## First Publish: Use the Release Tarball
+
+Requirements: pnpm 12, the repository's Node.js version, GitHub CLI, and `tar`.
+Run from this repository; the checkout does not need to match the release tag.
+Use a reviewed, tested release. The initial CI publish may fail until trusted
+publishing is configured.
+
+Authenticate once:
+
+```bash
+gh auth login
+pnpm login --registry https://registry.npmjs.org/
+```
+
+Replace `<workspace>/v<version>` with the release tag:
+
+```bash
+pnpm run publish-initial -- '<workspace>/v<version>'
+```
+
+The helper downloads the published release, reads its tagged manifest, verifies
+SHA-256 and package identity, and shows the package, version, registry and file.
+Confirm with `y` to publish that exact archive through pnpm. Login and 2FA stay
+interactive. No checkout, build, repack, or repository dispatch is needed.
+Downloaded files remain in a temporary directory for inspection or recovery.
+
+Check and download without publishing:
+
+```bash
+pnpm run publish-initial -- --check '<workspace>/v<version>'
+```
+
+Do not upload the version again while npm processes an accepted publish.
 
 ## Trusted Publishing
 
-This repository uses _OIDC Trusted Publishing_ for automated npm releases.
+After the first publish, open the package's npm settings and add a GitHub
+Actions trusted publisher:
 
-📘
-[npm Docs: Trusted publishing for npm packages](https://docs.npmjs.com/trusted-publishers)
+| Field                | Value         |
+| -------------------- | ------------- |
+| Organization or user | `simbo`       |
+| Repository           | `packages`    |
+| Workflow filename    | `publish.yml` |
+| Environment          | Leave empty   |
 
-When publishing with the npm CLI, trusted publishing requires npm 11.5.1 or
-later and Node.js 22.14.0 or later. This repository uses pnpm 12 and the Node.js
-version in `.nvmrc`; its package engine requirements also apply.
+Allow direct publishing (`npm publish`) in the publisher configuration. Confirm
+with 2FA. The workflow uses OIDC (`id-token: write`), GitHub-hosted runners, and
+pnpm 12 from `packageManager`; no npm publish token is required. Keep provenance
+enabled for public packages from the public repository.
 
-Once a package has been published manually, subsequent releases can be done via
-the automated GitHub workflows.
+[Trusted publishing reference](https://docs.npmjs.com/trusted-publishers/)
 
-## First Time Publishing (Locally, Manually)
+## Retry npm Publishing
 
-Release the package as usual by pushing changesets to main and let the CI create
-a version tag. The publishing workflow will fail since the package is not yet
-published.
-
-Then, publish the package manually for the first time:
+Use the existing GitHub release and the same archive. Fix authentication or
+configuration errors first; check whether npm already accepted the version. Do
+not overwrite release assets or rebuild the package to retry.
 
 ```bash
-# checkout the version tag to publish
-git checkout tags/PACKAGE_NAME/vX.Y.Z
-
-# run preflight checks
-pnpm run preflight
-
-# build the package
-pnpm exec turbo run build --filter=PACKAGE_NAME
-
-# login to npm
-npm login
-
-# publish the package
-pnpm publish --filter=PACKAGE_NAME --no-git-checks --access public
-
-# First-time publishes may need some minutes to propagate on npm servers.
-# Wait a bit before proceeding...
-
-# login to github.com
-gh auth login
-
-# dispatch a repository event to trigger post-publish actions
-gh api repos/simbo/packages/dispatches \
-  --method POST \
-  -f 'event_type=package-published' \
-  -f 'client_payload[name]=PACKAGE_NAME' \
-  -f 'client_payload[version]=PACKAGE_VERSION'
+gh workflow run publish.yml --repo simbo/packages \
+  -f workspace='<workspace>' -f version='<version>'
 ```
 
-## Configure a Package for Trusted Publishing
-
-After the first time publishing a package, set up trusted publishing for
-automated releases:
-
-1. Go to the package settings on the npm website.
-
-   ```plaintext
-   https://www.npmjs.com/package/PACKAGE_NAME/access
-   ```
-
-2. Under _Trusted Publisher_, select "GitHub Actions" and set these options:
-   - Organization or user:
-     ```plaintext
-     simbo
-     ```
-   - Repository:
-     ```plaintext
-     packages
-     ```
-   - Workflow filename:
-     ```plaintext
-     publish.yml
-     ```
-
-3. Click "Set up connection".
-
-After confirming with 2FA, the settings should be displayed as configured.
-
-The package should now be automatically published by the GitHub workflow.
+The workflow requires a published stable release, checks its identity and
+SHA-256 digest, and publishes the verified tarball. Registry acceptance and
+installation availability are separate states.
