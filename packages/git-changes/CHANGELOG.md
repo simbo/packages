@@ -1,5 +1,12 @@
 # @simbo/git-changes
 
+## 2.1.2
+
+### Patch Changes
+
+- e235985: Update `execa` to ^10.2.0.
+- @simbo/find-git-repository-root@2.0.0
+
 ## 2.1.1
 
 ### Patch Changes

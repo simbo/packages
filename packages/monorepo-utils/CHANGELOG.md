@@ -1,5 +1,14 @@
 # @simbo/monorepo-utils
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `p-queue` to ^9.3.5.
+- @simbo/accessible@2.0.0
+  - @simbo/package-json@1.0.0
+  - @simbo/stringify-error@2.0.0
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,14 @@
 # @simbo/monorepo-packages-list
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `zod` to ^4.6.7.
+- Updated dependencies [e235985]
+  - @simbo/monorepo-utils@2.0.1
+  - @simbo/zodpak@1.0.0
+
 ## 2.0.0
 
 ### Major Changes

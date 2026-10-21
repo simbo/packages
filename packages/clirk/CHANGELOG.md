@@ -1,5 +1,17 @@
 # @simbo/clirk
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `zod` to ^4.6.7.
+- @simbo/cli-output@2.0.0
+  - @simbo/find-up-package@2.0.0
+  - @simbo/graceful-exit@2.0.0
+  - @simbo/plural@2.0.0
+  - @simbo/stringify-error@2.0.0
+  - @simbo/zodpak@1.0.0
+
 ## 2.0.0
 
 ### Major Changes

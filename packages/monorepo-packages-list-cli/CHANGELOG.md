@@ -1,5 +1,24 @@
 # @simbo/monorepo-packages-list-cli
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `zod` to ^4.6.7.
+- Updated dependencies [e235985]
+- Updated dependencies [e235985]
+- Updated dependencies [e235985]
+  - @simbo/call-prettier@2.0.1
+  - @simbo/monorepo-utils@2.0.1
+  - @simbo/clirk@2.0.1
+  - @simbo/monorepo-packages-list@2.0.1
+  - @simbo/accessible@2.0.0
+  - @simbo/cli-output@2.0.0
+  - @simbo/find-git-repository-root@2.0.0
+  - @simbo/inject-between-html-comments@2.0.0
+  - @simbo/user-facing-error@2.0.0
+  - @simbo/zodpak@1.0.0
+
 ## 2.0.0
 
 ### Major Changes

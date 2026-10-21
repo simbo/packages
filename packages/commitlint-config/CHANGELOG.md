@@ -1,5 +1,11 @@
 # @simbo/commitlint-config
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `@commitlint/config-conventional` to ^21.2.4.
+
 ## 2.0.0
 
 ### Major Changes

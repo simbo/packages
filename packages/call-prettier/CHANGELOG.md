@@ -1,5 +1,14 @@
 # @simbo/call-prettier
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `execa` to ^10.2.0.
+- Updated dependencies [e235985]
+  - @simbo/find-bin@2.0.1
+  - @simbo/accessible@2.0.0
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,31 @@
 # @simbos-packages/changelog
 
+## 1.6.0
+
+### Minor Changes
+
+- 710ac4e: Build package archives once in the GitHub release workflow, then
+  verify and publish the same release tarballs to npm. Decouple release creation
+  from registry availability and document first publishes and retries using
+  release assets.
+
+  Add an interactive pnpm command to download, verify and publish release
+  archives locally, including a read-only check mode and tests for invalid
+  release assets.
+
+  Keep repository helpers in scripts/ and run their tests through Vitest
+  alongside package tests, with a dedicated scripts project for focused runs.
+
+### Patch Changes
+
+- 8e9dabc: Document pnpm 12 with the exact version maintained in package.json,
+  and align the release diagram with the existing publish and GitHub release
+  workflows.
+- e235985: Update pnpm from 12.8.1 to 12.14.0 and development dependencies.
+  Remove unused direct `baseline-browser-mapping` dependencies from workspace
+  packages. Capture and assert expected release-helper success messages instead
+  of printing test fixture output.
+
 ## 1.5.6
 
 ### Patch Changes

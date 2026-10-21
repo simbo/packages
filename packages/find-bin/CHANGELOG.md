@@ -1,5 +1,12 @@
 # @simbo/find-bin
 
+## 2.0.1
+
+### Patch Changes
+
+- e235985: Update `execa` to ^10.2.0.
+- @simbo/accessible@2.0.0
+
 ## 2.0.0
 
 ### Major Changes
