@@ -1,7 +1,7 @@
 {
   "name": "@simbo/cspell-config",
   "description": "Simbo's shared CSpell configuration.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "keywords": [
     "cspell",
     "config",

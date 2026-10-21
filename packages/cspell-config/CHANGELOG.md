@@ -1,5 +1,12 @@
 # @simbo/cspell-config
 
+## 2.1.1
+
+### Patch Changes
+
+- aa9def2: Ignore Git commit hash prefixes in Changesets-style CHANGELOG.md
+  entries while continuing to check their descriptions.
+
 ## 2.1.0
 
 ### Minor Changes
