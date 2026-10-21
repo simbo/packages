@@ -3,8 +3,9 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import process from 'node:process';
 
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 
 import { parseTag, readMetadata, verifyArchive } from './release-package.js';
 
@@ -13,6 +14,7 @@ import { parseTag, readMetadata, verifyArchive } from './release-package.js';
  */
 const directories = [];
 afterEach(() => {
+  vi.restoreAllMocks();
   for (const directory of directories.splice(0)) rmSync(directory, { recursive: true, force: true });
 });
 
@@ -90,9 +92,14 @@ test('rejects invalid manifest names before writing workflow outputs', () => {
 });
 
 test('accepts the unchanged archive and its single-file SHA-256 checksum', () => {
+  // Capture expected success output while keeping production diagnostics intact.
+  const output = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
   const directory = fixture();
   archive(directory);
   verifyArchive(readMetadata('example/v1.2.3', directory), directory);
+  expect(output).toHaveBeenCalledExactlyOnceWith(
+    expect.stringMatching(/^✅ Verified @simbo\/example@1\.2\.3: example-1\.2\.3\.tgz \([a-f\d]{64}\)\n$/),
+  );
 });
 
 test('rejects modified archives and checksum manifests naming other paths', () => {

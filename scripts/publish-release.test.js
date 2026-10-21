@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import process from 'node:process';
 
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 
 import { prepareRelease } from './publish-release.js';
 
@@ -14,6 +14,7 @@ import { prepareRelease } from './publish-release.js';
  */
 const directories = [];
 afterEach(() => {
+  vi.restoreAllMocks();
   for (const directory of directories.splice(0)) rmSync(directory, { recursive: true, force: true });
 });
 
@@ -57,9 +58,14 @@ function fixture(releaseOverrides, manifestOverrides) {
 }
 
 test('prepares the tagged identity without consulting a local checkout or invoking pnpm', () => {
+  // Assert the expected success message instead of printing fixture details.
+  const output = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
   const { directory, calls, run } = fixture();
   const metadata = prepareRelease('example/v1.2.3', directory, run);
   expect(metadata.name).toBe('@simbo/different-name');
+  expect(output).toHaveBeenCalledExactlyOnceWith(
+    expect.stringMatching(/^✅ Verified @simbo\/different-name@1\.2\.3: example-1\.2\.3\.tgz \([a-f\d]{64}\)\n$/),
+  );
   expect(calls.length).toBe(3);
   expect(calls[0]?.[2]?.endsWith('example%2Fv1.2.3')).toBeTruthy();
   expect(calls[1]?.[2]?.endsWith('?ref=example%2Fv1.2.3')).toBeTruthy();
