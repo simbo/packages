@@ -155,9 +155,20 @@ the npm publishing workflow verifies and uploads that same archive. See
 #### Continuous Integration Flow
 
 ```mermaid
+---
+config:
+  look: classic
+  htmlLabels: false
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"'
+  fontSize: 16
+  flowchart:
+    wrappingWidth: 400
+    nodeSpacing: 30
+    rankSpacing: 40
+---
 flowchart LR
 
-  subgraph ChecksWorkflow["<code>.github/workflows/checks.yml</code>"]
+  subgraph ChecksWorkflow[".github/workflows/checks.yml"]
     PushToMain@{ shape: rounded, label: "📥 Pushed to Main" }
     BuildPackages["👷 Build Packages"]
     RunTests["👨‍🔬 Run Tests"]
@@ -165,7 +176,7 @@ flowchart LR
     BuildDocs["📘 Build Docs"]
     ChecksPassed{"✅ All Checks<br>Passed?"}
     Changesets{"📄 Changesets<br>Present?"}
-    ReleaseEventDispatch["🎉 Dispatch Release Workflow"]
+    ReleaseEventDispatch["🎉 Dispatch<br>Release Workflow"]
 
     direction TB
     PushToMain --> BuildPackages
@@ -177,13 +188,13 @@ flowchart LR
     Changesets --"YES"--> ReleaseEventDispatch
   end
 
-  subgraph ReleaseWorkflow["<code>.github/workflows/release.yml</code>"]
-    ReleaseEvent@{ shape: rounded, label: "🎉 Release Workflow Requested" }
+  subgraph ReleaseWorkflow[".github/workflows/release.yml"]
+    ReleaseEvent@{ shape: rounded, label: "🎉 Release Workflow<br>Requested" }
     IntegrateChangesets["🔄 Apply Changesets<br>and Sync Versions"]
-    CollectPackages["🧾 Find Changed Packages"]
-    UpdatePackageDocs["📝 Update Package Lists"]
-    CommitAndPushChanges["💾 Commit and Push Changes"]
-    PushReleaseTags["🏷️ Push Release Tags<br>for Bumped Packages<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>"]
+    CollectPackages["🧾 Find Changed<br>Packages"]
+    UpdatePackageDocs["📝 Update<br>Package Lists"]
+    CommitAndPushChanges["💾 Commit and<br>Push Changes"]
+    PushReleaseTags["🏷️ Push Release Tags<br>for Bumped Packages<br>PACKAGE/vVERSION"]
 
     direction TB
     ReleaseEvent --> IntegrateChangesets
@@ -193,14 +204,14 @@ flowchart LR
     CommitAndPushChanges --> PushReleaseTags
   end
 
-  subgraph GitHubReleaseWorkflow["<code>.github/workflows/github-release.yml</code>"]
-    TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br><code>&lt;PACKAGE&gt;/v&lt;VERSION&gt;</code>" }
+  subgraph GitHubReleaseWorkflow[".github/workflows/github-release.yml"]
+    TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br>PACKAGE/vVERSION" }
     IsReleasePrivate{"Package is<br>Private?"}
-    BuildPackage["👷 Build Tagged Package"]
-    PackTarball["📦 Prepare Tarball with Checksum"]
-    ExtractChangelogEntry["📝 Extract Changelog Entry"]
+    BuildPackage["👷 Build Tagged<br>Package"]
+    PackTarball["📦 Prepare Tarball<br>with Checksum"]
+    ExtractChangelogEntry["📝 Extract<br>Changelog Entry"]
     UploadDraft["🎁 Create Draft Release<br>and Upload Assets"]
-    PublishRelease["🚀 Publish Final GitHub Release<br>with Tarball and Checksum"]
+    PublishRelease["🚀 Publish Final Release<br>with Tarball<br>and Checksum"]
 
     direction TB
     TagEvent --> IsReleasePrivate
@@ -211,12 +222,12 @@ flowchart LR
     UploadDraft --> PublishRelease
   end
 
-  subgraph PublishWorkflow["<code>.github/workflows/publish.yml</code>"]
-    ReleasePublished@{ shape: rounded, label: "🎉 GitHub Release Published" }
-    DownloadArchive["📥 Fetch Release Tarball with Checksum"]
-    VerifyDownload["🔐 Verify Identity and Checksum"]
+  subgraph PublishWorkflow[".github/workflows/publish.yml"]
+    ReleasePublished@{ shape: rounded, label: "🎉 GitHub Release<br>Published" }
+    DownloadArchive["📥 Fetch Release Tarball<br>with Checksum"]
+    VerifyDownload["🔐 Verify Identity<br>and Checksum"]
     IsPrivate{"Package is<br>Private?"}
-    PublishToNpm["🚛 Publish Tarball to NPM"]
+    PublishToNpm["🚛 Publish Tarball<br>to NPM"]
 
     direction TB
     ReleasePublished --> IsPrivate
@@ -229,10 +240,12 @@ flowchart LR
   ReleaseWorkflow Link2@=== GitHubReleaseWorkflow
   GitHubReleaseWorkflow Link3@=== PublishWorkflow
 
+  linkStyle default stroke:#888888,stroke-width:1.5px;
+
   classDef animateLink stroke: #888888,stroke-dasharray:9,5,stroke-dashoffset:900, animation: dash 25s linear infinite;
   class Link1,Link2,Link3 animateLink
 
-  classDef workflow stroke:#888888,fill:transparent;
+  classDef workflow stroke:#888888,fill:transparent,font-size:12px;
   class ChecksWorkflow,ReleaseWorkflow,GitHubReleaseWorkflow,PublishWorkflow workflow
 
   classDef event stroke:#B54BC8,stroke-width:2px,fill:transparent;

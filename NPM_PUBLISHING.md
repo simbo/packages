@@ -68,6 +68,12 @@ with 2FA. The workflow uses OIDC (`id-token: write`), GitHub-hosted runners, and
 pnpm 12 from `packageManager`; no npm publish token is required. Keep provenance
 enabled for public packages from the public repository.
 
+Complete the first successful CI publish within **2 days** of creating the
+trusted publisher, or the configuration expires. Prefer releasing immediately:
+add a patch changeset for the package to validate automated npm publishing; no
+runtime changes are needed. If the configuration expires, delete and recreate it
+before retrying.
+
 [Trusted publishing reference](https://docs.npmjs.com/trusted-publishers/)
 
 ## Retry npm Publishing
