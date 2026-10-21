@@ -147,8 +147,10 @@ In `templates/layout.njk`:
 - Use `/` in template paths for portable projects. Native Windows paths have not
   been verified on Windows.
 
-Includes and inheritance load asynchronously. Missing files, invalid syntax, and
-undefined output reject the HTML transform and fail production builds.
+Includes and inheritance load asynchronously. Required missing files, invalid
+syntax, and undefined output reject the HTML transform and fail production
+builds. Nunjucks `ignore missing` is supported; creating a requested optional
+template can trigger a development reload.
 
 ## Options
 

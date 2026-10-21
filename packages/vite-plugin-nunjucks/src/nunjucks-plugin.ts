@@ -109,11 +109,23 @@ export default function nunjucksPlugin(configuration: NunjucksPluginOptions = {}
             sourcePaths.add(normalizePath(path));
             // Vite owns watching; this also covers templates outside its app root.
             context.server?.watcher.add(path);
-            callbackify(async () => ({
-              src: await readFile(path, 'utf8'),
-              path,
-              noCache: options.noCache ?? true,
-            }))(callback);
+            callbackify(async () => {
+              try {
+                return { src: await readFile(path, 'utf8'), path, noCache: options.noCache ?? true };
+              } catch (error) {
+                // Let Nunjucks decide whether a missing source is optional.
+                // Other I/O errors must still fail the render instead of hiding the cause.
+                if (
+                  error instanceof Error &&
+                  'code' in error &&
+                  (error.code === 'ENOENT' || error.code === 'ENOTDIR')
+                ) {
+                  // eslint-disable-next-line unicorn/no-null -- Nunjucks uses null to signal a missing source.
+                  return null;
+                }
+                throw error;
+              }
+            })(callback);
           },
         };
         const environment = new Environment(loader, options);

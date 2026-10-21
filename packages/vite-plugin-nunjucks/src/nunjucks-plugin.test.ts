@@ -27,13 +27,15 @@ afterEach(async () => {
  * Exercises the plugin through Vite instead of casting incomplete hook contexts.
  *
  * @param options - Nunjucks options and template variables for the scenario.
- * @returns An isolated development server without an HTTP listener.
+ * WebSocket transport is disabled: tests observe hot.send directly and need no sockets.
+ *
+ * @returns An isolated development server without HTTP or WebSocket listeners.
  */
 async function startServer(options?: NunjucksPluginOptions): Promise<ViteDevServer> {
   server = await createServer({
     configFile: false,
     root: directory,
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, ws: false },
     plugins: [nunjucksPlugin(options)],
   });
   return server;
@@ -122,6 +124,25 @@ describe('Nunjucks template files', () => {
     expect(html).toContain('<main><b>Simon</b></main>');
   });
 
+  it('supports optional missing includes and discovers them when created', async () => {
+    const vite = await startServer();
+    expect(
+      await vite.transformIndexHtml('/index.html', 'before{% include "optional.njk" ignore missing %}after'),
+    ).toContain('beforeafter');
+    await writeFile(join(directory, 'optional.njk'), '<i>created</i>');
+    expect(await vite.transformIndexHtml('/index.html', '{% include "optional.njk" ignore missing %}')).toContain(
+      '<i>created</i>',
+    );
+  });
+
+  it('does not hide other filesystem errors behind ignore missing', async () => {
+    await mkdir(join(directory, 'directory.njk'));
+    const vite = await startServer();
+    await expect(
+      vite.transformIndexHtml('/index.html', '{% include "directory.njk" ignore missing %}'),
+    ).rejects.toThrow();
+  });
+
   it('rejects missing includes and invalid template syntax', async () => {
     const vite = await startServer();
     await expect(vite.transformIndexHtml('/index.html', '{% include "missing.njk" %}')).rejects.toThrow();
@@ -138,7 +159,7 @@ describe('Nunjucks template files', () => {
     server = await createServer({
       configFile: false,
       root: directory,
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, ws: false },
       plugins: [
         plugin,
         {
@@ -276,7 +297,7 @@ describe('Public package behavior', () => {
     server = await createServer({
       configFile: false,
       root: join(directory, 'app'),
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, ws: false },
       plugins: [
         nunjucksPlugin(),
         {
@@ -305,7 +326,7 @@ describe('Public package behavior', () => {
     server = await createServer({
       configFile: false,
       root: directory,
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, ws: false },
       plugins: [
         plugin,
         {
@@ -320,7 +341,7 @@ describe('Public package behavior', () => {
     const second = await createServer({
       configFile: false,
       root: directory,
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, ws: false },
       plugins: [
         plugin,
         {
