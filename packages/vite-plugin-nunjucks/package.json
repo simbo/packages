@@ -47,6 +47,9 @@
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
   },
+  "peerDependencies": {
+    "vite": "^8.3.1"
+  },
   "dependencies": {
     "nunjucks": "^3.2.4",
     "@types/nunjucks": "^3.2.6"
@@ -66,8 +69,5 @@
     "typescript": "^6.0.3",
     "vitest": "^5.0.3",
     "vite": "^8.3.4"
-  },
-  "peerDependencies": {
-    "vite": "^8.3.1"
   }
 }

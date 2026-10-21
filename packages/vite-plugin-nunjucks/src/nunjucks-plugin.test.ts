@@ -124,6 +124,16 @@ describe('Nunjucks template files', () => {
     expect(html).toContain('<main><b>Simon</b></main>');
   });
 
+  it('renders includes inside asyncEach loops in order with loop locals', async () => {
+    await writeFile(join(directory, 'item.njk'), '<li>{{ item }}</li>');
+    const vite = await startServer({ locals: { items: ['first', 'second'] } });
+    const html = await vite.transformIndexHtml(
+      '/index.html',
+      '<ul>{% asyncEach item in items %}{% include "./item.njk" %}{% endeach %}</ul>',
+    );
+    expect(html).toContain('<ul><li>first</li><li>second</li></ul>');
+  });
+
   it('supports optional missing includes and discovers them when created', async () => {
     const vite = await startServer();
     expect(

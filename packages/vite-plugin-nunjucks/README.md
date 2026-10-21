@@ -152,6 +152,16 @@ syntax, and undefined output reject the HTML transform and fail production
 builds. Nunjucks `ignore missing` is supported; creating a requested optional
 template can trigger a development reload.
 
+When loading includes inside a loop, use Nunjucks' `asyncEach` rather than
+`for`, because the filesystem loader is asynchronous:
+
+```html
+{% asyncEach item in items %} {% include "./templates/item.njk" %} {% endeach %}
+```
+
+Ordinary loops without template loading can still use `for`. See
+[Nunjucks asynchronous support](https://mozilla.github.io/nunjucks/api.html#asynchronous-support).
+
 ## Options
 
 ```ts
@@ -249,7 +259,7 @@ HTML escaping does not isolate template execution.
 
 ## Documentation
 
-- [API reference](https://simbo.de/packages/modules/_simbo_vite-plugin-nunjucks/)
+- [Plugin API reference](https://simbo.de/packages/modules/_simbo_vite-plugin-nunjucks/)
 - [Nunjucks template syntax](https://mozilla.github.io/nunjucks/templating.html)
 - [Nunjucks API](https://mozilla.github.io/nunjucks/api.html)
 - [Changelog](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/CHANGELOG.md)
