@@ -441,7 +441,7 @@ There are currently _**30**_ packages managed in this repository:
 
   📦
   [`@simbo/vite-plugin-nunjucks`](https://www.npmjs.com/package/@simbo/vite-plugin-nunjucks)
-  @ `1.0.0`
+  @ `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/CHANGELOG.md)  • 
