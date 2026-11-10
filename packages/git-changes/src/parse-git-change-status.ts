@@ -1,7 +1,21 @@
 import { GitChangeStatus } from './git-change-status.enum.js';
 import type { GitChange } from './git-changes.types.js';
 
-const trackedStatuses = Object.values(GitChangeStatus).filter(value => value !== GitChangeStatus.Untracked);
+const trackedStatuses = Object.values(GitChangeStatus).filter(
+  value => value !== GitChangeStatus.Untracked && value !== GitChangeStatus.Unmerged,
+);
+
+/**
+ * Status combinations that mark a file with merge conflicts ("unmerged").
+ * - `DD`: both deleted
+ * - `AU`: added by us
+ * - `UD`: deleted by them
+ * - `UA`: added by them
+ * - `DU`: deleted by us
+ * - `AA`: both added
+ * - `UU`: both modified
+ */
+const unmergedStatuses = new Set(['DD', 'AU', 'UD', 'UA', 'DU', 'AA', 'UU']);
 
 /**
  * Parses a Git change status string into staged and unstaged statuses.
@@ -11,6 +25,9 @@ const trackedStatuses = Object.values(GitChangeStatus).filter(value => value !==
  * - The second character represents the unstaged status.
  *
  * If the status is '??', it indicates an untracked file.
+ *
+ * If the status is one of the unmerged combinations (DD, AU, UD, UA, DU, AA, UU),
+ * it indicates a file with merge conflicts and both statuses are `Unmerged`.
  *
  * This should match the output of `git status --porcelain`.
  *
@@ -24,6 +41,10 @@ export function parseGitChangeStatus(status: string): Pick<GitChange, 'staged' |
 
   if (status.startsWith('??')) {
     return { staged: undefined, unstaged: GitChangeStatus.Untracked };
+  }
+
+  if (unmergedStatuses.has(status.slice(0, 2))) {
+    return { staged: GitChangeStatus.Unmerged, unstaged: GitChangeStatus.Unmerged };
   }
 
   const staged = trackedStatuses.find((value: string) => value === status[0]);

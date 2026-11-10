@@ -202,8 +202,8 @@ describe('parseGitStatusOutput()', () => {
   describe('rename and copy entries', () => {
     it.each([
       {
-        title: 'parses a staged rename (R  old -> new) using the next entry as target path',
-        output: 'R  old.ts\0new.ts\0',
+        title: 'parses a staged rename (R  new <- old) using the next entry as origin path',
+        output: 'R  new.ts\0old.ts\0',
         expected: {
           'new.ts': {
             path: 'new.ts',
@@ -214,8 +214,8 @@ describe('parseGitStatusOutput()', () => {
         },
       },
       {
-        title: 'parses a staged copy (C  source -> copied) using the next entry as target path',
-        output: 'C  source.ts\0copied.ts\0',
+        title: 'parses a staged copy (C  copied <- source) using the next entry as origin path',
+        output: 'C  copied.ts\0source.ts\0',
         expected: {
           'copied.ts': {
             path: 'copied.ts',
@@ -226,8 +226,8 @@ describe('parseGitStatusOutput()', () => {
         },
       },
       {
-        title: 'parses an unstaged rename ( R old -> new) using the next entry as target path',
-        output: ' R old.ts\0new.ts\0',
+        title: 'parses an unstaged rename ( R new <- old) using the next entry as origin path',
+        output: ' R new.ts\0old.ts\0',
         expected: {
           'new.ts': {
             path: 'new.ts',
@@ -238,8 +238,8 @@ describe('parseGitStatusOutput()', () => {
         },
       },
       {
-        title: 'parses an unstaged copy ( C source -> copied) using the next entry as target path',
-        output: ' C source.ts\0copied.ts\0',
+        title: 'parses an unstaged copy ( C copied <- source) using the next entry as origin path',
+        output: ' C copied.ts\0source.ts\0',
         expected: {
           'copied.ts': {
             path: 'copied.ts',
@@ -254,24 +254,24 @@ describe('parseGitStatusOutput()', () => {
       expect(toRecord(result)).toEqual(expected);
     });
 
-    it('skips rename entries when the target path is missing', () => {
+    it('skips rename entries when the origin path is missing', () => {
       // There is no second entry after the rename entry.
-      const output = 'R  old.ts\0';
+      const output = 'R  new.ts\0';
       const result = parseGitStatusOutput(output);
 
       expect(toRecord(result)).toEqual({});
     });
 
-    it('skips rename entries when the target path is an empty string', () => {
-      // Double separator creates an empty targetPath entry.
-      const output = 'R  old.ts\0\0';
+    it('skips rename entries when the origin path is an empty string', () => {
+      // Double separator creates an empty origin path entry.
+      const output = 'R  new.ts\0\0';
       const result = parseGitStatusOutput(output);
 
       expect(toRecord(result)).toEqual({});
     });
 
     it('parses a rename followed by other entries (index handling)', () => {
-      const output = ['R  a.ts', 'b.ts', 'M  after.ts', ''].join('\0');
+      const output = ['R  b.ts', 'a.ts', 'M  after.ts', ''].join('\0');
       const result = parseGitStatusOutput(output);
 
       expect(toRecord(result)).toEqual({
@@ -285,6 +285,56 @@ describe('parseGitStatusOutput()', () => {
           path: 'after.ts',
           staged: GitChangeStatus.Modified,
           unstaged: undefined,
+        },
+      });
+    });
+
+    it('consumes the origin path of a rename entry without a path', () => {
+      // The origin path must not be parsed as an entry of its own, even if it looks like one.
+      const output = ['R  ', 'M  looks-like-an-entry.ts', 'M  after.ts', ''].join('\0');
+      const result = parseGitStatusOutput(output);
+
+      expect(toRecord(result)).toEqual({
+        'after.ts': {
+          path: 'after.ts',
+          staged: GitChangeStatus.Modified,
+          unstaged: undefined,
+        },
+      });
+    });
+  });
+
+  describe('type change and unmerged entries', () => {
+    it('parses type changes and merge conflicts', () => {
+      const output = [
+        'T  staged-type-changed.ts',
+        ' T unstaged-type-changed.ts',
+        'UU both-modified.ts',
+        'AA both-added.ts',
+        '',
+      ].join('\0');
+      const result = parseGitStatusOutput(output);
+
+      expect(toRecord(result)).toEqual({
+        'staged-type-changed.ts': {
+          path: 'staged-type-changed.ts',
+          staged: GitChangeStatus.TypeChanged,
+          unstaged: undefined,
+        },
+        'unstaged-type-changed.ts': {
+          path: 'unstaged-type-changed.ts',
+          staged: undefined,
+          unstaged: GitChangeStatus.TypeChanged,
+        },
+        'both-modified.ts': {
+          path: 'both-modified.ts',
+          staged: GitChangeStatus.Unmerged,
+          unstaged: GitChangeStatus.Unmerged,
+        },
+        'both-added.ts': {
+          path: 'both-added.ts',
+          staged: GitChangeStatus.Unmerged,
+          unstaged: GitChangeStatus.Unmerged,
         },
       });
     });

@@ -45,7 +45,7 @@ describe('getGitChanges', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --short --null']);
+    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --null --untracked-files=all']);
     expect(parseGitStatusOutput).toHaveBeenCalledTimes(1);
     expect(parseGitStatusOutput).toHaveBeenNthCalledWith(1, 'git status output');
     expect(result).toEqual(new Map());
@@ -62,7 +62,7 @@ describe('getGitChanges', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/custom/dir' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --short --null']);
+    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --null --untracked-files=all']);
     expect(parseGitStatusOutput).toHaveBeenCalledTimes(1);
     expect(parseGitStatusOutput).toHaveBeenNthCalledWith(1, 'git status output');
     expect(result).toEqual(new Map());
@@ -76,7 +76,7 @@ describe('getGitChanges', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --short --null']);
+    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --null --untracked-files=all']);
     expect(parseGitStatusOutput).not.toHaveBeenCalled();
   });
 
@@ -89,7 +89,7 @@ describe('getGitChanges', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --short --null']);
+    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --null --untracked-files=all']);
     expect(parseGitStatusOutput).not.toHaveBeenCalled();
   });
 
@@ -100,7 +100,7 @@ describe('getGitChanges', () => {
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenNthCalledWith(1, { cwd: '/cwd' });
     expect(executor).toHaveBeenCalledTimes(1);
-    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --short --null']);
+    expect(executor).toHaveBeenNthCalledWith(1, ['git status --porcelain --null --untracked-files=all']);
     expect(parseGitStatusOutput).not.toHaveBeenCalled();
   });
 

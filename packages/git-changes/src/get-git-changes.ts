@@ -23,19 +23,23 @@ export async function getGitChanges(workingDir = cwd()): Promise<ReadonlyMap<str
     /**
      * This command provides a machine-readable, null-separated output of the
      * current status of the Git repository, including staged and unstaged changes,
-     * as well as untracked files.
+     * as well as untracked files. Untracked directories are listed as individual
+     * files, regardless of the `status.showUntrackedFiles` configuration.
+     * Paths are relative to the repository root.
      *
-     * Example output:
+     * Example output (renamed and copied entries list the new path first):
      * '?? untracked.ts\0'
      * ' M unstaged-modified.ts\0'
      * 'M  staged-modified.ts\0'
      * 'MM both-modified.ts\0'
      * ' D unstaged-deleted.ts\0'
      * 'A  staged-added.ts\0'
-     * 'R  old.ts\0new.ts\0'
-     * 'C  source.ts\0copied.ts\0'
+     * ' T type-changed.ts\0'
+     * 'UU conflicted.ts\0'
+     * 'R  new.ts\0old.ts\0'
+     * 'C  copied.ts\0source.ts\0'
      */
-    const { stdout: output } = await execa({ cwd: repoRoot })`git status --porcelain --short --null`;
+    const { stdout: output } = await execa({ cwd: repoRoot })`git status --porcelain --null --untracked-files=all`;
 
     return parseGitStatusOutput(output);
   } catch (error) {
