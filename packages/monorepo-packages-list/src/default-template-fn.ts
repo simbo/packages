@@ -32,6 +32,6 @@ export async function defaultTemplateFn(workspace: WorkspaceMetadata, data: Temp
     `  - **${title}**`,
     `    > ${description}`,
     `    📦 ${pkg} @ \`${version}\``,
-    ...(links.length > 0 ? [`    ${links.join('  •  ')}`] : []),
+    ...(links.length > 0 ? [`    ${links.join('\u{A0}\u{A0}•\u{A0} ')}`] : []),
   ].join('\n\n');
 }

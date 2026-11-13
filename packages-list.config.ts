@@ -43,7 +43,7 @@ export default defineConfig([
         `  > ${description}`,
         `  📂 ${folder}`,
         `  📦 ${pkg} @ \`${version}\``,
-        ...(links.length > 0 ? [`  ${links.join('  •  ')}`] : []),
+        ...(links.length > 0 ? [`  ${links.join('\u{A0}\u{A0}•\u{A0} ')}`] : []),
       ].join('\n\n');
     },
 

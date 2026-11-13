@@ -50,7 +50,7 @@ export async function findUpPackage(options: Options = {}): Promise<Package | Pa
 
   if (normalize) {
     const warnFn = typeof normalize === 'object' && normalize.warn ? normalize.warn : () => {};
-    const strict = typeof normalize === 'object' && normalize.strict ? normalize.strict : false;
+    const strict = typeof normalize === 'object' && (normalize.strict ?? false);
     const { default: normalizePackageData } = await import('normalize-package-data');
     normalizePackageData(matchedPackage.packageJson, warnFn, strict);
   }

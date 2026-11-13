@@ -67,7 +67,7 @@ describe('defaultTemplateFn', () => {
 
     📦 [\`@scope/pkg-a\`](${(await data.packageUrlFn(workspace)) as string}) @ \`1.0.0\`
 
-    ${expectedLinks.join('  •  ')}`,
+    ${expectedLinks.join('\u{A0}\u{A0}•\u{A0} ')}`,
     );
   });
 });

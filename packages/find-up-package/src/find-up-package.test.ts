@@ -18,10 +18,10 @@ const { readPackageJson } = vi.mocked(await import('@simbo/package-json'));
 const { findUp } = vi.mocked(await import('find-up')) as { findUp: Mock };
 const { default: normalizePackageData } = vi.mocked(await import('normalize-package-data')) as { default: Mock };
 
-type MatcherReturn = string | undefined | Promise<string | undefined>;
-type Matcher = (directory: string) => MatcherReturn;
-
 describe('findUpPackage', () => {
+  type MatcherReturn = string | undefined | Promise<string | undefined>;
+  type Matcher = (directory: string) => MatcherReturn;
+
   it('returns the matched package', async () => {
     readPackageJson.mockResolvedValueOnce({ name: 'test', version: '1.0.0' });
     findUp.mockImplementationOnce((matcher: Matcher): MatcherReturn => matcher('/fake/path'));
