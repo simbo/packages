@@ -5,7 +5,7 @@ import type { ConfigsRecord } from '../configs-record.interface.js';
 import { setRulesToOff } from '../utils/set-rules-to-off.js';
 
 const recommended = defineConfig({
-  extends: [eslintPluginUnicorn.configs.all],
+  extends: [eslintPluginUnicorn.configs.recommended],
   rules: {
     'unicorn/consistent-function-scoping': ['error', { checkArrowFunctions: false }],
     'unicorn/import-style': [
@@ -24,25 +24,18 @@ const recommended = defineConfig({
       'unicorn/no-array-reduce',
       'unicorn/no-asterisk-prefix-in-documentation-comments',
       'unicorn/no-await-expression-member',
-      'unicorn/no-barrel-files',
       'unicorn/no-computed-property-existence-check',
       'unicorn/no-top-level-assignment-in-function',
       'unicorn/no-unnecessary-global-this',
       'unicorn/no-unreadable-object-destructuring',
       'unicorn/no-useless-switch-case',
-      'unicorn/prefer-error-is-error',
-      'unicorn/try-complexity',
 
       // conflicts with other rules
       'unicorn/prefer-await',
-      'unicorn/consistent-arrow-return-style',
       'unicorn/consistent-class-member-order',
 
       // too new
-      'unicorn/prefer-regexp-escape',
-      'unicorn/prefer-temporal',
       'unicorn/prefer-iterator-to-array',
-      'unicorn/prefer-uint8array-base64',
     ]),
   },
 });
