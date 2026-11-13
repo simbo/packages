@@ -3,8 +3,10 @@ import { cwd, env } from 'node:process';
 import { stringifyError } from '@simbo/stringify-error';
 import Queue from 'p-queue';
 
+import { assertConcurrency } from './assert-concurrency.js';
 import { getWorkspaceMetadata } from './get-workspace-metadata.js';
 import { getWorkspacePaths } from './get-workspace-paths.js';
+import { isAbortError } from './is-abort-error.js';
 import type { WorkspaceMetadata } from './monorepo-utils.types.js';
 
 /**
@@ -43,9 +45,7 @@ const CONCURRENCY_CI = 5;
 export async function readWorkspaces(options: ReadWorkspacesOptions = {}): Promise<WorkspaceMetadata[]> {
   const { workingDir = cwd(), concurrency = env.CI ? CONCURRENCY_CI : CONCURRENCY } = options;
 
-  if (typeof concurrency !== 'number' || concurrency <= 0) {
-    throw new TypeError('Concurrency must be a positive number');
-  }
+  assertConcurrency(concurrency);
 
   const workspacesPaths = await getWorkspacePaths({ workingDir });
 
@@ -61,6 +61,10 @@ export async function readWorkspaces(options: ReadWorkspacesOptions = {}): Promi
         workspaces.push(data);
       })
       .catch((error: unknown) => {
+        // Tasks removed by clearing the queue reject with an AbortError and are not failures.
+        if (isAbortError(error)) {
+          return;
+        }
         queueErrors.set(workspacePath, error);
         queue.clear();
       });

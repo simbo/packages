@@ -107,7 +107,7 @@ describe('readWorkspaces', () => {
 
   it('should throw if concurrency is not a number', async () => {
     await expect(readWorkspaces({ concurrency: 'invalid' as unknown as number })).rejects.toThrow(
-      'Concurrency must be a positive number',
+      'Concurrency must be a positive integer',
     );
 
     expect(cwd).toHaveBeenCalledTimes(1);
@@ -116,7 +116,7 @@ describe('readWorkspaces', () => {
   });
 
   it('should throw if concurrency is not a positive number', async () => {
-    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrow('Concurrency must be a positive number');
+    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrow('Concurrency must be a positive integer');
 
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).not.toHaveBeenCalled();
@@ -144,5 +144,31 @@ describe('readWorkspaces', () => {
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
     expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
+  });
+
+  it('should only report failed workspaces, not the skipped ones', async () => {
+    getWorkspacePaths.mockResolvedValueOnce(['packages/pkg-a', 'packages/pkg-b', 'packages/pkg-c']);
+    getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
+
+    await expect(readWorkspaces({ concurrency: 1 })).rejects.toThrow(
+      /^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/,
+    );
+
+    // The queue may start the next task before the failure is handled, but never all of them.
+    expect(getWorkspaceMetadata.mock.calls.length).toBeLessThan(3);
+  });
+
+  it('should throw if concurrency is not an integer', async () => {
+    await expect(readWorkspaces({ concurrency: 1.5 })).rejects.toThrow('Concurrency must be a positive integer');
+
+    expect(getWorkspacePaths).not.toHaveBeenCalled();
+    expect(getWorkspaceMetadata).not.toHaveBeenCalled();
+  });
+
+  it('should accept an infinite concurrency', async () => {
+    const workspaces = await readWorkspaces({ concurrency: Infinity });
+
+    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
+    expect(queueOptions.concurrency).toBe(Infinity);
   });
 });

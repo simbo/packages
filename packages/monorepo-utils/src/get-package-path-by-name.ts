@@ -5,7 +5,9 @@ import { readPackageJson } from '@simbo/package-json';
 import { stringifyError } from '@simbo/stringify-error';
 import Queue from 'p-queue';
 
+import { assertConcurrency } from './assert-concurrency.js';
 import { getWorkspacePaths } from './get-workspace-paths.js';
+import { isAbortError } from './is-abort-error.js';
 
 const DEFAULT_CONCURRENCY = 10;
 
@@ -61,6 +63,8 @@ export async function getPackagePathByName(
 ): Promise<string> {
   const { workingDir = cwd(), absolute = false, concurrency = DEFAULT_CONCURRENCY, failOnError = false } = options;
 
+  assertConcurrency(concurrency);
+
   const workspacePaths = await getWorkspacePaths({ workingDir, absolutePaths: true });
 
   let absPackagePath: string | undefined;
@@ -80,6 +84,10 @@ export async function getPackagePathByName(
         queue.clear();
       })
       .catch((error: unknown) => {
+        // Tasks removed by clearing the queue reject with an AbortError and are not failures.
+        if (isAbortError(error)) {
+          return;
+        }
         queueErrors.set(relative(workingDir, workspacePath), error);
         if (failOnError) {
           queue.clear();
