@@ -24,7 +24,7 @@ configuration requirements.
 ### Requirements
 
 - a linux-based operating system
-- Node.js 24.21.0 (see `.nvmrc`) via [nvm](https://github.com/nvm-sh/nvm)
+- Node.js 26.13.1 (see `.nvmrc`) via [nvm](https://github.com/nvm-sh/nvm)
 - [pnpm](https://pnpm.io/) 12 (see `packageManager` in `package.json` for the
   exact version)
 

@@ -34,4 +34,9 @@ this file only when the owner asks for it; keep it to about one screen.
 - Test behavior, including real Git or file system behavior where a package
   depends on it. Do not mirror the implementation in tests.
 - Document public functions and interfaces with valid JSDoc.
+- Support the Node.js versions that Node.js itself still maintains (`engines`).
+  `@types/node` follows the lowest supported major, `.nvmrc` the current Active
+  LTS. Exception: `@types/node` stays on 24 until Node.js 22 reaches end of life
+  (2027-04-30), because its `undici-types` dependency fails the pnpm trust
+  policy.
 - Verify with `pnpm preflight` and report checks that were not run.
