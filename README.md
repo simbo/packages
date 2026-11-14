@@ -117,9 +117,9 @@ pnpm run each:check
 # run repository-level checks
 pnpm run check
 
-# prettier
-pnpm run [--filter=<PNPM_SELECTOR>] check:format
-pnpm run [--filter=<PNPM_SELECTOR>] fix:format
+# prettier (formats the whole repository)
+pnpm run check:format
+pnpm run fix:format
 
 # eslint
 pnpm run [--filter=<PNPM_SELECTOR>] check:eslint

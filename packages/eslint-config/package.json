@@ -57,7 +57,6 @@
     "clean:turbo": "rm -rf .turbo",
     "clean:coverage": "rm -rf coverage",
     "fix:eslint": "pnpm run check:eslint --fix",
-    "fix:format": "prettier --write .",
     "test": "vitest run --coverage",
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
@@ -76,15 +75,12 @@
   },
   "devDependencies": {
     "@eslint/config-inspector": "^3.5.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-    "@simbo/prettier-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.2",
     "@vitest/coverage-v8": "^5.1.0",
     "@vitest/ui": "^5.1.0",
     "eslint": "^10.14.0",
     "jiti": "^2.7.0",
-    "prettier": "^3.9.10",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0"
   }
