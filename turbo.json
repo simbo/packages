@@ -2,13 +2,16 @@
   "$schema": "https://turbo.build/schema.json",
   "noUpdateNotifier": true,
   "tasks": {
+    "//#check:eslint": {
+      "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
+      "cache": false
+    },
+    "//#check:types": {
+      "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
+      "cache": false
+    },
     "build": {
       "dependsOn": ["clean:dist", "^build"],
-      "outputs": ["dist/**"],
-      "outputLogs": "new-only"
-    },
-    "bundle": {
-      "dependsOn": ["^bundle"],
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
@@ -21,10 +24,6 @@
       "cache": false
     },
     "check:types": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:format": {
       "dependsOn": ["^build"],
       "cache": false
     },

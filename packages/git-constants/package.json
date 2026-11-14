@@ -35,9 +35,8 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "check": "pnpm run check:eslint && pnpm run check:format && pnpm run check:types",
+    "check": "pnpm run check:eslint && pnpm run check:types",
     "check:eslint": "eslint --config ./eslint.config.ts --max-warnings 0",
-    "check:format": "prettier --check .",
     "check:types": "tsc --noEmit",
     "clean": "pnpm run clean:dist && pnpm run clean:coverage && pnpm run clean:turbo && pnpm run clean:node_modules",
     "clean:dist": "rm -rf dist",

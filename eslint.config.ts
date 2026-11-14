@@ -15,7 +15,7 @@ export default defineConfig([
     extends: [configs.node.recommended],
   },
   {
-    files: ['scripts/*.js'],
+    files: ['*.js', 'scripts/*.js'],
     // JavaScript signatures use JSDoc; TypeScript syntax cannot be written here.
     // Keep type-aware rules and the shared JavaScript JSDoc requirements active.
     rules: {

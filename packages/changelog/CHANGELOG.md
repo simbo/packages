@@ -1,4 +1,4 @@
-# @simbos-packages/changelog
+# changelog
 
 ## 1.6.1
 
