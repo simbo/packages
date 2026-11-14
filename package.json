@@ -11,7 +11,7 @@
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
-  "packageManager": "pnpm@12.14.0",
+  "packageManager": "pnpm@12.14.0+sha512.c18ba6d87993d3d164cb5e8948f32b2c06ee854487e06cd8d86781342fb3e5bb4634367034711e86802baa9c37bea906ce1929ad08d70884c97d801df13389a6",
   "workspaces": [
     "packages/*"
   ],
@@ -71,8 +71,8 @@
     "husky": "^9.1.7",
     "jiti": "^2.7.0",
     "npm-check-updates": "^23.1.1",
-    "prettier": "^3.9.10",
-    "turbo": "^2.11.10",
+    "prettier": "^3.10.0",
+    "turbo": "^2.11.11",
     "typedoc": "^0.28.20",
     "typedoc-github-theme": "^0.4.0",
     "typedoc-plugin-mdn-links": "^5.1.1",
