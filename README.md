@@ -152,6 +152,52 @@ affected packages. Each package is built and packed once for its GitHub release;
 the npm publishing workflow verifies and uploads that same archive. See
 [NPM_PUBLISHING.md](./NPM_PUBLISHING.md) for first publishes and retries.
 
+#### Writing Changesets
+
+Each changeset becomes one entry in the changelogs of its packages: the first
+paragraph is the entry, everything after it is nested below. Keep changelogs
+readable by writing changesets by topic:
+
+- Add at least one changeset to every pull request or commit on `main`. Use a
+  package changeset when the published package changes for its users (behavior,
+  API, types, runtime dependencies, shipped docs). Record everything else, such
+  as tooling, CI, docs outside packages, development dependency updates and
+  refactorings without user-facing changes, in a changeset for the private
+  `changelog` package. Never add empty changesets.
+- Cover one topic per changeset. If the summary needs an "and" to join two
+  topics, write two changesets. One changeset may cover several packages, with
+  different bump types, if the change is the same for all of them.
+- Start with a one-sentence summary in the imperative that is readable on its
+  own. List the details below it; every item must belong to that summary.
+- End with a paragraph on migration or impact for major changes and for changes
+  that can cause new errors.
+- Update a single dependency in one sentence (``Update `execa` to ^10.2.1.``).
+  Update several as `Update dependencies.` with a list of names and ranges.
+- Name the file after the topic, for example `update-p-queue.md`.
+
+```md
+---
+'@simbo/monorepo-utils': patch
+---
+
+Update `p-queue` to ^10.0.0 and adapt to its queue behavior.
+
+- `readWorkspaces()` reports only the workspaces that failed.
+- Both functions reject a `concurrency` that is not a positive integer.
+```
+
+To preview the changelog entries, apply the changesets in a temporary worktree.
+It starts from the last commit, so commit the changesets first:
+
+```bash
+git worktree add --detach ../packages-preview
+cd ../packages-preview && pnpm install
+pnpm exec turbo run build --filter='@simbo/prettier-config'
+pnpm exec changeset version
+git diff -- '**/CHANGELOG.md'
+cd - && git worktree remove --force ../packages-preview
+```
+
 #### Continuous Integration Flow
 
 ```mermaid

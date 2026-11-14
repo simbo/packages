@@ -16,13 +16,18 @@ this file only when the owner asks for it; keep it to about one screen.
   accounts, or their state.
 - Change only this repository. Report changes needed elsewhere as a list.
 - No new tooling, platforms, or dependencies without a request.
+- Write handoffs to `.handoffs/`, not `docs/handoffs/`: `docs/` is the TypeDoc
+  output and is emptied on every run.
 
 ## Packages
 
 - One workspace per package in `packages/<name>/`; tags are `<name>/v<version>`.
-  `changelog/` holds the monorepo changelog.
-- Every change comes with a changeset (`pnpm exec changeset`); use `--empty` for
-  changes without a release. Breaking changes only after the owner agrees.
+  `packages/changelog/` holds the monorepo changelog.
+- Every change gets a changeset, as described in "Writing Changesets" in
+  [README.md](README.md): a package changeset when the published package changes
+  for its users, otherwise one for the private `changelog` package; one topic
+  each, a summary paragraph with the details as a list, never empty. Breaking
+  changes only after the owner agrees.
 - `README.md` package counts and `PACKAGES.md` are generated
   (`pnpm packages-list`); do not edit them by hand.
 - Commits follow Conventional Commits with a required scope: the workspace
