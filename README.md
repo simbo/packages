@@ -135,6 +135,26 @@ pnpm run [--filter=<PNPM_SELECTOR>] check:types
 pnpm run check:boundaries
 ```
 
+The boundaries check also enforces package layers. Each package declares one tag
+in its `turbo.json`, and the root `turbo.json` defines which tags may depend on
+each other, including transitive and development dependencies:
+
+| Tag      | Packages                                    | May depend on           |
+| -------- | ------------------------------------------- | ----------------------- |
+| `config` | shared configurations, like `eslint-config` | `config`                |
+| `core`   | utilities without internal dependencies     | `config`                |
+| `lib`    | libraries and plugins                       | `config`, `core`, `lib` |
+| `cli`    | command line tools                          | `config`, `core`, `lib` |
+| `meta`   | the private `changelog` package             | nothing depends on it   |
+
+No package may depend on `cli` or `meta` packages. Every workspace implicitly
+depends on the repository root, so the root must only add `config` packages as
+development dependencies.
+
+The root uses `monorepo-packages-list-cli` from its build output
+(`packages-list.config.ts`, `packages-list` script) without declaring it, so the
+layer rules stay intact; the Turbo root tasks build it first.
+
 #### Docs
 
 ```bash

@@ -1,6 +1,38 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "noUpdateNotifier": true,
+  "boundaries": {
+    "tags": {
+      "config": {
+        "dependencies": {
+          "allow": ["config"]
+        }
+      },
+      "core": {
+        "dependencies": {
+          "allow": ["config"]
+        }
+      },
+      "lib": {
+        "dependencies": {
+          "allow": ["config", "core", "lib"]
+        }
+      },
+      "cli": {
+        "dependencies": {
+          "allow": ["config", "core", "lib"]
+        },
+        "dependents": {
+          "deny": ["config", "core", "lib", "cli", "meta"]
+        }
+      },
+      "meta": {
+        "dependents": {
+          "deny": ["config", "core", "lib", "cli", "meta"]
+        }
+      }
+    }
+  },
   "tasks": {
     "//#check:eslint": {
       "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
