@@ -1,5 +1,25 @@
 # @simbo/monorepo-packages-list-cli
 
+## 2.0.2
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+- Updated dependencies [6f304e0]
+- Updated dependencies [760573e]
+- Updated dependencies [3982c1d]
+  - @simbo/accessible@2.0.1
+  - @simbo/call-prettier@2.0.2
+  - @simbo/cli-output@2.0.1
+  - @simbo/clirk@2.0.2
+  - @simbo/find-git-repository-root@2.0.1
+  - @simbo/inject-between-html-comments@2.0.1
+  - @simbo/monorepo-packages-list@2.0.2
+  - @simbo/monorepo-utils@2.0.2
+  - @simbo/user-facing-error@2.0.1
+  - @simbo/zodpak@1.0.1
+
 ## 2.0.1
 
 ### Patch Changes

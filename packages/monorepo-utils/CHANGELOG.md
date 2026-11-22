@@ -1,5 +1,24 @@
 # @simbo/monorepo-utils
 
+## 2.0.2
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+- 3982c1d: Update `p-queue` to ^10.0.0 and adapt to its queue behavior.
+
+  - `getPackagePathByName()` no longer fails with `failOnError` after finding
+    the package.
+  - `readWorkspaces()` reports only the workspaces that failed.
+  - Both functions reject a `concurrency` that is not a positive integer or
+    `Infinity` with a `TypeError`.
+
+- Updated dependencies [6f304e0]
+  - @simbo/accessible@2.0.1
+  - @simbo/package-json@1.0.1
+  - @simbo/stringify-error@2.0.1
+
 ## 2.0.1
 
 ### Patch Changes

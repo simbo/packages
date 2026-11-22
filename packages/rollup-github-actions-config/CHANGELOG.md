@@ -1,5 +1,17 @@
 # @simbo/rollup-github-actions-config
 
+## 2.0.1
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+- 3982c1d: Update dependencies.
+
+  - `@rollup/plugin-terser` to ^1.0.2
+  - `@rollup/plugin-typescript` to ^12.3.1
+  - `tslib` to ^2.9.1
+
 ## 2.0.0
 
 ### Major Changes

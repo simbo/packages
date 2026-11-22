@@ -1,5 +1,89 @@
 # changelog
 
+## 1.7.0
+
+### Minor Changes
+
+- e2ae724: Enforce package layers with Turbo boundaries.
+
+  - Tag every package as `config`, `core`, `lib`, `cli` or `meta` in its
+    `turbo.json`.
+  - Allow `config` packages to depend only on other `config` packages, and
+    `core` packages on no internal runtime packages.
+  - Prevent any package from depending on `cli` or `meta` packages.
+
+- 8f0e0fe: Migrate the workflows to the published Simbo's Actions.
+
+  - Get the app token with `actions/create-github-app-token` in the `release`
+    environment, with `contents: write` only, and only in the release and GitHub
+    release workflows.
+  - Commit release bumps and create the release tags with
+    `simbo-actions/signed-commit`, as a verified commit with lightweight tags.
+  - Release the commit checked by the checks workflow, and fail if the branch
+    has moved since then.
+  - Create GitHub releases with `simbo-actions/staged-release`, without marking
+    them as the latest release.
+  - Use `GITHUB_TOKEN` for checks, the release dispatch, npm publishing, and the
+    docs deployment.
+  - Pin all actions by commit SHA, set minimal permissions per job, and keep
+    checkout credentials out of the working tree.
+  - Require pull requests to add a changeset instead of accepting any pending
+    one, and drop the removed bundle step from the checks.
+
+- 5d801cb: Simplify the repository tooling.
+
+  - Format all packages from the repository root instead of per package.
+  - Build the packages that root checks depend on through Turbo.
+  - Lint and type-check the TypeDoc configuration.
+  - Remove the unused `bundle` task and the duplicate `engine-strict` setting.
+  - Configure changesets for public packages and tag private packages.
+  - Pin pnpm with an integrity hash.
+
+- 704a921: Accept Dependabot pull requests that only update workflows without a
+  changeset.
+
+  - Skip the changeset requirement when `dependabot[bot]` opened the pull
+    request and it changes only files in `.github/workflows/`.
+  - Keep requiring a changeset for every other pull request.
+
+- 2c2dce2: Keep the pinned GitHub Actions up to date with Dependabot.
+
+  - Check the actions in the workflows daily.
+  - Group the own `simbo-actions/*` actions into one pull request, without a
+    cooldown.
+  - Open one pull request per update for all other actions, after a cooldown of
+    7 days.
+
+- 3982c1d: Use Node.js 26 for development.
+
+  - `.nvmrc` follows the current Active LTS release.
+  - Supported Node.js versions follow the Node.js release schedule, and
+    `@types/node` follows the lowest supported major version.
+
+### Patch Changes
+
+- 47cf87f: Document when and how to write changesets.
+
+  - Every change gets a changeset: a package changeset when the published
+    package changes for its users, otherwise one for this changelog.
+  - Each changeset covers one topic with a summary paragraph and lists its
+    details.
+
+- 3982c1d: Fix the findings of `eslint-plugin-unicorn` 79 in the repository
+  code.
+
+  - Write non-breaking spaces as escape sequences.
+  - Simplify a ternary and narrow the scope of types in tests.
+  - Remove `eslint-disable` comments that are no longer needed.
+
+- d76a0e2: Stop recording sessions on the documentation pages.
+- 492ac88: Update development dependencies.
+
+  - `prettier` to ^3.10.0
+  - `rollup` to ^4.68.2
+  - `turbo` to ^2.11.11
+  - `vite` to ^8.3.8
+
 ## 1.6.1
 
 ### Patch Changes

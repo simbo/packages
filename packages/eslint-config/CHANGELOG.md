@@ -1,5 +1,40 @@
 # @simbo/eslint-config
 
+## 3.3.0
+
+### Minor Changes
+
+- 972435c: Base the Unicorn configurations on the `recommended` preset instead
+  of `all`.
+
+  - Rules that only `all` enables are no longer active: `comment-content`,
+    `consistent-destructuring`, `consistent-function-style`,
+    `custom-error-definition`, `id-match`, `iteration-fallback-style`,
+    `no-array-front-mutation`, `no-invalid-file-input-accept`,
+    `no-keyword-prefix`, `no-manually-wrapped-comments`,
+    `no-missing-local-resource`, `no-repeated-call-wrappers`,
+    `no-unnecessary-default-arguments`, `no-unreadable-new-expression`,
+    `no-unsafe-dom-html`, `no-unused-properties`, `prefer-dispose`,
+    `prefer-import-meta-properties`, `prefer-iterator-concat`,
+    `prefer-json-import`, `prefer-short-arrow-method`, `prefer-uint8array-hex`,
+    `require-post-message-target-origin` and `string-content`.
+  - Remove the overrides that only disabled rules `recommended` already leaves
+    off.
+  - Update `eslint-plugin-unicorn` to ^79.0.0.
+
+  Updated Unicorn rules can report new errors. Enable any of the rules above in
+  your own configuration to keep using them.
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+- 492ac88: Update dependencies.
+
+  - `eslint-plugin-jsdoc` to ^65.4.5
+  - `globals` to ^17.14.0
+  - `typescript-eslint` to ^8.72.2
+
 ## 3.2.1
 
 ### Patch Changes

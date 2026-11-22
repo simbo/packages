@@ -1,5 +1,17 @@
 # @simbo/call-prettier
 
+## 2.0.2
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+- 760573e: Update `execa` to ^10.2.1.
+- Updated dependencies [6f304e0]
+- Updated dependencies [760573e]
+  - @simbo/accessible@2.0.1
+  - @simbo/find-bin@2.0.2
+
 ## 2.0.1
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @simbo/clirk
 
+## 2.0.2
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+- Updated dependencies [6f304e0]
+  - @simbo/cli-output@2.0.1
+  - @simbo/find-up-package@2.0.1
+  - @simbo/graceful-exit@2.0.1
+  - @simbo/plural@2.0.1
+  - @simbo/stringify-error@2.0.1
+  - @simbo/zodpak@1.0.1
+
 ## 2.0.1
 
 ### Patch Changes

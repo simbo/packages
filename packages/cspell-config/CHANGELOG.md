@@ -1,5 +1,19 @@
 # @simbo/cspell-config
 
+## 2.2.0
+
+### Minor Changes
+
+- d02fde1: Add color, accessibility and typeface terms to the dictionaries.
+
+  - Abbreviations: `CMYK`, `DTCG`, `OSX`, `RGB`, `SIL`, `WCAG`.
+  - Words: `Fira`, `Frutiger`, `Futura`, `Grotesk`, `Noto`.
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+
 ## 2.1.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @simbo/prettier-config
 
+## 3.0.2
+
+### Patch Changes
+
+- 6f304e0: Include the original sources in source maps (`inlineSources`), so
+  debuggers and stack traces show the TypeScript code without publishing `src`.
+
 ## 3.0.1
 
 ### Patch Changes
