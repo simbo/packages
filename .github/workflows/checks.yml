@@ -1,3 +1,7 @@
+# Builds, tests, and checks every push to main and every pull request.
+# Pull requests must add a changeset. Pushes to main with pending changesets
+# dispatch the release workflow for the checked commit.
+
 name: Checks 🧐
 
 on:
@@ -34,34 +38,28 @@ concurrency:
       )
     }}
 
-permissions:
-  contents: write
-
-env:
-  REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+permissions: {}
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      has-changesets: ${{ steps.has-changesets.outputs.result }}
     steps:
-      - name: 🪪 Retrieve Credentials
-        id: credentials
-        uses: simbo-actions/actions/actions/github-app-credentials@main
-        with:
-          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
-          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
-
       - name: 🛎️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          token: ${{ steps.credentials.outputs.token }}
-          ref: ${{ env.REF }}
+          # the parent of a pull request's merge commit is needed to find added changesets
+          fetch-depth: 2
+          persist-credentials: false
 
       - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
 
       - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           cache: pnpm
           node-version-file: .nvmrc
@@ -71,9 +69,6 @@ jobs:
 
       - name: 👷 Build
         run: pnpm run each:build
-
-      - name: 📦 Bundle
-        run: pnpm run each:bundle
 
       - name: 👨‍🔬 Tests
         run: pnpm run test
@@ -89,33 +84,40 @@ jobs:
         run: |
           set -euo pipefail
           result=$([[ -d .changeset ]] && find .changeset -type f -name '*.md' -print -quit | grep -q . && echo true || echo false)
-          echo "result=${result}" >> $GITHUB_OUTPUT
+          echo "result=${result}" >> "$GITHUB_OUTPUT"
 
-      - name: 👮‍♂️ Pull Requests Must Have Changesets
+      - name: 👮‍♂️ Pull Requests Must Add Changesets
         if: >
           github.event_name == 'pull_request' &&
           github.event.pull_request.draft == false
-        env:
-          RESULT: ${{ steps.has-changesets.outputs.result }}
         run: |
           set -euo pipefail
-          if [[ "$RESULT" != "true" ]]; then
-            echo "::error title=Missing Changeset::Pull requests must have changesets."
+          # HEAD is the merge commit of the pull request, its first parent the base branch
+          added=$(git diff --name-only --diff-filter=A HEAD^1 HEAD -- '.changeset/*.md')
+          if [[ -z "$added" ]]; then
+            echo "::error title=Missing Changeset::Pull requests must add changesets."
             exit 1
           fi
 
+  dispatch-release:
+    needs: checks
+    if: >
+      github.event_name == 'push' &&
+      needs.checks.outputs.has-changesets == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      # required to create a repository dispatch event with GITHUB_TOKEN
+      contents: write
+    steps:
       - name: '🎉 Workflow: Release (Event)'
-        if: >
-          github.event_name == 'push' &&
-          steps.has-changesets.outputs.result == 'true'
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3.0.0
         with:
           event-type: workflow:release
-          token: ${{ steps.credentials.outputs.token }}
           client-payload: >
             ${{
               format(
-                '{{ "ref": {0} }}',
-                toJson(env.REF)
+                '{{ "ref": {0}, "sha": {1} }}',
+                toJson(github.ref_name),
+                toJson(github.sha)
               )
             }}

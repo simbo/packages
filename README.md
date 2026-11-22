@@ -259,8 +259,8 @@ flowchart LR
     IntegrateChangesets["🔄 Apply Changesets<br>and Sync Versions"]
     CollectPackages["🧾 Find Changed<br>Packages"]
     UpdatePackageDocs["📝 Update<br>Package Lists"]
-    CommitAndPushChanges["💾 Commit and<br>Push Changes"]
-    PushReleaseTags["🏷️ Push Release Tags<br>for Bumped Packages<br>PACKAGE/vVERSION"]
+    CommitAndPushChanges["💾 Create Signed<br>Release Commit"]
+    PushReleaseTags["🏷️ Create Release Tags<br>for Bumped Packages<br>PACKAGE/vVERSION"]
 
     direction TB
     ReleaseEvent --> IntegrateChangesets

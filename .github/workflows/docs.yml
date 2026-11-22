@@ -1,3 +1,6 @@
+# Builds the TypeDoc pages and deploys them to the gh-pages branch, after each
+# release commit or on manual request.
+
 name: Docs 📘
 
 on:
@@ -31,31 +34,29 @@ concurrency:
       )
     }}
 
+permissions: {}
+
 env:
   REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
 
 jobs:
   docs:
     runs-on: ubuntu-latest
+    permissions:
+      # push to the gh-pages branch with GITHUB_TOKEN
+      contents: write
     steps:
-      - name: 🪪 Retrieve Credentials
-        id: credentials
-        uses: simbo-actions/actions/actions/github-app-credentials@main
-        with:
-          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
-          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
-
       - name: 🛎️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          token: ${{ steps.credentials.outputs.token }}
           ref: ${{ env.REF }}
+          persist-credentials: false
 
       - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
 
       - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           cache: pnpm
           node-version-file: .nvmrc
@@ -70,11 +71,8 @@ jobs:
         run: pnpm run docs
 
       - name: 🚚 Deploy Docs
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
         with:
-          token: ${{ steps.credentials.outputs.token }}
-          git-config-name: ${{ steps.credentials.outputs.name }}
-          git-config-email: ${{ steps.credentials.outputs.email }}
           folder: docs
           branch: gh-pages
           clean: true

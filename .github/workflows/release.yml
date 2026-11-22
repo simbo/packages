@@ -1,3 +1,7 @@
+# Applies pending changesets, commits the version bumps as a signed commit, and
+# creates one tag per bumped package. The tags trigger the GitHub release
+# workflow; the docs workflow is dispatched afterwards.
+
 name: Release 🏷️
 
 on:
@@ -32,36 +36,42 @@ concurrency:
       )
     }}
 
-permissions:
-  contents: write
+permissions: {}
 
 env:
   REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
+  # the commit checked by the checks workflow; manual runs release the head of REF
+  SHA: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.sha || '' }}
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment:
+      name: release
+      deployment: false
+    permissions:
+      contents: read
     steps:
-      - name: 🪪 Retrieve Credentials
-        id: credentials
-        uses: simbo-actions/actions/actions/github-app-credentials@main
+      - name: 🔑 Get App Token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
-          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
-          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+          client-id: ${{ vars.SIMBO_GITHUB_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+          permission-contents: write
 
       - name: 🛎️ Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          token: ${{ steps.credentials.outputs.token }}
-          ref: ${{ env.REF }}
+          ref: ${{ env.SHA || env.REF }}
+          persist-credentials: false
 
       - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
 
       - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          token: ${{ steps.credentials.outputs.token }}
           cache: pnpm
           node-version-file: .nvmrc
 
@@ -114,25 +124,27 @@ jobs:
 
           # Print and output the packages
           echo "packages=${packages[*]}"
-          echo "packages=${packages[*]}" >> $GITHUB_OUTPUT
+          echo "packages=${packages[*]}" >> "$GITHUB_OUTPUT"
 
       - name: 📝 Update Packages List Docs
         run: pnpm run packages-list
 
-      - name: 💾 Commit & Push Changes
-        uses: simbo-actions/actions/actions/commit-and-push@main
+      # Fails if REF has moved since the checked commit, instead of releasing
+      # unchecked changes. Tags are lightweight and point to the new commit.
+      - name: 💾 Commit Release and Create Tags
+        uses: simbo-actions/signed-commit@98f498eda4eb29a405322d694b4fa17bb42fc40b # v1.0.2
         with:
-          ref: ${{ env.REF }}
-          name: ${{ steps.credentials.outputs.name }}
-          email: ${{ steps.credentials.outputs.email }}
+          token: ${{ steps.app-token.outputs.token }}
+          branch: ${{ env.REF }}
           message: 'ci(release): ${{ steps.bumped-packages.outputs.packages }}'
           tags: ${{ steps.bumped-packages.outputs.packages }}
+          sync: false
 
       - name: 🎉 Release Commit Created (Event)
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3.0.0
         with:
           event-type: release-commit-created
-          token: ${{ steps.credentials.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
           client-payload: >
             ${{
               format(
