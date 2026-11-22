@@ -1,7 +1,8 @@
 # Rules for assistants
 
 pnpm and Turbo monorepo of the `@simbo/*` npm packages. Read
-[README.md](README.md) and [NPM_PUBLISHING.md](NPM_PUBLISHING.md) first. Change
+[README.md](README.md) and [NPM_PUBLISHING.md](NPM_PUBLISHING.md) first. For
+maintenance, follow the runbooks in [MAINTAINING.md](MAINTAINING.md). Change
 this file only when the owner asks for it; keep it to about one screen.
 
 ## Collaboration
