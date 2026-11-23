@@ -52,14 +52,12 @@ jobs:
           ref: ${{ env.REF }}
           persist-credentials: false
 
-      - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
-
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - name: 🚚 Setup pnpm and Node.js
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
-          cache: pnpm
           node-version-file: .nvmrc
+          cache: true
+          install: false
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
