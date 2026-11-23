@@ -1,8 +1,9 @@
 # Maintaining
 
 Runbooks for recurring maintenance. Each runbook links the documents that hold
-the details instead of repeating them. Run `pnpm run preflight` before every
-merge or push to `main` and fix what it reports.
+the details instead of repeating them. `main` accepts changes only through
+squash-merged pull requests. Run `pnpm run preflight` before opening or merging
+a pull request and fix what it reports.
 
 ## GitHub Actions Updates
 
