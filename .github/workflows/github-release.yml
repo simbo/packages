@@ -57,7 +57,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: true
-          install: false
+          require-lockfile: true
 
       - name: 🧾 Validate Package Identity
         id: package
@@ -66,10 +66,6 @@ jobs:
       - name: 🔒 Skip Private Package
         if: ${{ steps.package.outputs.private == 'true' }}
         run: echo '::notice title=Private Package::Skipping GitHub release for a private workspace.'
-
-      - name: 📦 Install Dependencies
-        if: ${{ steps.package.outputs.private == 'false' }}
-        run: pnpm install --frozen-lockfile
 
       - name: 👷 Build Package
         if: ${{ steps.package.outputs.private == 'false' }}

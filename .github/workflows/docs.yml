@@ -57,10 +57,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: true
-          install: false
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
+          require-lockfile: true
 
       - name: 👷‍♂️ Build Packages
         run: pnpm run each:build
