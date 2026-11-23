@@ -59,6 +59,11 @@ GitHub with the same reason.
   repository's configuration. Remove the exception when `typedoc` supports
   minimatch 11 and `typescript-eslint` is updated to 8.73.0 or newer.
 
+CodeQL code scanning reports findings in the code itself, test code included.
+Fix them in the code where possible; a merge to `main` closes the alert. Dismiss
+an alert only with an exception recorded in this section and the same reason on
+GitHub.
+
 ## Node.js Versions
 
 Check the [Node.js release schedule](https://github.com/nodejs/Release) when a
