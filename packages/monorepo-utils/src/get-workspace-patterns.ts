@@ -5,8 +5,6 @@ import { cwd } from 'node:process';
 import { isReadableFile } from '@simbo/accessible';
 import { stringifyError } from '@simbo/stringify-error';
 
-import * as yaml from 'yaml'
-
 /**
  * Options for getting workspace patterns.
  */
@@ -91,7 +89,10 @@ async function readWorkspaceConfig(path: string, file: WorkspaceConfigFile): Pro
 
     switch (file) {
       case WorkspaceConfigFile.PnpmWorkspace: {
-        workspacesOption = yaml.parse(fileContent).packages;
+        // Bundlers may expose the CommonJS package only as a default export.
+        const yaml = await import('yaml');
+        const { parse } = 'parse' in yaml ? yaml : (yaml as { default: typeof yaml }).default;
+        workspacesOption = (parse(fileContent) as { packages?: unknown }).packages;
         break;
       }
       case WorkspaceConfigFile.PackageJson:
