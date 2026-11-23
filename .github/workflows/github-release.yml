@@ -47,19 +47,17 @@ jobs:
       contents: read
     steps:
       - name: 🛎️ Checkout Release Tag
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: refs/tags/${{ env.RELEASE_TAG }}
           persist-credentials: false
 
-      - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
-
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - name: 🚚 Setup pnpm and Node.js
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
           node-version-file: .nvmrc
-          cache: pnpm
+          cache: true
+          install: false
 
       - name: 🧾 Validate Package Identity
         id: package
@@ -98,7 +96,7 @@ jobs:
       - name: 🔑 Get App Token
         id: app-token
         if: ${{ steps.package.outputs.private == 'false' }}
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
         with:
           client-id: ${{ vars.SIMBO_GITHUB_APP_CLIENT_ID }}
           private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}

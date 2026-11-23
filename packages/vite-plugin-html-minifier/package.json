@@ -57,12 +57,12 @@
     "@simbo/tsconfig": "workspace:*",
     "@simbo/vite-plugin-nunjucks": "workspace:*",
     "@types/node": "^24.19.2",
-    "@vitest/coverage-v8": "^5.1.0",
-    "@vitest/ui": "^5.1.0",
-    "eslint": "^10.14.0",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vitest/ui": "^5.1.1",
+    "eslint": "^10.15.0",
     "jiti": "^2.7.0",
     "typescript": "^6.0.3",
     "vite": "^8.3.8",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   }
 }
