@@ -11,7 +11,7 @@ describe('git-constants', () => {
       const isEmptyString = isString && value.trim() === '';
       const isNegativeNumber = isNumber && value < 0;
 
-      if ((!isString && !isNumber) || isEmptyString || isNegativeNumber) {
+      if (isEmptyString || isNegativeNumber || (!isString && !isNumber)) {
         unexpected.push([key, value]);
       }
     }

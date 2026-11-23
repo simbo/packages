@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { clitch } from './clitch.js';
 
@@ -9,10 +9,6 @@ vi.mock('@simbo/graceful-exit', () => ({
 const { gracefulExit } = vi.mocked(await import('@simbo/graceful-exit'));
 
 describe('clitch', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('calls cliFn and exits gracefully without error', async () => {
     const fn = vi.fn();
     await clitch(fn);

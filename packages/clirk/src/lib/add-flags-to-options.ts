@@ -18,12 +18,14 @@ const FLAG_DESCRIPTIONS: Record<string, string[]> = {
  */
 export function addFlagsToOptions(options: ParsedOptions, flags: Record<string, boolean> = {}): void {
   for (const flag of FLAGS) {
-    if (flags[flag]) {
-      options.argsOptions.boolean = [...new Set([...options.argsOptions.boolean, flag])];
-      options.argsOptions.alias[flag] = [...(options.argsOptions.alias[flag] ?? []), flag[0]];
-      if (!(flag in options.options)) {
-        options.options[flag] = FLAG_DESCRIPTIONS[flag];
-      }
+    if (!flags[flag]) {
+      continue;
+    }
+
+    options.argsOptions.boolean = [...new Set([...options.argsOptions.boolean, flag])];
+    options.argsOptions.alias[flag] = [...(options.argsOptions.alias[flag] ?? []), flag[0]];
+    if (!Object.hasOwn(options.options, flag)) {
+      options.options[flag] = FLAG_DESCRIPTIONS[flag];
     }
   }
 }

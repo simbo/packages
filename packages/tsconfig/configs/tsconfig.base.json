@@ -4,6 +4,7 @@
     "moduleDetection": "force",
     "declaration": true,
     "sourceMap": true,
+    "inlineSources": true,
     "pretty": true,
     "newLine": "lf",
     "jsx": "react",

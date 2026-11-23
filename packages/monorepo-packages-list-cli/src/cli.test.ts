@@ -13,7 +13,6 @@ const { monorepoPackagesListCli: cliEntryPoint } = vi.mocked(await import('./mon
 
 describe('CLI', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     vi.resetModules();
   });
 

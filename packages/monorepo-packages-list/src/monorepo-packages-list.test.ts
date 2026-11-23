@@ -1,7 +1,7 @@
 import { cwd } from 'node:process';
 
 import type { WorkspaceMetadata } from '@simbo/monorepo-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { monorepoPackagesList } from './monorepo-packages-list.js';
 import type { TemplateData } from './monorepo-packages-list.types.js';
@@ -30,10 +30,6 @@ const { defaultBeforeFn } = vi.mocked(await import('./default-before-fn.js'));
 const { defaultTemplateFn } = vi.mocked(await import('./default-template-fn.js'));
 
 describe('monorepoPackagesList', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should generate a list of packages in the monorepo', async () => {
     const result = await monorepoPackagesList();
     expect(result).toBe('2 packages:\n\n- pkg-a\n\n- pkg-b');

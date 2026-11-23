@@ -23,7 +23,7 @@ async function testConfig(configName: string): Promise<string> {
     });
     return output;
   } catch (error) {
-    throw new Error(`ESLint failed for ${configName}: ${error as Error}`);
+    throw new Error(`ESLint failed for ${configName}: ${error as Error}`, { cause: error });
   }
 }
 

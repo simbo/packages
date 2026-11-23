@@ -5,8 +5,10 @@
 export enum GitChangeStatus {
   Added = 'A',
   Modified = 'M',
+  TypeChanged = 'T',
   Deleted = 'D',
   Renamed = 'R',
   Copied = 'C',
+  Unmerged = 'U',
   Untracked = '?',
 }

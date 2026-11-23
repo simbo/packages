@@ -5,7 +5,7 @@ import { isDirectory } from '@simbo/accessible';
 import { GIT_FOLDER } from '@simbo/git-constants';
 
 /**
- * Checks if the given directory is the root of a git repository.
+ * Checks if the given directory is the root of a Git repository.
  *
  * Only succeeds on directories that contain a `.git` folder.
  *

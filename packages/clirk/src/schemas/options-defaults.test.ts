@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { mockContext } from '../../tests/mocks.js';
 
@@ -20,10 +20,6 @@ const { gracefulExit } = vi.mocked(await import('@simbo/graceful-exit'));
 const { log } = vi.mocked(await import('node:console'));
 
 describe('Default Options', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   describe('DEFAULT_SIGINT_HANDLER', () => {
     it('calls gracefulExit', async () => {
       const context = mockContext();

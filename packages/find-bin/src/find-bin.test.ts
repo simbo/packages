@@ -27,7 +27,6 @@ describe('findBin', () => {
   let executor: Mock;
 
   beforeEach(() => {
-    vi.clearAllMocks();
     executor = vi.fn();
     (execa as Mock).mockReturnValue(executor);
   });

@@ -1,6 +1,6 @@
 import type { Stats } from 'node:fs';
 
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { isAccessible } from './is-accessible.js';
 
@@ -18,10 +18,6 @@ const mockStats = {
 };
 
 describe('isAccessible', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('returns false if stat throws', async () => {
     stat.mockRejectedValueOnce(new Error('ENOENT'));
     expect(await isAccessible('file', '', '/missing')).toBe(false);

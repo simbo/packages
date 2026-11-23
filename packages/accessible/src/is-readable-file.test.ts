@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { isReadableFile } from './is-readable-file.js';
 
@@ -9,10 +9,6 @@ vi.mock('./is-accessible.js', () => ({
 const { isAccessible } = vi.mocked(await import('./is-accessible.js'));
 
 describe('isReadableFile', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('returns true for a readable file', async () => {
     isAccessible.mockResolvedValueOnce(true);
     expect(await isReadableFile('/some/readable-file')).toBe(true);

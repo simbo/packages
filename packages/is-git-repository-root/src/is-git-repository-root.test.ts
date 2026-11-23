@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { isGitRepositoryRoot } from './is-git-repository-root.js';
 
@@ -18,10 +18,6 @@ const { isDirectory } = vi.mocked(await import('@simbo/accessible'));
 const { cwd } = vi.mocked(await import('node:process'));
 
 describe('isGitRepositoryRoot', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('returns true if .git directory exists', async () => {
     isDirectory.mockResolvedValue(true);
 

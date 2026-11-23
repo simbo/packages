@@ -5,6 +5,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "target": "ES2022", // >= Node.js 20
-    "lib": ["ES2023"]
+    "lib": ["ES2023"],
+    "types": ["node"]
   }
 }

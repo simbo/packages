@@ -1,5 +1,5 @@
 import type { Plugin } from 'rollup';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { getConfig } from './get-config.js';
 
@@ -24,10 +24,6 @@ vi.mock('@rollup/plugin-json', async () => ({
 }));
 
 describe('getConfig', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('suppresses known warning', async () => {
     const config = getConfig({
       knownWarnings: {

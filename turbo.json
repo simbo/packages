@@ -1,15 +1,63 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "noUpdateNotifier": true,
+  "boundaries": {
+    "tags": {
+      "config": {
+        "dependencies": {
+          "allow": ["config"]
+        }
+      },
+      "core": {
+        "dependencies": {
+          "allow": ["config"]
+        }
+      },
+      "lib": {
+        "dependencies": {
+          "allow": ["config", "core", "lib"]
+        }
+      },
+      "cli": {
+        "dependencies": {
+          "allow": ["config", "core", "lib"]
+        },
+        "dependents": {
+          "deny": ["config", "core", "lib", "cli", "meta"]
+        }
+      },
+      "meta": {
+        "dependents": {
+          "deny": ["config", "core", "lib", "cli", "meta"]
+        }
+      }
+    }
+  },
   "tasks": {
+    "//#check:eslint": {
+      "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
+      "cache": false
+    },
+    "//#check:types": {
+      "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
+      "cache": false
+    },
     "build": {
       "dependsOn": ["clean:dist", "^build"],
       "outputs": ["dist/**"],
       "outputLogs": "new-only"
     },
-    "bundle": {
-      "dependsOn": ["^bundle"],
-      "outputs": ["dist/**"],
-      "outputLogs": "new-only"
+    "check": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "check:eslint": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "check:types": {
+      "dependsOn": ["^build"],
+      "cache": false
     },
     "clean": {
       "cache": false,
@@ -32,22 +80,6 @@
       "outputLogs": "none"
     },
     "test": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:eslint": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:types": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
-    "check:format": {
       "dependsOn": ["^build"],
       "cache": false
     }

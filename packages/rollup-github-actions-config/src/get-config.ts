@@ -27,7 +27,7 @@ const KNOWN_WARNINGS = {
 };
 
 /**
- * Get a Rollup configuration for building GitHub Actions using Typescript.
+ * Get a Rollup configuration for building GitHub Actions using TypeScript.
  *
  * @param userOptions - Partial configuration options to override defaults.
  * @returns The Rollup configuration object.
@@ -66,7 +66,7 @@ export function getConfig(userOptions: Partial<RollupGithubActionsConfigOptions>
     plugins: [
       typescript({
         tsconfig: options.tsconfig,
-        // rollup typescript plugin does not fully support tsconfig extends.
+        // rollup TypeScript plugin does not fully support tsconfig extends.
         // so we need to specify the module type explicitly.
         // https://github.com/rollup/plugins/issues/1583
         module: 'NodeNext',

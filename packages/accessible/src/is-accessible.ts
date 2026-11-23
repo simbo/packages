@@ -23,7 +23,8 @@ export async function isAccessible(type: 'file' | 'directory', modes: string, pa
       return false;
     }
 
-    const modeFlags = new Set(modes.replaceAll(new RegExp(`[^${Object.keys(ACCESS_MODE_FLAGS).join('')}]+`, 'g'), ''));
+    const modeRegex = new RegExp(`[^${Object.keys(ACCESS_MODE_FLAGS).join('')}]+`, 'g');
+    const modeFlags = new Set(modes.replaceAll(modeRegex, ''));
 
     for (const [flag, mode] of Object.entries(ACCESS_MODE_FLAGS)) {
       if (modeFlags.has(flag)) {

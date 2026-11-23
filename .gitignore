@@ -8,6 +8,9 @@
 /packages/*/dist
 /packages/*/coverage
 
+# Agent Handoffs
+/.handoffs
+
 # IDEs and Editors
 /.vscode/*
 !/.vscode/extensions.json

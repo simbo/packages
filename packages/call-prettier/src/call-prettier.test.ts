@@ -26,7 +26,6 @@ describe('callPrettier', () => {
   let executor: Mock;
 
   beforeEach(() => {
-    vi.clearAllMocks();
     executor = vi.fn();
     (execa as Mock).mockReturnValue(executor);
   });
@@ -86,7 +85,7 @@ describe('callPrettier', () => {
   it('should throw if the custom binary path does not lead to a executable', async () => {
     isExecutableFile.mockResolvedValueOnce(false);
 
-    await expect(callPrettier('*.js', { binPath: '/custom/path/to/prettier' })).rejects.toThrowError(
+    await expect(callPrettier('*.js', { binPath: '/custom/path/to/prettier' })).rejects.toThrow(
       "The provided prettier binary path '/custom/path/to/prettier' is not executable.",
     );
 
@@ -98,7 +97,7 @@ describe('callPrettier', () => {
   });
 
   it('should throw if mode option is not "write" or "check"', async () => {
-    await expect(callPrettier('*.js', { mode: 'invalid' as string as 'write' })).rejects.toThrowError(
+    await expect(callPrettier('*.js', { mode: 'invalid' as string as 'write' })).rejects.toThrow(
       "Invalid mode 'invalid'. Expected 'write' or 'check'.",
     );
 

@@ -36,7 +36,6 @@ const { queueOptions } = vi.mocked(await import('p-queue')) as unknown as { queu
 
 describe('readWorkspaces', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     delete env.CI;
   });
 
@@ -107,8 +106,8 @@ describe('readWorkspaces', () => {
   });
 
   it('should throw if concurrency is not a number', async () => {
-    await expect(readWorkspaces({ concurrency: 'invalid' as unknown as number })).rejects.toThrowError(
-      'Concurrency must be a positive number',
+    await expect(readWorkspaces({ concurrency: 'invalid' as unknown as number })).rejects.toThrow(
+      'Concurrency must be a positive integer',
     );
 
     expect(cwd).toHaveBeenCalledTimes(1);
@@ -117,7 +116,7 @@ describe('readWorkspaces', () => {
   });
 
   it('should throw if concurrency is not a positive number', async () => {
-    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrowError('Concurrency must be a positive number');
+    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrow('Concurrency must be a positive integer');
 
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).not.toHaveBeenCalled();
@@ -127,9 +126,7 @@ describe('readWorkspaces', () => {
   it('should throw if a workspace failed to be read', async () => {
     getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
 
-    await expect(readWorkspaces()).rejects.toThrowError(
-      /^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/,
-    );
+    await expect(readWorkspaces()).rejects.toThrow(/^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/);
 
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
@@ -140,12 +137,38 @@ describe('readWorkspaces', () => {
     getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
     getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
 
-    await expect(readWorkspaces()).rejects.toThrowError(
+    await expect(readWorkspaces()).rejects.toThrow(
       /^Failed to read workspaces: packages\/pkg-a \(metadata failure\), packages\/pkg-b \(metadata failure\)$/,
     );
 
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
     expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
+  });
+
+  it('should only report failed workspaces, not the skipped ones', async () => {
+    getWorkspacePaths.mockResolvedValueOnce(['packages/pkg-a', 'packages/pkg-b', 'packages/pkg-c']);
+    getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
+
+    await expect(readWorkspaces({ concurrency: 1 })).rejects.toThrow(
+      /^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/,
+    );
+
+    // The queue may start the next task before the failure is handled, but never all of them.
+    expect(getWorkspaceMetadata.mock.calls.length).toBeLessThan(3);
+  });
+
+  it('should throw if concurrency is not an integer', async () => {
+    await expect(readWorkspaces({ concurrency: 1.5 })).rejects.toThrow('Concurrency must be a positive integer');
+
+    expect(getWorkspacePaths).not.toHaveBeenCalled();
+    expect(getWorkspaceMetadata).not.toHaveBeenCalled();
+  });
+
+  it('should accept an infinite concurrency', async () => {
+    const workspaces = await readWorkspaces({ concurrency: Infinity });
+
+    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
+    expect(queueOptions.concurrency).toBe(Infinity);
   });
 });

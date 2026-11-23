@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { mockOptions } from '../../tests/mocks.js';
 
@@ -47,10 +47,6 @@ const { terminated } = vi.mocked(await import('@simbo/cli-output'));
 const { default: minimist } = vi.mocked(await import('minimist'));
 
 describe('createClirkContext', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('walks the happy path', async () => {
     const ctx = await createClirkContext(mockOptions());
 
@@ -73,7 +69,7 @@ describe('createClirkContext', () => {
 
   it('throws if findUpPackage returns undefined', async () => {
     findUpPackage.mockResolvedValueOnce(undefined);
-    await expect(createClirkContext(mockOptions())).rejects.toThrowError(
+    await expect(createClirkContext(mockOptions())).rejects.toThrow(
       /^Could not find package for path: \/test\/path\/to\/pkg\/src$/,
     );
   });
@@ -127,7 +123,7 @@ describe('createClirkContext', () => {
     const options = mockOptions({
       options: { force: ['Force apply'] },
     });
-    await expect(createClirkContext(options)).rejects.toThrowError(/^Option not configured: "force"$/);
+    await expect(createClirkContext(options)).rejects.toThrow(/^Option not configured: "force"$/);
   });
 
   it('takes name from package.json bin', async () => {

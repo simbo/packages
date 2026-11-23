@@ -1,4 +1,191 @@
-# @simbos-packages/changelog
+# changelog
+
+## 1.7.1
+
+### Patch Changes
+
+- 9946fb0: Document recurring maintenance in runbooks.
+
+  - Add `MAINTAINING.md` with runbooks for GitHub Actions updates, npm
+    dependency updates, Node.js versions, contributor pull requests, releases
+    and exceptions.
+  - Point assistants to the runbooks in `AGENTS.md`.
+
+- 9946fb0: Update development dependencies.
+
+  - `@cspell/cspell-types` and `cspell` to ^10.5.2
+  - `@vitest/coverage-v8`, `@vitest/ui` and `vitest` to ^5.1.1
+  - `eslint` to ^10.15.0
+  - `prettier` to ^3.10.1
+  - `rollup` to ^4.68.7
+  - `turbo` to ^2.11.13
+  - Refresh the lockfile within the existing ranges.
+
+- 9946fb0: Update GitHub Actions.
+
+  - `actions/checkout` to v7.0.1
+  - `actions/create-github-app-token` to v3.4.0
+  - `peter-evans/repository-dispatch` to v4.0.1
+
+- 9946fb0: Update pnpm to 12.21.0.
+- 9946fb0: Set up pnpm and Node.js with `pnpm/setup` in all workflows.
+
+  - Replace `pnpm/action-setup` and `actions/setup-node` with one `pnpm/setup`
+    v3.2.0 step that reads pnpm from `packageManager` and Node.js from `.nvmrc`.
+  - Keep the explicit install steps and the store cache where the workflows
+    cached before; the publish workflow still runs without a cache.
+
+## 1.7.0
+
+### Minor Changes
+
+- e2ae724: Enforce package layers with Turbo boundaries.
+
+  - Tag every package as `config`, `core`, `lib`, `cli` or `meta` in its
+    `turbo.json`.
+  - Allow `config` packages to depend only on other `config` packages, and
+    `core` packages on no internal runtime packages.
+  - Prevent any package from depending on `cli` or `meta` packages.
+
+- 8f0e0fe: Migrate the workflows to the published Simbo's Actions.
+
+  - Get the app token with `actions/create-github-app-token` in the `release`
+    environment, with `contents: write` only, and only in the release and GitHub
+    release workflows.
+  - Commit release bumps and create the release tags with
+    `simbo-actions/signed-commit`, as a verified commit with lightweight tags.
+  - Release the commit checked by the checks workflow, and fail if the branch
+    has moved since then.
+  - Create GitHub releases with `simbo-actions/staged-release`, without marking
+    them as the latest release.
+  - Use `GITHUB_TOKEN` for checks, the release dispatch, npm publishing, and the
+    docs deployment.
+  - Pin all actions by commit SHA, set minimal permissions per job, and keep
+    checkout credentials out of the working tree.
+  - Require pull requests to add a changeset instead of accepting any pending
+    one, and drop the removed bundle step from the checks.
+
+- 5d801cb: Simplify the repository tooling.
+
+  - Format all packages from the repository root instead of per package.
+  - Build the packages that root checks depend on through Turbo.
+  - Lint and type-check the TypeDoc configuration.
+  - Remove the unused `bundle` task and the duplicate `engine-strict` setting.
+  - Configure changesets for public packages and tag private packages.
+  - Pin pnpm with an integrity hash.
+
+- 704a921: Accept Dependabot pull requests that only update workflows without a
+  changeset.
+
+  - Skip the changeset requirement when `dependabot[bot]` opened the pull
+    request and it changes only files in `.github/workflows/`.
+  - Keep requiring a changeset for every other pull request.
+
+- 2c2dce2: Keep the pinned GitHub Actions up to date with Dependabot.
+
+  - Check the actions in the workflows daily.
+  - Group the own `simbo-actions/*` actions into one pull request, without a
+    cooldown.
+  - Open one pull request per update for all other actions, after a cooldown of
+    7 days.
+
+- 3982c1d: Use Node.js 26 for development.
+
+  - `.nvmrc` follows the current Active LTS release.
+  - Supported Node.js versions follow the Node.js release schedule, and
+    `@types/node` follows the lowest supported major version.
+
+### Patch Changes
+
+- 47cf87f: Document when and how to write changesets.
+
+  - Every change gets a changeset: a package changeset when the published
+    package changes for its users, otherwise one for this changelog.
+  - Each changeset covers one topic with a summary paragraph and lists its
+    details.
+
+- 3982c1d: Fix the findings of `eslint-plugin-unicorn` 79 in the repository
+  code.
+
+  - Write non-breaking spaces as escape sequences.
+  - Simplify a ternary and narrow the scope of types in tests.
+  - Remove `eslint-disable` comments that are no longer needed.
+
+- d76a0e2: Stop recording sessions on the documentation pages.
+- 492ac88: Update development dependencies.
+
+  - `prettier` to ^3.10.0
+  - `rollup` to ^4.68.2
+  - `turbo` to ^2.11.11
+  - `vite` to ^8.3.8
+
+## 1.6.1
+
+### Patch Changes
+
+- 5f28099: Improve CI diagram rendering compatibility and document the trusted
+  publisher's two-day validation deadline with an immediate patch release
+  recommendation.
+
+## 1.6.0
+
+### Minor Changes
+
+- 710ac4e: Build package archives once in the GitHub release workflow, then
+  verify and publish the same release tarballs to npm. Decouple release creation
+  from registry availability and document first publishes and retries using
+  release assets.
+
+  Add an interactive pnpm command to download, verify and publish release
+  archives locally, including a read-only check mode and tests for invalid
+  release assets.
+
+  Keep repository helpers in scripts/ and run their tests through Vitest
+  alongside package tests, with a dedicated scripts project for focused runs.
+
+### Patch Changes
+
+- 8e9dabc: Document pnpm 12 with the exact version maintained in package.json,
+  and align the release diagram with the existing publish and GitHub release
+  workflows.
+- e235985: Update pnpm from 12.8.1 to 12.14.0 and development dependencies.
+  Remove unused direct `baseline-browser-mapping` dependencies from workspace
+  packages. Capture and assert expected release-helper success messages instead
+  of printing test fixture output.
+
+## 1.5.6
+
+### Patch Changes
+
+- 4fb4825: minor dependency upgrades
+- 9f38803: Disable Turbo update notifications centrally in turbo.json for local
+  runs and CI.
+
+## 1.5.5
+
+### Patch Changes
+
+- 9b365b4: update/fix url schemas throughout the repo from http to https
+- bf8d6e2: update umami tracking scripts for docs
+- c68cba9: upgrade dependencies
+
+## 1.5.4
+
+### Patch Changes
+
+- 1c58f82: cleanup tsconfig files and turbo.json tasks
+
+## 1.5.3
+
+### Patch Changes
+
+- 2ded9ff: Update documentation links from `simbo.codes` to `simbo.de`. Refresh
+  repository setup, build, test and publishing instructions, and align the
+  documented CI flow with the current workflows.
+- 2ded9ff: Upgrade the repository's test tooling to Vitest 5.0.1, including the
+  V8 coverage provider and Vitest UI. Explicitly include source files in
+  coverage reports, use automatic mock clearing and replace deprecated
+  `toThrowError` assertions with `toThrow`.
 
 ## 1.5.2
 

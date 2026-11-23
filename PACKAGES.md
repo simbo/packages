@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**29**_ packages managed in this repository:
+There are currently _**31**_ packages managed in this repository:
 
 - ### **Accessible**
 
@@ -18,11 +18,11 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/accessible`**](https://github.com/simbo/packages/tree/main/packages/accessible/)
 
   📦 [`@simbo/accessible`](https://www.npmjs.com/package/@simbo/accessible) @
-  `1.0.1`
+  `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/accessible/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/accessible/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_accessible/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_accessible/)
 
 - ### **Call Prettier**
 
@@ -34,11 +34,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/call-prettier`](https://www.npmjs.com/package/@simbo/call-prettier) @
-  `1.0.2`
+  `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/call-prettier/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/call-prettier/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_call-prettier/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_call-prettier/)
 
 - ### **Simbo's Packages — Changelog**
 
@@ -47,7 +47,7 @@ There are currently _**29**_ packages managed in this repository:
   📂
   [**`./packages/changelog`**](https://github.com/simbo/packages/tree/main/packages/changelog/)
 
-  📦 `changelog` @ `1.5.2`
+  📦 `changelog` @ `1.7.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/changelog/CHANGELOG.md)
@@ -60,11 +60,11 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/cli-output`**](https://github.com/simbo/packages/tree/main/packages/cli-output/)
 
   📦 [`@simbo/cli-output`](https://www.npmjs.com/package/@simbo/cli-output) @
-  `1.0.1`
+  `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/cli-output/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/cli-output/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_cli-output/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_cli-output/)
 
 - ### **Clirk - The CLI Clerk**
 
@@ -75,11 +75,11 @@ There are currently _**29**_ packages managed in this repository:
   📂
   [**`./packages/clirk`**](https://github.com/simbo/packages/tree/main/packages/clirk/)
 
-  📦 [`@simbo/clirk`](https://www.npmjs.com/package/@simbo/clirk) @ `1.1.4`
+  📦 [`@simbo/clirk`](https://www.npmjs.com/package/@simbo/clirk) @ `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/clirk/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/clirk/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_clirk/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_clirk/)
 
 - ### **Simbo's Commitlint Configuration**
 
@@ -91,11 +91,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/commitlint-config`](https://www.npmjs.com/package/@simbo/commitlint-config)
-  @ `1.0.7`
+  @ `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/commitlint-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/commitlint-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_commitlint-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_commitlint-config/)
 
 - ### **Simbo's CSpell Configuration**
 
@@ -106,11 +106,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/cspell-config`](https://www.npmjs.com/package/@simbo/cspell-config) @
-  `1.4.0`
+  `2.2.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/cspell-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/cspell-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_cspell-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_cspell-config/)
 
 - ### **Simbo's ESLint Configurations**
 
@@ -122,11 +122,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/eslint-config`](https://www.npmjs.com/package/@simbo/eslint-config) @
-  `2.0.4`
+  `3.3.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/eslint-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/eslint-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_eslint-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_eslint-config/)
 
 - ### **Find Bin**
 
@@ -136,11 +136,11 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/find-bin`**](https://github.com/simbo/packages/tree/main/packages/find-bin/)
 
   📦 [`@simbo/find-bin`](https://www.npmjs.com/package/@simbo/find-bin) @
-  `1.0.2`
+  `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-bin/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-bin/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_find-bin/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_find-bin/)
 
 - ### **Find Git Repository Root**
 
@@ -151,11 +151,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/find-git-repository-root`](https://www.npmjs.com/package/@simbo/find-git-repository-root)
-  @ `1.0.2`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-git-repository-root/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-git-repository-root/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_find-git-repository-root/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_find-git-repository-root/)
 
 - ### **Find Up Package**
 
@@ -167,11 +167,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/find-up-package`](https://www.npmjs.com/package/@simbo/find-up-package)
-  @ `1.0.3`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_find-up-package/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_find-up-package/)
 
 - ### **Git Changes**
 
@@ -182,11 +182,11 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/git-changes`**](https://github.com/simbo/packages/tree/main/packages/git-changes/)
 
   📦 [`@simbo/git-changes`](https://www.npmjs.com/package/@simbo/git-changes) @
-  `1.0.3`
+  `3.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-changes/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-changes/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_git-changes/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_git-changes/)
 
 - ### **Git Constants**
 
@@ -198,11 +198,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/git-constants`](https://www.npmjs.com/package/@simbo/git-constants) @
-  `1.0.1`
+  `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-constants/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-constants/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_git-constants/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_git-constants/)
 
 - ### **Globby Has Matches**
 
@@ -213,11 +213,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/globby-has-matches`](https://www.npmjs.com/package/@simbo/globby-has-matches)
-  @ `1.0.5`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/globby-has-matches/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/globby-has-matches/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_globby-has-matches/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_globby-has-matches/)
 
 - ### **Graceful Exit**
 
@@ -229,11 +229,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/graceful-exit`](https://www.npmjs.com/package/@simbo/graceful-exit) @
-  `1.1.0`
+  `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/graceful-exit/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/graceful-exit/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_graceful-exit/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_graceful-exit/)
 
 - ### **Import Meta Path**
 
@@ -245,11 +245,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/import-meta-path`](https://www.npmjs.com/package/@simbo/import-meta-path)
-  @ `1.0.0`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_import-meta-path/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_import-meta-path/)
 
 - ### **Inject Between HTML Comments**
 
@@ -260,11 +260,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/inject-between-html-comments`](https://www.npmjs.com/package/@simbo/inject-between-html-comments)
-  @ `1.0.4`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/inject-between-html-comments/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/inject-between-html-comments/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_inject-between-html-comments/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_inject-between-html-comments/)
 
 - ### **Is Git Repository Root**
 
@@ -276,11 +276,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/is-git-repository-root`](https://www.npmjs.com/package/@simbo/is-git-repository-root)
-  @ `1.0.1`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/is-git-repository-root/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/is-git-repository-root/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_is-git-repository-root/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_is-git-repository-root/)
 
 - ### **Monorepo Packages List**
 
@@ -291,11 +291,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list`](https://www.npmjs.com/package/@simbo/monorepo-packages-list)
-  @ `1.1.5`
+  @ `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_monorepo-packages-list/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_monorepo-packages-list/)
 
 - ### **Monorepo Packages List CLI**
 
@@ -307,11 +307,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list-cli`](https://www.npmjs.com/package/@simbo/monorepo-packages-list-cli)
-  @ `1.0.5`
+  @ `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_monorepo-packages-list-cli/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_monorepo-packages-list-cli/)
 
 - ### **Monorepo Utilities**
 
@@ -322,11 +322,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-utils`](https://www.npmjs.com/package/@simbo/monorepo-utils)
-  @ `1.0.6`
+  @ `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_monorepo-utils/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_monorepo-utils/)
 
 - ### **Package Utilities**
 
@@ -336,11 +336,11 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/package-json`**](https://github.com/simbo/packages/tree/main/packages/package-json/)
 
   📦 [`@simbo/package-json`](https://www.npmjs.com/package/@simbo/package-json)
-  @ `0.1.3`
+  @ `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/package-json/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/package-json/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_package-json/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_package-json/)
 
 - ### **Plural**
 
@@ -349,11 +349,11 @@ There are currently _**29**_ packages managed in this repository:
   📂
   [**`./packages/plural`**](https://github.com/simbo/packages/tree/main/packages/plural/)
 
-  📦 [`@simbo/plural`](https://www.npmjs.com/package/@simbo/plural) @ `1.0.1`
+  📦 [`@simbo/plural`](https://www.npmjs.com/package/@simbo/plural) @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/plural/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/plural/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_plural/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_plural/)
 
 - ### **Simbo's Prettier Configuration**
 
@@ -364,11 +364,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/prettier-config`](https://www.npmjs.com/package/@simbo/prettier-config)
-  @ `2.0.0`
+  @ `3.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/prettier-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/prettier-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_prettier-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_prettier-config/)
 
 - ### **Rollup GitHub Actions Config**
 
@@ -380,11 +380,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/rollup-github-actions-config`](https://www.npmjs.com/package/@simbo/rollup-github-actions-config)
-  @ `1.0.2`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/rollup-github-actions-config/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_rollup-github-actions-config/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_rollup-github-actions-config/)
 
 - ### **Stringify Error**
 
@@ -396,11 +396,11 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/stringify-error`](https://www.npmjs.com/package/@simbo/stringify-error)
-  @ `1.0.2`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/stringify-error/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/stringify-error/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_stringify-error/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_stringify-error/)
 
 - ### **Simbo's TypeScript Configurations**
 
@@ -410,7 +410,7 @@ There are currently _**29**_ packages managed in this repository:
   [**`./packages/tsconfig`**](https://github.com/simbo/packages/tree/main/packages/tsconfig/)
 
   📦 [`@simbo/tsconfig`](https://www.npmjs.com/package/@simbo/tsconfig) @
-  `1.0.4`
+  `2.1.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/tsconfig/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/tsconfig/CHANGELOG.md)
@@ -425,11 +425,43 @@ There are currently _**29**_ packages managed in this repository:
 
   📦
   [`@simbo/user-facing-error`](https://www.npmjs.com/package/@simbo/user-facing-error)
-  @ `1.0.2`
+  @ `2.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/user-facing-error/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_user-facing-error/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_user-facing-error/)
+
+- ### **Vite Plugin HTML Minifier**
+
+  > Minify generated Vite HTML assets with shared defaults and typed
+  > html-minifier-terser options.
+
+  📂
+  [**`./packages/vite-plugin-html-minifier`**](https://github.com/simbo/packages/tree/main/packages/vite-plugin-html-minifier/)
+
+  📦
+  [`@simbo/vite-plugin-html-minifier`](https://www.npmjs.com/package/@simbo/vite-plugin-html-minifier)
+  @ `1.0.2`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-html-minifier/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-html-minifier/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_vite-plugin-html-minifier/)
+
+- ### **Vite Plugin Nunjucks**
+
+  > Render Nunjucks templates in Vite HTML entries with layouts, locals and
+  > automatic reloads.
+
+  📂
+  [**`./packages/vite-plugin-nunjucks`**](https://github.com/simbo/packages/tree/main/packages/vite-plugin-nunjucks/)
+
+  📦
+  [`@simbo/vite-plugin-nunjucks`](https://www.npmjs.com/package/@simbo/vite-plugin-nunjucks)
+  @ `1.0.2`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/vite-plugin-nunjucks/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_vite-plugin-nunjucks/)
 
 - ### **Zodpak**
 
@@ -438,10 +470,10 @@ There are currently _**29**_ packages managed in this repository:
   📂
   [**`./packages/zodpak`**](https://github.com/simbo/packages/tree/main/packages/zodpak/)
 
-  📦 [`@simbo/zodpak`](https://www.npmjs.com/package/@simbo/zodpak) @ `0.1.4`
+  📦 [`@simbo/zodpak`](https://www.npmjs.com/package/@simbo/zodpak) @ `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/zodpak/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/zodpak/CHANGELOG.md)  • 
-  [Documentation](https://simbo.codes/packages/modules/_simbo_zodpak/)
+  [Documentation](https://simbo.de/packages/modules/_simbo_zodpak/)
 
 <!-- /PACKAGES -->

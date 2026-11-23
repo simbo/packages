@@ -78,7 +78,7 @@ function getParameters(context: ClirkContextWithoutMessages): string[] {
 
   const output: string[] = [bold(`${parametersLabel}:`)];
 
-  for (const [key, { description }] of parameters.entries()) {
+  for (const [key, { description }] of parameters) {
     output.push(`  ${yellow(key)}\n    ${description.join('\n    ')}`);
   }
 
@@ -101,7 +101,7 @@ function getOptions(context: ClirkContextWithoutMessages): string[] {
 
   const output: string[] = [bold(`${optionsLabel}:`)];
 
-  for (const [key, { description, aliases, type }] of options.entries()) {
+  for (const [key, { description, aliases, type }] of options) {
     const value = type === 'string' ? dim('=<VALUE>') : '';
     let aliasDescription = `  ${yellow(`--${key}`)}${value}\n    ${description.join('\n    ')}`;
     if (aliases.size > 0) {

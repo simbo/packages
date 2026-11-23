@@ -1,4 +1,4 @@
-import { defineConfig } from '@eslint/config-helpers';
+import { defineConfig } from 'eslint/config';
 import typescriptEslint from 'typescript-eslint';
 
 import type { ConfigsRecord } from '../configs-record.interface.js';

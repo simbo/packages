@@ -1,4 +1,7 @@
-name: ' Docs 📘'
+# Builds the TypeDoc pages and deploys them to the gh-pages branch, after each
+# release commit or on manual request.
+
+name: Docs 📘
 
 on:
   repository_dispatch:
@@ -31,34 +34,30 @@ concurrency:
       )
     }}
 
+permissions: {}
+
 env:
   REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
 
 jobs:
   docs:
     runs-on: ubuntu-latest
+    permissions:
+      # push to the gh-pages branch with GITHUB_TOKEN
+      contents: write
     steps:
-      - name: 🪪 Retrieve Credentials
-        id: credentials
-        uses: simbo-actions/actions/actions/github-app-credentials@main
-        with:
-          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
-          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
-
       - name: 🛎️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ steps.credentials.outputs.token }}
           ref: ${{ env.REF }}
+          persist-credentials: false
 
-      - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
+      - name: 🚚 Setup pnpm and Node.js
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
-          cache: pnpm
           node-version-file: .nvmrc
+          cache: true
+          install: false
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -70,11 +69,8 @@ jobs:
         run: pnpm run docs
 
       - name: 🚚 Deploy Docs
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
         with:
-          token: ${{ steps.credentials.outputs.token }}
-          git-config-name: ${{ steps.credentials.outputs.name }}
-          git-config-email: ${{ steps.credentials.outputs.email }}
           folder: docs
           branch: gh-pages
           clean: true

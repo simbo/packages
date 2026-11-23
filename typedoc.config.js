@@ -1,0 +1,113 @@
+import { customHeadScripts } from './typedoc-scripts.js';
+
+/**
+ * TypeDoc configuration.
+ *
+ * @type {Partial<import('typedoc').TypeDocOptions>}
+ */
+const config = {
+  cleanOutputDir: true,
+  entryPoints: ['packages/*'],
+  entryPointStrategy: 'packages',
+  plugin: ['typedoc-github-theme', 'typedoc-plugin-mdn-links', customHeadScripts],
+  exclude: ['packages/tsconfig/', 'packages/changelog/'],
+  treatWarningsAsErrors: true,
+
+  name: "Documentation for Simbo's Packages",
+  router: 'kind-dir',
+  // favicon: './favicon.ico',
+  customFooterHtml:
+    "<small><a style='color:#808080' href='https://simbo.mit-license.org/2025/'>MIT &copy; Simon Lepel</a></small> — " +
+    "<small><a style='color:#808080' href='https://simbo.de/'>simbo.de</a></small> — " +
+    "<small><a style='color:#808080' href='https://github.com/simbo'>github.com/simbo</a></small>",
+  hideGenerator: true,
+  includeVersion: false,
+  githubPages: true,
+  readme: './typedoc-index.md',
+  sidebarLinks: {},
+  navigationLinks: {
+    'GitHub Repository': 'https://github.com/simbo/packages',
+  },
+  searchInComments: true,
+  searchInDocuments: true,
+  visibilityFilters: {
+    protected: true,
+    private: true,
+    inherited: true,
+    external: true,
+  },
+
+  packageOptions: {
+    tsconfig: './tsconfig.build.json',
+    includeVersion: true,
+    sourceLinkTemplate: 'https://github.com/simbo/packages/blob/{gitRevision}/{path}#L{line}',
+    gitRevision: 'main',
+    basePath: './src',
+  },
+
+  highlightLanguages: [
+    'angular-html',
+    'angular-ts',
+    'apache',
+    'applescript',
+    'asciidoc',
+    'asm',
+    'awk',
+    'codeowners',
+    'css',
+    'csv',
+    'diff',
+    'docker',
+    'dotenv',
+    'git-commit',
+    'git-rebase',
+    'graphql',
+    'groovy',
+    'handlebars',
+    'html',
+    'html-derivative',
+    'http',
+    'ini',
+    'javascript',
+    'json',
+    'jsonc',
+    'json5',
+    'jsonl',
+    'jsx',
+    'less',
+    'log',
+    'make',
+    'markdown',
+    'mdx',
+    'mermaid',
+    'nginx',
+    'php',
+    'postcss',
+    'pug',
+    'python',
+    'regexp',
+    'sass',
+    'scss',
+    'shellscript',
+    'shellsession',
+    'sql',
+    'ssh-config',
+    'stylus',
+    'svelte',
+    'toml',
+    'ts-tags',
+    'tsx',
+    'typescript',
+    'typespec',
+    'vue',
+    'vue-html',
+    'vue-vine',
+    'wasm',
+    'wgsl',
+    'xml',
+    'xsl',
+    'yaml',
+  ],
+};
+
+export default config;

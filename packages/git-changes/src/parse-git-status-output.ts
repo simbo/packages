@@ -4,9 +4,9 @@ import { ENTRY_PATH_INDEX, ENTRY_SEPARATOR, ENTRY_STATUS_INDEX, ENTRY_STATUS_LEN
 import { parseGitChangeStatus } from './parse-git-change-status.js';
 
 /**
- * Parses the output of the git status command and returns a map of Git changes.
+ * Parses the output of the Git status command and returns a map of Git changes.
  *
- * @param output - The output string from the git status command.
+ * @param output - The output string from the Git status command.
  * @returns A ReadonlyMap of file paths to their corresponding GitChange objects.
  */
 export function parseGitStatusOutput(output: string): ReadonlyMap<string, GitChange> {
@@ -26,22 +26,22 @@ export function parseGitStatusOutput(output: string): ReadonlyMap<string, GitCha
 
     const path = entry.slice(ENTRY_PATH_INDEX);
 
-    if ((!staged && !unstaged) || !path) {
-      continue;
-    }
-
-    // For entries that are renamed or copied, the current entry contains the old path,
-    // and the next entry contains the new path.
+    // Renamed or copied entries contain the new path, followed by an entry with the original path.
+    // The original path is consumed even if the entry is invalid, so it is never parsed as an entry.
     if (
       staged === GitChangeStatus.Renamed ||
       staged === GitChangeStatus.Copied ||
       unstaged === GitChangeStatus.Renamed ||
       unstaged === GitChangeStatus.Copied
     ) {
-      if (entries[index]) {
-        const targetPath = entries[index++];
-        changes.set(targetPath, { path: targetPath, originPath: path, staged, unstaged });
+      const originPath = entries[index++];
+      if (path && originPath) {
+        changes.set(path, { path, originPath, staged, unstaged });
       }
+      continue;
+    }
+
+    if (!path || (!staged && !unstaged)) {
       continue;
     }
 

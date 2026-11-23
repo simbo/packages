@@ -1,9 +1,16 @@
 Clirk
+Fira
+Frutiger
+Futura
+Grotesk
 Lepel
+Magawa
+Noto
 Simbo
 Simbos
 stringifying
 Tauri
 Turborepo
+Umami
 unpushed
 Zodpak

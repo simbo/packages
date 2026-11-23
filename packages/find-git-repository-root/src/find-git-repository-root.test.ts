@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi, type Mock } from 'vitest';
+import { describe, expect, it, vi, type Mock } from 'vitest';
 
 import { findGitRepositoryRoot } from './find-git-repository-root.js';
 
@@ -19,10 +19,6 @@ const { findUp } = vi.mocked(await import('find-up')) as { findUp: Mock };
 const { isGitRepositoryRoot } = vi.mocked(await import('@simbo/is-git-repository-root'));
 
 describe('findGitRepositoryRoot', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('resolves to the first directory where isGitRepositoryRoot returns true', async () => {
     // Simulate checking four levels, with the third being the Git root
     const callOrder: (string | undefined)[] = [];

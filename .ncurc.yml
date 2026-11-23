@@ -1,6 +1,12 @@
 packageManager: pnpm
 reject:
   - npm
+  - pnpm
+  # Held at ~8.72.2 until 2026-12-31: 8.73.0 adds
+  # `no-unsafe-class-instance-assignment` to `strictTypeChecked` in a minor
+  # release and reports `no-unsafe-member-access` on code that type checks.
+  # Retry with the next release and remove this entry when it passes.
+  - typescript-eslint
 workspaces: true
 root: true
 install: never

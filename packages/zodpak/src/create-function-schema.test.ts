@@ -28,7 +28,7 @@ describe('createFunctionSchema', () => {
     expect(schema.parse(f1)).toBe(f1);
     expect(schema.parse(f2)).toBe(f2);
     expect(schema.parse(f3)).toBe(f3 as unknown as (...args: unknown[]) => unknown);
-    expect(schema.parse(f4)).toBe(f4 as unknown as (...args: unknown[]) => unknown);
+    expect(schema.parse(f4)).toBe(f4 as (...args: unknown[]) => unknown);
     expect(schema.parse(f5)).toBe(f5 as unknown as (...args: unknown[]) => unknown);
 
     // safeParse happy paths
@@ -43,19 +43,21 @@ describe('createFunctionSchema', () => {
     const schema = createFunctionSchema(); // default "Expected a function"
 
     for (const value of [null, undefined, 0, 1, '', 'fn', true, false, {}, [], new Date(), /re/]) {
-      const res = schema.safeParse(value as unknown);
+      const res = schema.safeParse(value);
       expect(res.success).toBe(false);
-      if (!res.success) {
-        // z.custom emits code "custom"
-        expect(res.error.issues[0]?.code).toBe('custom');
-        expect(res.error.issues[0]?.message).toBe('Expected a function');
+      if (res.success) {
+        continue;
       }
+
+      // z.custom emits code "custom"
+      expect(res.error.issues[0]?.code).toBe('custom');
+      expect(res.error.issues[0]?.message).toBe('Expected a function');
     }
   });
 
   it('uses a custom error message when provided', () => {
     const schema = createFunctionSchema('Nope, not a function');
-    const res = schema.safeParse(123 as unknown);
+    const res = schema.safeParse(123);
     expect(res.success).toBe(false);
     if (!res.success) {
       expect(res.error.issues[0]?.message).toBe('Nope, not a function');
@@ -82,18 +84,18 @@ describe('createFunctionSchema', () => {
     const schema = createFunctionSchema<F>();
 
     // Runtime check still only checks typeof === 'function'
-    const f: F = async (a, b) => a > b.length;
-    const parsed = schema.parse(f);
+    const fn: F = async (a, b) => a > b.length;
+    const parsed = schema.parse(fn);
 
     // Runtime: identity
-    expect(parsed).toBe(f);
+    expect(parsed).toBe(fn);
 
     // Type-level: parsed is F; input is F
     expectTypeOf(parsed).toEqualTypeOf<F>();
     expectTypeOf<ReturnType<typeof schema.parse>>().toEqualTypeOf<F>();
 
     // safeParse data type is also F on success
-    const ok = schema.safeParse(f);
+    const ok = schema.safeParse(fn);
     if (ok.success) {
       expectTypeOf(ok.data).toEqualTypeOf<F>();
     } else {
@@ -116,10 +118,12 @@ describe('createFunctionSchema', () => {
 
     const bad = container.safeParse({ handler: 123, name: 'demo' });
     expect(bad.success).toBe(false);
-    if (!bad.success) {
-      // Ensure the path points to "handler"
-      expect(bad.error.issues[0]?.path).toEqual(['handler']);
-      expect(bad.error.issues[0]?.code).toBe('custom');
+    if (bad.success) {
+      return;
     }
+
+    // Ensure the path points to "handler"
+    expect(bad.error.issues[0]?.path).toEqual(['handler']);
+    expect(bad.error.issues[0]?.code).toBe('custom');
   });
 });

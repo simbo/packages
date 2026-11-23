@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { looseGracefulExit } from './loose-graceful-exit.js';
 
@@ -24,10 +24,6 @@ const { gracefulExit } = vi.mocked(await import('./graceful-exit.js'));
 const { stringifyError } = vi.mocked(await import('@simbo/stringify-error'));
 
 describe('looseGracefulExit', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('calls gracefulExit with default values', () => {
     looseGracefulExit();
 

@@ -11,4 +11,24 @@ describe('Prettier Config', () => {
 
     expect(result).toBe(expected);
   });
+
+  it.each(['jsx', 'tsx'])('sorts imports and formats JSX in .%s files', async extension => {
+    const code = `import zebra from './zebra';
+import alpha from './alpha';
+export const element=<div>{alpha}{zebra}</div>;`;
+    const expected = `import alpha from './alpha';
+import zebra from './zebra';
+
+export const element = (
+  <div>
+    {alpha}
+    {zebra}
+  </div>
+);
+`;
+    const options = config.overrides?.[0]?.options;
+    const result = await prettier.format(code, { ...config, ...options, filepath: `component.${extension}` });
+
+    expect(result).toBe(expected);
+  });
 });

@@ -3,9 +3,6 @@ packages:
 
 engineStrict: true
 
-onlyBuiltDependencies:
-  - esbuild
-
 verifyDepsBeforeRun: warn
 
 minimumReleaseAge: 2880
@@ -14,3 +11,6 @@ minimumReleaseAgeExclude:
   - '@simbo/*'
 
 trustPolicy: no-downgrade
+
+allowBuilds:
+  esbuild: true

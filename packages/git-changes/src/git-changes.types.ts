@@ -1,9 +1,9 @@
 import type { GitChangeStatus } from './git-change-status.enum.js';
 
 /**
- * Common git change statuses for both staged and unstaged changes.
+ * Common Git change statuses for both staged and unstaged changes.
  */
-export type GitChangeStatusCommon = GitChangeStatus.Modified | GitChangeStatus.Deleted;
+export type GitChangeStatusCommon = GitChangeStatus.Modified | GitChangeStatus.TypeChanged | GitChangeStatus.Deleted;
 
 /**
  * Git change statuses that include an origin path.
@@ -11,68 +11,62 @@ export type GitChangeStatusCommon = GitChangeStatus.Modified | GitChangeStatus.D
 export type GitChangeStatusWithOriginPath = GitChangeStatus.Renamed | GitChangeStatus.Copied;
 
 /**
- * Added git change status (only for staged changes).
+ * Added Git change status.
  */
 export type GitChangeStatusAdded = GitChangeStatus.Added;
 
 /**
- * Untracked git change status (only for unstaged changes).
+ * Untracked Git change status (only for unstaged changes).
  */
 export type GitChangeStatusUntracked = GitChangeStatus.Untracked;
 
-export type GitChangeStagedStatus = GitChangeStatusCommon | GitChangeStatusAdded | GitChangeStatusWithOriginPath;
-export type GitChangeUnstagedStatus = GitChangeStatusCommon | GitChangeStatusUntracked | GitChangeStatusWithOriginPath;
+/**
+ * Unmerged Git change status (always set for both staged and unstaged changes
+ * of a file with merge conflicts).
+ */
+export type GitChangeStatusUnmerged = GitChangeStatus.Unmerged;
 
 /**
- * A change in a Git repository.
+ * Combined type for staged changes field.
  */
-export type GitChange<
-  Staged extends GitChangeStagedStatus | undefined = GitChangeStagedStatus | undefined,
-  Unstaged extends GitChangeUnstagedStatus | undefined = GitChangeUnstagedStatus | undefined,
-> = GitChangeBase &
-  (Staged extends GitChangeStagedStatus ? GitChangeStaged : object) &
-  (Unstaged extends GitChangeUnstagedStatus ? GitChangeUnstaged : object) &
-  (Staged extends GitChangeStatusWithOriginPath ? GitChangeWithOriginPath : object) &
-  (Unstaged extends GitChangeStatusWithOriginPath ? GitChangeWithOriginPath : object);
+export type GitChangeStagedStatus =
+  GitChangeStatusCommon | GitChangeStatusAdded | GitChangeStatusWithOriginPath | GitChangeStatusUnmerged;
 
 /**
- * Base interface for a change in a Git repository.
+ * Combined type for unstaged changes field.
  */
-export interface GitChangeBase {
+export type GitChangeUnstagedStatus =
+  | GitChangeStatusCommon
+  | GitChangeStatusAdded
+  | GitChangeStatusUntracked
+  | GitChangeStatusWithOriginPath
+  | GitChangeStatusUnmerged;
+
+/**
+ * Interface for a change in a Git repository.
+ */
+export interface GitChange {
   /**
-   * The file path of the change.
+   * The file path of the change, relative to the repository root.
+   * For renamed or copied files, this is the new path.
    */
   path: string;
-}
 
-/**
- * A change in a Git repository that is staged.
- */
-export interface GitChangeStaged {
   /**
-   * The status of the change when it is staged.
+   * The status of the change if it is staged.
    * This can be one of the GitChangeStatus values or undefined if not staged.
    */
-  staged: GitChangeStagedStatus;
-}
+  staged?: GitChangeStagedStatus;
 
-/**
- * A change in a Git repository that is unstaged.
- */
-export interface GitChangeUnstaged {
   /**
-   * The status of the change when it is unstaged.
+   * The status of the change if it is unstaged.
    * This can be one of the GitChangeStatus values or undefined if not unstaged.
    */
-  unstaged: GitChangeUnstagedStatus;
-}
+  unstaged?: GitChangeUnstagedStatus;
 
-/**
- * A change in a Git repository that includes an origin path.
- */
-export interface GitChangeWithOriginPath {
   /**
-   * The original file path before the change (for renamed or copied files).
+   * The original file path before the change (for renamed or copied files),
+   * relative to the repository root.
    */
-  originPath: string;
+  originPath?: string;
 }

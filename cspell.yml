@@ -1,1 +1,3 @@
 import: '@simbo/cspell-config'
+ignorePaths:
+  - .handoffs/

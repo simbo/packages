@@ -1,12 +1,12 @@
-import { defineConfig } from '@eslint/config-helpers';
 import type { Linter } from 'eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import { defineConfig } from 'eslint/config';
 
 import type { ConfigsRecord } from '../configs-record.interface.js';
 
 /**
  * Prettier's ESLint configurations exports rules that override and disable
- * known eslint rules that are considered unnecessary or might conflict with
+ * known ESLint rules that are considered unnecessary or might conflict with
  * prettier's formatting.
  *
  * We want to filter Prettier's overrides and keep some rules active.

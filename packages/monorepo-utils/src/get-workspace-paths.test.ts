@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { getWorkspacePaths } from './get-workspace-paths.js';
 
@@ -27,10 +27,6 @@ const { globby } = vi.mocked(await import('globby'));
 const { getWorkspacePatterns } = vi.mocked(await import('./get-workspace-patterns.js'));
 
 describe('getWorkspacePaths', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should return an array of workspace paths', async () => {
     getWorkspacePatterns.mockResolvedValueOnce(['packages/*']);
     globby.mockResolvedValueOnce(['packages/pkg-a/package.json', 'packages/pkg-b/package.json']);
@@ -79,7 +75,7 @@ describe('getWorkspacePaths', () => {
   it('should throw if globby found no package.json files', async () => {
     globby.mockResolvedValueOnce([]);
 
-    await expect(getWorkspacePaths()).rejects.toThrowError('No workspaces found.');
+    await expect(getWorkspacePaths()).rejects.toThrow('No workspaces found.');
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(getWorkspacePatterns).toHaveBeenCalledTimes(1);
     expect(getWorkspacePatterns).toHaveBeenCalledWith({ workingDir: '/cwd' });

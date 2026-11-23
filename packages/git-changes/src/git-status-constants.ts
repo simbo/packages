@@ -1,7 +1,7 @@
 import { GitChangeStatus } from './git-change-status.enum.js';
 
 /**
- * The separator used in the output of the git status command.
+ * The separator used in the output of the Git status command.
  * This is a null character, which is used to separate entries in the output.
  */
 export const ENTRY_SEPARATOR = '\0';

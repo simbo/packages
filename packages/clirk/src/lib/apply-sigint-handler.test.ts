@@ -47,10 +47,6 @@ on.mockImplementation((_event: never, listener: () => void) => {
 });
 
 describe('applySigintHandler', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('registers a sigint handler', async () => {
     const context = mockContext();
     applySigintHandler(context);

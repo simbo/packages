@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('node:path', async importActual => {
   const actual = await importActual<{ relative: (from: string, to: string) => string }>();
@@ -32,10 +32,6 @@ const { getWorkspacePaths } = vi.mocked(await import('./get-workspace-paths.js')
 const { getPackagePathByName } = await import('./get-package-path-by-name.js');
 
 describe('getPackagePathByName', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should walk the happy path and return the package path', async () => {
     getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
     readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
@@ -64,14 +60,14 @@ describe('getPackagePathByName', () => {
     getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
     readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
 
-    await expect(getPackagePathByName('pkg-b')).rejects.toThrowError('Package "pkg-b" not found in workspaces.');
+    await expect(getPackagePathByName('pkg-b')).rejects.toThrow('Package "pkg-b" not found in workspaces.');
   });
 
   it('should throw an error when reading package.json fails and failOnError is true', async () => {
     getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
     readPackageJson.mockRejectedValueOnce(new Error('Failed to read package.json'));
 
-    await expect(getPackagePathByName('pkg-b', { failOnError: true })).rejects.toThrowError(
+    await expect(getPackagePathByName('pkg-b', { failOnError: true })).rejects.toThrow(
       'Failed to read package.json files: packages/pkg-a (Failed to read package.json)',
     );
   });
@@ -83,5 +79,36 @@ describe('getPackagePathByName', () => {
       .mockResolvedValueOnce({ name: 'pkg-b', version: '1.0.0' });
 
     await expect(getPackagePathByName('pkg-b')).resolves.toBe('packages/pkg-b');
+  });
+
+  it('should return the package path when found before other workspaces were read and failOnError is true', async () => {
+    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a', '/cwd/packages/pkg-b', '/cwd/packages/pkg-c']);
+    readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
+
+    await expect(getPackagePathByName('pkg-a', { concurrency: 1, failOnError: true })).resolves.toBe('packages/pkg-a');
+
+    expect(readPackageJson).toHaveBeenCalledTimes(1);
+  });
+
+  it('should only report failed package.json files, not the skipped ones, when failOnError is true', async () => {
+    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a', '/cwd/packages/pkg-b', '/cwd/packages/pkg-c']);
+    readPackageJson
+      .mockRejectedValueOnce(new Error('Failed to read package.json'))
+      .mockResolvedValue({ name: 'other', version: '1.0.0' });
+
+    await expect(getPackagePathByName('pkg-z', { concurrency: 1, failOnError: true })).rejects.toThrow(
+      /^Failed to read package.json files: packages\/pkg-a \(Failed to read package.json\)$/,
+    );
+
+    // The queue may start the next task before the failure is handled, but never all of them.
+    expect(readPackageJson.mock.calls.length).toBeLessThan(3);
+  });
+
+  it.each([0, -1, 1.5, NaN, 'invalid' as unknown as number])('should throw if concurrency is %s', async concurrency => {
+    await expect(getPackagePathByName('pkg-a', { concurrency })).rejects.toThrow(
+      'Concurrency must be a positive integer',
+    );
+
+    expect(getWorkspacePaths).not.toHaveBeenCalled();
   });
 });

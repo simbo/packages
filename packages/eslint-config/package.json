@@ -1,7 +1,7 @@
 {
   "name": "@simbo/eslint-config",
   "description": "Shared ESLint configurations for different environments and technology stacks with utilities for configuration customization.",
-  "version": "2.0.4",
+  "version": "3.3.1",
   "keywords": [
     "eslint",
     "eslintconfig",
@@ -22,11 +22,11 @@
   ],
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
-  "homepage": "http://github.com/simbo/packages/tree/main/packages/eslint-config",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/eslint-config",
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {
@@ -48,9 +48,8 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "check": "pnpm run check:eslint && pnpm run check:format && pnpm run check:types",
+    "check": "pnpm run check:eslint && pnpm run check:types",
     "check:eslint": "eslint --config ./eslint.config.ts --max-warnings 0",
-    "check:format": "prettier --check .",
     "check:types": "tsc --noEmit",
     "clean": "pnpm run clean:dist && pnpm run clean:coverage && pnpm run clean:turbo && pnpm run clean:node_modules",
     "clean:dist": "rm -rf dist",
@@ -58,37 +57,31 @@
     "clean:turbo": "rm -rf .turbo",
     "clean:coverage": "rm -rf coverage",
     "fix:eslint": "pnpm run check:eslint --fix",
-    "fix:format": "prettier --write .",
     "test": "vitest run --coverage",
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "eslint": "^9"
+    "eslint": "^10.4.0"
   },
   "dependencies": {
-    "@eslint/config-helpers": "^0.5.0",
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^61.5.0",
-    "eslint-plugin-n": "^17.23.1",
-    "eslint-plugin-unicorn": "^62.0.0",
-    "globals": "^16.5.0",
-    "typescript-eslint": "^8.50.0"
+    "eslint-plugin-jsdoc": "^65.5.0",
+    "eslint-plugin-n": "^18.5.0",
+    "eslint-plugin-unicorn": "^79.0.0",
+    "globals": "^17.14.0",
+    "typescript-eslint": "~8.72.2"
   },
   "devDependencies": {
-    "@eslint/config-inspector": "^1.4.2",
-    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "@simbo/prettier-config": "workspace:*",
+    "@eslint/config-inspector": "^3.5.0",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "^24.10.4",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
-    "baseline-browser-mapping": "^2.9.8",
-    "eslint": "^9.39.2",
-    "jiti": "^2.6.1",
-    "prettier": "^3.7.4",
-    "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
+    "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vitest/ui": "^5.1.1",
+    "eslint": "^10.15.0",
+    "jiti": "^2.7.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.1"
   }
 }

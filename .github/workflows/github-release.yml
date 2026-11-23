@@ -1,141 +1,120 @@
-name: ' GitHub Release 🎁'
+# Builds and packs the package of a release tag and publishes a complete GitHub
+# release with the tarball and its checksum. The release is published with the
+# app token, so that it triggers the publish workflow.
+
+name: GitHub Release 🎁
 
 on:
-  repository_dispatch:
-    types:
-      - package-published
+  push:
+    tags:
+      - '*/v*.*.*'
+      - '!changelog/v*'
   workflow_dispatch:
     inputs:
-      name:
-        description: Package Name
+      workspace:
+        description: 'Workspace folder (e.g. "my-pkg")'
         type: string
         required: true
       version:
-        description: Package Version
+        description: 'Version (e.g. "1.2.3")'
         type: string
         required: true
 
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name }}
+
 run-name: >
-  ${{
-    format(
-      '{0} {1}/v{2}',
-      github.workflow,
-      github.event_name == 'repository_dispatch'
-        && github.event.client_payload.name || github.event.inputs.name,
-      github.event_name == 'repository_dispatch'
-        && github.event.client_payload.version || github.event.inputs.version
-    )
-  }}
+  ${{ format('{0} {1}', github.workflow,
+    github.event_name == 'workflow_dispatch'
+      && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name) }}
 
 concurrency:
   cancel-in-progress: false
   group: >
-    ${{
-      format(
-        '{0}--{1}/v{2}',
-        github.workflow,
-        github.event_name == 'repository_dispatch'
-          && github.event.client_payload.name || github.event.inputs.name,
-        github.event_name == 'repository_dispatch'
-          && github.event.client_payload.version || github.event.inputs.version
-      )
-    }}
+    ${{ format('{0}--{1}', github.workflow,
+      github.event_name == 'workflow_dispatch'
+        && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name) }}
 
-env:
-  PACKAGE_NAME: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.name || github.event.inputs.name }}
-  PACKAGE_VERSION: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.version || github.event.inputs.version }}
-
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
   github-release:
     runs-on: ubuntu-latest
+    environment:
+      name: release
+      deployment: false
+    permissions:
+      contents: read
     steps:
-      - name: 🪪 Retrieve Credentials
-        id: credentials
-        uses: simbo-actions/actions/actions/github-app-credentials@main
+      - name: 🛎️ Checkout Release Tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
-          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+          ref: refs/tags/${{ env.RELEASE_TAG }}
+          persist-credentials: false
 
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
+      - name: 🚚 Setup pnpm and Node.js
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
-          node-version: 24
+          node-version-file: .nvmrc
+          cache: true
+          install: false
 
-      - name: ⚫️ Fetch Tarball
-        id: fetch-tarball
+      - name: 🧾 Validate Package Identity
+        id: package
+        run: node scripts/release-package.js metadata "$RELEASE_TAG"
+
+      - name: 🔒 Skip Private Package
+        if: ${{ steps.package.outputs.private == 'true' }}
+        run: echo '::notice title=Private Package::Skipping GitHub release for a private workspace.'
+
+      - name: 📦 Install Dependencies
+        if: ${{ steps.package.outputs.private == 'false' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: 👷 Build Package
+        if: ${{ steps.package.outputs.private == 'false' }}
+        env:
+          PACKAGE_NAME: ${{ steps.package.outputs.name }}
+        run: pnpm exec turbo run build --filter="$PACKAGE_NAME"
+
+      - name: 📦 Pack and Verify Release Archive
+        if: ${{ steps.package.outputs.private == 'false' }}
+        env:
+          PACKAGE_NAME: ${{ steps.package.outputs.name }}
+          ASSET_NAME: ${{ steps.package.outputs.asset }}
         run: |
           set -euo pipefail
-          npm pack "${PACKAGE_NAME}@${PACKAGE_VERSION}"
-          filename="$(ls *.tgz | head -n 1)"
-          echo "filename=$filename" >> $GITHUB_OUTPUT
+          mkdir -p "$RUNNER_TEMP/package-release"
+          pnpm --filter="$PACKAGE_NAME" pack --out "$RUNNER_TEMP/package-release/$ASSET_NAME"
+          (cd "$RUNNER_TEMP/package-release" && sha256sum "$ASSET_NAME" > SHA256SUMS)
+          node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
 
-      - name: 📦 Unpack Tarball
-        run: |
-          set -euo pipefail
-          mkdir package
-          tar -xzf "${{ steps.fetch-tarball.outputs.filename }}" -C package --strip-components=1
+      - name: 📝 Prepare Release Notes
+        if: ${{ steps.package.outputs.private == 'false' }}
+        run: node scripts/release-notes.js
 
-      - name: 🧾 Get Release Info
-        id: info
-        run: |
-          set -euo pipefail
+      - name: 🔑 Get App Token
+        id: app-token
+        if: ${{ steps.package.outputs.private == 'false' }}
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
+        with:
+          client-id: ${{ vars.SIMBO_GITHUB_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
+          permission-contents: write
 
-
-          name="$PACKAGE_NAME"
-          version="$PACKAGE_VERSION"
-          changelog="package/CHANGELOG.md"
-          releaseDate=$(TZ="Europe/Berlin" date +%Y-%m-%d\ %H:%M:%S\ %Z)
-          description=""
-
-          # Get unscoped package name (workspace name)
-          if [[ "$name" == @*/* ]]; then
-            workspace="${name#*/}"
-          else
-            workspace="$name"
-          fi
-
-          # Fail if the changelog file does not exist
-          if [[ ! -f "$changelog" ]]; then
-            echo "::error title=Missing Changelog File::Changelog file not found: $changelog"
-            exit 1
-          fi
-
-          # Extract the respective version's section from the changelog and remove leading and trailing whitespace
-          description=$(awk -v ver="## ${version}" '
-              $0 == ver { found=1; next }
-              found && /^## / { exit }
-              found { print }
-            ' "$changelog" | \
-            awk 'BEGIN{found=0} NF{found=1} found{print}' | tac | \
-            awk 'BEGIN{found=0} NF{found=1} found{print}' | tac)
-
-          # Fail if no description is set
-          if [[ -z "$description" ]]; then
-            echo "::error title=Missing Changelog Section::Section for ${version} could not be found in changelog: $changelog"
-            exit 1
-          fi
-
-          # Output date and description
-          echo "date=${releaseDate}" >> $GITHUB_OUTPUT
-          echo "workspace=${workspace}" >> $GITHUB_OUTPUT
-          {
-            echo "description<<EOF"
-            echo "$description"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
+      # Creates a draft, uploads the assets, and publishes the release only when
+      # it is complete. A re-run after publishing ends without changes.
       - name: 🎁 Create GitHub Release
-        uses: ncipollo/release-action@v1
+        if: ${{ steps.package.outputs.private == 'false' }}
+        uses: simbo-actions/staged-release@a5fc19e8ec37e057512cd030959f53feb7da837d # v1.0.3
         with:
-          tag: ${{ steps.info.outputs.workspace }}/v${{ env.PACKAGE_VERSION }}
-          name: ${{ env.PACKAGE_NAME }} v${{ env.PACKAGE_VERSION }}
-          body: |
-            _${{ steps.info.outputs.date }}_
-
-            ${{ steps.info.outputs.description }}
-          artifacts: ${{ steps.fetch-tarball.outputs.filename }}
-          token: ${{ steps.credentials.outputs.token }}
-          makeLatest: true
+          token: ${{ steps.app-token.outputs.token }}
+          tag: ${{ env.RELEASE_TAG }}
+          name: ${{ steps.package.outputs.name }} v${{ steps.package.outputs.version }}
+          working-directory: ${{ runner.temp }}/package-release
+          body-file: RELEASE_NOTES.md
+          assets: |
+            ${{ steps.package.outputs.asset }}
+            SHA256SUMS
+          make-latest: 'false'
+          if-released: skip

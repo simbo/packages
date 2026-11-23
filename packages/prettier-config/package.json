@@ -1,7 +1,7 @@
 {
   "name": "@simbo/prettier-config",
   "description": "Simbo's shared Prettier configuration.",
-  "version": "2.0.0",
+  "version": "3.0.2",
   "keywords": [
     "prettier",
     "config",
@@ -16,11 +16,11 @@
   ],
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
-  "homepage": "http://github.com/simbo/packages/tree/main/packages/prettier-config",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/prettier-config",
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {
@@ -50,16 +50,15 @@
     "prettier": "^3"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@simbo/tsconfig": "workspace:*",
-    "@types/node": "^24.10.4",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
-    "baseline-browser-mapping": "^2.9.8",
-    "eslint": "^9.39.2",
-    "jiti": "^2.6.1",
-    "prettier": "^3.7.4",
-    "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
+    "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vitest/ui": "^5.1.1",
+    "eslint": "^10.15.0",
+    "jiti": "^2.7.0",
+    "prettier": "^3.10.1",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.1"
   }
 }

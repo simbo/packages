@@ -1,4 +1,9 @@
-name: ' Checks 🧐'
+# Builds, tests, and checks every push to main and every pull request.
+# Pull requests must add a changeset, except Dependabot updates of workflows.
+# Pushes to main with pending changesets dispatch the release workflow for the
+# checked commit.
+
+name: Checks 🧐
 
 on:
   push:
@@ -34,46 +39,35 @@ concurrency:
       )
     }}
 
-permissions:
-  contents: write
-
-env:
-  REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+permissions: {}
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      has-changesets: ${{ steps.has-changesets.outputs.result }}
     steps:
-      - name: 🪪 Retrieve Credentials
-        id: credentials
-        uses: simbo-actions/actions/actions/github-app-credentials@main
-        with:
-          app-id: ${{ secrets.SIMBO_GITHUB_APP_ID }}
-          app-private-key: ${{ secrets.SIMBO_GITHUB_APP_PRIVATE_KEY }}
-
       - name: 🛎️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ steps.credentials.outputs.token }}
-          ref: ${{ env.REF }}
+          # the parent of a pull request's merge commit is needed to find added changesets
+          fetch-depth: 2
+          persist-credentials: false
 
-      - name: 🚚 Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
+      - name: 🚚 Setup pnpm and Node.js
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
-          cache: pnpm
           node-version-file: .nvmrc
+          cache: true
+          install: false
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
       - name: 👷 Build
         run: pnpm run each:build
-
-      - name: 📦 Bundle
-        run: pnpm run each:bundle
 
       - name: 👨‍🔬 Tests
         run: pnpm run test
@@ -89,33 +83,54 @@ jobs:
         run: |
           set -euo pipefail
           result=$([[ -d .changeset ]] && find .changeset -type f -name '*.md' -print -quit | grep -q . && echo true || echo false)
-          echo "result=${result}" >> $GITHUB_OUTPUT
+          echo "result=${result}" >> "$GITHUB_OUTPUT"
 
-      - name: 👮‍♂️ Pull Requests Must Have Changesets
+      - name: 👮‍♂️ Pull Requests Must Add Changesets
         if: >
           github.event_name == 'pull_request' &&
           github.event.pull_request.draft == false
         env:
-          RESULT: ${{ steps.has-changesets.outputs.result }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           set -euo pipefail
-          if [[ "$RESULT" != "true" ]]; then
-            echo "::error title=Missing Changeset::Pull requests must have changesets."
-            exit 1
+
+          # HEAD is the merge commit of the pull request, its first parent the base branch
+          base='HEAD^1'
+
+          if git diff --name-only --diff-filter=A "$base" HEAD -- '.changeset/*.md' | grep -q .; then
+            echo 'Changeset found.'
+            exit 0
           fi
 
+          # Dependabot updates of workflows need no release.
+          if [[ "$PR_AUTHOR" == 'dependabot[bot]' ]] \
+            && ! git diff --name-only "$base" HEAD | grep -qvE '^\.github/workflows/.+'; then
+            echo 'Dependabot pull request changes only workflows; no changeset required.'
+            exit 0
+          fi
+
+          echo "::error title=Missing Changeset::Pull requests must add changesets."
+          exit 1
+
+  dispatch-release:
+    needs: checks
+    if: >
+      github.event_name == 'push' &&
+      needs.checks.outputs.has-changesets == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      # required to create a repository dispatch event with GITHUB_TOKEN
+      contents: write
+    steps:
       - name: '🎉 Workflow: Release (Event)'
-        if: >
-          github.event_name == 'push' &&
-          steps.has-changesets.outputs.result == 'true'
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4.0.1
         with:
           event-type: workflow:release
-          token: ${{ steps.credentials.outputs.token }}
           client-payload: >
             ${{
               format(
-                '{{ "ref": {0} }}',
-                toJson(env.REF)
+                '{{ "ref": {0}, "sha": {1} }}',
+                toJson(github.ref_name),
+                toJson(github.sha)
               )
             }}

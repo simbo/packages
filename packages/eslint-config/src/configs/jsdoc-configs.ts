@@ -1,6 +1,6 @@
-import { defineConfig } from '@eslint/config-helpers';
 import type { Linter } from 'eslint';
 import eslintPluginJsdoc from 'eslint-plugin-jsdoc';
+import { defineConfig } from 'eslint/config';
 
 import type { ConfigsRecord } from '../configs-record.interface.js';
 
@@ -30,7 +30,7 @@ const recommended = defineConfig(
   },
   {
     files: ['**/*.+(js|jsx|mjs|cjs)'],
-    extends: [eslintPluginJsdoc.configs['flat/recommended-error'], eslintPluginJsdoc.configs['flat/recommended-error']],
+    extends: [eslintPluginJsdoc.configs['flat/recommended-error']],
     rules,
   },
 );
