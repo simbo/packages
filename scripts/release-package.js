@@ -28,7 +28,7 @@ import process from 'node:process';
 /**
  * Tag identity combined with the manifest in the checked-out repository.
  *
- * @typedef {ReleaseTag & {name: string, private: boolean}} ReleaseMetadata
+ * @typedef {ReleaseTag & {name: string}} ReleaseMetadata
  */
 
 /**
@@ -80,15 +80,14 @@ export function parseTag(tag) {
 }
 
 /**
- * Resolves the npm name and private flag from the requested workspace manifest.
+ * Resolves the npm name from the requested workspace manifest.
  * The caller must check out the tag first: a matching version alone does not
  * prove that arbitrary working-tree contents belong to that Git revision.
- * Private packages are reported for the workflow's explicit skip step.
  *
  * @param {string} tag - Stable package tag whose manifest must match.
  * @param {string} [root] - Checked-out repository root; defaults to the current directory.
  * @returns {ReleaseMetadata} Validated tag and source-manifest identity.
- * @throws {Error} If the manifest cannot be read, is invalid, or has a different version.
+ * @throws {Error} If the manifest cannot be read, is invalid, private, or has a different version.
  */
 export function readMetadata(tag, root = process.cwd()) {
   const metadata = parseTag(tag);
@@ -99,12 +98,13 @@ export function readMetadata(tag, root = process.cwd()) {
 /**
  * Validates manifest text obtained from a tagged checkout or GitHub's tag API.
  * Keeping this check shared prevents local publishing from depending on the
- * version currently present in the user's working tree.
+ * version currently present in the user's working tree. Private packages are
+ * rejected here, before any job builds, packs, or downloads them.
  *
  * @param {string} tag - Stable package tag whose version must match.
  * @param {string} source - Manifest JSON obtained from that Git revision.
  * @returns {ReleaseMetadata} Manifest identity combined with the parsed tag.
- * @throws {Error} If the manifest name or version is invalid.
+ * @throws {Error} If the manifest name or version is invalid, or the package is private.
  */
 export function metadataFromManifest(tag, source) {
   const metadata = parseTag(tag);
@@ -117,7 +117,10 @@ export function metadataFromManifest(tag, source) {
       `Version mismatch: tag requests ${metadata.version}, package declares ${String(manifest.version)}.`,
     );
   }
-  return { ...metadata, name: manifest.name, private: manifest.private === true };
+  if (manifest.private === true) {
+    throw new Error(`Private packages cannot be released or published: packages/${metadata.workspace}.`);
+  }
+  return { ...metadata, name: manifest.name };
 }
 
 /**
@@ -147,7 +150,7 @@ export function verifyArchive(metadata, directory) {
       `Archive identity mismatch: expected ${metadata.name}@${metadata.version}, found ${String(manifest.name)}@${String(manifest.version)}.`,
     );
   }
-  if (manifest.private === true || metadata.private) {
+  if (manifest.private === true) {
     throw new Error('Private packages cannot be released or published by this workflow.');
   }
   for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies', 'devDependencies']) {
@@ -172,7 +175,7 @@ if (process.argv[1] && resolve(process.argv[1]) === import.meta.filename) {
     if (command === 'metadata') {
       if (!process.env.GITHUB_OUTPUT) throw new Error('GITHUB_OUTPUT is required for workflow metadata.');
       for (const [key, value] of Object.entries(metadata)) {
-        appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${String(value)}\n`);
+        appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${value}\n`);
       }
     } else if (directory) {
       verifyArchive(metadata, directory);

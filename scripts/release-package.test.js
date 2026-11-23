@@ -91,6 +91,11 @@ test('rejects invalid manifest names before writing workflow outputs', () => {
   expect(() => readMetadata('example/v1.2.3', fixture({ version: '1.2.3' }))).toThrow(/Invalid package name/);
 });
 
+test('rejects private manifests before writing workflow outputs', () => {
+  const directory = fixture({ name: '@simbo/example', version: '1.2.3', private: true });
+  expect(() => readMetadata('example/v1.2.3', directory)).toThrow(/Private packages/);
+});
+
 test('accepts the unchanged archive and its single-file SHA-256 checksum', () => {
   // Capture expected success output while keeping production diagnostics intact.
   const output = vi.spyOn(process.stdout, 'write').mockReturnValue(true);

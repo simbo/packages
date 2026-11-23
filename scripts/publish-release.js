@@ -59,7 +59,6 @@ export function prepareRelease(tag, directory, run = commandOutput) {
     'Accept: application/vnd.github.raw+json',
   ]);
   const metadata = metadataFromManifest(tag, source);
-  if (metadata.private) throw new Error('Private packages cannot be published.');
   run('gh', [
     'release',
     'download',
