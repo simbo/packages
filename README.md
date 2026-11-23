@@ -272,7 +272,7 @@ flowchart LR
 
   subgraph GitHubReleaseWorkflow[".github/workflows/github-release.yml"]
     TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br>PACKAGE/vVERSION" }
-    IsReleasePrivate{"Package is<br>Private?"}
+    ValidateRelease["🧾 Validate Package<br>Identity, Reject<br>Private Packages"]
     BuildPackage["👷 Build Tagged<br>Package"]
     PackTarball["📦 Prepare Tarball<br>with Checksum"]
     ExtractChangelogEntry["📝 Extract<br>Changelog Entry"]
@@ -280,8 +280,8 @@ flowchart LR
     PublishRelease["🚀 Publish Final Release<br>with Tarball<br>and Checksum"]
 
     direction TB
-    TagEvent --> IsReleasePrivate
-    IsReleasePrivate --"NO"--> BuildPackage
+    TagEvent --> ValidateRelease
+    ValidateRelease --> BuildPackage
     BuildPackage --> PackTarball
     PackTarball --> ExtractChangelogEntry
     ExtractChangelogEntry --> UploadDraft
@@ -292,12 +292,12 @@ flowchart LR
     ReleasePublished@{ shape: rounded, label: "🎉 GitHub Release<br>Published" }
     DownloadArchive["📥 Fetch Release Tarball<br>with Checksum"]
     VerifyDownload["🔐 Verify Identity<br>and Checksum"]
-    IsPrivate{"Package is<br>Private?"}
+    ValidatePublish["🧾 Validate Package<br>Identity, Reject<br>Private Packages"]
     PublishToNpm["🚛 Publish Tarball<br>to NPM"]
 
     direction TB
-    ReleasePublished --> IsPrivate
-    IsPrivate --"NO"--> DownloadArchive
+    ReleasePublished --> ValidatePublish
+    ValidatePublish --> DownloadArchive
     DownloadArchive --> VerifyDownload
     VerifyDownload --> PublishToNpm
   end
@@ -318,10 +318,10 @@ flowchart LR
   class PushToMain,TagEvent,ReleaseEvent,ReleasePublished event
 
   classDef step stroke:#6366F1,stroke-width:2px,fill:transparent;
-  class BuildPackages,RunTests,RunChecks,BuildDocs,ReleaseEventDispatch,IntegrateChangesets,CollectPackages,UpdatePackageDocs,CommitAndPushChanges,PushReleaseTags,BuildPackage,PackTarball,ExtractChangelogEntry,UploadDraft,PublishRelease,DownloadArchive,VerifyDownload,PublishToNpm step
+  class BuildPackages,RunTests,RunChecks,BuildDocs,ReleaseEventDispatch,IntegrateChangesets,CollectPackages,UpdatePackageDocs,CommitAndPushChanges,PushReleaseTags,ValidateRelease,BuildPackage,PackTarball,ExtractChangelogEntry,UploadDraft,PublishRelease,ValidatePublish,DownloadArchive,VerifyDownload,PublishToNpm step
 
   classDef gate stroke:#E67E22,stroke-width:2px,fill:transparent
-  class IsReleasePrivate,IsPrivate,ChecksPassed,Changesets gate
+  class ChecksPassed,Changesets gate
 
 ```
 
