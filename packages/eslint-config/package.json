@@ -67,21 +67,21 @@
   "dependencies": {
     "@eslint/js": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^65.4.5",
+    "eslint-plugin-jsdoc": "^65.5.0",
     "eslint-plugin-n": "^18.5.0",
     "eslint-plugin-unicorn": "^79.0.0",
     "globals": "^17.14.0",
-    "typescript-eslint": "^8.72.2"
+    "typescript-eslint": "~8.72.2"
   },
   "devDependencies": {
     "@eslint/config-inspector": "^3.5.0",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.2",
-    "@vitest/coverage-v8": "^5.1.0",
-    "@vitest/ui": "^5.1.0",
-    "eslint": "^10.14.0",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vitest/ui": "^5.1.1",
+    "eslint": "^10.15.0",
     "jiti": "^2.7.0",
     "typescript": "^6.0.3",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   }
 }
