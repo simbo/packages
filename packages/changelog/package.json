@@ -1,6 +1,6 @@
 {
   "name": "changelog",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A meta package holding the changelog for this monorepo.",
   "type": "module",
   "private": true,

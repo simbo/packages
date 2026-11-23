@@ -1,5 +1,40 @@
 # changelog
 
+## 1.7.1
+
+### Patch Changes
+
+- 9946fb0: Document recurring maintenance in runbooks.
+
+  - Add `MAINTAINING.md` with runbooks for GitHub Actions updates, npm
+    dependency updates, Node.js versions, contributor pull requests, releases
+    and exceptions.
+  - Point assistants to the runbooks in `AGENTS.md`.
+
+- 9946fb0: Update development dependencies.
+
+  - `@cspell/cspell-types` and `cspell` to ^10.5.2
+  - `@vitest/coverage-v8`, `@vitest/ui` and `vitest` to ^5.1.1
+  - `eslint` to ^10.15.0
+  - `prettier` to ^3.10.1
+  - `rollup` to ^4.68.7
+  - `turbo` to ^2.11.13
+  - Refresh the lockfile within the existing ranges.
+
+- 9946fb0: Update GitHub Actions.
+
+  - `actions/checkout` to v7.0.1
+  - `actions/create-github-app-token` to v3.4.0
+  - `peter-evans/repository-dispatch` to v4.0.1
+
+- 9946fb0: Update pnpm to 12.21.0.
+- 9946fb0: Set up pnpm and Node.js with `pnpm/setup` in all workflows.
+
+  - Replace `pnpm/action-setup` and `actions/setup-node` with one `pnpm/setup`
+    v3.2.0 step that reads pnpm from `packageManager` and Node.js from `.nvmrc`.
+  - Keep the explicit install steps and the store cache where the workflows
+    cached before; the publish workflow still runs without a cache.
+
 ## 1.7.0
 
 ### Minor Changes
