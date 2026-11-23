@@ -1,5 +1,30 @@
 # changelog
 
+## 1.7.2
+
+### Patch Changes
+
+- 989bb6c: Document that `main` accepts changes only through squash-merged pull
+  requests.
+- 989bb6c: Install dependencies with `pnpm/setup` instead of a separate workflow
+  step.
+
+  - Run the install in the setup step of the checks, docs, release, and GitHub
+    release workflows, which caches the lockfile verification right after the
+    install.
+  - Require an existing lockfile with `require-lockfile: true`, which replaces
+    `pnpm install --frozen-lockfile`.
+
+- 989bb6c: Reject private packages when validating a release tag instead of
+  skipping them.
+
+  - Fail `scripts/release-package.js metadata` for private workspaces, so no job
+    builds, packs, or downloads them.
+  - Remove the skip steps and their conditions from the GitHub release and
+    publish workflows.
+  - Drop the `private` output and the duplicate check in
+    `scripts/publish-release.js`.
+
 ## 1.7.1
 
 ### Patch Changes
