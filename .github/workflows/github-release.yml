@@ -63,18 +63,12 @@ jobs:
         id: package
         run: node scripts/release-package.js metadata "$RELEASE_TAG"
 
-      - name: 🔒 Skip Private Package
-        if: ${{ steps.package.outputs.private == 'true' }}
-        run: echo '::notice title=Private Package::Skipping GitHub release for a private workspace.'
-
       - name: 👷 Build Package
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           PACKAGE_NAME: ${{ steps.package.outputs.name }}
         run: pnpm exec turbo run build --filter="$PACKAGE_NAME"
 
       - name: 📦 Pack and Verify Release Archive
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           PACKAGE_NAME: ${{ steps.package.outputs.name }}
           ASSET_NAME: ${{ steps.package.outputs.asset }}
@@ -86,12 +80,10 @@ jobs:
           node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
 
       - name: 📝 Prepare Release Notes
-        if: ${{ steps.package.outputs.private == 'false' }}
         run: node scripts/release-notes.js
 
       - name: 🔑 Get App Token
         id: app-token
-        if: ${{ steps.package.outputs.private == 'false' }}
         uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
         with:
           client-id: ${{ vars.SIMBO_GITHUB_APP_CLIENT_ID }}
@@ -101,7 +93,6 @@ jobs:
       # Creates a draft, uploads the assets, and publishes the release only when
       # it is complete. A re-run after publishing ends without changes.
       - name: 🎁 Create GitHub Release
-        if: ${{ steps.package.outputs.private == 'false' }}
         uses: simbo-actions/staged-release@a5fc19e8ec37e057512cd030959f53feb7da837d # v1.0.3
         with:
           token: ${{ steps.app-token.outputs.token }}

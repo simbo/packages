@@ -59,12 +59,7 @@ jobs:
         id: package
         run: node scripts/release-package.js metadata "$RELEASE_TAG"
 
-      - name: 🔒 Skip Private Package
-        if: ${{ steps.package.outputs.private == 'true' }}
-        run: echo '::notice title=Private Package::Skipping npm publish for a private workspace.'
-
       - name: 📥 Download Published Release Archive
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -86,11 +81,9 @@ jobs:
           gh release download "$RELEASE_TAG" --pattern "$ASSET_NAME" --pattern SHA256SUMS --dir "$RUNNER_TEMP/package-release"
 
       - name: 🔐 Verify Archive Identity and Checksum
-        if: ${{ steps.package.outputs.private == 'false' }}
         run: node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
 
       - name: 🚛 Publish Verified Tarball to npm
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           ASSET_NAME: ${{ steps.package.outputs.asset }}
         run: pnpm publish "$RUNNER_TEMP/package-release/$ASSET_NAME" --no-git-checks --access public --provenance
