@@ -44,6 +44,21 @@ cooldown of 7 days.
    [README.md](README.md): a package changeset for runtime dependencies of a
    published package, a `changelog` changeset for development dependencies.
 
+## Security Alerts
+
+Dependabot security updates try to fix vulnerable npm dependencies in the
+lockfile. When no update is possible because a dependent pins the vulnerable
+range, assess the risk, record an exception below, and dismiss the alert on
+GitHub with the same reason.
+
+- `minimatch` 10
+  ([GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)) is
+  accepted until 2026-12-31. `typedoc` 0.28.20 requires `^10.2.5` and uses
+  `matchOne()`, which minimatch 11 removes, so an override would break the docs.
+  Here it only runs in linting and the docs build, with glob patterns from this
+  repository's configuration. Remove the exception when `typedoc` supports
+  minimatch 11 and `typescript-eslint` is updated to 8.73.0 or newer.
+
 ## Node.js Versions
 
 Check the [Node.js release schedule](https://github.com/nodejs/Release) when a
