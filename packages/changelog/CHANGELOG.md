@@ -1,5 +1,23 @@
 # changelog
 
+## 1.7.5
+
+### Patch Changes
+
+- 465d563: Document how to handle CodeQL code scanning alerts in
+  `MAINTAINING.md`.
+
+  - Fix findings in the code where possible, test code included.
+  - Dismiss an alert only with a recorded exception and the same reason on
+    GitHub.
+
+- 465d563: Run the ESLint binary in the `eslint-config` runtime test without a
+  shell.
+
+  - Pass the arguments to `execFile()` instead of building a command string for
+    `exec()`, so paths with spaces or shell characters keep working.
+  - Resolve the CodeQL alert `js/shell-command-injection-from-environment`.
+
 ## 1.7.4
 
 ### Patch Changes
