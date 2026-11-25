@@ -26,6 +26,7 @@ export interface ImportMetaObject {
  * @param type - The type of path to retrieve: `'dir'` for directory or `'file'` for file path. Defaults to `'dir'`.
  * @returns The derived directory or file path as a string.
  * @throws {TypeError} If the `type` argument is not `'dir'` or `'file'`.
+ * @deprecated Use `import.meta.dirname` or `import.meta.filename` instead.
  */
 export function importMetaPath(importMeta: ImportMetaObject, type: 'dir' | 'file' = 'dir'): string {
   switch (type) {

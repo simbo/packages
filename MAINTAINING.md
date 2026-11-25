@@ -95,6 +95,82 @@ Releases run automatically when changesets reach `main`; see "Releases" in
 After a release, confirm that the Release, GitHub Release and Publish workflows
 passed for every bumped package.
 
+## Deprecating a Package
+
+A deprecated package gets a final release with a deprecation notice and is then
+removed from the monorepo. This takes two pull requests: `changeset version`
+fails for changesets of a package that no longer exists, and the final release
+must be built from a tag that still contains it.
+
+1. Find internal users and replace them, including development dependencies,
+   configurations and examples in other packages:
+
+   ```bash
+   git grep -n '<package-name>' -- ':!packages/<workspace>/' ':!pnpm-lock.yaml'
+   ```
+
+   Ignore the generated `PACKAGES.md`. A replacement that changes a published
+   package needs its own package changeset.
+
+2. Open the first pull request for the final release of the package:
+   - Add a deprecation notice with the replacement and a migration example to
+     the top of its `README.md`, and replace the API documentation link: the
+     TypeDoc pages of the package disappear with the removal.
+   - Mark its public functions as `@deprecated` in JSDoc, and disable
+     `@typescript-eslint/no-deprecated` in their tests.
+   - Start the `description` in `package.json` with `Deprecated:`.
+   - Point `homepage` in `package.json` and the repository links in its
+     `README.md` to the tag of the final release
+     (`tree/<workspace>/v<version>`), because `main` will no longer contain the
+     package.
+   - Add a patch changeset for the package that names the replacement, as
+     described in "Writing Changesets" in [README.md](README.md).
+
+3. After the merge, confirm that the Release, GitHub Release and Publish
+   workflows passed and that npm serves the final version:
+
+   ```bash
+   npm view <package-name> version
+   ```
+
+4. The owner deprecates all published versions on npm and removes the trusted
+   publisher of the package in its npm settings (see
+   [NPM_PUBLISHING.md](NPM_PUBLISHING.md)):
+
+   ```bash
+   npm deprecate '<package-name>' '<message with the replacement>'
+   ```
+
+5. Open the second pull request to remove the workspace:
+   - Make sure that no pending changeset in `.changeset/` names the package.
+   - Delete `packages/<workspace>/` and update the lockfile. Remove the
+     workspace state first, otherwise `pnpm install` reports "Already up to
+     date" and keeps the importer of the deleted workspace, which
+     `--frozen-lockfile` does not detect:
+
+     ```bash
+     rm -rf packages/<workspace> node_modules/.pnpm-workspace-state*.json
+     pnpm install
+     git grep -n 'packages/<workspace>:' -- pnpm-lock.yaml
+     ```
+
+     The last command must find nothing.
+
+   - Run `pnpm run packages-list` to update `PACKAGES.md` and the package count
+     in [README.md](README.md). Run it in a regular clone: in a Git worktree it
+     updates the files of the main checkout instead.
+   - Add a changeset for the private `changelog` package.
+
+   The Turbo layer tag, the boundaries check, TypeDoc, Vitest and the release
+   scripts find workspaces through the `packages/*` glob and need no change.
+   Search the root configurations and `.github/` for the workspace name to be
+   sure.
+
+6. Keep the tags `<workspace>/v*` and their GitHub releases. They document the
+   published versions, and the publish workflow needs them for retries. After
+   the merge, confirm that the Docs workflow removed the TypeDoc pages of the
+   package.
+
 ## Exceptions
 
 An exception to a rule, such as an ignored finding or a held back dependency,
