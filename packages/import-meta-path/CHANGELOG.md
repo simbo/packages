@@ -1,5 +1,19 @@
 # @simbo/clirk
 
+## 2.0.2
+
+### Patch Changes
+
+- ea7f0c0: Deprecate the package in favor of `import.meta.dirname` and
+  `import.meta.filename`, which all supported Node.js versions provide.
+
+  - Add a deprecation notice and a migration example to the `README.md`.
+  - Mark `importMetaPath()` as `@deprecated`.
+  - Point the `homepage` to the tag of this release, because the package will be
+    removed from the repository.
+
+  This is the final release. The package receives no further updates.
+
 ## 2.0.1
 
 ### Patch Changes

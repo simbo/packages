@@ -47,7 +47,7 @@ There are currently _**31**_ packages managed in this repository:
   📂
   [**`./packages/changelog`**](https://github.com/simbo/packages/tree/main/packages/changelog/)
 
-  📦 `changelog` @ `1.7.5`
+  📦 `changelog` @ `1.7.6`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/changelog/CHANGELOG.md)
@@ -237,7 +237,8 @@ There are currently _**31**_ packages managed in this repository:
 
 - ### **Import Meta Path**
 
-  > A small utility for safely deriving absolute file and directory paths from
+  > Deprecated: use import.meta.dirname and import.meta.filename instead. A
+  > small utility for safely deriving absolute file and directory paths from
   > import.meta in Node.js, with a consistent fallback order.
 
   📂
@@ -245,7 +246,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📦
   [`@simbo/import-meta-path`](https://www.npmjs.com/package/@simbo/import-meta-path)
-  @ `2.0.1`
+  @ `2.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/CHANGELOG.md)  • 

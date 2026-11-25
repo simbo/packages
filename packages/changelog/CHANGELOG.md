@@ -1,5 +1,16 @@
 # changelog
 
+## 1.7.6
+
+### Patch Changes
+
+- ea7f0c0: Add a runbook for deprecating a package to `MAINTAINING.md`.
+
+  - Release a final version with a deprecation notice before removing the
+    workspace, in two pull requests.
+  - Deprecate the published versions on npm and remove the trusted publisher.
+  - Keep the release tags and GitHub releases of the package.
+
 ## 1.7.5
 
 ### Patch Changes
