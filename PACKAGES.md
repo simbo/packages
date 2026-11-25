@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**31**_ packages managed in this repository:
+There are currently _**30**_ packages managed in this repository:
 
 - ### **Accessible**
 
@@ -47,7 +47,7 @@ There are currently _**31**_ packages managed in this repository:
   📂
   [**`./packages/changelog`**](https://github.com/simbo/packages/tree/main/packages/changelog/)
 
-  📦 `changelog` @ `1.7.6`
+  📦 `changelog` @ `1.7.7`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/changelog/CHANGELOG.md)
@@ -234,23 +234,6 @@ There are currently _**31**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/graceful-exit/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/graceful-exit/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_graceful-exit/)
-
-- ### **Import Meta Path**
-
-  > Deprecated: use import.meta.dirname and import.meta.filename instead. A
-  > small utility for safely deriving absolute file and directory paths from
-  > import.meta in Node.js, with a consistent fallback order.
-
-  📂
-  [**`./packages/import-meta-path`**](https://github.com/simbo/packages/tree/main/packages/import-meta-path/)
-
-  📦
-  [`@simbo/import-meta-path`](https://www.npmjs.com/package/@simbo/import-meta-path)
-  @ `2.0.2`
-
-  [README.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/README.md)  • 
-  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/import-meta-path/CHANGELOG.md)  • 
-  [Documentation](https://simbo.de/packages/modules/_simbo_import-meta-path/)
 
 - ### **Inject Between HTML Comments**
 
