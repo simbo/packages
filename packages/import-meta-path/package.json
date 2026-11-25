@@ -1,6 +1,6 @@
 {
   "name": "@simbo/import-meta-path",
-  "description": "A small utility for safely deriving absolute file and directory paths from import.meta in Node.js, with a consistent fallback order.",
+  "description": "Deprecated: use import.meta.dirname and import.meta.filename instead. A small utility for safely deriving absolute file and directory paths from import.meta in Node.js, with a consistent fallback order.",
   "version": "2.0.1",
   "keywords": [
     "import.meta",
@@ -18,7 +18,7 @@
   ],
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
-  "homepage": "https://github.com/simbo/packages/tree/main/packages/import-meta-path",
+  "homepage": "https://github.com/simbo/packages/tree/import-meta-path/v2.0.2/packages/import-meta-path",
   "repository": "github:simbo/packages",
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {

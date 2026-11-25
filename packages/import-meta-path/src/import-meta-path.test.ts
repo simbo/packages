@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-deprecated -- tests the deprecated API */
 import { describe, expect, it, vi } from 'vitest';
 
 import { importMetaPath, type ImportMetaObject } from './import-meta-path.js';
