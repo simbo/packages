@@ -1,51 +1,49 @@
 # Applies pending changesets, commits the version bumps as a signed commit, and
 # creates one tag per bumped package. The tags trigger the GitHub release
-# workflow; the docs workflow is dispatched afterwards.
+# workflow; the docs workflow is dispatched for the release commit afterwards.
+# Dispatched by the checks workflow on main; manual runs are skipped. Releases
+# only the commit that the checks workflow tested: main must still be at it.
 
 name: Release 🏷️
 
 on:
-  repository_dispatch:
-    types:
-      - workflow:release
   workflow_dispatch:
     inputs:
-      ref:
-        description: Ref
-        type: string
-        required: true
-        default: 'main'
+      sha:
+        description: 'Full SHA of the checked commit (set by "Checks")'
+        required: false
+        default: ''
+      commit:
+        description: 'Short SHA of the checked commit (set by "Checks")'
+        required: false
+        default: ''
+      subject:
+        description: 'Subject of the checked commit (set by "Checks")'
+        required: false
+        default: ''
 
 run-name: >
   ${{
-    format(
-      '{0} Branch {1}',
-      github.workflow,
-      github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
-    )
+    inputs.commit != ''
+      && format('{0} {1} "{2}"', github.workflow, inputs.commit, inputs.subject)
+      || github.workflow
   }}
 
 concurrency:
   cancel-in-progress: false
-  group: >
-    ${{
-      format(
-        '{0}--{1}',
-        github.workflow,
-        github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
-      )
-    }}
+  group: ${{ github.workflow }}
 
 permissions: {}
 
-env:
-  REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
-  # the commit checked by the checks workflow; manual runs release the head of REF
-  SHA: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.sha || '' }}
-
 jobs:
   release:
+    # Only the dispatch by the checks workflow releases; a manual run is
+    # skipped. A re-run keeps the actor of the original run.
+    if: github.ref == 'refs/heads/main' && github.actor == 'github-actions[bot]'
     runs-on: ubuntu-latest
+    outputs:
+      commit-sha: ${{ steps.commit.outputs.commit-sha }}
+      tags: ${{ steps.bumped-packages.outputs.tags }}
     environment:
       name: release
       deployment: false
@@ -63,8 +61,26 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ env.SHA || env.REF }}
+          ref: main
           persist-credentials: false
+
+      # Runs only code from main, and only the commit that the checks workflow
+      # tested. If main has moved on, the release fails here, and the run for
+      # the later commit takes over.
+      - name: 🔎 Check the Commit
+        env:
+          SHA: ${{ inputs.sha }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error title=Invalid Commit::Expected the full SHA of the checked commit."
+            exit 1
+          fi
+          head="$(git rev-parse HEAD)"
+          if [[ "$head" != "$SHA" ]]; then
+            echo "::error title=Main Has Moved On::main is at ${head}, not at the checked commit ${SHA}."
+            exit 1
+          fi
 
       - name: 🚚 Setup pnpm and Node.js
         uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
@@ -95,27 +111,35 @@ jobs:
       - name: 📝 Update Packages List Docs
         run: pnpm run packages-list
 
-      # Fails if REF has moved since the checked commit, instead of releasing
+      # Fails if main has moved since the checked commit, instead of releasing
       # unchecked changes. Tags are lightweight and point to the new commit.
       - name: 💾 Commit Release and Create Tags
+        id: commit
         uses: simbo-actions/signed-commit@98f498eda4eb29a405322d694b4fa17bb42fc40b # v1.0.2
         with:
           token: ${{ steps.app-token.outputs.token }}
-          branch: ${{ env.REF }}
+          branch: main
           message: 'ci(release): ${{ steps.bumped-packages.outputs.tags }}'
           tags: ${{ steps.bumped-packages.outputs.tags }}
           sync: false
 
-      - name: 🎉 Release Commit Created (Event)
-        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4.0.1
-        with:
-          event-type: release-commit-created
-          token: ${{ steps.app-token.outputs.token }}
-          client-payload: >
-            ${{
-              format(
-                '{{ "ref": {0}, "tags": {1} }}',
-                toJson(env.REF),
-                toJson(steps.bumped-packages.outputs.tags)
-              )
-            }}
+  dispatch-docs:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      # required to dispatch a workflow with GITHUB_TOKEN
+      actions: write
+    steps:
+      - name: '📘 Workflow: Docs'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ needs.release.outputs.commit-sha }}
+          TAGS: ${{ needs.release.outputs.tags }}
+        run: |
+          set -euo pipefail
+          # Passes the release commit and names the run after it: short SHA
+          # and subject.
+          gh workflow run docs.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            --field sha="$SHA" \
+            --field commit="${SHA:0:7}" \
+            --field subject="ci(release): ${TAGS}"

@@ -93,8 +93,9 @@ Releases run automatically when changesets reach `main`; see "Releases" in
 [README.md](README.md). For first publishes, trusted publishing and retries, see
 [NPM_PUBLISHING.md](NPM_PUBLISHING.md).
 
-After a release, confirm that the Release, GitHub Release and Publish workflows
-passed for every bumped package.
+After a release, confirm that the Release, GitHub Release, Publish and Docs
+workflows passed for every bumped package. Retry a failed Release or Docs run
+with "Re-run"; a run started by hand is skipped.
 
 ## Deprecating a Package
 

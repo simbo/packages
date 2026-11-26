@@ -174,6 +174,11 @@ publishing workflow verifies that same archive and uploads it unless the package
 is private. See [NPM_PUBLISHING.md](./NPM_PUBLISHING.md) for first publishes and
 retries.
 
+The workflows hand over with `gh workflow run` and the full SHA of the commit.
+The Release and Docs workflows run only when dispatched by the previous workflow
+on `main`; manual runs are skipped. Retry a failed run with "Re-run", which
+keeps the original actor.
+
 #### Writing Changesets
 
 Each changeset becomes one entry in the changelogs of its packages: the first
@@ -257,19 +262,23 @@ flowchart LR
   end
 
   subgraph ReleaseWorkflow[".github/workflows/release.yml"]
-    ReleaseEvent@{ shape: rounded, label: "🎉 Release Workflow<br>Requested" }
+    ReleaseEvent@{ shape: rounded, label: "🎉 Dispatched by Checks<br>for the Checked Commit" }
+    CheckCommit["🔎 Check that Main<br>Is Still at the Commit"]
     IntegrateChangesets["🔄 Apply Changesets<br>and Sync Versions"]
     CollectPackages["🧾 Find Changed<br>Packages"]
     UpdatePackageDocs["📝 Update<br>Package Lists"]
     CommitAndPushChanges["💾 Create Signed<br>Release Commit"]
     PushReleaseTags["🏷️ Create Release Tags<br>for Bumped Packages<br>NAME/vVERSION"]
+    DocsDispatch["📘 Dispatch Docs Workflow<br>for the Release Commit"]
 
     direction TB
-    ReleaseEvent --> IntegrateChangesets
+    ReleaseEvent --> CheckCommit
+    CheckCommit --> IntegrateChangesets
     IntegrateChangesets --> CollectPackages
     CollectPackages --> UpdatePackageDocs
     UpdatePackageDocs --> CommitAndPushChanges
     CommitAndPushChanges --> PushReleaseTags
+    PushReleaseTags --> DocsDispatch
   end
 
   subgraph GitHubReleaseWorkflow[".github/workflows/github-release.yml"]
@@ -320,7 +329,7 @@ flowchart LR
   class PushToMain,TagEvent,ReleaseEvent,ReleasePublished event
 
   classDef step stroke:#6366F1,stroke-width:2px,fill:transparent;
-  class BuildPackages,RunTests,RunChecks,BuildDocs,ReleaseEventDispatch,IntegrateChangesets,CollectPackages,UpdatePackageDocs,CommitAndPushChanges,PushReleaseTags,ValidateRelease,BuildPackage,PackTarball,ExtractChangelogEntry,UploadDraft,PublishRelease,ValidatePublish,DownloadArchive,VerifyDownload,PublishToNpm step
+  class BuildPackages,RunTests,RunChecks,BuildDocs,ReleaseEventDispatch,CheckCommit,DocsDispatch,IntegrateChangesets,CollectPackages,UpdatePackageDocs,CommitAndPushChanges,PushReleaseTags,ValidateRelease,BuildPackage,PackTarball,ExtractChangelogEntry,UploadDraft,PublishRelease,ValidatePublish,DownloadArchive,VerifyDownload,PublishToNpm step
 
   classDef gate stroke:#E67E22,stroke-width:2px,fill:transparent
   class ChecksPassed,Changesets gate
