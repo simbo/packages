@@ -77,8 +77,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          # changesets need a working prettier config, therefor the prettier-config package needs to be build first
-          pnpm exec turbo run build --filter='@simbo/prettier-config'
+          # changesets need a working prettier config, the bump detection needs monorepo-utils
+          pnpm exec turbo run build --filter='@simbo/prettier-config' --filter='@simbo/monorepo-utils'
 
           # integrate changesets
           pnpm exec changeset version
@@ -86,40 +86,11 @@ jobs:
           # update lockfile
           pnpm install
 
+      # Temporary until simbo-actions/version-bumps exists; the script has the
+      # same outputs: packages (JSON), tags, count.
       - name: 🧾 Get Bumped Packages
         id: bumped-packages
-        run: |
-          set -euo pipefail
-
-          # Get the names of changes files
-          changedFiles=$(git diff --name-only HEAD)
-
-          # Initialize an array of package versions for release
-          packages=()
-
-          # Loop through the changed files and check for package.json files.
-          # Check if the package.json has a version change, extract the package folder name and version.
-          # Join them with a slash and add it to the released packages list.
-          for file in $changedFiles; do
-            if [[ "$file" =~ ^packages/.+/package\.json$ ]]; then
-              oldVersion=$(git show HEAD:"$file" | jq -r .version 2>/dev/null || echo)
-              newVersion=$(jq -r .version "$file")
-              if [[ -n "$oldVersion" && -n "$newVersion" && "$oldVersion" != "$newVersion" ]]; then
-                pkgFolder=$(basename "$(dirname "$file")")
-                packages+=("${pkgFolder}/v${newVersion}")
-              fi
-            fi
-          done
-
-          # Fail if no packages are found
-          if [[ ${#packages[@]} -eq 0 ]]; then
-            echo "::error title=No Packages Found::No packages were found to release."
-            exit 1
-          fi
-
-          # Print and output the packages
-          echo "packages=${packages[*]}"
-          echo "packages=${packages[*]}" >> "$GITHUB_OUTPUT"
+        run: node scripts/version-bumps.js HEAD
 
       - name: 📝 Update Packages List Docs
         run: pnpm run packages-list
@@ -131,8 +102,8 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           branch: ${{ env.REF }}
-          message: 'ci(release): ${{ steps.bumped-packages.outputs.packages }}'
-          tags: ${{ steps.bumped-packages.outputs.packages }}
+          message: 'ci(release): ${{ steps.bumped-packages.outputs.tags }}'
+          tags: ${{ steps.bumped-packages.outputs.tags }}
           sync: false
 
       - name: 🎉 Release Commit Created (Event)
@@ -143,8 +114,8 @@ jobs:
           client-payload: >
             ${{
               format(
-                '{{ "ref": {0}, "packages": {1} }}',
+                '{{ "ref": {0}, "tags": {1} }}',
                 toJson(env.REF),
-                toJson(steps.bumped-packages.outputs.packages)
+                toJson(steps.bumped-packages.outputs.tags)
               )
             }}

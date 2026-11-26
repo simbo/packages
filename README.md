@@ -145,7 +145,7 @@ each other, including transitive and development dependencies:
 | `core`   | utilities without internal dependencies     | `config`                |
 | `lib`    | libraries and plugins                       | `config`, `core`, `lib` |
 | `cli`    | command line tools                          | `config`, `core`, `lib` |
-| `meta`   | the private `changelog` package             | nothing depends on it   |
+| `meta`   | the private `packages-changelog` package    | nothing depends on it   |
 
 No package may depend on `cli` or `meta` packages. Every workspace implicitly
 depends on the repository root, so the root must only add `config` packages as
@@ -168,9 +168,11 @@ pnpm run serve:docs
 ### Releases
 
 Adding changesets to the main branch will automatically create releases for the
-affected packages. Each package is built and packed once for its GitHub release;
-the npm publishing workflow verifies and uploads that same archive. See
-[NPM_PUBLISHING.md](./NPM_PUBLISHING.md) for first publishes and retries.
+affected packages. Each package is tagged as `<name>/v<version>` with its full
+package name, and built and packed once for its GitHub release; the npm
+publishing workflow verifies that same archive and uploads it unless the package
+is private. See [NPM_PUBLISHING.md](./NPM_PUBLISHING.md) for first publishes and
+retries.
 
 #### Writing Changesets
 
@@ -183,7 +185,7 @@ readable by writing changesets by topic:
   API, types, runtime dependencies, shipped docs). Record everything else, such
   as tooling, CI, docs outside packages, development dependency updates and
   refactorings without user-facing changes, in a changeset for the private
-  `changelog` package. Never add empty changesets.
+  `packages-changelog` package. Never add empty changesets.
 - Cover one topic per changeset. If the summary needs an "and" to join two
   topics, write two changesets. One changeset may cover several packages, with
   different bump types, if the change is the same for all of them.
@@ -260,7 +262,7 @@ flowchart LR
     CollectPackages["🧾 Find Changed<br>Packages"]
     UpdatePackageDocs["📝 Update<br>Package Lists"]
     CommitAndPushChanges["💾 Create Signed<br>Release Commit"]
-    PushReleaseTags["🏷️ Create Release Tags<br>for Bumped Packages<br>PACKAGE/vVERSION"]
+    PushReleaseTags["🏷️ Create Release Tags<br>for Bumped Packages<br>NAME/vVERSION"]
 
     direction TB
     ReleaseEvent --> IntegrateChangesets
@@ -271,8 +273,8 @@ flowchart LR
   end
 
   subgraph GitHubReleaseWorkflow[".github/workflows/github-release.yml"]
-    TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br>PACKAGE/vVERSION" }
-    ValidateRelease["🧾 Validate Package<br>Identity, Reject<br>Private Packages"]
+    TagEvent@{ shape: rounded, label: "🏷️ Tag Pushed<br>NAME/vVERSION" }
+    ValidateRelease["🧾 Find Workspace<br>and Validate<br>Package Identity"]
     BuildPackage["👷 Build Tagged<br>Package"]
     PackTarball["📦 Prepare Tarball<br>with Checksum"]
     ExtractChangelogEntry["📝 Extract<br>Changelog Entry"]
@@ -292,8 +294,8 @@ flowchart LR
     ReleasePublished@{ shape: rounded, label: "🎉 GitHub Release<br>Published" }
     DownloadArchive["📥 Fetch Release Tarball<br>with Checksum"]
     VerifyDownload["🔐 Verify Identity<br>and Checksum"]
-    ValidatePublish["🧾 Validate Package<br>Identity, Reject<br>Private Packages"]
-    PublishToNpm["🚛 Publish Tarball<br>to NPM"]
+    ValidatePublish["🧾 Parse Package<br>Identity from Tag"]
+    PublishToNpm["🚛 Publish Tarball<br>to NPM, unless Private"]
 
     direction TB
     ReleasePublished --> ValidatePublish

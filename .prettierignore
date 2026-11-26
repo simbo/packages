@@ -1,3 +1,4 @@
 # automatically includes entries from .gitignore
 
+.claude/
 pnpm-lock.yaml

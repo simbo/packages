@@ -1,12 +1,9 @@
 # Build Artifacts, Dependencies, etc.
-/node_modules
-/.turbo
+node_modules/
+.turbo/
+dist/
+coverage/
 /docs
-/coverage
-/packages/*/node_modules
-/packages/*/.turbo
-/packages/*/dist
-/packages/*/coverage
 
 # Agent Handoffs
 /.handoffs

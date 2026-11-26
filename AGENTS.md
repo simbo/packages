@@ -22,12 +22,15 @@ this file only when the owner asks for it; keep it to about one screen.
 
 ## Packages
 
-- One workspace per package in `packages/<name>/`; tags are `<name>/v<version>`.
-  `packages/changelog/` holds the monorepo changelog. Every package has a
-  `turbo.json` with one layer tag (see "Checks" in [README.md](README.md)).
+- One workspace per package in `packages/<folder>/`; `changelog/` holds the
+  monorepo changelog as the private `packages-changelog`. Workspaces are listed
+  in `pnpm-workspace.yaml` and `workspaces`; tools find them there, not by
+  `packages/` paths. Tags are `<name>/v<version>` with the full package name,
+  such as `@simbo/eslint-config/v3.4.0`. Every package has a `turbo.json` with
+  one layer tag (see "Checks" in [README.md](README.md)).
 - Every change gets a changeset, as described in "Writing Changesets" in
   [README.md](README.md): a package changeset when the published package changes
-  for its users, otherwise one for the private `changelog` package; one topic
+  for its users, otherwise one for the private `packages-changelog`; one topic
   each, a summary paragraph with the details as a list, never empty. Breaking
   changes only after the owner agrees.
 - `README.md` package counts and `PACKAGES.md` are generated

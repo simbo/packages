@@ -1,20 +1,25 @@
 /**
  * Downloads and verifies a GitHub release package for an interactive local publish.
  *
- * Run through `pnpm run publish-initial -- <workspace>/v<version>`. Add --check
+ * Run through `pnpm run publish-initial -- <name>/v<version>`. Add --check
  * to download and verify only. No checkout, install, build or repack is performed.
- * Requires authenticated GitHub CLI, pnpm 12, Node.js and tar. The tagged GitHub
- * manifest supplies the expected identity; working-tree versions are irrelevant.
+ * Requires authenticated GitHub CLI, pnpm 12, Node.js and tar. The tag supplies
+ * the expected identity, which the packed manifest must match; working-tree
+ * versions are irrelevant. Private packages are verified but never published.
  * Downloaded archives remain in a temporary directory for inspection or recovery.
  */
-import { execFileSync } from 'node:child_process';
-import { mkdtempSync } from 'node:fs';
+import { execFile, spawn } from 'node:child_process';
+import { once } from 'node:events';
+import { mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import process from 'node:process';
 import { createInterface } from 'node:readline/promises';
+import { promisify } from 'node:util';
 
-import { isRecord, metadataFromManifest, parseTag, verifyArchive } from './release-package.js';
+import { isRecord, parseTag, verifyArchive } from './release-package.js';
+
+const execFileAsync = promisify(execFile);
 
 const REPOSITORY = 'simbo/packages';
 const REGISTRY = 'https://registry.npmjs.org/';
@@ -25,10 +30,32 @@ const REGISTRY = 'https://registry.npmjs.org/';
  *
  * @param {string} command - Executable name.
  * @param {string[]} args - Separate arguments passed directly to the executable.
- * @returns {string} Standard output for metadata parsing.
+ * @returns {Promise<string>} Standard output for metadata parsing.
  */
-function commandOutput(command, args) {
-  return execFileSync(command, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] });
+async function commandOutput(command, args) {
+  const child = execFileAsync(command, args, { encoding: 'utf8' });
+  child.child.stderr?.pipe(process.stderr);
+  const { stdout } = await child;
+  return stdout;
+}
+
+/**
+ * Runs an interactive command with inherited standard streams, so login and 2FA
+ * prompts reach the terminal.
+ *
+ * @param {string} command - Executable name.
+ * @param {string[]} args - Separate arguments passed directly to the executable.
+ * @param {string} cwd - Working directory.
+ * @returns {Promise<void>} Resolves when the command exits successfully.
+ * @throws {Error} If the command cannot start or exits with another status.
+ */
+async function runInteractive(command, args, cwd) {
+  // once() rejects when the child emits 'error', for example if the command is missing.
+  /**
+   * @type {unknown[]}
+   */
+  const exit = await once(spawn(command, args, { cwd, stdio: 'inherit' }), 'exit');
+  if (exit[0] !== 0) throw new Error(`${command} exited with status ${String(exit[0])}.`);
 }
 
 /**
@@ -38,28 +65,20 @@ function commandOutput(command, args) {
  *
  * @param {string} tag - Stable package release tag.
  * @param {string} directory - Existing directory for downloaded release assets.
- * @param {(command: string, args: string[]) => string} [run] - GitHub CLI runner.
- * @returns {import('./release-package.js').ReleaseMetadata} Verified package identity.
- * @throws {Error} If the release, tagged manifest, download, checksum or identity is invalid.
+ * @param {(command: string, args: string[]) => Promise<string>} [run] - GitHub CLI runner.
+ * @returns {Promise<import('./release-package.js').ReleaseTag & {private: boolean}>} Verified package identity.
+ * @throws {Error} If the release, download, checksum or identity is invalid.
  */
-export function prepareRelease(tag, directory, run = commandOutput) {
-  const parsed = parseTag(tag);
-  const encodedTag = encodeURIComponent(tag);
+export async function prepareRelease(tag, directory, run = commandOutput) {
+  const metadata = parseTag(tag);
   /**
    * @type {unknown}
    */
-  const release = JSON.parse(run('gh', ['api', `repos/${REPOSITORY}/releases/tags/${encodedTag}`]));
+  const release = JSON.parse(await run('gh', ['api', `repos/${REPOSITORY}/releases/tags/${encodeURIComponent(tag)}`]));
   if (!isRecord(release) || release.tag_name !== tag || release.draft !== false || release.prerelease !== false) {
     throw new Error(`Expected a published stable GitHub release for ${tag}.`);
   }
-  const source = run('gh', [
-    'api',
-    `repos/${REPOSITORY}/contents/packages/${parsed.workspace}/package.json?ref=${encodedTag}`,
-    '--header',
-    'Accept: application/vnd.github.raw+json',
-  ]);
-  const metadata = metadataFromManifest(tag, source);
-  run('gh', [
+  await run('gh', [
     'release',
     'download',
     tag,
@@ -72,8 +91,7 @@ export function prepareRelease(tag, directory, run = commandOutput) {
     '--dir',
     directory,
   ]);
-  verifyArchive(metadata, directory);
-  return metadata;
+  return { ...metadata, ...(await verifyArchive(metadata, directory)) };
 }
 
 /**
@@ -89,21 +107,25 @@ async function main() {
   const checkOnly = args.includes('--check');
   const tags = args.filter(argument => argument !== '--check');
   if (tags.length !== 1 || !tags[0]) {
-    throw new Error('Usage: pnpm run publish-initial -- [--check] <workspace>/v<version>');
+    throw new Error('Usage: pnpm run publish-initial -- [--check] <name>/v<version>');
   }
   const tag = tags[0];
   parseTag(tag);
   if (!checkOnly && !process.stdin.isTTY) {
     throw new Error('Publishing requires an interactive terminal. Use --check to verify without publishing.');
   }
-  const directory = mkdtempSync(join(tmpdir(), 'verified-package-release-'));
+  const directory = await mkdtemp(join(tmpdir(), 'verified-package-release-'));
   process.stdout.write(`📥 Checking ${tag} in ${directory}\n`);
-  const metadata = prepareRelease(tag, directory);
+  const metadata = await prepareRelease(tag, directory);
   process.stdout.write(
     `\n📦 Package: ${metadata.name}@${metadata.version}\n🏷️ Tag: ${tag}\n🔗 Registry: ${REGISTRY}\n📁 Archive: ${join(directory, metadata.asset)}\n`,
   );
   if (checkOnly) {
     process.stdout.write('✅ Check complete. Nothing published.\n');
+    return;
+  }
+  if (metadata.private) {
+    process.stdout.write('🔒 The package is private and is not published.\n');
     return;
   }
   const terminal = createInterface({ input: process.stdin, output: process.stdout });
@@ -117,10 +139,10 @@ async function main() {
     process.stdout.write('Publication cancelled. The verified archive is retained.\n');
     return;
   }
-  execFileSync(
+  await runInteractive(
     'pnpm',
     ['publish', join(directory, metadata.asset), '--access', 'public', '--registry', REGISTRY, '--no-git-checks'],
-    { cwd: directory, stdio: 'inherit' },
+    directory,
   );
 }
 

@@ -1,20 +1,29 @@
+import { readFile } from 'node:fs/promises';
+
 import { defineConfig } from 'vitest/config';
+
+// The workspace patterns of the root package.json; pnpm-workspace.yaml lists the same.
+const { workspaces } = JSON.parse(await readFile(new URL('package.json', import.meta.url), 'utf8')) as {
+  workspaces: string[];
+};
 
 export default defineConfig({
   test: {
     environment: 'node',
     globals: true,
-    include: ['packages/*/{src,tests}/**/*.test.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov'],
-      include: ['packages/*/src/**/*.ts', 'scripts/*.js'],
-      exclude: ['packages/*/src/**/*.{type,types,interface,interfaces,enum}.ts', 'packages/*/src/**/index.ts'],
+      include: [...workspaces.map(pattern => `${pattern}/src/**/*.ts`), 'scripts/*.js'],
+      exclude: workspaces.flatMap(pattern => [
+        `${pattern}/src/**/*.{type,types,interface,interfaces,enum}.ts`,
+        `${pattern}/src/**/index.ts`,
+      ]),
     },
     projects: [
-      'packages/*',
+      ...workspaces,
       {
-        // Keep the root package include pattern out of this project.
+        // Keep the root configuration out of this project.
         extends: false,
         test: {
           name: 'scripts',

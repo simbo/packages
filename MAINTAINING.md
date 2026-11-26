@@ -42,7 +42,8 @@ cooldown of 7 days.
 3. Run `pnpm install` and `pnpm run preflight`.
 4. Write changesets as described in "Writing Changesets" in
    [README.md](README.md): a package changeset for runtime dependencies of a
-   published package, a `changelog` changeset for development dependencies.
+   published package, a `packages-changelog` changeset for development
+   dependencies.
 
 ## Security Alerts
 
@@ -121,8 +122,8 @@ must be built from a tag that still contains it.
    - Start the `description` in `package.json` with `Deprecated:`.
    - Point `homepage` in `package.json` and the repository links in its
      `README.md` to the tag of the final release
-     (`tree/<workspace>/v<version>`), because `main` will no longer contain the
-     package.
+     (`tree/<package-name>/v<version>`), because `main` will no longer contain
+     the package.
    - Add a patch changeset for the package that names the replacement, as
      described in "Writing Changesets" in [README.md](README.md).
 
@@ -159,17 +160,17 @@ must be built from a tag that still contains it.
    - Run `pnpm run packages-list` to update `PACKAGES.md` and the package count
      in [README.md](README.md). Run it in a regular clone: in a Git worktree it
      updates the files of the main checkout instead.
-   - Add a changeset for the private `changelog` package.
+   - Add a changeset for the private `packages-changelog` package.
 
-   The Turbo layer tag, the boundaries check, TypeDoc, Vitest and the release
-   scripts find workspaces through the `packages/*` glob and need no change.
-   Search the root configurations and `.github/` for the workspace name to be
-   sure.
+   The Turbo layer tag, the boundaries check, Vitest and the release scripts
+   find workspaces through the workspace patterns, TypeDoc through the
+   `packages/*` glob; none of them needs a change. Search the root
+   configurations and `.github/` for the workspace name to be sure.
 
-6. Keep the tags `<workspace>/v*` and their GitHub releases. They document the
-   published versions, and the publish workflow needs them for retries. After
-   the merge, confirm that the Docs workflow removed the TypeDoc pages of the
-   package.
+6. Keep the tags `<package-name>/v*` and their GitHub releases. They document
+   the published versions, and the publish workflow needs them for retries.
+   After the merge, confirm that the Docs workflow removed the TypeDoc pages of
+   the package.
 
 ## Exceptions
 

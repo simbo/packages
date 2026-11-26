@@ -10,7 +10,7 @@ const config = {
   entryPoints: ['packages/*'],
   entryPointStrategy: 'packages',
   plugin: ['typedoc-github-theme', 'typedoc-plugin-mdn-links', customHeadScripts],
-  exclude: ['packages/tsconfig/', 'packages/changelog/'],
+  exclude: ['packages/tsconfig/'],
   treatWarningsAsErrors: true,
 
   name: "Documentation for Simbo's Packages",

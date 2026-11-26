@@ -1,21 +1,30 @@
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import process from 'node:process';
+import { promisify } from 'node:util';
 
 import { afterEach, expect, test, vi } from 'vitest';
 
 import { prepareRelease } from './publish-release.js';
 
+const execFileAsync = promisify(execFile);
+const TAG = '@simbo/example/v1.2.3';
+const ASSET = 'simbo-example-1.2.3.tgz';
+
 /**
  * @type {string[]}
  */
 const directories = [];
-afterEach(() => {
+afterEach(async () => {
   vi.restoreAllMocks();
-  for (const directory of directories.splice(0)) rmSync(directory, { recursive: true, force: true });
+  await Promise.all(
+    directories.splice(0).map(async directory => {
+      await rm(directory, { recursive: true, force: true });
+    }),
+  );
 });
 
 /**
@@ -23,13 +32,13 @@ afterEach(() => {
  * Calls are recorded to prove preparation never invokes a publish command.
  *
  * @param {Record<string, unknown>} [releaseOverrides] - Release fields to invalidate.
- * @param {Record<string, unknown>} [manifestOverrides] - Tagged manifest fields to invalidate.
- * @returns {{directory: string, calls: string[][], run: (command: string, args: string[]) => string}} Isolated runner fixture.
+ * @param {Record<string, unknown>} [manifestOverrides] - Packed manifest fields to invalidate.
+ * @returns {Promise<{directory: string, calls: string[][], run: (command: string, args: string[]) => Promise<string>}>} Isolated runner fixture.
  */
-function fixture(releaseOverrides, manifestOverrides) {
-  const directory = mkdtempSync(join(tmpdir(), 'publish-release-'));
+async function fixture(releaseOverrides, manifestOverrides) {
+  const directory = await mkdtemp(join(tmpdir(), 'publish-release-'));
   directories.push(directory);
-  const manifest = { name: '@simbo/different-name', version: '1.2.3', ...manifestOverrides };
+  const manifest = { name: '@simbo/example', version: '1.2.3', ...manifestOverrides };
   /**
    * @type {string[][]}
    */
@@ -37,73 +46,71 @@ function fixture(releaseOverrides, manifestOverrides) {
   return {
     directory,
     calls,
-    run(command, args) {
+    async run(command, args) {
       calls.push([command, ...args]);
       expect(command).toBe('gh');
-      if (args[0] === 'api' && args[1]?.includes('/releases/tags/')) {
-        return JSON.stringify({ tag_name: 'example/v1.2.3', draft: false, prerelease: false, ...releaseOverrides });
+      if (args[0] === 'api') {
+        return JSON.stringify({ tag_name: TAG, draft: false, prerelease: false, ...releaseOverrides });
       }
-      if (args[0] === 'api' && args[1]?.includes('/contents/')) return JSON.stringify(manifest);
-      expect(args.slice(0, 3)).toEqual(['release', 'download', 'example/v1.2.3']);
-      mkdirSync(join(directory, 'package'));
-      writeFileSync(join(directory, 'package/package.json'), JSON.stringify(manifest));
-      execFileSync('tar', ['-czf', join(directory, 'example-1.2.3.tgz'), '-C', directory, 'package']);
+      expect(args.slice(0, 3)).toEqual(['release', 'download', TAG]);
+      await mkdir(join(directory, 'package'));
+      await writeFile(join(directory, 'package/package.json'), JSON.stringify(manifest));
+      await execFileAsync('tar', ['-czf', join(directory, ASSET), '-C', directory, 'package']);
       const digest = createHash('sha256')
-        .update(readFileSync(join(directory, 'example-1.2.3.tgz')))
+        .update(await readFile(join(directory, ASSET)))
         .digest('hex');
-      writeFileSync(join(directory, 'SHA256SUMS'), `${digest}  example-1.2.3.tgz\n`);
+      await writeFile(join(directory, 'SHA256SUMS'), `${digest}  ${ASSET}\n`);
       return '';
     },
   };
 }
 
-test('prepares the tagged identity without consulting a local checkout or invoking pnpm', () => {
+test('prepares the tagged identity without consulting a checkout or invoking pnpm', async () => {
   // Assert the expected success message instead of printing fixture details.
   const output = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
-  const { directory, calls, run } = fixture();
-  const metadata = prepareRelease('example/v1.2.3', directory, run);
-  expect(metadata.name).toBe('@simbo/different-name');
+  const { directory, calls, run } = await fixture();
+  const metadata = await prepareRelease(TAG, directory, run);
+  expect(metadata).toMatchObject({ name: '@simbo/example', asset: ASSET, private: false });
   expect(output).toHaveBeenCalledExactlyOnceWith(
-    expect.stringMatching(/^✅ Verified @simbo\/different-name@1\.2\.3: example-1\.2\.3\.tgz \([a-f\d]{64}\)\n$/),
+    expect.stringMatching(/^✅ Verified @simbo\/example@1\.2\.3: simbo-example-1\.2\.3\.tgz \([a-f\d]{64}\)\n$/),
   );
-  expect(calls.length).toBe(3);
-  expect(calls[0]?.[2]?.endsWith('example%2Fv1.2.3')).toBeTruthy();
-  expect(calls[1]?.[2]?.endsWith('?ref=example%2Fv1.2.3')).toBeTruthy();
-  expect(calls.every(call => call[0] === 'gh')).toBeTruthy();
+  expect(calls.length).toBe(2);
+  expect(calls[0]?.[2]?.endsWith('%40simbo%2Fexample%2Fv1.2.3')).toBeTruthy();
+  expect(calls[1]).toContain(ASSET);
 });
 
-test('rejects drafts, prereleases and a response for another tag before downloading', () => {
+test('rejects drafts, prereleases and a response for another tag before downloading', async () => {
   for (const release of [{ draft: true }, { prerelease: true }, { tag_name: 'other/v1.2.3' }]) {
-    const { directory, calls, run } = fixture(release);
-    expect(() => prepareRelease('example/v1.2.3', directory, run)).toThrow(/published stable/);
+    const { directory, calls, run } = await fixture(release);
+    await expect(prepareRelease(TAG, directory, run)).rejects.toThrow(/published stable/);
     expect(calls.length).toBe(1);
   }
 });
 
-test('rejects private manifests and mismatched source versions before downloading', () => {
-  for (const manifest of [{ private: true }, { version: '9.0.0' }]) {
-    const { directory, calls, run } = fixture(undefined, manifest);
-    expect(() => prepareRelease('example/v1.2.3', directory, run)).toThrow(/Private packages|Version mismatch/);
-    expect(calls.length).toBe(2);
-  }
+test('reports private archives and rejects archives of another version', async () => {
+  vi.spyOn(process.stdout, 'write').mockReturnValue(true);
+  const privateRelease = await fixture(undefined, { private: true });
+  expect(await prepareRelease(TAG, privateRelease.directory, privateRelease.run)).toMatchObject({ private: true });
+  const otherVersion = await fixture(undefined, { version: '9.0.0' });
+  await expect(prepareRelease(TAG, otherVersion.directory, otherVersion.run)).rejects.toThrow(
+    /Archive identity mismatch/,
+  );
 });
 
-test('rejects a damaged download without ever invoking a registry command', () => {
-  const { directory, calls, run } = fixture();
-  expect(() =>
-    prepareRelease('example/v1.2.3', directory, (command, args) => {
-      const output = run(command, args);
-      if (args[0] === 'release') writeFileSync(join(directory, 'example-1.2.3.tgz'), 'damaged');
+test('rejects a damaged download without ever invoking a registry command', async () => {
+  const { directory, calls, run } = await fixture();
+  await expect(
+    prepareRelease(TAG, directory, async (command, args) => {
+      const output = await run(command, args);
+      if (args[0] === 'release') await writeFile(join(directory, ASSET), 'damaged');
       return output;
     }),
-  ).toThrow(/Checksum mismatch/);
+  ).rejects.toThrow(/Checksum mismatch/);
   expect(calls.every(call => call[0] === 'gh')).toBeTruthy();
 });
 
-test('non-interactive CLI refuses publishing before any network or registry operation', () => {
-  const result = spawnSync(process.execPath, ['scripts/publish-release.js', 'example/v1.2.3'], {
-    encoding: 'utf8',
-  });
-  expect(result.status).toBe(1);
-  expect(result.stderr).toMatch(/requires an interactive terminal/);
+test('non-interactive CLI refuses publishing before any network or registry operation', async () => {
+  await expect(
+    execFileAsync(process.execPath, ['scripts/publish-release.js', TAG], { encoding: 'utf8' }),
+  ).rejects.toThrow(/requires an interactive terminal/);
 });

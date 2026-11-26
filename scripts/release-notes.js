@@ -1,12 +1,13 @@
 /**
  * Creates the Markdown body for a stable package release from its changelog.
  *
- * Run from the tagged repository root with RELEASE_TAG and RUNNER_TEMP set.
+ * Run from the tagged repository root with RELEASE_TAG, PACKAGE_DIR (the
+ * workspace directory from `release-package.js metadata`) and RUNNER_TEMP set.
  * Markdown indentation and internal blank lines are preserved; only surrounding
  * blank lines are removed. The timestamp always uses Europe/Berlin. No external
  * commands or dependencies are needed, and imports have no CLI side effects.
  */
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import process from 'node:process';
 
@@ -50,33 +51,39 @@ export function createReleaseNotes(changelog, version, date = new Date()) {
 /**
  * Reads the tagged workspace changelog and writes the workflow's release body.
  *
- * @param {string} tag - Stable workspace release tag.
+ * @param {string} tag - Stable package release tag.
+ * @param {string} dir - Workspace directory relative to the repository root.
  * @param {string} temporaryDirectory - Runner temporary directory.
- * @param {string} [root] - Repository root containing packages/.
- * @returns {string} Absolute or root-relative path of the generated Markdown file.
+ * @param {string} [root] - Repository root.
+ * @returns {Promise<string>} Absolute or root-relative path of the generated Markdown file.
  * @throws {Error} If inputs, changelog content or filesystem operations are invalid.
  */
-export function writeReleaseNotes(tag, temporaryDirectory, root = process.cwd()) {
-  const { workspace, version } = parseTag(tag);
+export async function writeReleaseNotes(tag, dir, temporaryDirectory, root = process.cwd()) {
+  const { version } = parseTag(tag);
+  if (!dir) throw new Error('Missing PACKAGE_DIR: Expected the workspace directory of the package.');
   if (!temporaryDirectory) throw new Error('Missing RUNNER_TEMP: Expected a release output directory.');
-  const changelog = join(root, 'packages', workspace, 'CHANGELOG.md');
+  const changelog = join(root, dir, 'CHANGELOG.md');
   let source;
   try {
-    source = readFileSync(changelog, 'utf8');
+    source = await readFile(changelog, 'utf8');
   } catch (error) {
     throw new Error(`Missing Changelog: Cannot read ${changelog} at ${tag}.`, { cause: error });
   }
   const notes = createReleaseNotes(source, version);
   const directory = join(temporaryDirectory, 'package-release');
-  mkdirSync(directory, { recursive: true });
+  await mkdir(directory, { recursive: true });
   const output = join(directory, 'RELEASE_NOTES.md');
-  writeFileSync(output, notes);
+  await writeFile(output, notes);
   return output;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === import.meta.filename) {
   try {
-    const output = writeReleaseNotes(process.env.RELEASE_TAG ?? '', process.env.RUNNER_TEMP ?? '');
+    const output = await writeReleaseNotes(
+      process.env.RELEASE_TAG ?? '',
+      process.env.PACKAGE_DIR ?? '',
+      process.env.RUNNER_TEMP ?? '',
+    );
     process.stdout.write(`📝 Release notes written to ${output}\n`);
   } catch (error) {
     const message = (error instanceof Error ? error.message : String(error))

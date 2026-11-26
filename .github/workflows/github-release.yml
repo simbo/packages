@@ -1,18 +1,20 @@
-# Builds and packs the package of a release tag and publishes a complete GitHub
-# release with the tarball and its checksum. The release is published with the
-# app token, so that it triggers the publish workflow.
+# Builds and packs the workspace of a release tag <name>/v<version> and
+# publishes a complete GitHub release with the tarball and its checksum, for
+# every workspace, private ones included. The release is published with the app
+# token, so that it triggers the publish workflow. Only packages-changelog
+# releases become the latest release.
 
 name: GitHub Release 🎁
 
 on:
   push:
     tags:
-      - '*/v*.*.*'
-      - '!changelog/v*'
+      # package names may contain a scope, so tags contain one or two slashes
+      - '**/v*.*.*'
   workflow_dispatch:
     inputs:
-      workspace:
-        description: 'Workspace folder (e.g. "my-pkg")'
+      name:
+        description: 'Package name (e.g. "@simbo/my-pkg")'
         type: string
         required: true
       version:
@@ -21,19 +23,19 @@ on:
         required: true
 
 env:
-  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name }}
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.name, inputs.version) || github.ref_name }}
 
 run-name: >
   ${{ format('{0} {1}', github.workflow,
     github.event_name == 'workflow_dispatch'
-      && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name) }}
+      && format('{0}/v{1}', inputs.name, inputs.version) || github.ref_name) }}
 
 concurrency:
   cancel-in-progress: false
   group: >
     ${{ format('{0}--{1}', github.workflow,
       github.event_name == 'workflow_dispatch'
-        && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name) }}
+        && format('{0}/v{1}', inputs.name, inputs.version) || github.ref_name) }}
 
 permissions: {}
 
@@ -61,7 +63,10 @@ jobs:
 
       - name: 🧾 Validate Package Identity
         id: package
-        run: node scripts/release-package.js metadata "$RELEASE_TAG"
+        run: |
+          set -euo pipefail
+          pnpm exec turbo run build --filter='@simbo/monorepo-utils'
+          node scripts/release-package.js metadata "$RELEASE_TAG"
 
       - name: 👷 Build Package
         env:
@@ -80,6 +85,8 @@ jobs:
           node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
 
       - name: 📝 Prepare Release Notes
+        env:
+          PACKAGE_DIR: ${{ steps.package.outputs.dir }}
         run: node scripts/release-notes.js
 
       - name: 🔑 Get App Token
@@ -103,5 +110,5 @@ jobs:
           assets: |
             ${{ steps.package.outputs.asset }}
             SHA256SUMS
-          make-latest: 'false'
+          make-latest: ${{ steps.package.outputs.name == 'packages-changelog' && 'true' || 'false' }}
           if-released: skip
