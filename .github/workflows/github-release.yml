@@ -100,7 +100,7 @@ jobs:
       # Creates a draft, uploads the assets, and publishes the release only when
       # it is complete. A re-run after publishing ends without changes.
       - name: 🎁 Create GitHub Release
-        uses: simbo-actions/staged-release@a5fc19e8ec37e057512cd030959f53feb7da837d # v1.0.3
+        uses: simbo-actions/staged-release@8092ba118ec7bd953c1193bafb597886f54f2f9d # v1.0.4
         with:
           token: ${{ steps.app-token.outputs.token }}
           tag: ${{ env.RELEASE_TAG }}
