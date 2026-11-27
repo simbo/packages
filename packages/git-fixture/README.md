@@ -70,13 +70,27 @@ Without `await using`, remove the repository with `cleanup()`, for example in
 
 The fixture runs its own Git commands with the neutral configuration. Code under
 test that runs Git itself reads the environment of the process instead. Set the
-variables of `env` for it, for example with Vitest:
+variables of `env` for it, for example with Vitest, and restore the environment
+after each test:
 
 ```ts
-for (const [name, value] of Object.entries(repo.env)) {
-  vi.stubEnv(name, value);
-}
+let repo: GitFixture;
+
+beforeEach(async () => {
+  repo = await createGitFixture({ files: { 'a.txt': 'a\n' } });
+  for (const [name, value] of Object.entries(repo.env)) {
+    vi.stubEnv(name, value);
+  }
+});
+
+afterEach(async () => {
+  vi.unstubAllEnvs();
+  await repo.cleanup();
+});
 ```
+
+The variables then apply to all code in the test process, also to Git commands
+outside the repository, until `vi.unstubAllEnvs()` restores them.
 
 `env` holds `GIT_CONFIG_GLOBAL` (the null device), `GIT_CONFIG_NOSYSTEM`,
 `GIT_CEILING_DIRECTORIES` (the parent of the repository), `GIT_TERMINAL_PROMPT`,

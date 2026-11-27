@@ -687,6 +687,9 @@ importers:
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@simbo/git-fixture':
+        specifier: workspace:*
+        version: link:../git-fixture
       '@simbo/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
