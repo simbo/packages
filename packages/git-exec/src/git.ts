@@ -15,6 +15,10 @@ const DEFAULT_MAX_BUFFER = 1_073_741_824;
 /**
  * Runs a Git command and returns its raw standard output, for binary data.
  *
+ * The arguments are passed to Git as given, without a shell. Pass untrusted
+ * values only after `--end-of-options` or `--`, never as options: some options,
+ * such as `--upload-pack`, make Git run commands.
+ *
  * @param args - The Git arguments.
  * @param options - Options for running the command.
  * @returns The standard output as buffer.

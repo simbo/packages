@@ -26,7 +26,7 @@ Actions, command line tools, and libraries.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and Git on the `PATH`.
+Requires Node.js `^24.15.0 || >=26.0.0` and Git on the `PATH`.
 
 ## Installation
 
@@ -91,6 +91,32 @@ import { debug } from '@actions/core';
 import { git } from '@simbo/git-exec';
 
 const head = await git(['rev-parse', 'HEAD'], { debug });
+```
+
+## Security
+
+Git runs through `execFile` without a shell, so no shell interprets the
+arguments. Git itself, however, runs commands that some options name, such as
+`--upload-pack` for `clone`, `fetch`, and `ls-remote`, or `-c` with
+`core.sshCommand`. `@simbo/git-exec` passes all arguments to Git as given and
+does not filter them.
+
+Never pass untrusted values, such as user input or data from a pull request, as
+options. Place them where Git cannot read them as options:
+
+- after `--end-of-options` for revisions, branches, tags, and remotes
+- after `--` for paths, with the `:(literal)` prefix to turn off pathspec magic
+
+```ts
+// `ref` and `path` come from untrusted input
+await git([
+  'log',
+  '--oneline',
+  '--end-of-options',
+  ref,
+  '--',
+  `:(literal)${path}`,
+]);
 ```
 
 ## License
