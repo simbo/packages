@@ -1,0 +1,167 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@simbo/git-exec - v1.0.2 | Documentation for Simbo&#39;s Packages</title><meta name="description" content="Documentation for Documentation for Simbo's Packages"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../../assets/style.css"/><link rel="stylesheet" href="../../assets/highlight.css"/><script defer src="../../assets/main.js"></script><script async src="../../assets/icons.js" id="tsd-icons-script"></script><script async src="../../assets/search.js" id="tsd-search-script"></script><script async src="../../assets/navigation.js" id="tsd-nav-script"></script><script async src="../../assets/hierarchy.js" id="tsd-hierarchy-script"></script><script defer src="https://trk.srvkist.net/trk.js" data-website-id="c9ce8bab-5c6d-45ae-8127-19de67d3dbb1"></script><link rel="stylesheet" href="../../assets/typedoc-github-style.css"/></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../../index.html" class="title">Documentation for Simbo&#39;s Packages</a>
+<div id="tsd-toolbar-links"><a href="https://github.com/simbo/packages">GitHub Repository</a></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="" aria-current="page">@simbo/git-exec</a></li></ul>
+<h1>Module @simbo/git-exec - v1.0.2</h1></div>
+<section class="tsd-panel tsd-typography"><h1 id="git-exec" class="tsd-anchor-link">Git Exec<a href="#git-exec" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<p>📦 <a href="https://npmjs.com/package/@simbo/git-exec"><strong><code>@simbo/git-exec</code></strong></a></p>
+<p>Run Git commands asynchronously and get their output as text, buffer, or success
+flag.</p>
+<p>Built on <code>execFile</code> from <code>node:child_process</code>, without a shell, for GitHub
+Actions, command line tools, and libraries.</p>
+<h2 id="features" class="tsd-anchor-link">Features<a href="#features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li>
+<p><code>git()</code> returns the standard output as trimmed text</p>
+</li>
+<li>
+<p><code>gitBuffer()</code> returns the raw standard output, for binary data</p>
+</li>
+<li>
+<p><code>gitSucceeds()</code> reports whether a command exited with code 0</p>
+</li>
+<li>
+<p>Failures reject with a <code>GitError</code> that holds the arguments, the exit code, and
+the standard error output</p>
+</li>
+<li>
+<p>A <code>debug</code> callback receives the commands, for example <code>core.debug</code> from
+<code>@actions/core</code></p>
+</li>
+<li>
+<p>Zero dependencies</p>
+</li>
+</ul>
+<h2 id="requirements" class="tsd-anchor-link">Requirements<a href="#requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Requires Node.js <code>^24.15.0 || &gt;=26.0.0</code> and Git on the <code>PATH</code>.</p>
+<h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Install <code>@simbo/git-exec</code> from the npm registry:</p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">i</span><span class="hl-1"> </span><span class="hl-2">@simbo/git-exec</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="usage" class="tsd-anchor-link">Usage<a href="#usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>For a complete API reference, see the
+<a href="https://simbo.de/packages/modules/_simbo_git-exec/">documentation</a>.</p>
+<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">git</span><span class="hl-1">, </span><span class="hl-4">gitBuffer</span><span class="hl-1">, </span><span class="hl-4">GitError</span><span class="hl-1">, </span><span class="hl-4">gitSucceeds</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@simbo/git-exec&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">root</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">git</span><span class="hl-1">([</span><span class="hl-2">&#39;rev-parse&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;--show-toplevel&#39;</span><span class="hl-1">], {</span><br/><span class="hl-1">  </span><span class="hl-4">cwd:</span><span class="hl-1"> </span><span class="hl-2">&#39;/path/to/repo&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">blob</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">gitBuffer</span><span class="hl-1">([</span><span class="hl-2">&#39;cat-file&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;blob&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;HEAD:image.png&#39;</span><span class="hl-1">], {</span><br/><span class="hl-1">  </span><span class="hl-4">cwd:</span><span class="hl-1"> </span><span class="hl-4">root</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">gitSucceeds</span><span class="hl-1">([</span><span class="hl-2">&#39;cat-file&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;-e&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;HEAD:README.md&#39;</span><span class="hl-1">], { </span><span class="hl-4">cwd:</span><span class="hl-1"> </span><span class="hl-4">root</span><span class="hl-1"> })) {</span><br/><span class="hl-1">  </span><span class="hl-5">// README.md exists in HEAD</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-3">try</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">git</span><span class="hl-1">([</span><span class="hl-2">&#39;switch&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;missing-branch&#39;</span><span class="hl-1">], { </span><span class="hl-4">cwd:</span><span class="hl-1"> </span><span class="hl-4">root</span><span class="hl-1"> });</span><br/><span class="hl-1">} </span><span class="hl-3">catch</span><span class="hl-1"> (</span><span class="hl-4">error</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-4">error</span><span class="hl-1"> </span><span class="hl-6">instanceof</span><span class="hl-1"> </span><span class="hl-8">GitError</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">error</span><span class="hl-1">(</span><span class="hl-4">error</span><span class="hl-1">.</span><span class="hl-4">exitCode</span><span class="hl-1">, </span><span class="hl-4">error</span><span class="hl-1">.</span><span class="hl-4">stderr</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="options" class="tsd-anchor-link">Options<a href="#options" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cwd</code></td>
+<td>The working directory of the command.</td>
+<td><code>process.cwd()</code></td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>Variables merged over <code>process.env</code>; <code>undefined</code> removes a variable.</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>maxBuffer</code></td>
+<td>The largest output in bytes on standard output or standard error.</td>
+<td>1 GiB</td>
+</tr>
+<tr>
+<td><code>debug</code></td>
+<td>A callback for the command before it runs and the reason a <code>gitSucceeds()</code> fails.</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h3 id="errors" class="tsd-anchor-link">Errors<a href="#errors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p><code>git()</code> and <code>gitBuffer()</code> reject with a <code>GitError</code> if Git cannot be started,
+exits with a non-zero code, is terminated, or exceeds <code>maxBuffer</code>. The message
+contains the command, the reason, and the standard error output.</p>
+<p><code>exitCode</code> holds the exit code when Git exited on its own. It is <code>undefined</code>
+when Git could not be started, was terminated by a signal, or was stopped for
+exceeding <code>maxBuffer</code>. Check it to tell a failed command from a Git that could
+not run:</p>
+<pre><code class="ts"><span class="hl-3">try</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">git</span><span class="hl-1">([</span><span class="hl-2">&#39;fetch&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;origin&#39;</span><span class="hl-1">], { </span><span class="hl-4">cwd:</span><span class="hl-1"> </span><span class="hl-4">root</span><span class="hl-1"> });</span><br/><span class="hl-1">} </span><span class="hl-3">catch</span><span class="hl-1"> (</span><span class="hl-4">error</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-4">error</span><span class="hl-1"> </span><span class="hl-6">instanceof</span><span class="hl-1"> </span><span class="hl-8">GitError</span><span class="hl-1"> &amp;&amp; </span><span class="hl-4">error</span><span class="hl-1">.</span><span class="hl-4">exitCode</span><span class="hl-1"> === </span><span class="hl-6">undefined</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-3">throw</span><span class="hl-1"> </span><span class="hl-4">error</span><span class="hl-1">; </span><span class="hl-5">// Git did not run to completion</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">  </span><span class="hl-5">// Git ran and reported a failure</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><code>gitSucceeds()</code> returns <code>false</code> only for a non-zero exit code. If Git cannot run
+at all, it rejects, so that a missing Git or working directory is not mistaken
+for a failed check.</p>
+<p>In GitHub Actions, pass <code>core.debug</code> to see the commands in debug logs:</p>
+<pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">debug</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@actions/core&#39;</span><span class="hl-1">;</span><br/><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">git</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@simbo/git-exec&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">head</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">git</span><span class="hl-1">([</span><span class="hl-2">&#39;rev-parse&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;HEAD&#39;</span><span class="hl-1">], { </span><span class="hl-4">debug</span><span class="hl-1"> });</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="security" class="tsd-anchor-link">Security<a href="#security" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Git runs through <code>execFile</code> without a shell, so no shell interprets the
+arguments. Git itself, however, runs commands that some options name, such as
+<code>--upload-pack</code> for <code>clone</code>, <code>fetch</code>, and <code>ls-remote</code>, or <code>-c</code> with
+<code>core.sshCommand</code>. <code>@simbo/git-exec</code> passes all arguments to Git as given and
+does not filter them.</p>
+<p>Never pass untrusted values, such as user input or data from a pull request, as
+options. Place them where Git cannot read them as options:</p>
+<ul>
+<li>after <code>--end-of-options</code> for revisions, branches, tags, and remotes</li>
+<li>after <code>--</code> for paths, with the <code>:(literal)</code> prefix to turn off pathspec magic</li>
+</ul>
+<pre><code class="ts"><span class="hl-5">// `ref` and `path` come from untrusted input</span><br/><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">git</span><span class="hl-1">([</span><br/><span class="hl-1">  </span><span class="hl-2">&#39;log&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">&#39;--oneline&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">&#39;--end-of-options&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">ref</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">&#39;--&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">`:(literal)</span><span class="hl-6">${</span><span class="hl-4">path</span><span class="hl-6">}</span><span class="hl-2">`</span><span class="hl-1">,</span><br/><span class="hl-1">]);</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="license" class="tsd-anchor-link">License<a href="#license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><a href="https://simbo.mit-license.org/2026/">MIT © Simon Lepel</a></p>
+</section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Classes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="classes">Classes<a href="#classes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="giterror"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Class"><use href="../../assets/icons.svg#icon-128"></use></svg><a href="../../classes/_simbo_git-exec.GitError/">GitError</a><a href="#giterror" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Interfaces"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="interfaces">Interfaces<a href="#interfaces" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="giterrordetails"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../../assets/icons.svg#icon-256"></use></svg><a href="../../interfaces/_simbo_git-exec.GitErrorDetails/">GitErrorDetails</a><a href="#giterrordetails" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="gitoptions"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../../assets/icons.svg#icon-256"></use></svg><a href="../../interfaces/_simbo_git-exec.GitOptions/">GitOptions</a><a href="#gitoptions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="functions">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="git"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><a href="../../functions/_simbo_git-exec.git/">git</a><a href="#git" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="gitbuffer"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><a href="../../functions/_simbo_git-exec.gitBuffer/">gitBuffer</a><a href="#gitbuffer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd><dt class="tsd-member-summary" id="gitsucceeds"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><a href="../../functions/_simbo_git-exec.gitSucceeds/">gitSucceeds</a><a href="#gitsucceeds" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#git-exec"><span>Git <wbr/>Exec</span></a>
+<ul>
+<li><a href="#features"><span>Features</span></a></li>
+<li><a href="#requirements"><span>Requirements</span></a></li>
+<li><a href="#installation"><span>Installation</span></a></li>
+<li><a href="#usage"><span>Usage</span></a></li>
+<li>
+<ul>
+<li><a href="#options"><span>Options</span></a></li>
+<li><a href="#errors"><span>Errors</span></a></li></ul></li>
+<li><a href="#security"><span>Security</span></a></li>
+<li><a href="#license"><span>License</span></a></li></ul>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Classes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>Classes</summary>
+<div><a href="#giterror"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Class"><use href="../../assets/icons.svg#icon-128"></use></svg><span>Git<wbr/>Error</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Interfaces"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>Interfaces</summary>
+<div><a href="#giterrordetails"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../../assets/icons.svg#icon-256"></use></svg><span>Git<wbr/>Error<wbr/>Details</span></a><a href="#gitoptions"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Interface"><use href="../../assets/icons.svg#icon-256"></use></svg><span>Git<wbr/>Options</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>
+<div><a href="#git"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><span>git</span></a><a href="#gitbuffer"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><span>git<wbr/>Buffer</span></a><a href="#gitsucceeds"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../../assets/icons.svg#icon-64"></use></svg><span>git<wbr/>Succeeds</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav id="tsd-sidebar-links" class="tsd-navigation"><a href="https://github.com/simbo/packages" class="tsd-nav-link">GitHub Repository</a></nav>
+<nav class="tsd-navigation"><a href="../../modules.html">Documentation for Simbo&#39;s Packages</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer>
+<p><small><a style='color:#808080' href='https://simbo.mit-license.org/2025/'>MIT &copy; Simon Lepel</a></small> — <small><a style='color:#808080' href='https://simbo.de/'>simbo.de</a></small> — <small><a style='color:#808080' href='https://github.com/simbo'>github.com/simbo</a></small></p></footer>
+<div class="overlay"></div></body></html>
