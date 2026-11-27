@@ -1,9 +1,8 @@
-import { join } from 'node:path';
-import { cwd } from 'node:process';
+import { posix, resolve, sep } from 'node:path';
+import { cwd, env } from 'node:process';
 
-import { isExecutableFile } from '@simbo/accessible';
-import { execa } from 'execa';
-import { findUp } from 'find-up';
+import { npmRunPath } from 'npm-run-path';
+import which from 'which';
 
 /**
  * Options for finding a binary executable.
@@ -21,8 +20,10 @@ export interface Options {
 /**
  * Finds the path to a binary executable.
  *
- * Currently only supports finding binaries in local `node_modules/.bin`
- * directories or globally installed binaries.
+ * Looks in the `node_modules/.bin` directories from the working directory up
+ * to the file system root first, then in the directories of the `PATH`
+ * environment variable. A name that contains a path separator is resolved
+ * against the working directory instead.
  *
  * @param name - The name of the binary to find.
  * @param options - Options for finding the binary.
@@ -41,32 +42,11 @@ export async function findBin(name: string, options: Options = {}): Promise<stri
     throw new Error('Command name must not be empty');
   }
 
-  const binPath = await findUp(
-    async (path: string) => {
-      const potentialBinPath = join(path, 'node_modules', '.bin', name);
-      return validatePotentialBinPath(potentialBinPath);
-    },
-    { cwd: workingDir },
-  );
-
-  if (binPath) {
-    return binPath;
+  if (name.includes(posix.sep) || name.includes(sep)) {
+    return (await which(resolve(workingDir, name), { nothrow: true })) ?? undefined;
   }
 
-  try {
-    const { stdout } = await execa({ cwd: workingDir })`which ${name}`;
-    return await validatePotentialBinPath(stdout.trim());
-  } catch {
-    return undefined;
-  }
-}
+  const path = npmRunPath({ cwd: workingDir, path: env.PATH ?? '', addExecPath: false });
 
-/**
- * Validates a potential binary path by checking if it is executable.
- *
- * @param path - The path to the potential binary.
- * @returns The path if it is executable, or undefined if not.
- */
-async function validatePotentialBinPath(path: string): Promise<string | undefined> {
-  return (await isExecutableFile(path)) ? path : undefined;
+  return (await which(name, { path, nothrow: true })) ?? undefined;
 }

@@ -53,20 +53,20 @@
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
   },
-  "dependencies": {
-    "@simbo/accessible": "workspace:*",
-    "execa": "^10.2.1",
-    "find-up": "^8.0.0"
-  },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.2",
+    "@types/which": "^3.0.4",
     "@vitest/coverage-v8": "^5.1.1",
     "@vitest/ui": "^5.1.1",
     "eslint": "^10.15.0",
     "jiti": "^2.7.0",
     "typescript": "^6.0.3",
     "vitest": "^5.1.1"
+  },
+  "dependencies": {
+    "npm-run-path": "^6.0.0",
+    "which": "^7.0.0"
   }
 }
