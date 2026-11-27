@@ -1,5 +1,46 @@
 # @simbo/monorepo-utils
 
+## 4.0.0
+
+### Major Changes
+
+- 17dfaec: Find the monorepo and its workspaces with `@manypkg/get-packages`.
+
+  - Workspaces of npm, pnpm, Yarn, Bun, Lerna, and Rush monorepos are detected.
+  - `workingDir` can be any directory inside the monorepo; the root is searched
+    upward from it, and paths are relative to the root.
+  - `getWorkspacePatterns()` is removed, and `getWorkspacePaths()` no longer
+    accepts `patterns`.
+  - `getPackagePathByName()` no longer accepts `concurrency` and `failOnError`,
+    and rejects if a workspace manifest cannot be read.
+  - Replace `globby`, `yaml`, and `@simbo/accessible` with
+    `@manypkg/get-packages` ^3.1.0.
+
+  Migration: npm, Yarn, and Bun workspaces are found only next to their
+  lockfile, and pnpm workspaces only with a root `package.json`. Workspace
+  directories listed in `.gitignore` are now included, and directories that
+  start with a dot are no longer included. Remove the dropped options and
+  replace `getWorkspacePatterns()` with `getWorkspacePaths()`. See "Migrating
+  from 3.x" in the README.
+
+### Minor Changes
+
+- 17dfaec: Add `findMonorepoRoot()` to find the root of the monorepo that
+  contains a directory.
+
+  - It searches the directory and its parents for a workspace configuration and
+    works in Git worktrees and for monorepos inside other repositories.
+  - It returns `undefined` if no monorepo contains the directory.
+
+### Patch Changes
+
+- 17dfaec: Read workspaces concurrently with `p-map` ^7.1.1 instead of
+  `p-queue`.
+
+  - `readWorkspaces()` reads every workspace and reports all that fail, in the
+    order of the workspaces, instead of stopping at the first failure.
+  - An invalid `concurrency` is rejected by `p-map` with a `TypeError`.
+
 ## 3.0.1
 
 ### Patch Changes

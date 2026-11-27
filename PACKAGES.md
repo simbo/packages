@@ -15,7 +15,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📂 [**`./changelog`**](https://github.com/simbo/packages/tree/main/changelog/)
 
-  📦 `packages-changelog` @ `1.8.1`
+  📦 `packages-changelog` @ `1.8.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/changelog/CHANGELOG.md)
@@ -289,7 +289,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list`](https://www.npmjs.com/package/@simbo/monorepo-packages-list)
-  @ `3.0.1`
+  @ `3.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/CHANGELOG.md)  • 
@@ -305,7 +305,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list-cli`](https://www.npmjs.com/package/@simbo/monorepo-packages-list-cli)
-  @ `3.0.1`
+  @ `3.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/CHANGELOG.md)  • 
@@ -320,7 +320,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-utils`](https://www.npmjs.com/package/@simbo/monorepo-utils)
-  @ `3.0.1`
+  @ `4.0.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/CHANGELOG.md)  • 

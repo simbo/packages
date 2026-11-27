@@ -1,5 +1,22 @@
 # @simbo/monorepo-packages-list
 
+## 3.0.2
+
+### Patch Changes
+
+- 17dfaec: Find the workspaces with `@simbo/monorepo-utils` 4.
+
+  - npm workspaces are found only next to a `package-lock.json`, and pnpm
+    workspaces only with a root `package.json`.
+  - Workspace directories listed in `.gitignore` are now listed, and directories
+    that start with a dot are no longer listed.
+  - See "Migrating from 3.x" in the README of `@simbo/monorepo-utils`.
+
+- Updated dependencies [17dfaec]
+- Updated dependencies [17dfaec]
+- Updated dependencies [17dfaec]
+  - @simbo/monorepo-utils@4.0.0
+
 ## 3.0.1
 
 ### Patch Changes
