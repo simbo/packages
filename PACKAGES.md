@@ -74,7 +74,7 @@ There are currently _**32**_ packages managed in this repository:
   📂
   [**`./packages/clirk`**](https://github.com/simbo/packages/tree/main/packages/clirk/)
 
-  📦 [`@simbo/clirk`](https://www.npmjs.com/package/@simbo/clirk) @ `3.0.0`
+  📦 [`@simbo/clirk`](https://www.npmjs.com/package/@simbo/clirk) @ `3.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/clirk/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/clirk/CHANGELOG.md)  • 
@@ -167,7 +167,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📦
   [`@simbo/find-up-package`](https://www.npmjs.com/package/@simbo/find-up-package)
-  @ `3.0.0`
+  @ `3.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-up-package/CHANGELOG.md)  • 
@@ -304,7 +304,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list`](https://www.npmjs.com/package/@simbo/monorepo-packages-list)
-  @ `3.0.2`
+  @ `3.0.3`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list/CHANGELOG.md)  • 
@@ -320,7 +320,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list-cli`](https://www.npmjs.com/package/@simbo/monorepo-packages-list-cli)
-  @ `3.0.4`
+  @ `3.0.5`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/CHANGELOG.md)  • 
@@ -335,7 +335,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-utils`](https://www.npmjs.com/package/@simbo/monorepo-utils)
-  @ `4.0.0`
+  @ `4.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-utils/CHANGELOG.md)  • 
@@ -349,7 +349,7 @@ There are currently _**32**_ packages managed in this repository:
   [**`./packages/package-json`**](https://github.com/simbo/packages/tree/main/packages/package-json/)
 
   📦 [`@simbo/package-json`](https://www.npmjs.com/package/@simbo/package-json)
-  @ `2.0.0`
+  @ `2.1.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/package-json/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/package-json/CHANGELOG.md)  • 

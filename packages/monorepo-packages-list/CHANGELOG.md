@@ -1,5 +1,11 @@
 # @simbo/monorepo-packages-list
 
+## 3.0.3
+
+### Patch Changes
+
+- @simbo/monorepo-utils@4.0.1
+
 ## 3.0.2
 
 ### Patch Changes

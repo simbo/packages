@@ -1,7 +1,7 @@
 {
   "name": "@simbo/package-json",
   "description": "A set of utilities for working with package.json files.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "keywords": [
     "package.json",
     "npm",

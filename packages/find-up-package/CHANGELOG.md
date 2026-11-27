@@ -1,5 +1,13 @@
 # @simbo/find-up-package
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [5a6906f]
+- Updated dependencies [5a6906f]
+  - @simbo/package-json@2.1.0
+
 ## 3.0.0
 
 ### Major Changes

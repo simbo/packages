@@ -1,5 +1,13 @@
 # @simbo/monorepo-packages-list-cli
 
+## 3.0.5
+
+### Patch Changes
+
+- @simbo/monorepo-utils@4.0.1
+  - @simbo/clirk@3.0.1
+  - @simbo/monorepo-packages-list@3.0.3
+
 ## 3.0.4
 
 ### Patch Changes
