@@ -38,6 +38,19 @@ describe(
       expect(result).toBeDefined();
     });
 
+    it('should report sync Node.js APIs unless a disable comment justifies them', async () => {
+      const result: unknown = await execFileAsync(
+        ESLINT,
+        ['--config', 'eslint-node-recommended.config.ts', '--format', 'json', 'no-sync.ts'],
+        { cwd: MOCKS_PATH },
+      ).catch((error: unknown) => error);
+      expect(result).toMatchObject({ code: 1 });
+      const [report] = JSON.parse((result as { stdout: string }).stdout) as {
+        messages: { ruleId: string | null; line: number }[];
+      }[];
+      expect(report.messages.map(({ ruleId, line }) => ({ ruleId, line }))).toEqual([{ ruleId: 'n/no-sync', line: 5 }]);
+    });
+
     it('should not fail on using configs.browser.recommended', async () => {
       const result = await testConfig('browser-recommended');
       expect(result).toBeDefined();
