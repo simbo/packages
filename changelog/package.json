@@ -1,6 +1,6 @@
 {
   "name": "packages-changelog",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "A meta package holding the changelog for this monorepo.",
   "repository": {
     "type": "git",

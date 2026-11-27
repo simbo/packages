@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**31**_ packages managed in this repository:
+There are currently _**32**_ packages managed in this repository:
 
 - ### **Simbo's Packages — Changelog**
 
@@ -15,7 +15,7 @@ There are currently _**31**_ packages managed in this repository:
 
   📂 [**`./changelog`**](https://github.com/simbo/packages/tree/main/changelog/)
 
-  📦 `packages-changelog` @ `1.8.3`
+  📦 `packages-changelog` @ `1.8.4`
 
   [README.md](https://github.com/simbo/packages/blob/main/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/changelog/CHANGELOG.md)
@@ -217,6 +217,20 @@ There are currently _**31**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-exec/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-exec/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_git-exec/)
+
+- ### **Git Fixture**
+
+  > Create temporary Git repositories with a neutral configuration for tests.
+
+  📂
+  [**`./packages/git-fixture`**](https://github.com/simbo/packages/tree/main/packages/git-fixture/)
+
+  📦 [`@simbo/git-fixture`](https://www.npmjs.com/package/@simbo/git-fixture) @
+  `1.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_git-fixture/)
 
 - ### **Globby Has Matches**
 
