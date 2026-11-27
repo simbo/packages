@@ -1,79 +1,52 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { mkdtemp, realpath, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { readPackageJson } from './read-package-json.js';
 
-vi.mock('node:fs/promises', () => ({
-  readFile: vi.fn(),
-}));
+describe('readPackageJson()', () => {
+  let dir: string;
 
-vi.mock('node:path', async () => {
-  const actual = await vi.importActual<typeof import('node:path')>('node:path');
-  return {
-    resolve: vi.fn().mockImplementation((...args: string[]) => actual.resolve(...args)),
-    basename: vi.fn().mockImplementation((path: string) => actual.basename(path)),
-  };
-});
-
-vi.mock('node:process', () => ({
-  cwd: vi.fn().mockReturnValue('/cwd'),
-}));
-
-const { readFile } = vi.mocked(await import('node:fs/promises'));
-const { resolve, basename } = vi.mocked(await import('node:path'));
-const { cwd } = vi.mocked(await import('node:process'));
-
-describe('readPackageJson', () => {
-  let pkg: Record<string, unknown>;
-
-  beforeEach(() => {
-    pkg = { name: 'mocked-package' };
-    readFile.mockResolvedValue(JSON.stringify(pkg));
+  beforeEach(async () => {
+    const tempDir = await mkdtemp(join(tmpdir(), 'package-json-read-'));
+    dir = await realpath(tempDir);
   });
 
-  it('returns the package.json object from the current working directory', async () => {
-    const result = await readPackageJson();
-
-    expect(result).toEqual(pkg);
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(basename).toHaveBeenCalledTimes(1);
-    expect(resolve).toHaveBeenCalledTimes(1);
-    expect(resolve).toHaveBeenCalledWith('/cwd', 'package.json');
-    expect(readFile).toHaveBeenCalledTimes(1);
-    expect(readFile).toHaveBeenCalledWith('/cwd/package.json', 'utf8');
+  afterEach(async () => {
+    await rm(dir, { recursive: true, force: true });
   });
 
-  it('returns the package.json object from the given directory path', async () => {
-    const result = await readPackageJson('/path/to');
+  it('reads the package.json in a directory', async () => {
+    await writeFile(join(dir, 'package.json'), '{ "name": "pkg", "version": "1.0.0" }\n');
 
-    expect(result).toEqual(pkg);
-    expect(cwd).not.toHaveBeenCalled();
-    expect(basename).toHaveBeenCalledTimes(1);
-    expect(resolve).toHaveBeenCalledTimes(1);
-    expect(resolve).toHaveBeenCalledWith('/path/to', 'package.json');
-    expect(readFile).toHaveBeenCalledTimes(1);
-    expect(readFile).toHaveBeenCalledWith('/path/to/package.json', 'utf8');
+    expect(await readPackageJson(dir)).toEqual({ name: 'pkg', version: '1.0.0' });
   });
 
-  it('returns the package.json object from the given file path', async () => {
-    const result = await readPackageJson('/path/to/package.json');
+  it('reads the package.json at a file path', async () => {
+    await writeFile(join(dir, 'package.json'), '{ "name": "pkg" }\n');
 
-    expect(result).toEqual(pkg);
-    expect(cwd).not.toHaveBeenCalled();
-    expect(basename).toHaveBeenCalledTimes(1);
-    expect(resolve).not.toHaveBeenCalled();
-    expect(readFile).toHaveBeenCalledTimes(1);
-    expect(readFile).toHaveBeenCalledWith('/path/to/package.json', 'utf8');
+    expect(await readPackageJson(join(dir, 'package.json'))).toEqual({ name: 'pkg' });
   });
 
-  it('should throw an error if readFile fails', async () => {
-    readFile.mockRejectedValue(new Error('readFile Error'));
+  it('does not normalize the content', async () => {
+    await writeFile(join(dir, 'package.json'), '{ "name": " pkg ", "repository": "user/repo" }\n');
 
-    await expect(readPackageJson()).rejects.toThrow(/^Failed to read package.json: readFile Error/);
+    expect(await readPackageJson(dir)).toEqual({ name: ' pkg ', repository: 'user/repo' });
   });
 
-  it('should throw an error if the package.json is invalid', async () => {
-    readFile.mockResolvedValue('invalid json');
+  it('rejects a missing file', async () => {
+    const rejection = await readPackageJson(dir).catch((error: unknown) => error);
 
-    await expect(readPackageJson()).rejects.toThrow(/^Failed to read package.json: Unexpected token/);
+    expect(rejection).toBeInstanceOf(Error);
+    expect((rejection as Error).message).toMatch(/^Failed to read package\.json: .*ENOENT/);
+    expect((rejection as Error).cause).toHaveProperty('code', 'ENOENT');
+  });
+
+  it('rejects invalid JSON', async () => {
+    await writeFile(join(dir, 'package.json'), 'invalid json');
+
+    await expect(readPackageJson(dir)).rejects.toThrow(/^Failed to read package\.json: Unexpected token/);
   });
 });
