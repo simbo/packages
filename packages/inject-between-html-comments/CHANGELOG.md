@@ -1,5 +1,32 @@
 # @simbo/inject-between-html-comments
 
+## 3.0.0
+
+### Major Changes
+
+- 19c8dc1: Require Node.js ^24.15.0 || >=26.0.0 across all packages, as Node.js
+  22 reaches its end of life on 2027-04-30.
+
+  - Remove `^22.22.2` from `engines.node` in every package.
+  - Update the requirements in the package READMEs.
+
+  Node.js 22 is no longer supported. Upgrade to Node.js ^24.15.0 or >=26.0.0
+  before updating these packages.
+
+### Patch Changes
+
+- 19c8dc1: Replace `escape-string-regexp` with the built-in `RegExp.escape()`.
+
+  - Remove the runtime dependency `escape-string-regexp`.
+  - Comment texts with special characters match as before.
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
 ## 2.0.1
 
 ### Patch Changes

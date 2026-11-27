@@ -1,55 +1,63 @@
-# Builds the TypeDoc pages and deploys them to the gh-pages branch, after each
-# release commit or on manual request.
+# Builds the TypeDoc pages of a release commit and deploys them to the gh-pages
+# branch. Dispatched by the release workflow for every release commit; manual
+# runs are skipped.
 
 name: Docs 📘
 
 on:
-  repository_dispatch:
-    types:
-      - release-commit-created
   workflow_dispatch:
     inputs:
-      ref:
-        description: Ref
+      sha:
+        description: 'Full SHA of the release commit (set by "Release")'
         required: false
-        default: 'main'
+        default: ''
+      commit:
+        description: 'Short SHA of the release commit (set by "Release")'
+        required: false
+        default: ''
+      subject:
+        description: 'Subject of the release commit (set by "Release")'
+        required: false
+        default: ''
 
 run-name: >
   ${{
-    format(
-      '{0} {1}',
-      github.workflow,
-      github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
-    )
+    inputs.commit != ''
+      && format('{0} {1} "{2}"', github.workflow, inputs.commit, inputs.subject)
+      || github.workflow
   }}
 
 concurrency:
   cancel-in-progress: false
-  group: >
-    ${{
-      format(
-        '{0}--{1}',
-        github.workflow,
-        github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref
-      )
-    }}
+  group: ${{ github.workflow }}
 
 permissions: {}
 
-env:
-  REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.ref || github.event.inputs.ref }}
-
 jobs:
   docs:
+    # Only the dispatch by the release workflow deploys; a manual run is
+    # skipped. A re-run keeps the actor of the original run.
+    if: github.ref == 'refs/heads/main' && github.actor == 'github-actions[bot]'
     runs-on: ubuntu-latest
     permissions:
       # push to the gh-pages branch with GITHUB_TOKEN
       contents: write
     steps:
+      - name: 🔎 Check the Commit
+        env:
+          SHA: ${{ inputs.sha }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error title=Invalid Commit::Expected the full SHA of the release commit."
+            exit 1
+          fi
+
+      # Builds the release commit, not the current main.
       - name: 🛎️ Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ env.REF }}
+          ref: ${{ inputs.sha }}
           persist-credentials: false
 
       - name: 🚚 Setup pnpm and Node.js
@@ -57,10 +65,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: true
-          install: false
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
+          require-lockfile: true
 
       - name: 👷‍♂️ Build Packages
         run: pnpm run each:build

@@ -1,4 +1,4 @@
 {
   "extends": "@simbo/tsconfig/node",
-  "include": ["file.ts"]
+  "include": ["file.ts", "no-sync.ts"]
 }

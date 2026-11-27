@@ -1,5 +1,6 @@
 # Publishes the verified tarball of a published GitHub release to npm, with
 # trusted publishing (OIDC) and provenance. Nothing is rebuilt or repacked.
+# Releases whose packed manifest is private are verified and skipped.
 
 name: Publish 🚛
 
@@ -9,8 +10,8 @@ on:
       - published
   workflow_dispatch:
     inputs:
-      workspace:
-        description: 'Workspace folder (e.g. "my-pkg")'
+      name:
+        description: 'Package name (e.g. "@simbo/my-pkg")'
         type: string
         required: true
       version:
@@ -19,25 +20,25 @@ on:
         required: true
 
 env:
-  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.workspace, inputs.version) || github.event.release.tag_name }}
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.name, inputs.version) || github.event.release.tag_name }}
 
 run-name: >
   ${{ format('{0} {1}', github.workflow,
     github.event_name == 'workflow_dispatch'
-      && format('{0}/v{1}', inputs.workspace, inputs.version) || github.event.release.tag_name) }}
+      && format('{0}/v{1}', inputs.name, inputs.version) || github.event.release.tag_name) }}
 
 concurrency:
   cancel-in-progress: false
   group: >
     ${{ format('{0}--{1}', github.workflow,
       github.event_name == 'workflow_dispatch'
-        && format('{0}/v{1}', inputs.workspace, inputs.version) || github.event.release.tag_name) }}
+        && format('{0}/v{1}', inputs.name, inputs.version) || github.event.release.tag_name) }}
 
 permissions: {}
 
 jobs:
   publish:
-    if: ${{ github.event_name == 'workflow_dispatch' || (!github.event.release.prerelease && !startsWith(github.event.release.tag_name, 'changelog/')) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || !github.event.release.prerelease }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -55,16 +56,11 @@ jobs:
           node-version-file: .nvmrc
           install: false
 
-      - name: 🧾 Validate Package Identity
+      - name: 🧾 Parse Package Identity
         id: package
-        run: node scripts/release-package.js metadata "$RELEASE_TAG"
-
-      - name: 🔒 Skip Private Package
-        if: ${{ steps.package.outputs.private == 'true' }}
-        run: echo '::notice title=Private Package::Skipping npm publish for a private workspace.'
+        run: node scripts/release-package.js parse "$RELEASE_TAG"
 
       - name: 📥 Download Published Release Archive
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -86,11 +82,11 @@ jobs:
           gh release download "$RELEASE_TAG" --pattern "$ASSET_NAME" --pattern SHA256SUMS --dir "$RUNNER_TEMP/package-release"
 
       - name: 🔐 Verify Archive Identity and Checksum
-        if: ${{ steps.package.outputs.private == 'false' }}
+        id: archive
         run: node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
 
       - name: 🚛 Publish Verified Tarball to npm
-        if: ${{ steps.package.outputs.private == 'false' }}
+        if: ${{ steps.archive.outputs.private != 'true' }}
         env:
           ASSET_NAME: ${{ steps.package.outputs.asset }}
         run: pnpm publish "$RUNNER_TEMP/package-release/$ASSET_NAME" --no-git-checks --access public --provenance

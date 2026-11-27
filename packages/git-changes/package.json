@@ -1,7 +1,7 @@
 {
   "name": "@simbo/git-changes",
   "description": "A library to read, parse and provide Git changes information from `git status` for a local repository.",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "keywords": [
     "git",
     "changes",
@@ -17,10 +17,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/git-changes",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/git-changes"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {

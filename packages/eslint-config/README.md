@@ -22,7 +22,7 @@ you do not need to add them separately.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 ## Installation
 
@@ -44,6 +44,23 @@ Its naming and class-ordering checks do not override the existing TypeScript
 conventions, and it does not require `Temporal` or `RegExp.escape()`. The
 Node.js requirement above applies to running the linter, not to the code being
 linted.
+
+## Versioning
+
+This package follows Semantic Versioning for its own changes. A release that can
+make a previously passing lint run fail is a major release.
+
+- **Major:** enables a rule, makes a rule option or severity stricter, removes a
+  preset or export, or drops support for a Node.js or ESLint version.
+- **Minor:** cannot add lint errors, for example a rule turned off, a relaxed
+  option, or a new preset or export.
+- **Patch:** documentation and internal changes that do not affect which errors
+  are reported.
+
+The bundled plugins are dependencies with caret ranges, so their own minor
+releases reach your project without a release of this package. Upstream minor
+releases can report new errors, for example after a bug fix. Use a lockfile to
+keep a lint build stable until you update on purpose.
 
 ## Usage
 
@@ -128,6 +145,14 @@ Each of the following supersets extends curated third-party configurations:
   ```ts
   import { nConfigs } from '@simbo/eslint-config/n';
   ```
+
+  Reports synchronous Node.js APIs with `n/no-sync`. Where a sync call is
+  required, disable the rule for that line and name the reason:
+  `// eslint-disable-next-line n/no-sync -- <reason>`.
+
+  The Node.js version checks read `engines.node` from the nearest
+  `package.json`. Without it, they assume `>=16.0.0` and report newer APIs such
+  as `import.meta.dirname`, so set `engines` in every linted package.
 
 - **Superset of [`eslint-config-prettier`]**  
   _Exported as_ [`prettierConfigs`]

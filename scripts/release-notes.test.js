@@ -1,13 +1,15 @@
-import { spawnSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { execFile } from 'node:child_process';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import process from 'node:process';
+import { promisify } from 'node:util';
 
 import { expect, test } from 'vitest';
 
 import { createReleaseNotes } from './release-notes.js';
 
+const execFileAsync = promisify(execFile);
 const script = new URL('release-notes.js', import.meta.url);
 
 /**
@@ -25,36 +27,35 @@ const cases = [
 ];
 
 for (const scenario of cases) {
-  test(`release notes preserve ${scenario.title}`, () => {
-    const directory = mkdtempSync(join(tmpdir(), 'release-notes-'));
+  test(`release notes preserve ${scenario.title}`, async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'release-notes-'));
     try {
-      mkdirSync(join(directory, 'packages/example'), { recursive: true });
-      mkdirSync(join(directory, 'package-release'));
-      writeFileSync(
-        join(directory, 'packages/example/CHANGELOG.md'),
+      await mkdir(join(directory, 'changelog'), { recursive: true });
+      await writeFile(
+        join(directory, 'changelog/CHANGELOG.md'),
         `# Example\n\n## 1.2.3\n${scenario.body}## 1.2.2\n\n- older entry\n`,
       );
-      const result = spawnSync(process.execPath, [script.pathname], {
+      const result = execFileAsync(process.execPath, [script.pathname], {
         cwd: directory,
         encoding: 'utf8',
         env: {
           ...process.env,
-          RELEASE_TAG: 'example/v1.2.3',
+          RELEASE_TAG: 'packages-changelog/v1.2.3',
+          PACKAGE_DIR: 'changelog',
           RUNNER_TEMP: directory,
         },
       });
       if (scenario.failure) {
-        expect(result.status).not.toBe(0);
-        expect(result.stderr).toMatch(/Missing Release Notes/);
+        await expect(result).rejects.toThrow(/Missing Release Notes/);
       } else {
-        expect(result.status, result.stderr).toBe(0);
-        const notes = readFileSync(join(directory, 'package-release/RELEASE_NOTES.md'), 'utf8');
+        await result;
+        const notes = await readFile(join(directory, 'package-release/RELEASE_NOTES.md'), 'utf8');
         const body = notes.slice(notes.indexOf('\n\n') + '\n\n'.length);
         expect(body).toBe(`${scenario.expected ?? ''}\n`);
         expect(body).not.toContain('older entry');
       }
     } finally {
-      rmSync(directory, { recursive: true, force: true });
+      await rm(directory, { recursive: true, force: true });
     }
   });
 }

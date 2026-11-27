@@ -8,7 +8,7 @@ A shared [commitlint](https://commitlint.js.org/) configuration based on the
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 Use `@commitlint/cli` ^21.2.3 with this configuration.
 

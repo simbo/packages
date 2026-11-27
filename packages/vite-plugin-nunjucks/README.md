@@ -39,7 +39,7 @@ The plugin adds no Nunjucks runtime to your browser bundle.
 
 ## Requirements
 
-- Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`
+- Node.js `^24.15.0 || >=26.0.0`
 - Vite `^8.3.1`
 - An ESM Vite configuration
 

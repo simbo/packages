@@ -1,18 +1,20 @@
-# Builds and packs the package of a release tag and publishes a complete GitHub
-# release with the tarball and its checksum. The release is published with the
-# app token, so that it triggers the publish workflow.
+# Builds and packs the workspace of a release tag <name>/v<version> and
+# publishes a complete GitHub release with the tarball and its checksum, for
+# every workspace, private ones included. The release is published with the app
+# token, so that it triggers the publish workflow. Only packages-changelog
+# releases become the latest release.
 
 name: GitHub Release 🎁
 
 on:
   push:
     tags:
-      - '*/v*.*.*'
-      - '!changelog/v*'
+      # package names may contain a scope, so tags contain one or two slashes
+      - '**/v*.*.*'
   workflow_dispatch:
     inputs:
-      workspace:
-        description: 'Workspace folder (e.g. "my-pkg")'
+      name:
+        description: 'Package name (e.g. "@simbo/my-pkg")'
         type: string
         required: true
       version:
@@ -21,19 +23,19 @@ on:
         required: true
 
 env:
-  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name }}
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('{0}/v{1}', inputs.name, inputs.version) || github.ref_name }}
 
 run-name: >
   ${{ format('{0} {1}', github.workflow,
     github.event_name == 'workflow_dispatch'
-      && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name) }}
+      && format('{0}/v{1}', inputs.name, inputs.version) || github.ref_name) }}
 
 concurrency:
   cancel-in-progress: false
   group: >
     ${{ format('{0}--{1}', github.workflow,
       github.event_name == 'workflow_dispatch'
-        && format('{0}/v{1}', inputs.workspace, inputs.version) || github.ref_name) }}
+        && format('{0}/v{1}', inputs.name, inputs.version) || github.ref_name) }}
 
 permissions: {}
 
@@ -57,28 +59,21 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: true
-          install: false
+          require-lockfile: true
 
       - name: 🧾 Validate Package Identity
         id: package
-        run: node scripts/release-package.js metadata "$RELEASE_TAG"
-
-      - name: 🔒 Skip Private Package
-        if: ${{ steps.package.outputs.private == 'true' }}
-        run: echo '::notice title=Private Package::Skipping GitHub release for a private workspace.'
-
-      - name: 📦 Install Dependencies
-        if: ${{ steps.package.outputs.private == 'false' }}
-        run: pnpm install --frozen-lockfile
+        run: |
+          set -euo pipefail
+          pnpm exec turbo run build --filter='@simbo/monorepo-utils'
+          node scripts/release-package.js metadata "$RELEASE_TAG"
 
       - name: 👷 Build Package
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           PACKAGE_NAME: ${{ steps.package.outputs.name }}
         run: pnpm exec turbo run build --filter="$PACKAGE_NAME"
 
       - name: 📦 Pack and Verify Release Archive
-        if: ${{ steps.package.outputs.private == 'false' }}
         env:
           PACKAGE_NAME: ${{ steps.package.outputs.name }}
           ASSET_NAME: ${{ steps.package.outputs.asset }}
@@ -90,12 +85,12 @@ jobs:
           node scripts/release-package.js verify "$RELEASE_TAG" "$RUNNER_TEMP/package-release"
 
       - name: 📝 Prepare Release Notes
-        if: ${{ steps.package.outputs.private == 'false' }}
+        env:
+          PACKAGE_DIR: ${{ steps.package.outputs.dir }}
         run: node scripts/release-notes.js
 
       - name: 🔑 Get App Token
         id: app-token
-        if: ${{ steps.package.outputs.private == 'false' }}
         uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
         with:
           client-id: ${{ vars.SIMBO_GITHUB_APP_CLIENT_ID }}
@@ -105,7 +100,6 @@ jobs:
       # Creates a draft, uploads the assets, and publishes the release only when
       # it is complete. A re-run after publishing ends without changes.
       - name: 🎁 Create GitHub Release
-        if: ${{ steps.package.outputs.private == 'false' }}
         uses: simbo-actions/staged-release@a5fc19e8ec37e057512cd030959f53feb7da837d # v1.0.3
         with:
           token: ${{ steps.app-token.outputs.token }}
@@ -116,5 +110,5 @@ jobs:
           assets: |
             ${{ steps.package.outputs.asset }}
             SHA256SUMS
-          make-latest: 'false'
+          make-latest: ${{ steps.package.outputs.name == 'packages-changelog' && 'true' || 'false' }}
           if-released: skip

@@ -6,12 +6,6 @@ import type { ConfigsRecord } from '../configs-record.interface.js';
 const recommended = defineConfig({
   extends: [eslintPluginNode.configs['flat/recommended']],
   rules: {
-    'n/no-unsupported-features/node-builtins': [
-      'error',
-      {
-        ignores: ['import.meta.dirname'],
-      },
-    ],
     'n/no-missing-import': [
       'error',
       {
@@ -19,6 +13,8 @@ const recommended = defineConfig({
         ignoreTypeImport: true,
       },
     ],
+    // Async APIs are the default; justify each sync call with a disable comment.
+    'n/no-sync': 'error',
     'n/hashbang': [
       'error',
       {

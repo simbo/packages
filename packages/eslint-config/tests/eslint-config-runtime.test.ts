@@ -1,11 +1,14 @@
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
+import { promisify } from 'node:util';
 
 import { describe, expect, it } from 'vitest';
 
 const PKG_ROOT = dirname(import.meta.dirname);
 const MOCKS_PATH = resolve(PKG_ROOT, 'mocks');
 const ESLINT = resolve(PKG_ROOT, 'node_modules/.bin/eslint');
+
+const execFileAsync = promisify(execFile);
 
 /**
  * A test function to validate the ESLint configs during runtime.
@@ -15,13 +18,10 @@ const ESLINT = resolve(PKG_ROOT, 'node_modules/.bin/eslint');
  */
 async function testConfig(configName: string): Promise<string> {
   try {
-    const output = await new Promise<string>((res, rej) => {
-      exec(`${ESLINT} --config eslint-${configName}.config.ts file.ts`, { cwd: MOCKS_PATH }, (error, stdout) => {
-        if (error) rej(error);
-        else res(stdout.trim());
-      });
+    const { stdout } = await execFileAsync(ESLINT, ['--config', `eslint-${configName}.config.ts`, 'file.ts'], {
+      cwd: MOCKS_PATH,
     });
-    return output;
+    return stdout.trim();
   } catch (error) {
     throw new Error(`ESLint failed for ${configName}: ${error as Error}`, { cause: error });
   }
@@ -36,6 +36,19 @@ describe(
     it('should not fail on using configs.node.recommended', async () => {
       const result = await testConfig('node-recommended');
       expect(result).toBeDefined();
+    });
+
+    it('should report sync Node.js APIs unless a disable comment justifies them', async () => {
+      const result: unknown = await execFileAsync(
+        ESLINT,
+        ['--config', 'eslint-node-recommended.config.ts', '--format', 'json', 'no-sync.ts'],
+        { cwd: MOCKS_PATH },
+      ).catch((error: unknown) => error);
+      expect(result).toMatchObject({ code: 1 });
+      const [report] = JSON.parse((result as { stdout: string }).stdout) as {
+        messages: { ruleId: string | null; line: number }[];
+      }[];
+      expect(report.messages.map(({ ruleId, line }) => ({ ruleId, line }))).toEqual([{ ruleId: 'n/no-sync', line: 5 }]);
     });
 
     it('should not fail on using configs.browser.recommended', async () => {

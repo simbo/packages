@@ -1,8 +1,9 @@
 # Maintaining
 
 Runbooks for recurring maintenance. Each runbook links the documents that hold
-the details instead of repeating them. Run `pnpm run preflight` before every
-merge or push to `main` and fix what it reports.
+the details instead of repeating them. `main` accepts changes only through
+squash-merged pull requests. Run `pnpm run preflight` before opening or merging
+a pull request and fix what it reports.
 
 ## GitHub Actions Updates
 
@@ -41,7 +42,28 @@ cooldown of 7 days.
 3. Run `pnpm install` and `pnpm run preflight`.
 4. Write changesets as described in "Writing Changesets" in
    [README.md](README.md): a package changeset for runtime dependencies of a
-   published package, a `changelog` changeset for development dependencies.
+   published package, a `packages-changelog` changeset for development
+   dependencies.
+
+## Security Alerts
+
+Dependabot security updates try to fix vulnerable npm dependencies in the
+lockfile. When no update is possible because a dependent pins the vulnerable
+range, assess the risk, record an exception below, and dismiss the alert on
+GitHub with the same reason.
+
+- `minimatch` 10
+  ([GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)) is
+  accepted until 2026-12-31. `typedoc` 0.28.20 requires `^10.2.5` and uses
+  `matchOne()`, which minimatch 11 removes, so an override would break the docs.
+  Here it only runs in linting and the docs build, with glob patterns from this
+  repository's configuration. Remove the exception when `typedoc` supports
+  minimatch 11 and `typescript-eslint` is updated to 8.73.0 or newer.
+
+CodeQL code scanning reports findings in the code itself, test code included.
+Fix them in the code where possible; a merge to `main` closes the alert. Dismiss
+an alert only with an exception recorded in this section and the same reason on
+GitHub.
 
 ## Node.js Versions
 
@@ -50,9 +72,7 @@ release line starts or reaches its end of life.
 
 - `engines` in every `package.json` lists the release lines that Node.js still
   maintains. Dropping a line is a breaking change for every published package.
-- `@types/node` follows the lowest supported major. It stays on 24 until Node.js
-  22 reaches its end of life (2027-04-30), because its `undici-types` dependency
-  fails the pnpm trust policy.
+- `@types/node` follows the lowest supported major.
 - `.nvmrc` holds the current Active LTS release. The workflows read it through
   `node-version-file`.
 - Update the requirements in [README.md](README.md) together with these files.
@@ -71,11 +91,89 @@ Releases run automatically when changesets reach `main`; see "Releases" in
 [README.md](README.md). For first publishes, trusted publishing and retries, see
 [NPM_PUBLISHING.md](NPM_PUBLISHING.md).
 
-After a release, confirm that the Release, GitHub Release and Publish workflows
-passed for every bumped package.
+After a release, confirm that the Release, GitHub Release, Publish and Docs
+workflows passed for every bumped package. Retry a failed Release or Docs run
+with "Re-run"; a run started by hand is skipped.
+
+## Deprecating a Package
+
+A deprecated package gets a final release with a deprecation notice and is then
+removed from the monorepo. This takes two pull requests: `changeset version`
+fails for changesets of a package that no longer exists, and the final release
+must be built from a tag that still contains it.
+
+1. Find internal users and replace them, including development dependencies,
+   configurations and examples in other packages:
+
+   ```bash
+   git grep -n '<package-name>' -- ':!packages/<workspace>/' ':!pnpm-lock.yaml'
+   ```
+
+   Ignore the generated `PACKAGES.md`. A replacement that changes a published
+   package needs its own package changeset.
+
+2. Open the first pull request for the final release of the package:
+   - Add a deprecation notice with the replacement and a migration example to
+     the top of its `README.md`, and replace the API documentation link: the
+     TypeDoc pages of the package disappear with the removal.
+   - Mark its public functions as `@deprecated` in JSDoc, and disable
+     `@typescript-eslint/no-deprecated` in their tests.
+   - Start the `description` in `package.json` with `Deprecated:`.
+   - Point `homepage` in `package.json` and the repository links in its
+     `README.md` to the tag of the final release
+     (`tree/<package-name>/v<version>`), because `main` will no longer contain
+     the package.
+   - Add a patch changeset for the package that names the replacement, as
+     described in "Writing Changesets" in [README.md](README.md).
+
+3. After the merge, confirm that the Release, GitHub Release and Publish
+   workflows passed and that npm serves the final version:
+
+   ```bash
+   npm view <package-name> version
+   ```
+
+4. The owner deprecates all published versions on npm and removes the trusted
+   publisher of the package in its npm settings (see
+   [NPM_PUBLISHING.md](NPM_PUBLISHING.md)):
+
+   ```bash
+   npm deprecate '<package-name>' '<message with the replacement>'
+   ```
+
+5. Open the second pull request to remove the workspace:
+   - Make sure that no pending changeset in `.changeset/` names the package.
+   - Delete `packages/<workspace>/` and update the lockfile. Remove the
+     workspace state first, otherwise `pnpm install` reports "Already up to
+     date" and keeps the importer of the deleted workspace, which
+     `--frozen-lockfile` does not detect:
+
+     ```bash
+     rm -rf packages/<workspace> node_modules/.pnpm-workspace-state*.json
+     pnpm install
+     git grep -n 'packages/<workspace>:' -- pnpm-lock.yaml
+     ```
+
+     The last command must find nothing.
+
+   - Run `pnpm run packages-list` to update `PACKAGES.md` and the package count
+     in [README.md](README.md). Run it in a regular clone: in a Git worktree it
+     updates the files of the main checkout instead.
+   - Add a changeset for the private `packages-changelog` package.
+
+   The Turbo layer tag, the boundaries check, Vitest and the release scripts
+   find workspaces through the workspace patterns, TypeDoc through the
+   `packages/*` glob; none of them needs a change. Search the root
+   configurations and `.github/` for the workspace name to be sure.
+
+6. Keep the tags `<package-name>/v*` and their GitHub releases. They document
+   the published versions, and the publish workflow needs them for retries.
+   After the merge, confirm that the Docs workflow removed the TypeDoc pages of
+   the package.
 
 ## Exceptions
 
 An exception to a rule, such as an ignored finding or a held back dependency,
 needs a reason and an expiry date. Record it next to the rule it affects, as
-done for `@types/node` above, and remove it when it expires.
+done for `minimatch` in [Security Alerts](#security-alerts), and remove it when
+it expires.

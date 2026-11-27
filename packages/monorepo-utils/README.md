@@ -18,7 +18,8 @@ with package manifests.
 
 - Validate and parse workspaces' `package.json` files
 
-- Extract metadata such as name, version, description, and README title
+- Extract metadata such as name, version, description, and the README title as
+  plain text
 
 - Manage concurrency when scanning large monorepos
 
@@ -26,7 +27,7 @@ with package manifests.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 ## Installation
 

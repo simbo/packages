@@ -50,7 +50,7 @@ export interface WorkspaceMetadata {
   readme: string;
 
   /**
-   * The H1 title of the workspace's README.md file.
+   * The H1 title of the workspace's README.md file as plain text, without images, HTML tags, links, and formatting.
    */
   title: string;
 }

@@ -5,7 +5,7 @@ import {
   type WorkspaceMetadata,
 } from './packages/monorepo-packages-list-cli/dist/index.js';
 
-const PACKAGES_EXCLUDED_FROM_DOCS = new Set(['changelog', 'tsconfig']);
+const PACKAGES_EXCLUDED_FROM_DOCS = new Set(['packages-changelog', '@simbo/tsconfig']);
 
 export default defineConfig([
   {
@@ -21,7 +21,7 @@ export default defineConfig([
     targetFile: 'PACKAGES.md',
 
     templateFn: async (workspace: WorkspaceMetadata, data: TemplateData): Promise<string> => {
-      const { name, title, version, description, folderName } = workspace;
+      const { name, title, version, description, relativePath } = workspace;
       const { repoUrlFn, packageUrlFn, docsUrlFn, readmeUrlFn, changelogUrlFn } = data as Required<TemplateData>;
 
       const repoUrl = await repoUrlFn(workspace);
@@ -30,7 +30,7 @@ export default defineConfig([
       const readmeUrl = await readmeUrlFn(workspace);
       const changelogUrl = await changelogUrlFn(workspace);
 
-      const folder = repoUrl ? `[**\`./packages/${folderName}\`**](${repoUrl})` : `**\`./packages/${folderName}\`**`;
+      const folder = repoUrl ? `[**\`./${relativePath}\`**](${repoUrl})` : `**\`./${relativePath}\`**`;
       const pkg = packageUrl ? `[\`${name}\`](${packageUrl})` : `\`${name}\``;
 
       const links: string[] = [];
@@ -57,7 +57,7 @@ export default defineConfig([
       },
 
       docsUrlFn: (workspace: WorkspaceMetadata): string | undefined => {
-        if (PACKAGES_EXCLUDED_FROM_DOCS.has(workspace.folderName)) return;
+        if (PACKAGES_EXCLUDED_FROM_DOCS.has(workspace.name)) return;
         return `https://simbo.de/packages/modules/${workspace.name.replaceAll(/[^\da-z-]/gi, '_')}/`;
       },
 

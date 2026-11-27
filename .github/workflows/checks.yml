@@ -61,10 +61,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: true
-          install: false
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
+          require-lockfile: true
 
       - name: 👷 Build
         run: pnpm run each:build
@@ -116,21 +113,22 @@ jobs:
     needs: checks
     if: >
       github.event_name == 'push' &&
+      github.ref_name == 'main' &&
       needs.checks.outputs.has-changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
-      # required to create a repository dispatch event with GITHUB_TOKEN
-      contents: write
+      # required to dispatch a workflow with GITHUB_TOKEN
+      actions: write
     steps:
-      - name: '🎉 Workflow: Release (Event)'
-        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4.0.1
-        with:
-          event-type: workflow:release
-          client-payload: >
-            ${{
-              format(
-                '{{ "ref": {0}, "sha": {1} }}',
-                toJson(github.ref_name),
-                toJson(github.sha)
-              )
-            }}
+      - name: '🎉 Workflow: Release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          set -euo pipefail
+          # Passes the checked commit, which the release builds, and names the
+          # run after it: short SHA and the first line of its message.
+          gh workflow run release.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            --field sha="$GITHUB_SHA" \
+            --field commit="${GITHUB_SHA:0:7}" \
+            --field subject="${MESSAGE%%$'\n'*}"

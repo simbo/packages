@@ -139,6 +139,22 @@ describe('getWorkspaceMetadata', () => {
     expect(readFile).toHaveBeenNthCalledWith(1, '/cwd/packages/test-package/README.md', 'utf8');
   });
 
+  it("should read the readme's title as plain text", async () => {
+    readFile.mockResolvedValueOnce('# <img alt="" src="logo.svg"> **Test** [Package](https://example.com/)\n\ncontent');
+
+    const metadata = await getWorkspaceMetadata('packages/test-package');
+
+    expect(metadata.title).toBe('Test Package');
+  });
+
+  it("should throw if the readme's title holds no text", async () => {
+    readFile.mockResolvedValueOnce('# <img alt="" src="logo.svg">\n\ncontent');
+
+    await expect(getWorkspaceMetadata('packages/test-package')).rejects.toThrow(
+      /^Failed to extract the title from README.md at packages\/test-package\./,
+    );
+  });
+
   it("should throw if the readme's title is not found", async () => {
     readFile.mockResolvedValueOnce('foo');
 

@@ -1,4 +1,169 @@
-# changelog
+# packages-changelog
+
+## 1.8.0
+
+### Minor Changes
+
+- 19c8dc1: Drop Node.js 22 from the repository's supported Node.js versions.
+
+  - Require Node.js ^24.15.0 || >=26.0.0 in the root and `packages-changelog`
+    workspaces.
+  - Update the requirements in `README.md` and the documentation index.
+  - Remove the `@types/node` exception for Node.js 22 from `MAINTAINING.md` and
+    `AGENTS.md`; `@types/node` stays on 24 as the lowest supported major.
+
+### Patch Changes
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
+## 1.7.9
+
+### Patch Changes
+
+- 1d41ab3: Run the cspell CLI in the `@simbo/cspell-config` tests with
+  `promisify(execFile)` instead of `spawnSync`.
+
+## 1.7.8
+
+### Patch Changes
+
+- 1f3126b: Create annotated release tags with `simbo-actions/signed-commit`
+  v2.0.0.
+
+  - Each tag has the app as tagger and the message `Release <tag>`.
+  - Existing tags were migrated to the same form.
+
+- 1f3126b: Dispatch the Release and Docs workflows with `gh workflow run`
+  instead of repository dispatch events.
+
+  - The dispatching jobs need only `actions: write`, not `contents: write` or
+    the app token; `peter-evans/repository-dispatch` is no longer used.
+  - The Release and Docs workflows run only when dispatched by the previous
+    workflow on `main`; manual runs are skipped, and "Re-run" keeps the original
+    actor.
+  - The Release workflow fails if `main` has moved on from the checked commit;
+    the Docs workflow builds the release commit instead of the current `main`.
+
+- 1f3126b: Exclude the local `.claude/` folder from Prettier, so that agent
+  worktrees inside it do not break the format check.
+- 1f3126b: Name release tags after the full package name, as in
+  `@simbo/eslint-config/v3.4.0`.
+
+  - Release assets carry the name that `pnpm pack` gives them, as in
+    `simbo-eslint-config-3.4.0.tgz`; existing releases keep their asset names.
+  - The release scripts find a workspace by its package name in every workspace
+    folder instead of below `packages/`.
+  - The bumped packages after `changeset version` come from a script with the
+    outputs of the planned `version-bumps` action.
+  - Manual runs of the GitHub Release and Publish workflows take `name` and
+    `version`.
+
+- 1f3126b: Create a GitHub release for every workspace, private ones included.
+
+  - The Publish workflow verifies every release and publishes it to npm only if
+    the packed manifest is not private.
+  - Only `packages-changelog` releases become the latest release.
+
+- 1f3126b: Rename the private `changelog` package to `packages-changelog` and
+  move it to `./changelog/`.
+
+  - The package name is unscoped, never published, and free on npm, so it can be
+    used in release tags.
+  - The workspace now lives next to `packages/` and is listed in
+    `pnpm-workspace.yaml` and `workspaces`.
+  - Its archive contains `CHANGELOG.md` besides the files that pnpm always
+    packs.
+
+## 1.7.7
+
+### Patch Changes
+
+- 73b6108: Remove the deprecated `@simbo/import-meta-path` package from the
+  repository.
+
+  - Delete the workspace; the published versions stay on npm, deprecated in
+    favor of `import.meta.dirname` and `import.meta.filename`.
+  - Keep the tags `import-meta-path/v*` and their GitHub releases.
+
+## 1.7.6
+
+### Patch Changes
+
+- ea7f0c0: Add a runbook for deprecating a package to `MAINTAINING.md`.
+
+  - Release a final version with a deprecation notice before removing the
+    workspace, in two pull requests.
+  - Deprecate the published versions on npm and remove the trusted publisher.
+  - Keep the release tags and GitHub releases of the package.
+
+## 1.7.5
+
+### Patch Changes
+
+- 465d563: Document how to handle CodeQL code scanning alerts in
+  `MAINTAINING.md`.
+
+  - Fix findings in the code where possible, test code included.
+  - Dismiss an alert only with a recorded exception and the same reason on
+    GitHub.
+
+- 465d563: Run the ESLint binary in the `eslint-config` runtime test without a
+  shell.
+
+  - Pass the arguments to `execFile()` instead of building a command string for
+    `exec()`, so paths with spaces or shell characters keep working.
+  - Resolve the CodeQL alert `js/shell-command-injection-from-environment`.
+
+## 1.7.4
+
+### Patch Changes
+
+- 88677c6: Show the package identity validation in the release diagram of
+  `README.md`.
+
+  - Replace the "Package is Private?" gates in the GitHub release and publish
+    workflows with the validation step that rejects private packages.
+
+## 1.7.3
+
+### Patch Changes
+
+- f69acf7: Document how to handle Dependabot security alerts that cannot be
+  fixed by an update.
+
+  - Add a "Security Alerts" runbook to `MAINTAINING.md`.
+  - Accept `minimatch` 10 (GHSA-g3hv-75wg-m249) until 2026-12-31, because
+    `typedoc` still requires it.
+
+## 1.7.2
+
+### Patch Changes
+
+- 989bb6c: Document that `main` accepts changes only through squash-merged pull
+  requests.
+- 989bb6c: Install dependencies with `pnpm/setup` instead of a separate workflow
+  step.
+
+  - Run the install in the setup step of the checks, docs, release, and GitHub
+    release workflows, which caches the lockfile verification right after the
+    install.
+  - Require an existing lockfile with `require-lockfile: true`, which replaces
+    `pnpm install --frozen-lockfile`.
+
+- 989bb6c: Reject private packages when validating a release tag instead of
+  skipping them.
+
+  - Fail `scripts/release-package.js metadata` for private workspaces, so no job
+    builds, packs, or downloads them.
+  - Remove the skip steps and their conditions from the GitHub release and
+    publish workflows.
+  - Drop the `private` output and the duplicate check in
+    `scripts/publish-release.js`.
 
 ## 1.7.1
 

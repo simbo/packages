@@ -1,5 +1,67 @@
 # @simbo/eslint-config
 
+## 5.0.0
+
+### Major Changes
+
+- 19c8dc1: Require Node.js ^24.15.0 || >=26.0.0 across all packages, as Node.js
+  22 reaches its end of life on 2027-04-30.
+
+  - Remove `^22.22.2` from `engines.node` in every package.
+  - Update the requirements in the package READMEs.
+
+  Node.js 22 is no longer supported. Upgrade to Node.js ^24.15.0 or >=26.0.0
+  before updating these packages.
+
+- 19c8dc1: Check `import.meta.dirname` against the Node.js versions in
+  `engines`.
+
+  - `n/no-unsupported-features/node-builtins` no longer ignores
+    `import.meta.dirname`, which every supported Node.js version provides.
+  - The README explains that the Node.js version checks read `engines.node` from
+    the nearest `package.json`.
+
+  Set `engines.node` in every linted package, including nested folders with
+  their own `package.json`. Without it, `eslint-plugin-n` assumes `>=16.0.0` and
+  reports `import.meta.dirname`, for example in
+  `tsconfigRootDir: import.meta.dirname` in `eslint.config.ts`.
+
+### Patch Changes
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
+## 4.0.0
+
+### Major Changes
+
+- 1d41ab3: Report synchronous Node.js APIs with `n/no-sync` in the Node.js
+  presets.
+
+  - `configs.node.recommended` and `nConfigs.node.recommended` enable the rule
+    as an error, including at the top level of modules.
+  - A justified sync call stays possible with
+    `// eslint-disable-next-line n/no-sync -- <reason>`.
+
+  Calls such as `readFileSync`, `execFileSync` or `spawnSync` now fail the lint
+  run. Replace them with `node:fs/promises` or `promisify(execFile)`, or disable
+  the rule for that line and name the reason.
+
+### Patch Changes
+
+- 1d41ab3: Document the versioning policy in the README.
+
+  - A change that can make a previously passing lint run fail is a major
+    release.
+  - Changes that cannot add lint errors are minor, documentation and internal
+    changes are patches.
+  - Minor releases of the bundled plugins can report new errors without a
+    release of this package.
+
 ## 3.3.1
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@simbo/inject-between-html-comments",
   "description": "Inject content between HTML comment markers inside a string.",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "keywords": [
     "inject",
     "html",
@@ -22,10 +22,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/inject-between-html-comments",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/inject-between-html-comments"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {
@@ -51,9 +55,6 @@
     "test": "vitest run --coverage",
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
-  },
-  "dependencies": {
-    "escape-string-regexp": "^5.0.0"
   },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
