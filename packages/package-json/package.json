@@ -28,7 +28,7 @@
   },
   "type": "module",
   "exports": {
-    ".": "./dist/read-package-json.js"
+    ".": "./dist/index.js"
   },
   "files": [
     "CHANGELOG.md",
@@ -53,7 +53,10 @@
   },
   "dependencies": {
     "@simbo/stringify-error": "workspace:*",
-    "type-fest": "^5.10.0"
+    "read-pkg": "^10.1.0",
+    "sort-package-json": "^4.1.0",
+    "type-fest": "^5.10.0",
+    "write-package": "^7.2.0"
   },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
