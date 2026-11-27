@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@simbo/find-git-repository-root": "workspace:*",
-    "execa": "^10.2.1"
+    "@simbo/git-exec": "workspace:*"
   },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",

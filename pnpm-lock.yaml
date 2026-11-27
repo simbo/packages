@@ -680,9 +680,9 @@ importers:
       '@simbo/find-git-repository-root':
         specifier: workspace:*
         version: link:../find-git-repository-root
-      execa:
-        specifier: ^10.2.1
-        version: 10.2.1
+      '@simbo/git-exec':
+        specifier: workspace:*
+        version: link:../git-exec
     devDependencies:
       '@simbo/eslint-config':
         specifier: workspace:*

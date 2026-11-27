@@ -1,7 +1,7 @@
 import { cwd } from 'node:process';
 
 import { findGitRepositoryRoot } from '@simbo/find-git-repository-root';
-import { execa, ExecaError } from 'execa';
+import { gitBuffer } from '@simbo/git-exec';
 
 import type { GitChange } from './git-changes.types.js';
 import { parseGitStatusOutput } from './parse-git-status-output.js';
@@ -38,17 +38,15 @@ export async function getGitChanges(workingDir = cwd()): Promise<ReadonlyMap<str
      * 'UU conflicted.ts\0'
      * 'R  new.ts\0old.ts\0'
      * 'C  copied.ts\0source.ts\0'
+     *
+     * The output is read as buffer, because `git()` trims the leading space of
+     * the first entry.
      */
-    const { stdout: output } = await execa({ cwd: repoRoot })`git status --porcelain --null --untracked-files=all`;
+    const output = await gitBuffer(['status', '--porcelain', '--null', '--untracked-files=all'], { cwd: repoRoot });
 
-    return parseGitStatusOutput(output);
+    return parseGitStatusOutput(output.toString('utf8'));
   } catch (error) {
-    const reason =
-      error instanceof ExecaError
-        ? error.shortMessage
-        : error instanceof Error
-          ? error.message
-          : `Unknown error (${String(error)})`;
+    const reason = error instanceof Error ? error.message : `Unknown error (${String(error)})`;
     throw new Error(`Failed to get Git changes: ${reason}`, { cause: error });
   }
 }
