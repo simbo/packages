@@ -62,7 +62,6 @@
     "@simbo/call-prettier": "workspace:*",
     "@simbo/cli-output": "workspace:*",
     "@simbo/clirk": "workspace:*",
-    "@simbo/find-git-repository-root": "workspace:*",
     "@simbo/inject-between-html-comments": "workspace:*",
     "@simbo/monorepo-packages-list": "workspace:*",
     "@simbo/monorepo-utils": "workspace:*",
