@@ -15,7 +15,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📂 [**`./changelog`**](https://github.com/simbo/packages/tree/main/changelog/)
 
-  📦 `packages-changelog` @ `1.8.4`
+  📦 `packages-changelog` @ `1.8.5`
 
   [README.md](https://github.com/simbo/packages/blob/main/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/changelog/CHANGELOG.md)
@@ -226,7 +226,7 @@ There are currently _**32**_ packages managed in this repository:
   [**`./packages/git-fixture`**](https://github.com/simbo/packages/tree/main/packages/git-fixture/)
 
   📦 [`@simbo/git-fixture`](https://www.npmjs.com/package/@simbo/git-fixture) @
-  `1.0.0`
+  `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/CHANGELOG.md)  • 
