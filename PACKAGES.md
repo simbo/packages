@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**32**_ packages managed in this repository:
+There are currently _**33**_ packages managed in this repository:
 
 - ### **Simbo's Packages — Changelog**
 
@@ -232,6 +232,22 @@ There are currently _**32**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_git-fixture/)
+
+- ### **GitHub Actions Octokit**
+
+  > Create an authenticated Octokit client for GitHub Actions that waits and
+  > retries on rate limits.
+
+  📂
+  [**`./packages/github-actions-octokit`**](https://github.com/simbo/packages/tree/main/packages/github-actions-octokit/)
+
+  📦
+  [`@simbo/github-actions-octokit`](https://www.npmjs.com/package/@simbo/github-actions-octokit)
+  @ `0.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/github-actions-octokit/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/github-actions-octokit/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_github-actions-octokit/)
 
 - ### **Globby Has Matches**
 
