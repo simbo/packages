@@ -1,7 +1,7 @@
 {
   "name": "@simbo/git-fixture",
   "description": "Create temporary Git repositories with a neutral configuration for tests.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "git",
     "fixture",
