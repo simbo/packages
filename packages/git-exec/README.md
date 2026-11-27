@@ -80,6 +80,22 @@ try {
 exits with a non-zero code, is terminated, or exceeds `maxBuffer`. The message
 contains the command, the reason, and the standard error output.
 
+`exitCode` holds the exit code when Git exited on its own. It is `undefined`
+when Git could not be started, was terminated by a signal, or was stopped for
+exceeding `maxBuffer`. Check it to tell a failed command from a Git that could
+not run:
+
+```ts
+try {
+  await git(['fetch', 'origin'], { cwd: root });
+} catch (error) {
+  if (error instanceof GitError && error.exitCode === undefined) {
+    throw error; // Git did not run to completion
+  }
+  // Git ran and reported a failure
+}
+```
+
 `gitSucceeds()` returns `false` only for a non-zero exit code. If Git cannot run
 at all, it rejects, so that a missing Git or working directory is not mistaken
 for a failed check.
