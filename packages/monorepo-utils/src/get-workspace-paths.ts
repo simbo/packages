@@ -1,16 +1,13 @@
-import { join } from 'node:path';
 import { cwd } from 'node:process';
 
-import { globby } from 'globby';
-
-import { getWorkspacePatterns } from './get-workspace-patterns.js';
+import { getMonorepo } from './get-monorepo.js';
 
 /**
  * Options for getting workspace paths.
  */
 export interface GetWorkspacePathsOptions {
   /**
-   * The working directory to get the workspace paths from.
+   * A directory inside the monorepo; the root is searched from there.
    * Defaults to the current working directory.
    *
    * @default process.cwd()
@@ -18,13 +15,7 @@ export interface GetWorkspacePathsOptions {
   workingDir?: string;
 
   /**
-   * The patterns to match workspace paths against.
-   * If undefined or empty, patterns will be determined using `getWorkspacePatterns`.
-   */
-  patterns?: string[];
-
-  /**
-   * Whether to return absolute paths or relative paths.
+   * Whether to return absolute paths or paths relative to the monorepo root.
    * Defaults to false (relative paths).
    *
    * @default false
@@ -33,40 +24,19 @@ export interface GetWorkspacePathsOptions {
 }
 
 /**
- * Get the paths for all workspaces defined for the monorepo.
+ * Get the paths of all workspaces of the monorepo, sorted by path.
  *
- * The patterns will be passed to globby and found paths will be returned if
- * they contain a `package.json` file.
+ * The monorepo and its workspaces are found with `@manypkg/get-packages`,
+ * which supports npm, pnpm, Yarn, Bun, Lerna, and Rush.
  *
  * @param options - The options for getting workspace paths.
  * @returns An array of workspace paths.
- * @throws {Error} If no workspace patterns are found or if no workspaces are found.
+ * @throws {Error} If no monorepo or no workspaces are found, or a manifest cannot be read.
  */
 export async function getWorkspacePaths(options: GetWorkspacePathsOptions = {}): Promise<string[]> {
-  const { workingDir = cwd(), patterns = [], absolutePaths } = options;
+  const { workingDir = cwd(), absolutePaths = false } = options;
 
-  if (patterns.length === 0) {
-    patterns.push(...(await getWorkspacePatterns({ workingDir })));
-  }
+  const { packages } = await getMonorepo(workingDir);
 
-  const globPatterns = patterns.map(pattern => join(pattern, 'package.json'));
-
-  const paths = await globby(globPatterns, {
-    cwd: workingDir,
-    dot: true,
-    followSymbolicLinks: true,
-    gitignore: true,
-  });
-
-  if (paths.length === 0) {
-    throw new Error('No workspaces found.');
-  }
-
-  return paths.map(path => {
-    path = path.replace(/\/package\.json$/, '');
-    if (absolutePaths) {
-      path = join(workingDir, path);
-    }
-    return path;
-  });
+  return packages.map(({ dir, relativeDir }) => (absolutePaths ? dir : relativeDir));
 }

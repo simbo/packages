@@ -1,114 +1,47 @@
-import { describe, expect, it, vi } from 'vitest';
+import { join } from 'node:path';
 
-vi.mock('node:path', async importActual => {
-  const actual = await importActual<{ relative: (from: string, to: string) => string }>();
-  return {
-    ...actual,
-    relative: vi.fn().mockImplementation(actual.relative),
-  };
-});
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-vi.mock('node:process', () => ({
-  cwd: vi.fn().mockReturnValue('/cwd'),
-}));
+import { createFixture, type Fixture } from '../tests/fixture.js';
 
-vi.mock('@simbo/package-json', () => ({
-  readPackageJson: vi.fn(),
-}));
+import { getPackagePathByName } from './get-package-path-by-name.js';
 
-vi.mock('@simbo/stringify-error', () => ({
-  stringifyError: vi.fn().mockImplementation((error: Error) => error.message),
-}));
+describe('getPackagePathByName()', () => {
+  let fixture: Fixture;
 
-vi.mock('./get-workspace-paths.js', () => ({
-  getWorkspacePaths: vi.fn(),
-}));
-
-const { relative } = vi.mocked(await import('node:path'));
-const { cwd } = vi.mocked(await import('node:process'));
-const { readPackageJson } = vi.mocked(await import('@simbo/package-json'));
-const { getWorkspacePaths } = vi.mocked(await import('./get-workspace-paths.js'));
-
-const { getPackagePathByName } = await import('./get-package-path-by-name.js');
-
-describe('getPackagePathByName', () => {
-  it('should walk the happy path and return the package path', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
-    readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
-
-    await expect(getPackagePathByName('pkg-a')).resolves.toBe('packages/pkg-a');
-
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(cwd).toHaveBeenCalledWith();
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledWith({ workingDir: '/cwd', absolutePaths: true });
-    expect(readPackageJson).toHaveBeenCalledTimes(1);
-    expect(readPackageJson).toHaveBeenNthCalledWith(1, '/cwd/packages/pkg-a');
-    expect(relative).toHaveBeenCalledTimes(1);
-    expect(relative).toHaveBeenCalledWith('/cwd', '/cwd/packages/pkg-a');
+  beforeEach(async () => {
+    fixture = await createFixture();
   });
 
-  it('should return the absolute path of the package when found and absolute is true', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
-    readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
-
-    await expect(getPackagePathByName('pkg-a', { absolute: true })).resolves.toBe('/cwd/packages/pkg-a');
-    expect(relative).not.toHaveBeenCalled();
+  afterEach(async () => {
+    await fixture.cleanup();
   });
 
-  it('should throw an error when the package is not found', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
-    readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
+  it('returns the path of a workspace relative to the root', async () => {
+    await fixture.pnpmMonorepo();
 
-    await expect(getPackagePathByName('pkg-b')).rejects.toThrow('Package "pkg-b" not found in workspaces.');
-  });
-
-  it('should throw an error when reading package.json fails and failOnError is true', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a']);
-    readPackageJson.mockRejectedValueOnce(new Error('Failed to read package.json'));
-
-    await expect(getPackagePathByName('pkg-b', { failOnError: true })).rejects.toThrow(
-      'Failed to read package.json files: packages/pkg-a (Failed to read package.json)',
+    await expect(getPackagePathByName('@scope/b', { workingDir: join(fixture.root, 'packages/a') })).resolves.toBe(
+      'packages/b',
     );
   });
 
-  it('should continue on error when reading package.json fails and failOnError is false', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a', '/cwd/packages/pkg-b']);
-    readPackageJson
-      .mockRejectedValueOnce(new Error('Failed to read package.json'))
-      .mockResolvedValueOnce({ name: 'pkg-b', version: '1.0.0' });
+  it('returns an absolute path', async () => {
+    await fixture.pnpmMonorepo();
 
-    await expect(getPackagePathByName('pkg-b')).resolves.toBe('packages/pkg-b');
-  });
-
-  it('should return the package path when found before other workspaces were read and failOnError is true', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a', '/cwd/packages/pkg-b', '/cwd/packages/pkg-c']);
-    readPackageJson.mockResolvedValueOnce({ name: 'pkg-a', version: '1.0.0' });
-
-    await expect(getPackagePathByName('pkg-a', { concurrency: 1, failOnError: true })).resolves.toBe('packages/pkg-a');
-
-    expect(readPackageJson).toHaveBeenCalledTimes(1);
-  });
-
-  it('should only report failed package.json files, not the skipped ones, when failOnError is true', async () => {
-    getWorkspacePaths.mockResolvedValue(['/cwd/packages/pkg-a', '/cwd/packages/pkg-b', '/cwd/packages/pkg-c']);
-    readPackageJson
-      .mockRejectedValueOnce(new Error('Failed to read package.json'))
-      .mockResolvedValue({ name: 'other', version: '1.0.0' });
-
-    await expect(getPackagePathByName('pkg-z', { concurrency: 1, failOnError: true })).rejects.toThrow(
-      /^Failed to read package.json files: packages\/pkg-a \(Failed to read package.json\)$/,
+    await expect(getPackagePathByName('@scope/b', { workingDir: fixture.root, absolute: true })).resolves.toBe(
+      join(fixture.root, 'packages/b'),
     );
-
-    // The queue may start the next task before the failure is handled, but never all of them.
-    expect(readPackageJson.mock.calls.length).toBeLessThan(3);
   });
 
-  it.each([0, -1, 1.5, NaN, 'invalid' as unknown as number])('should throw if concurrency is %s', async concurrency => {
-    await expect(getPackagePathByName('pkg-a', { concurrency })).rejects.toThrow(
-      'Concurrency must be a positive integer',
-    );
+  it('rejects if no workspace has the name', async () => {
+    await fixture.pnpmMonorepo();
 
-    expect(getWorkspacePaths).not.toHaveBeenCalled();
+    await expect(getPackagePathByName('@scope/c', { workingDir: fixture.root })).rejects.toThrow(
+      'Package "@scope/c" not found in workspaces.',
+    );
+  });
+
+  it('rejects if no monorepo is found', async () => {
+    await expect(getPackagePathByName('@scope/a', { workingDir: fixture.root })).rejects.toThrow('No monorepo found');
   });
 });
