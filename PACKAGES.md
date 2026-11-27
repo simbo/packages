@@ -243,7 +243,7 @@ There are currently _**33**_ packages managed in this repository:
 
   📦
   [`@simbo/github-actions-octokit`](https://www.npmjs.com/package/@simbo/github-actions-octokit)
-  @ `0.0.0`
+  @ `1.0.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/github-actions-octokit/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/github-actions-octokit/CHANGELOG.md)  • 
