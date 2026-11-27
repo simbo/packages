@@ -1,7 +1,7 @@
 {
   "name": "@simbo/github-actions-octokit",
   "description": "Create an authenticated Octokit client for GitHub Actions that waits and retries on rate limits.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "github-actions",
     "octokit",
