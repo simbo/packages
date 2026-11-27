@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**30**_ packages managed in this repository:
+There are currently _**31**_ packages managed in this repository:
 
 - ### **Simbo's Packages — Changelog**
 
@@ -15,7 +15,7 @@ There are currently _**30**_ packages managed in this repository:
 
   📂 [**`./changelog`**](https://github.com/simbo/packages/tree/main/changelog/)
 
-  📦 `packages-changelog` @ `1.8.0`
+  📦 `packages-changelog` @ `1.8.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/changelog/CHANGELOG.md)
@@ -202,6 +202,21 @@ There are currently _**30**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-constants/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-constants/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_git-constants/)
+
+- ### **Git Exec**
+
+  > Run Git commands asynchronously and get their output as text, buffer, or
+  > success flag.
+
+  📂
+  [**`./packages/git-exec`**](https://github.com/simbo/packages/tree/main/packages/git-exec/)
+
+  📦 [`@simbo/git-exec`](https://www.npmjs.com/package/@simbo/git-exec) @
+  `1.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/git-exec/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-exec/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_git-exec/)
 
 - ### **Globby Has Matches**
 

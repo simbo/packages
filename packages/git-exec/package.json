@@ -1,7 +1,7 @@
 {
   "name": "@simbo/git-exec",
   "description": "Run Git commands asynchronously and get their output as text, buffer, or success flag.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "keywords": [
     "git",
     "exec",
