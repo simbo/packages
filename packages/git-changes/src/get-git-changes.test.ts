@@ -5,7 +5,7 @@ import { GitError } from '@simbo/git-exec';
 import { createGitFixture, type GitFixture } from '@simbo/git-fixture';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { getGitChanges, GitChangeStatus } from '../src/index.js';
+import { getGitChanges, GitChangeStatus } from './index.js';
 
 /**
  * Integration tests running against a temporary Git repository.
