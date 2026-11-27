@@ -1,5 +1,7 @@
-import { symlink, unlink } from 'node:fs/promises';
+import { rm, symlink, unlink } from 'node:fs/promises';
+import { cwd } from 'node:process';
 
+import { GitError } from '@simbo/git-exec';
 import { createGitFixture, type GitFixture } from '@simbo/git-fixture';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -140,5 +142,50 @@ describe('getGitChanges() with a real Git repository', () => {
       'modified.txt': { path: 'modified.txt', staged: undefined, unstaged: GitChangeStatus.Modified },
       'sub/dir/file.txt': { path: 'sub/dir/file.txt', staged: undefined, unstaged: GitChangeStatus.Untracked },
     });
+  });
+
+  it('reports paths with spaces and non-ASCII characters as they are', async () => {
+    await repo.write('dir with spaces/café ✓.txt', 'unicode\n');
+
+    expect(Object.fromEntries(await getGitChanges(repo.dir))).toEqual({
+      'dir with spaces/café ✓.txt': {
+        path: 'dir with spaces/café ✓.txt',
+        staged: undefined,
+        unstaged: GitChangeStatus.Untracked,
+      },
+    });
+  });
+
+  it('does not report ignored files', async () => {
+    await repo.commit('ignore', { '.gitignore': '*.log\n' });
+    await repo.write('debug.log', 'ignored\n');
+
+    expect(await getGitChanges(repo.dir)).toEqual(new Map());
+  });
+
+  it('uses the current working directory by default', async () => {
+    const expected = await getGitChanges(cwd());
+
+    expect(await getGitChanges()).toEqual(expected);
+  });
+
+  it('rejects if the directory is not part of a Git repository', async () => {
+    await rm(repo.path('.git'), { recursive: true });
+
+    await expect(getGitChanges(repo.dir)).rejects.toThrow(
+      `The directory "${repo.dir}" is not part of a Git repository.`,
+    );
+  });
+
+  it('rejects with the Git error as cause if git status fails', async () => {
+    await rm(repo.path('.git/HEAD'));
+
+    const rejection = await getGitChanges(repo.dir).catch((error: unknown) => error);
+
+    expect(rejection).toBeInstanceOf(Error);
+    expect((rejection as Error).message).toMatch(
+      /^Failed to get Git changes: git status --porcelain --null --untracked-files=all failed \(exit code 128\): fatal: /,
+    );
+    expect((rejection as Error).cause).toBeInstanceOf(GitError);
   });
 });
