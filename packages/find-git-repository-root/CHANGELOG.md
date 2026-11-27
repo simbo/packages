@@ -1,5 +1,12 @@
 # @simbo/find-git-repository-root
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [c017ffe]
+  - @simbo/git-exec@1.0.2
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,14 @@
 # @simbo/git-exec
 
+## 1.0.2
+
+### Patch Changes
+
+- c017ffe: Set the license year to 2026, the year the package was first
+  published.
+
+  - `LICENSE.md` and the license link in `README.md` name 2026 instead of 2025.
+
 ## 1.0.1
 
 ### Patch Changes

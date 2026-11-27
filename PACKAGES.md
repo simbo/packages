@@ -151,7 +151,7 @@ There are currently _**33**_ packages managed in this repository:
 
   📦
   [`@simbo/find-git-repository-root`](https://www.npmjs.com/package/@simbo/find-git-repository-root)
-  @ `4.0.0`
+  @ `4.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-git-repository-root/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-git-repository-root/CHANGELOG.md)  • 
@@ -182,7 +182,7 @@ There are currently _**33**_ packages managed in this repository:
   [**`./packages/git-changes`**](https://github.com/simbo/packages/tree/main/packages/git-changes/)
 
   📦 [`@simbo/git-changes`](https://www.npmjs.com/package/@simbo/git-changes) @
-  `4.1.2`
+  `4.1.3`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-changes/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-changes/CHANGELOG.md)  • 
@@ -213,7 +213,7 @@ There are currently _**33**_ packages managed in this repository:
   [**`./packages/git-exec`**](https://github.com/simbo/packages/tree/main/packages/git-exec/)
 
   📦 [`@simbo/git-exec`](https://www.npmjs.com/package/@simbo/git-exec) @
-  `1.0.1`
+  `1.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-exec/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-exec/CHANGELOG.md)  • 
@@ -227,7 +227,7 @@ There are currently _**33**_ packages managed in this repository:
   [**`./packages/git-fixture`**](https://github.com/simbo/packages/tree/main/packages/git-fixture/)
 
   📦 [`@simbo/git-fixture`](https://www.npmjs.com/package/@simbo/git-fixture) @
-  `1.0.1`
+  `1.0.2`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-fixture/CHANGELOG.md)  • 
@@ -305,7 +305,7 @@ There are currently _**33**_ packages managed in this repository:
 
   📦
   [`@simbo/is-git-repository-root`](https://www.npmjs.com/package/@simbo/is-git-repository-root)
-  @ `4.0.0`
+  @ `4.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/is-git-repository-root/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/is-git-repository-root/CHANGELOG.md)  • 
