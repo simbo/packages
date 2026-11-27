@@ -89,7 +89,9 @@ async function readWorkspaceConfig(path: string, file: WorkspaceConfigFile): Pro
 
     switch (file) {
       case WorkspaceConfigFile.PnpmWorkspace: {
-        const { parse } = await import('yaml');
+        // Bundlers may expose the CommonJS package only as a default export.
+        const yaml = await import('yaml');
+        const { parse } = 'parse' in yaml ? yaml : (yaml as { default: typeof yaml }).default;
         workspacesOption = (parse(fileContent) as { packages?: unknown }).packages;
         break;
       }
