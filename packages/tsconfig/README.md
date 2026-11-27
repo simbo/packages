@@ -2,7 +2,7 @@
 
 📦 [**`@simbo/tsconfig`**](https://npmjs.com/package/@simbo/tsconfig)
 
-Shared TypeScript configurations for TypeScript 5 and 6.
+Shared TypeScript configurations for TypeScript 6.
 
 ## Requirements
 

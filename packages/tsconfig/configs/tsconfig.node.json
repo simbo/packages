@@ -4,8 +4,8 @@
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "target": "ES2022", // >= Node.js 20
-    "lib": ["ES2023"],
+    "target": "ES2024",
+    "lib": ["ES2025"],
     "types": ["node"]
   }
 }
