@@ -2,33 +2,39 @@
  * Validates the package identity shared by GitHub release and npm publish jobs.
  *
  * Run from the repository root after checking out the requested release tag:
- * `node scripts/release-package.js metadata <workspace>/v<version>`
- * writes scalar step outputs to GITHUB_OUTPUT. The `verify` command takes the
- * same tag followed by a directory containing the package archive and SHA256SUMS.
- * It verifies the existing bytes; it never builds, repacks, or publishes them.
- * Requires Node.js and the tar executable. Invalid inputs exit with status 1 and
- * a GitHub Actions error annotation; importing the module has no CLI side effects.
+ * `node scripts/release-package.js metadata <name>/v<version>` resolves the
+ * workspace of the package and writes scalar step outputs to GITHUB_OUTPUT.
+ * `parse` writes the identity derived from the tag alone and needs no installed
+ * dependencies. The `verify` command takes the same tag followed by a directory
+ * containing the package archive and SHA256SUMS. It verifies the existing bytes
+ * and writes whether the packed manifest is private; it never builds, repacks,
+ * or publishes them. Requires Node.js and the tar executable. Invalid inputs exit
+ * with status 1 and a GitHub Actions error annotation; importing the module has
+ * no CLI side effects.
  */
-import { execFileSync } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { appendFileSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { appendFile, readFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
 import process from 'node:process';
+import { promisify } from 'node:util';
+
+const execFileAsync = promisify(execFile);
 
 /**
- * Identity derived from a stable package tag, not from an npm package name.
+ * Identity derived from a stable release tag.
  *
  * @typedef {object} ReleaseTag
- * @property {string} tag - Complete Git tag, such as example/v1.2.3.
- * @property {string} workspace - Folder directly below packages/.
+ * @property {string} tag - Complete Git tag, such as `@simbo/example/v1.2.3`.
+ * @property {string} name - Package name, including its scope.
  * @property {string} version - Stable major.minor.patch version.
- * @property {string} asset - Expected release asset basename, including .tgz.
+ * @property {string} asset - Release asset basename as pnpm pack names it, including .tgz.
  */
 
 /**
- * Tag identity combined with the manifest in the checked-out repository.
+ * Tag identity combined with the manifest of the workspace in the checked-out repository.
  *
- * @typedef {ReleaseTag & {name: string}} ReleaseMetadata
+ * @typedef {ReleaseTag & {dir: string, private: boolean}} ReleaseMetadata
  */
 
 /**
@@ -60,98 +66,106 @@ function parseManifest(source) {
 }
 
 /**
- * Parses the repository's stable release-tag convention before using its folder
- * or asset name in filesystem operations. Prereleases and the private changelog
- * workspace are excluded from this publication pipeline.
+ * Names the archive of a package version the way `pnpm pack` does: the scope
+ * loses its `@`, and its separator becomes a hyphen.
  *
- * @param {string} tag - Git tag in the form example/v1.2.3.
- * @returns {ReleaseTag} Validated workspace, version and archive basename.
- * @throws {Error} If the tag has an unsupported format or names changelog.
+ * @param {string} name - Package name, optionally scoped.
+ * @param {string} version - Package version.
+ * @returns {string} Archive basename, such as simbo-example-1.2.3.tgz.
+ */
+export function assetName(name, version) {
+  return `${name.replace(/^@/, '').replace('/', '-')}-${version}.tgz`;
+}
+
+/**
+ * Parses the repository's stable release-tag convention `<name>/v<version>`
+ * before its parts are used in file names or API calls. The name is a package
+ * name with an optional scope, so the tag contains one or two slashes.
+ * Prereleases are excluded from this publication pipeline.
+ *
+ * @param {string} tag - Git tag in the form `@scope/name/v1.2.3` or `name/v1.2.3`.
+ * @returns {ReleaseTag} Validated name, version and archive basename.
+ * @throws {Error} If the tag has an unsupported format.
  */
 export function parseTag(tag) {
-  const match = /^([a-z0-9][a-z0-9._-]*)\/v((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.exec(tag);
-  if (!match || match[1] === 'changelog') {
-    throw new Error(
-      `Invalid package tag: ${tag}. Expected <workspace>/v<major>.<minor>.<patch>; changelog is excluded.`,
-    );
+  const match =
+    /^((?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*)\/v((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.exec(tag);
+  if (!match) {
+    throw new Error(`Invalid package tag: ${tag}. Expected <name>/v<major>.<minor>.<patch>.`);
   }
-  const [, workspace, version] = match;
-  return { tag, workspace, version, asset: `${workspace}-${version}.tgz` };
+  const [, name, version] = match;
+  return { tag, name, version, asset: assetName(name, version) };
 }
 
 /**
- * Resolves the npm name from the requested workspace manifest.
- * The caller must check out the tag first: a matching version alone does not
- * prove that arbitrary working-tree contents belong to that Git revision.
+ * Validates manifest text of the tagged workspace against the tag.
  *
- * @param {string} tag - Stable package tag whose manifest must match.
- * @param {string} [root] - Checked-out repository root; defaults to the current directory.
- * @returns {ReleaseMetadata} Validated tag and source-manifest identity.
- * @throws {Error} If the manifest cannot be read, is invalid, private, or has a different version.
- */
-export function readMetadata(tag, root = process.cwd()) {
-  const metadata = parseTag(tag);
-  const source = readFileSync(resolve(root, 'packages', metadata.workspace, 'package.json'), 'utf8');
-  return metadataFromManifest(tag, source);
-}
-
-/**
- * Validates manifest text obtained from a tagged checkout or GitHub's tag API.
- * Keeping this check shared prevents local publishing from depending on the
- * version currently present in the user's working tree. Private packages are
- * rejected here, before any job builds, packs, or downloads them.
- *
- * @param {string} tag - Stable package tag whose version must match.
+ * @param {string} tag - Stable package tag whose name and version must match.
  * @param {string} source - Manifest JSON obtained from that Git revision.
- * @returns {ReleaseMetadata} Manifest identity combined with the parsed tag.
- * @throws {Error} If the manifest name or version is invalid, or the package is private.
+ * @returns {ReleaseTag & {private: boolean}} Tag identity and the manifest's private flag.
+ * @throws {Error} If the manifest name or version differs from the tag.
  */
 export function metadataFromManifest(tag, source) {
   const metadata = parseTag(tag);
   const manifest = parseManifest(source);
-  if (typeof manifest.name !== 'string' || !/^(?:@[a-z0-9._-]+\/)?[a-z0-9][a-z0-9._-]*$/.test(manifest.name)) {
-    throw new Error(`Invalid package name in packages/${metadata.workspace}/package.json.`);
+  if (manifest.name !== metadata.name) {
+    throw new Error(`Name mismatch: tag requests ${metadata.name}, package declares ${String(manifest.name)}.`);
   }
   if (manifest.version !== metadata.version) {
     throw new Error(
       `Version mismatch: tag requests ${metadata.version}, package declares ${String(manifest.version)}.`,
     );
   }
-  if (manifest.private === true) {
-    throw new Error(`Private packages cannot be released or published: packages/${metadata.workspace}.`);
-  }
-  return { ...metadata, name: manifest.name };
+  return { ...metadata, private: manifest.private === true };
 }
 
 /**
- * Verifies an archive against the checked-out manifest and its downloaded digest.
+ * Resolves the workspace of the tagged package and validates its manifest.
+ * The caller must check out the tag first: a matching version alone does not
+ * prove that arbitrary working-tree contents belong to that Git revision.
+ *
+ * @param {string} tag - Stable package tag whose manifest must match.
+ * @param {string} [root] - Checked-out repository root; defaults to the current directory.
+ * @returns {Promise<ReleaseMetadata>} Validated tag identity, workspace directory and private flag.
+ * @throws {Error} If no workspace declares the name, or its manifest is invalid or has another version.
+ */
+export async function readMetadata(tag, root = process.cwd()) {
+  const { name } = parseTag(tag);
+  // Imported on demand: the publish job runs `parse` and `verify` without installed dependencies.
+  // A relative import, because a root dependency on a library would break the Turbo boundaries.
+  const { getPackagePathByName } = await import('../packages/monorepo-utils/dist/index.js');
+  const dir = await getPackagePathByName(name, { workingDir: root, failOnError: true });
+  const source = await readFile(join(root, dir, 'package.json'), 'utf8');
+  return { ...metadataFromManifest(tag, source), dir };
+}
+
+/**
+ * Verifies an archive against the tag identity and its downloaded digest.
  * SHA256SUMS must describe exactly the expected asset. The packed manifest must
- * match the source identity, be public, and contain no workspace protocol ranges.
- * Only package/package.json is read through tar; files are not extracted to disk.
+ * match the tag and contain no workspace protocol ranges. Only
+ * package/package.json is read through tar; files are not extracted to disk.
  * A checksum detects changed bytes, not an attacker replacing both assets.
  *
- * @param {ReleaseMetadata} metadata - Identity read from the tagged checkout.
+ * @param {ReleaseTag} metadata - Identity derived from the release tag.
  * @param {string} directory - Directory containing the expected .tgz and SHA256SUMS.
- * @returns {void} Logs the verified identity and digest on success.
+ * @returns {Promise<{private: boolean}>} Whether the packed manifest is private; publishing skips private packages.
  * @throws {Error} If files or tar are unavailable, or any integrity or identity check fails.
  */
-export function verifyArchive(metadata, directory) {
+export async function verifyArchive(metadata, directory) {
   const archive = resolve(directory, metadata.asset);
-  const sums = readFileSync(resolve(directory, 'SHA256SUMS'), 'utf8').trimEnd();
-  const digest = createHash('sha256').update(readFileSync(archive)).digest('hex');
-  if (sums !== `${digest}  ${metadata.asset}`) {
+  const [sums, bytes] = await Promise.all([readFile(resolve(directory, 'SHA256SUMS'), 'utf8'), readFile(archive)]);
+  const digest = createHash('sha256').update(bytes).digest('hex');
+  if (sums.trimEnd() !== `${digest}  ${metadata.asset}`) {
     throw new Error(
       `Checksum mismatch: expected SHA256SUMS to identify exactly ${metadata.asset} and its SHA-256 digest.`,
     );
   }
-  const manifest = parseManifest(execFileSync('tar', ['-xOf', archive, 'package/package.json'], { encoding: 'utf8' }));
+  const { stdout } = await execFileAsync('tar', ['-xOf', archive, 'package/package.json'], { encoding: 'utf8' });
+  const manifest = parseManifest(stdout);
   if (manifest.name !== metadata.name || manifest.version !== metadata.version) {
     throw new Error(
       `Archive identity mismatch: expected ${metadata.name}@${metadata.version}, found ${String(manifest.name)}@${String(manifest.version)}.`,
     );
-  }
-  if (manifest.private === true) {
-    throw new Error('Private packages cannot be released or published by this workflow.');
   }
   for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies', 'devDependencies']) {
     const dependencies = manifest[field];
@@ -162,23 +176,39 @@ export function verifyArchive(metadata, directory) {
       throw new Error(`Unresolved workspace dependency in archive ${field}. Use pnpm pack from the tagged workspace.`);
     }
   }
-  process.stdout.write(`✅ Verified ${metadata.name}@${metadata.version}: ${metadata.asset} (${digest})\n`);
+  const isPrivate = manifest.private === true;
+  process.stdout.write(
+    `✅ Verified ${metadata.name}@${metadata.version}${isPrivate ? ' (private)' : ''}: ${metadata.asset} (${digest})\n`,
+  );
+  return { private: isPrivate };
+}
+
+/**
+ * Appends scalar values to the GitHub Actions step outputs.
+ *
+ * @param {Record<string, string | boolean>} values - Output names and values.
+ * @returns {Promise<void>} Resolves once the outputs are written.
+ * @throws {Error} If GITHUB_OUTPUT is not set.
+ */
+async function writeOutputs(values) {
+  if (!process.env.GITHUB_OUTPUT) throw new Error('GITHUB_OUTPUT is required for workflow metadata.');
+  const lines = Object.entries(values).map(([key, value]) => `${key}=${String(value)}\n`);
+  await appendFile(process.env.GITHUB_OUTPUT, lines.join(''));
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === import.meta.filename) {
   try {
     const [command, tag, directory] = process.argv.slice(2);
-    if (!tag || (command !== 'metadata' && command !== 'verify') || (command === 'verify' && !directory)) {
-      throw new Error('Usage: node scripts/release-package.js <metadata|verify> <tag> [archive-directory]');
+    if (!tag || !['metadata', 'parse', 'verify'].includes(command) || (command === 'verify' && !directory)) {
+      throw new Error('Usage: node scripts/release-package.js <metadata|parse|verify> <tag> [archive-directory]');
     }
-    const metadata = readMetadata(tag);
     if (command === 'metadata') {
-      if (!process.env.GITHUB_OUTPUT) throw new Error('GITHUB_OUTPUT is required for workflow metadata.');
-      for (const [key, value] of Object.entries(metadata)) {
-        appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${value}\n`);
-      }
+      await writeOutputs(await readMetadata(tag));
+    } else if (command === 'parse') {
+      await writeOutputs(parseTag(tag));
     } else if (directory) {
-      verifyArchive(metadata, directory);
+      const result = await verifyArchive(parseTag(tag), directory);
+      if (process.env.GITHUB_OUTPUT) await writeOutputs(result);
     }
   } catch (error) {
     const message = (error instanceof Error ? error.message : String(error))

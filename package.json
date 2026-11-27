@@ -13,7 +13,8 @@
   },
   "packageManager": "pnpm@12.21.0+sha512.66fd8278ee28935ce951792d34367ff3af5c432a2756445823029533835b8da529bbe0be5130afd56ed0713fb8789e47bad82d93bd5ae2fe54b15562d6276ef0",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "changelog"
   ],
   "type": "module",
   "scripts": {
@@ -32,10 +33,10 @@
     "each:build": "turbo run build",
     "each:check": "turbo run check",
     "each:clean": "pnpm run each:clean:coverage && pnpm run each:clean:dist && pnpm run each:clean:turbo && pnpm run each:clean:node_modules",
-    "each:clean:coverage": "rm -rf packages/*/coverage",
-    "each:clean:dist": "rm -rf packages/*/dist",
-    "each:clean:node_modules": "rm -rf packages/*/node_modules",
-    "each:clean:turbo": "rm -rf packages/*/.turbo",
+    "each:clean:coverage": "pnpm -r exec rm -rf coverage",
+    "each:clean:dist": "pnpm -r exec rm -rf dist",
+    "each:clean:node_modules": "pnpm -r exec rm -rf node_modules",
+    "each:clean:turbo": "pnpm -r exec rm -rf .turbo",
     "each:test": "turbo run test",
     "fix:eslint": "pnpm run check:eslint --fix",
     "fix:format": "pnpm run x:prettier --write .",

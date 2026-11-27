@@ -35,11 +35,11 @@
   },
   "tasks": {
     "//#check:eslint": {
-      "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
+      "dependsOn": ["@simbo/monorepo-packages-list-cli#build", "@simbo/monorepo-utils#build"],
       "cache": false
     },
     "//#check:types": {
-      "dependsOn": ["@simbo/monorepo-packages-list-cli#build"],
+      "dependsOn": ["@simbo/monorepo-packages-list-cli#build", "@simbo/monorepo-utils#build"],
       "cache": false
     },
     "build": {

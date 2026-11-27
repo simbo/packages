@@ -3,19 +3,30 @@
 ## Release Pipeline
 
 ```text
-<workspace>/v<version>
+<name>/v<version>
   → github-release.yml: build → pack → verify → upload draft assets → publish release
-  → publish.yml: download → verify → publish the same .tgz to npm
+  → publish.yml: download → verify → publish the same .tgz to npm, unless private
 ```
 
-The GitHub release contains `<workspace>-<version>.tgz` and `SHA256SUMS`. The
-package is built once. Publishing never rebuilds or repacks it. GitHub's
-automatic source ZIP/tar archives are not the npm package.
+The tag carries the full package name, scope included, for example
+`@simbo/eslint-config/v3.4.0` or `packages-changelog/v1.8.0`. Tags are
+annotated, with the app as tagger and the message `Release <tag>`. Every
+workspace gets a GitHub release, private ones included. The release contains the
+archive as `pnpm pack` names it (`simbo-eslint-config-3.4.0.tgz`) and
+`SHA256SUMS`; releases created before this format keep their asset names. Only
+`packages-changelog` releases become the latest release. The publish workflow
+skips archives whose packed manifest is private. The package is built once.
+Publishing never rebuilds or repacks it. GitHub's automatic source ZIP/tar
+archives are not the npm package.
 
 A GitHub release can exist before npm makes the version installable. An npm
 failure does not remove the release. Both workflows support manual runs with
-`workspace` and `version`; the tag must exist and contain the workflow tooling.
+`name` and `version`; the tag must exist and contain the workflow tooling.
 Published releases are preserved; incomplete drafts can be retried.
+
+Tags from before the current format were moved to it on existing commits. Their
+checkouts contain the older scripts, which do not accept the new tag format, so
+those releases cannot be rerun or retried through the workflows.
 
 ## First Publish: Use the Release Tarball
 
@@ -31,22 +42,23 @@ gh auth login
 pnpm login --registry https://registry.npmjs.org/
 ```
 
-Replace `<workspace>/v<version>` with the release tag:
+Replace `<name>/v<version>` with the release tag:
 
 ```bash
-pnpm run publish-initial -- '<workspace>/v<version>'
+pnpm run publish-initial -- '<name>/v<version>'
 ```
 
-The helper downloads the published release, reads its tagged manifest, verifies
-SHA-256 and package identity, and shows the package, version, registry and file.
-Confirm with `y` to publish that exact archive through pnpm. Login and 2FA stay
-interactive. No checkout, build, repack, or repository dispatch is needed.
-Downloaded files remain in a temporary directory for inspection or recovery.
+The helper downloads the published release, verifies SHA-256 and that the packed
+manifest matches the tag, refuses private packages, and shows the package,
+version, registry and file. Confirm with `y` to publish that exact archive
+through pnpm. Login and 2FA stay interactive. No checkout, build, repack, or
+repository dispatch is needed. Downloaded files remain in a temporary directory
+for inspection or recovery.
 
 Check and download without publishing:
 
 ```bash
-pnpm run publish-initial -- --check '<workspace>/v<version>'
+pnpm run publish-initial -- --check '<name>/v<version>'
 ```
 
 Do not upload the version again while npm processes an accepted publish.
@@ -84,7 +96,7 @@ not overwrite release assets or rebuild the package to retry.
 
 ```bash
 gh workflow run publish.yml --repo simbo/packages \
-  -f workspace='<workspace>' -f version='<version>'
+  -f name='<name>' -f version='<version>'
 ```
 
 The workflow requires a published stable release, checks its identity and
