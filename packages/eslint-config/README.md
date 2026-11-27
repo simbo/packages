@@ -150,6 +150,10 @@ Each of the following supersets extends curated third-party configurations:
   required, disable the rule for that line and name the reason:
   `// eslint-disable-next-line n/no-sync -- <reason>`.
 
+  The Node.js version checks read `engines.node` from the nearest
+  `package.json`. Without it, they assume `>=16.0.0` and report newer APIs such
+  as `import.meta.dirname`, so set `engines` in every linted package.
+
 - **Superset of [`eslint-config-prettier`]**  
   _Exported as_ [`prettierConfigs`]
 
