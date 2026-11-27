@@ -137,4 +137,4 @@ await git([
 
 ## License
 
-[MIT © Simon Lepel](https://simbo.mit-license.org/2025/)
+[MIT © Simon Lepel](https://simbo.mit-license.org/2026/)
