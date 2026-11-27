@@ -1034,27 +1034,21 @@ importers:
 
   packages/monorepo-utils:
     dependencies:
-      '@simbo/accessible':
-        specifier: workspace:*
-        version: link:../accessible
+      '@manypkg/get-packages':
+        specifier: ^3.1.0
+        version: 3.1.0
       '@simbo/package-json':
         specifier: workspace:*
         version: link:../package-json
       '@simbo/stringify-error':
         specifier: workspace:*
         version: link:../stringify-error
-      globby:
-        specifier: ^16.2.4
-        version: 16.2.4
-      p-queue:
-        specifier: ^10.0.0
-        version: 10.0.0
+      p-map:
+        specifier: ^7.1.1
+        version: 7.1.1
       type-fest:
         specifier: ^5.10.0
         version: 5.10.0
-      yaml:
-        specifier: ^2.9.1
-        version: 2.9.1
     devDependencies:
       '@simbo/eslint-config':
         specifier: workspace:*
@@ -3733,9 +3727,9 @@ packages:
     resolution: {integrity: sha512-wPrq66Llhl7/4AGC6I+cqxT07LhXvWL08LNXz1fENOw0Ap4sRZZ/gZpTTJ5jpurzzzfS2W/Ge9BY3LgLjCShcw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  p-queue@10.0.0:
-    resolution: {integrity: sha512-P2wrCri3bhGLPo3kX7qYVXbo/5GvaVATU0DpO24CbeT53Y4z35t8JUWku04ERpXHUYB5rPMi3TkWE3fmJgx5rA==}
-    engines: {node: '>=22'}
+  p-map@7.1.1:
+    resolution: {integrity: sha512-6Lh3jQPLthYujSrlw6ccWXBGZTkoTCz27Hd92g79LH/kjAbgoEu0t442cCCNbegPSJsA0lwDX8z0bcKtkpA32g==}
+    engines: {node: '>=18'}
 
   package-manager-detector@1.9.0:
     resolution: {integrity: sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA==}
@@ -6625,7 +6619,7 @@ snapshots:
     dependencies:
       p-limit: 4.0.0
 
-  p-queue@10.0.0: {}
+  p-map@7.1.1: {}
 
   package-manager-detector@1.9.0: {}
 

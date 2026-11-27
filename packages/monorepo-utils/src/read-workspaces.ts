@@ -1,12 +1,10 @@
 import { cwd, env } from 'node:process';
 
 import { stringifyError } from '@simbo/stringify-error';
-import Queue from 'p-queue';
+import pMap, { pMapSkip } from 'p-map';
 
-import { assertConcurrency } from './assert-concurrency.js';
+import { getMonorepo } from './get-monorepo.js';
 import { getWorkspaceMetadata } from './get-workspace-metadata.js';
-import { getWorkspacePaths } from './get-workspace-paths.js';
-import { isAbortError } from './is-abort-error.js';
 import type { WorkspaceMetadata } from './monorepo-utils.types.js';
 
 /**
@@ -14,8 +12,7 @@ import type { WorkspaceMetadata } from './monorepo-utils.types.js';
  */
 export interface ReadWorkspacesOptions {
   /**
-   * The working directory to get the workspace metadata from.
-   * Should be the path to the root of the repository.
+   * A directory inside the monorepo; the root is searched from there.
    * Defaults to the current working directory.
    *
    * @default process.cwd()
@@ -23,7 +20,7 @@ export interface ReadWorkspacesOptions {
   workingDir?: string;
 
   /**
-   * The concurrency level for reading workspaces.
+   * The number of workspaces to read at the same time: a positive integer or `Infinity`.
    * If not specified, it will default to 10 in non-CI environments and 5 in CI environments.
    *
    * @default process.env.CI ? 5 : 10
@@ -35,50 +32,38 @@ const CONCURRENCY = 10;
 const CONCURRENCY_CI = 5;
 
 /**
- * Read workspace metadata from the file system.
+ * Read the metadata of all workspaces of the monorepo, sorted by path.
  *
- * A queue (p-queue) is used to manage concurrent file system operations.
+ * The workspaces are read concurrently with `p-map`. All workspaces are read,
+ * and every one that fails is reported.
  *
  * @param options - Options for reading workspaces.
  * @returns - An array of workspace metadata.
+ * @throws {Error} If no monorepo is found, `concurrency` is invalid, or a workspace cannot be read.
  */
 export async function readWorkspaces(options: ReadWorkspacesOptions = {}): Promise<WorkspaceMetadata[]> {
   const { workingDir = cwd(), concurrency = env.CI ? CONCURRENCY_CI : CONCURRENCY } = options;
 
-  assertConcurrency(concurrency);
+  const { rootDir, packages } = await getMonorepo(workingDir);
 
-  const workspacesPaths = await getWorkspacePaths({ workingDir });
+  const errors: [string, unknown][] = [];
 
-  const workspaces: WorkspaceMetadata[] = [];
-  const queueErrors = new Map<string, unknown>();
+  const workspaces = await pMap(
+    packages,
+    async ({ relativeDir }) => {
+      try {
+        return await getWorkspaceMetadata(relativeDir, { workingDir: rootDir });
+      } catch (error) {
+        errors.push([relativeDir, error]);
+        return pMapSkip;
+      }
+    },
+    { concurrency },
+  );
 
-  const queue = new Queue({ concurrency });
-
-  const enqueue = (workspacePath: string): void => {
-    queue
-      .add(async () => {
-        const data = await getWorkspaceMetadata(workspacePath, { workingDir });
-        workspaces.push(data);
-      })
-      .catch((error: unknown) => {
-        // Tasks removed by clearing the queue reject with an AbortError and are not failures.
-        if (isAbortError(error)) {
-          return;
-        }
-        queueErrors.set(workspacePath, error);
-        queue.clear();
-      });
-  };
-
-  for (const workspacePath of workspacesPaths) {
-    enqueue(workspacePath);
-  }
-
-  await queue.onIdle();
-
-  if (queueErrors.size > 0) {
+  if (errors.length > 0) {
     throw new Error(
-      `Failed to read workspace${queueErrors.size > 1 ? 's' : ''}: ${[...queueErrors]
+      `Failed to read workspace${errors.length > 1 ? 's' : ''}: ${errors
         .map(([path, error]) => `${path} (${stringifyError(error)})`)
         .join(', ')}`,
     );
