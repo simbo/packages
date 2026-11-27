@@ -5,7 +5,7 @@
 A lightweight utility to locate the executable path of a command.
 
 It searches for binaries in local `node_modules/.bin` directories first, and
-falls back to globally available executables.
+falls back to the directories in `PATH`.
 
 ## Features
 
@@ -13,7 +13,10 @@ falls back to globally available executables.
 
 - Searches upward through `node_modules/.bin` folders
 
-- Falls back to global executables via `which`
+- Falls back to the directories in `PATH`, without a system `which` binary
+
+- Resolves names with a path separator, such as `./bin/tool`, against the
+  working directory
 
 - Async, Promise-based API
 
@@ -22,6 +25,10 @@ falls back to globally available executables.
 ## Requirements
 
 Requires Node.js `^24.15.0 || >=26.0.0`.
+
+Tested on Linux and macOS only. On Windows, the lookup follows `PATHEXT` and
+also checks the working directory of the process first, but it is not tested
+there.
 
 ## Installation
 
