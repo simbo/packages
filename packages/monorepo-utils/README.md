@@ -18,7 +18,8 @@ with package manifests.
 
 - Validate and parse workspaces' `package.json` files
 
-- Extract metadata such as name, version, description, and README title
+- Extract metadata such as name, version, description, and the README title as
+  plain text
 
 - Manage concurrency when scanning large monorepos
 

@@ -6,6 +6,7 @@ import { readPackageJson } from '@simbo/package-json';
 import { stringifyError } from '@simbo/stringify-error';
 import type { PackageJson } from 'type-fest';
 
+import { getDisplayTitle } from './get-display-title.js';
 import type { ValidatedPackageJson, WorkspaceMetadata } from './monorepo-utils.types.js';
 
 /**
@@ -102,7 +103,8 @@ async function aggregateReadmeData(
 
   try {
     readme = await readFile(join(absolutePath, 'README.md'), 'utf8');
-    title = /^#\s+(.+)$/m.exec(readme)?.[1].trim();
+    const heading = /^#\s+(.+)$/m.exec(readme)?.[1];
+    title = heading === undefined ? undefined : getDisplayTitle(heading);
   } catch (error) {
     throw new Error(`Failed to read README.md at ${relativePath}: ${stringifyError(error)}`, { cause: error });
   }
