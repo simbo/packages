@@ -1,7 +1,7 @@
 {
   "name": "@simbo/monorepo-packages-list",
   "description": "A utility library that generates a list of monorepo packages with metadata.",
-  "version": "2.0.3",
+  "version": "3.0.2",
   "keywords": [
     "monorepo",
     "packages",
@@ -19,10 +19,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/monorepo-packages-list",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/monorepo-packages-list"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {

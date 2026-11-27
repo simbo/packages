@@ -34,6 +34,7 @@ afterEach(async () => {
 async function fixture() {
   const directory = await mkdtemp(join(tmpdir(), 'package-release-'));
   directories.push(directory);
+  await writeFile(join(directory, 'package.json'), JSON.stringify({ name: 'root', private: true }));
   await writeFile(join(directory, 'pnpm-workspace.yaml'), 'packages:\n  - packages/*\n  - changelog\n');
   await mkdir(join(directory, 'packages/example'), { recursive: true });
   await mkdir(join(directory, 'changelog'));

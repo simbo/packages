@@ -7,7 +7,7 @@ A rollup configuration for building GitHub Actions written in TypeScript/ESM.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 ## Installation
 
@@ -32,6 +32,11 @@ In your `package.json`, add a build script:
 ```json
     "build": "rollup -c"
 ```
+
+The bundle in `dist` has no source maps and no declaration files. The
+configuration passes `sourceMap: false`, `inlineSources: false` and
+`declaration: false` to the TypeScript plugin, so your `tsconfig.build.json`
+does not need to disable them, even if it extends `@simbo/tsconfig`.
 
 For a complete API reference, see the
 [documentation](https://simbo.de/packages/modules/_simbo_rollup-github-actions-config/).

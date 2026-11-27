@@ -24,7 +24,7 @@ Designed for robust error handling in logs, CLI output, or user-facing messages.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 ## Installation
 

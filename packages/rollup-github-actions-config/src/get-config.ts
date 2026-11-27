@@ -70,6 +70,11 @@ export function getConfig(userOptions: Partial<RollupGithubActionsConfigOptions>
         // so we need to specify the module type explicitly.
         // https://github.com/rollup/plugins/issues/1583
         module: 'NodeNext',
+        // bundles have no source maps (see output.sourcemap) and no declarations.
+        // inlineSources must be disabled with sourceMap, otherwise TypeScript fails with TS5051.
+        sourceMap: false,
+        inlineSources: false,
+        declaration: false,
       }),
       nodeResolve({
         preferBuiltins: true,

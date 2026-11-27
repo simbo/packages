@@ -1,0 +1,65 @@
+{
+  "name": "@simbo/git-exec",
+  "description": "Run Git commands asynchronously and get their output as text, buffer, or success flag.",
+  "version": "1.0.1",
+  "keywords": [
+    "git",
+    "exec",
+    "execfile",
+    "child-process",
+    "command",
+    "async",
+    "github-actions",
+    "cli",
+    "utility",
+    "typescript"
+  ],
+  "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
+  "license": "MIT",
+  "homepage": "https://github.com/simbo/packages/tree/main/packages/git-exec",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/git-exec"
+  },
+  "bugs": "https://github.com/simbo/packages/issues",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "check": "pnpm run check:eslint && pnpm run check:types",
+    "check:eslint": "eslint --config ./eslint.config.ts --max-warnings 0",
+    "check:types": "tsc --noEmit",
+    "clean": "pnpm run clean:dist && pnpm run clean:coverage && pnpm run clean:turbo && pnpm run clean:node_modules",
+    "clean:dist": "rm -rf dist",
+    "clean:node_modules": "rm -rf node_modules",
+    "clean:turbo": "rm -rf .turbo",
+    "clean:coverage": "rm -rf coverage",
+    "fix:eslint": "pnpm run check:eslint --fix",
+    "test": "vitest run --coverage",
+    "test:ui": "pnpm run test:watch --ui",
+    "test:watch": "vitest dev --coverage"
+  },
+  "devDependencies": {
+    "@simbo/eslint-config": "workspace:*",
+    "@simbo/tsconfig": "workspace:*",
+    "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@vitest/ui": "^5.1.1",
+    "eslint": "^10.15.0",
+    "jiti": "^2.7.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.1"
+  }
+}

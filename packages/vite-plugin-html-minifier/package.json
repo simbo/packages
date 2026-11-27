@@ -1,7 +1,7 @@
 {
   "name": "@simbo/vite-plugin-html-minifier",
   "description": "Minify generated Vite HTML assets with shared defaults and typed html-minifier-terser options.",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "keywords": [
     "vite-plugin",
     "vite",
@@ -12,10 +12,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/vite-plugin-html-minifier",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/vite-plugin-html-minifier"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {

@@ -1,5 +1,60 @@
 # packages-changelog
 
+## 1.8.3
+
+### Patch Changes
+
+- 2340885: Remove the note that `pnpm run packages-list` must run in a regular
+  clone.
+
+  - The packages list CLI finds the monorepo root, so it updates the files of
+    the worktree it runs in.
+
+## 1.8.2
+
+### Patch Changes
+
+- 17dfaec: Adapt the release scripts to `@simbo/monorepo-utils` 4.
+
+  - `scripts/release-package.js` no longer passes the removed `failOnError`
+    option.
+  - The test fixtures of the release scripts have a root `package.json`, which
+    pnpm monorepos need to be detected.
+
+## 1.8.1
+
+### Patch Changes
+
+- dab18e8: Record the CodeQL exception for packages that run Git with the
+  arguments of their callers.
+
+  - `js/second-order-command-line-injection` is accepted until 2027-11-27 for
+    `@simbo/git-exec` and packages with the same purpose, because they pass the
+    arguments to Git as given, without a shell.
+  - Their READMEs explain how to pass untrusted values after `--end-of-options`
+    or `--`.
+
+## 1.8.0
+
+### Minor Changes
+
+- 19c8dc1: Drop Node.js 22 from the repository's supported Node.js versions.
+
+  - Require Node.js ^24.15.0 || >=26.0.0 in the root and `packages-changelog`
+    workspaces.
+  - Update the requirements in `README.md` and the documentation index.
+  - Remove the `@types/node` exception for Node.js 22 from `MAINTAINING.md` and
+    `AGENTS.md`; `@types/node` stays on 24 as the lowest supported major.
+
+### Patch Changes
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
 ## 1.7.9
 
 ### Patch Changes

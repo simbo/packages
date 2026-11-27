@@ -63,6 +63,7 @@ async function fixture() {
   const root = await mkdtemp(join(tmpdir(), 'version-bumps-'));
   directories.push(root);
   await git(root, ['init', '--quiet']);
+  await writeFile(join(root, 'package.json'), JSON.stringify({ name: 'root', private: true }));
   await writeFile(join(root, 'pnpm-workspace.yaml'), 'packages:\n  - packages/*\n  - changelog\n');
   await workspace(root, 'packages/a', { name: '@simbo/a', version: '1.0.0' });
   await workspace(root, 'packages/b', { name: '@simbo/b', version: '2.0.0' });

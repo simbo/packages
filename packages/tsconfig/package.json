@@ -1,7 +1,7 @@
 {
   "name": "@simbo/tsconfig",
   "description": "Simbo's shared TypeScript configurations.",
-  "version": "2.1.0",
+  "version": "3.0.1",
   "keywords": [
     "typescript",
     "tsconfig",
@@ -18,10 +18,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/tsconfig",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/tsconfig"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {
@@ -41,7 +45,7 @@
     "test:watch": "vitest dev --coverage"
   },
   "peerDependencies": {
-    "typescript": "^5 || ^6"
+    "typescript": "^6"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^5.1.1",

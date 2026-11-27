@@ -1,5 +1,86 @@
 # @simbo/monorepo-utils
 
+## 4.0.0
+
+### Major Changes
+
+- 17dfaec: Find the monorepo and its workspaces with `@manypkg/get-packages`.
+
+  - Workspaces of npm, pnpm, Yarn, Bun, Lerna, and Rush monorepos are detected.
+  - `workingDir` can be any directory inside the monorepo; the root is searched
+    upward from it, and paths are relative to the root.
+  - `getWorkspacePatterns()` is removed, and `getWorkspacePaths()` no longer
+    accepts `patterns`.
+  - `getPackagePathByName()` no longer accepts `concurrency` and `failOnError`,
+    and rejects if a workspace manifest cannot be read.
+  - Replace `globby`, `yaml`, and `@simbo/accessible` with
+    `@manypkg/get-packages` ^3.1.0.
+
+  Migration: npm, Yarn, and Bun workspaces are found only next to their
+  lockfile, and pnpm workspaces only with a root `package.json`. Workspace
+  directories listed in `.gitignore` are now included, and directories that
+  start with a dot are no longer included. Remove the dropped options and
+  replace `getWorkspacePatterns()` with `getWorkspacePaths()`. See "Migrating
+  from 3.x" in the README.
+
+### Minor Changes
+
+- 17dfaec: Add `findMonorepoRoot()` to find the root of the monorepo that
+  contains a directory.
+
+  - It searches the directory and its parents for a workspace configuration and
+    works in Git worktrees and for monorepos inside other repositories.
+  - It returns `undefined` if no monorepo contains the directory.
+
+### Patch Changes
+
+- 17dfaec: Read workspaces concurrently with `p-map` ^7.1.1 instead of
+  `p-queue`.
+
+  - `readWorkspaces()` reads every workspace and reports all that fail, in the
+    order of the workspaces, instead of stopping at the first failure.
+  - An invalid `concurrency` is rejected by `p-map` with a `TypeError`.
+
+## 3.0.1
+
+### Patch Changes
+
+- 3d93303: Read `pnpm-workspace.yaml` when a bundler exposes `yaml` only as a
+  default export.
+
+  - `getWorkspacePatterns()` falls back to the default export of `yaml` when the
+    dynamic import provides no named `parse` export, as some bundler setups do
+    for CommonJS packages.
+  - `yaml` is still loaded only when a `pnpm-workspace.yaml` is read.
+
+## 3.0.0
+
+### Major Changes
+
+- 19c8dc1: Require Node.js ^24.15.0 || >=26.0.0 across all packages, as Node.js
+  22 reaches its end of life on 2027-04-30.
+
+  - Remove `^22.22.2` from `engines.node` in every package.
+  - Update the requirements in the package READMEs.
+
+  Node.js 22 is no longer supported. Upgrade to Node.js ^24.15.0 or >=26.0.0
+  before updating these packages.
+
+### Patch Changes
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
+- Updated dependencies [19c8dc1]
+- Updated dependencies [19c8dc1]
+  - @simbo/accessible@3.0.0
+  - @simbo/package-json@2.0.0
+  - @simbo/stringify-error@3.0.0
+
 ## 2.0.3
 
 ### Patch Changes

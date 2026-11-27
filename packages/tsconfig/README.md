@@ -2,11 +2,11 @@
 
 📦 [**`@simbo/tsconfig`**](https://npmjs.com/package/@simbo/tsconfig)
 
-Shared TypeScript configurations for TypeScript 5 and 6.
+Shared TypeScript configurations for TypeScript 6.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 ## Installation
 
@@ -41,6 +41,22 @@ In your `tsconfig.json`:
   "extends": "@simbo/tsconfig/node",
   "compilerOptions": {
     // add custom settings here
+  }
+}
+```
+
+## Source Maps
+
+The base configuration enables `sourceMap` together with `inlineSources`, so the
+source maps contain the original sources. To build without source maps, disable
+both options; with `sourceMap` alone, TypeScript fails with TS5051:
+
+```json
+{
+  "extends": "@simbo/tsconfig/node",
+  "compilerOptions": {
+    "sourceMap": false,
+    "inlineSources": false
   }
 }
 ```

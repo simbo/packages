@@ -1,7 +1,7 @@
 {
   "name": "@simbo/eslint-config",
   "description": "Shared ESLint configurations for different environments and technology stacks with utilities for configuration customization.",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "keywords": [
     "eslint",
     "eslintconfig",
@@ -23,10 +23,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/eslint-config",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/eslint-config"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {

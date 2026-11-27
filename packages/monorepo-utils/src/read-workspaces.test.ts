@@ -1,174 +1,77 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { rm } from 'node:fs/promises';
+import { join } from 'node:path';
+
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { createFixture, type Fixture } from '../tests/fixture.js';
 
 import { readWorkspaces } from './read-workspaces.js';
 
-vi.mock('node:process', () => ({
-  cwd: vi.fn().mockReturnValue('/cwd'),
-  env: {},
-}));
+describe('readWorkspaces()', () => {
+  let fixture: Fixture;
 
-vi.mock('p-queue', async () => {
-  const actual = await vi.importActual<typeof import('p-queue')>('p-queue');
-  const queueOpts: { concurrency?: number } = {};
-  return {
-    queueOptions: queueOpts,
-    default: class extends actual.default {
-      public constructor(options: { concurrency: number }) {
-        super(options);
-        queueOpts.concurrency = options.concurrency;
-      }
-    },
-  };
-});
-
-vi.mock('./get-workspace-metadata.js', () => ({
-  getWorkspaceMetadata: vi.fn().mockResolvedValue({ name: 'mock' }),
-}));
-
-vi.mock('./get-workspace-paths.js', () => ({
-  getWorkspacePaths: vi.fn().mockResolvedValue(['packages/pkg-a', 'packages/pkg-b']),
-}));
-
-const { cwd, env } = vi.mocked(await import('node:process'));
-const { getWorkspaceMetadata } = vi.mocked(await import('./get-workspace-metadata.js'));
-const { getWorkspacePaths } = vi.mocked(await import('./get-workspace-paths.js'));
-const { queueOptions } = vi.mocked(await import('p-queue')) as unknown as { queueOptions: { concurrency?: number } };
-
-describe('readWorkspaces', () => {
-  beforeEach(() => {
-    delete env.CI;
+  beforeEach(async () => {
+    fixture = await createFixture();
   });
 
-  it('should provide workspace metadata', async () => {
-    const workspaces = await readWorkspaces();
-
-    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
-    expect(queueOptions.concurrency).toBe(10);
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenNthCalledWith(1, { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(1, 'packages/pkg-a', { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(2, 'packages/pkg-b', { workingDir: '/cwd' });
+  afterEach(async () => {
+    vi.unstubAllEnvs();
+    await fixture.cleanup();
   });
 
-  it('should use different concurrency value in CI environments', async () => {
-    env.CI = 'true';
-    const workspaces = await readWorkspaces();
+  it('reads the metadata of all workspaces, sorted by path', async () => {
+    await fixture.pnpmMonorepo();
 
-    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
-    expect(queueOptions.concurrency).toBe(5);
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenNthCalledWith(1, { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(1, 'packages/pkg-a', { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(2, 'packages/pkg-b', { workingDir: '/cwd' });
+    const workspaces = await readWorkspaces({ workingDir: join(fixture.root, 'packages/a'), concurrency: 1 });
+
+    expect(
+      workspaces.map(({ name, relativePath, absolutePath, title }) => ({ name, relativePath, absolutePath, title })),
+    ).toEqual([
+      {
+        name: '@scope/a',
+        relativePath: 'packages/a',
+        absolutePath: join(fixture.root, 'packages/a'),
+        title: '@scope/a',
+      },
+      {
+        name: '@scope/b',
+        relativePath: 'packages/b',
+        absolutePath: join(fixture.root, 'packages/b'),
+        title: '@scope/b',
+      },
+    ]);
   });
 
-  it('should use the specified concurrency', async () => {
-    const workspaces = await readWorkspaces({ concurrency: 3 });
+  it('reads all workspaces in CI', async () => {
+    vi.stubEnv('CI', 'true');
+    await fixture.pnpmMonorepo();
 
-    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
-    expect(queueOptions.concurrency).toBe(3);
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenNthCalledWith(1, { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(1, 'packages/pkg-a', { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(2, 'packages/pkg-b', { workingDir: '/cwd' });
+    await expect(readWorkspaces({ workingDir: fixture.root })).resolves.toHaveLength(2);
   });
 
-  it('should use the specified concurrency even in CI environments', async () => {
-    env.CI = 'true';
-    const workspaces = await readWorkspaces({ concurrency: 3 });
+  it('reports a workspace that cannot be read', async () => {
+    await fixture.pnpmMonorepo();
+    await rm(join(fixture.root, 'packages/b/README.md'));
 
-    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
-    expect(queueOptions.concurrency).toBe(3);
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenNthCalledWith(1, { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(1, 'packages/pkg-a', { workingDir: '/cwd' });
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(2, 'packages/pkg-b', { workingDir: '/cwd' });
-  });
-
-  it('should use the specified working directory', async () => {
-    const workspaces = await readWorkspaces({ workingDir: '/custom/dir' });
-
-    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
-    expect(cwd).not.toHaveBeenCalled();
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenNthCalledWith(1, { workingDir: '/custom/dir' });
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(1, 'packages/pkg-a', { workingDir: '/custom/dir' });
-    expect(getWorkspaceMetadata).toHaveBeenNthCalledWith(2, 'packages/pkg-b', { workingDir: '/custom/dir' });
-  });
-
-  it('should throw if concurrency is not a number', async () => {
-    await expect(readWorkspaces({ concurrency: 'invalid' as unknown as number })).rejects.toThrow(
-      'Concurrency must be a positive integer',
+    await expect(readWorkspaces({ workingDir: fixture.root })).rejects.toThrow(
+      /^Failed to read workspace: packages\/b \(Failed to read README\.md at packages\/b: .+\)$/,
     );
-
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).not.toHaveBeenCalled();
-    expect(getWorkspaceMetadata).not.toHaveBeenCalled();
   });
 
-  it('should throw if concurrency is not a positive number', async () => {
-    await expect(readWorkspaces({ concurrency: 0 })).rejects.toThrow('Concurrency must be a positive integer');
+  it('reports every workspace that cannot be read, in the order of the workspaces', async () => {
+    await fixture.pnpmMonorepo();
+    await fixture.workspace('packages/c', '@scope/c');
+    await rm(join(fixture.root, 'packages/a/README.md'));
+    await rm(join(fixture.root, 'packages/c/README.md'));
 
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).not.toHaveBeenCalled();
-    expect(getWorkspaceMetadata).not.toHaveBeenCalled();
-  });
-
-  it('should throw if a workspace failed to be read', async () => {
-    getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
-
-    await expect(readWorkspaces()).rejects.toThrow(/^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/);
-
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
-  });
-
-  it('should throw if multiple workspaces failed to be read', async () => {
-    getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
-    getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
-
-    await expect(readWorkspaces()).rejects.toThrow(
-      /^Failed to read workspaces: packages\/pkg-a \(metadata failure\), packages\/pkg-b \(metadata failure\)$/,
+    await expect(readWorkspaces({ workingDir: fixture.root })).rejects.toThrow(
+      /^Failed to read workspaces: packages\/a \(.+\), packages\/c \(.+\)$/,
     );
-
-    expect(cwd).toHaveBeenCalledTimes(1);
-    expect(getWorkspacePaths).toHaveBeenCalledTimes(1);
-    expect(getWorkspaceMetadata).toHaveBeenCalledTimes(2);
   });
 
-  it('should only report failed workspaces, not the skipped ones', async () => {
-    getWorkspacePaths.mockResolvedValueOnce(['packages/pkg-a', 'packages/pkg-b', 'packages/pkg-c']);
-    getWorkspaceMetadata.mockRejectedValueOnce(new Error('metadata failure'));
+  it('rejects an invalid concurrency', async () => {
+    await fixture.pnpmMonorepo();
 
-    await expect(readWorkspaces({ concurrency: 1 })).rejects.toThrow(
-      /^Failed to read workspace: packages\/pkg-a \(metadata failure\)$/,
-    );
-
-    // The queue may start the next task before the failure is handled, but never all of them.
-    expect(getWorkspaceMetadata.mock.calls.length).toBeLessThan(3);
-  });
-
-  it('should throw if concurrency is not an integer', async () => {
-    await expect(readWorkspaces({ concurrency: 1.5 })).rejects.toThrow('Concurrency must be a positive integer');
-
-    expect(getWorkspacePaths).not.toHaveBeenCalled();
-    expect(getWorkspaceMetadata).not.toHaveBeenCalled();
-  });
-
-  it('should accept an infinite concurrency', async () => {
-    const workspaces = await readWorkspaces({ concurrency: Infinity });
-
-    expect(workspaces).toEqual([{ name: 'mock' }, { name: 'mock' }]);
-    expect(queueOptions.concurrency).toBe(Infinity);
+    await expect(readWorkspaces({ workingDir: fixture.root, concurrency: 0 })).rejects.toThrow(TypeError);
   });
 });

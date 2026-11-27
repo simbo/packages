@@ -1,7 +1,7 @@
 {
   "name": "@simbo/is-git-repository-root",
   "description": "A lightweight utility for checking whether a directory is the root of a Git repository.",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "keywords": [
     "git",
     "repository",
@@ -18,10 +18,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/is-git-repository-root",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/is-git-repository-root"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {

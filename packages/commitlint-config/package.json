@@ -1,7 +1,7 @@
 {
   "name": "@simbo/commitlint-config",
   "description": "Simbo's shared commitlint configuration based on the conventional commits standard.",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "keywords": [
     "commitlint",
     "config",
@@ -17,10 +17,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/commitlint-config",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/commitlint-config"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {

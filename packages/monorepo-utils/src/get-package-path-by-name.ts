@@ -1,23 +1,13 @@
-import { relative } from 'node:path';
 import { cwd } from 'node:process';
 
-import { readPackageJson } from '@simbo/package-json';
-import { stringifyError } from '@simbo/stringify-error';
-import Queue from 'p-queue';
-
-import { assertConcurrency } from './assert-concurrency.js';
-import { getWorkspacePaths } from './get-workspace-paths.js';
-import { isAbortError } from './is-abort-error.js';
-
-const DEFAULT_CONCURRENCY = 10;
+import { getMonorepo } from './get-monorepo.js';
 
 /**
  * Options for `getPackagePathByName`.
  */
 export interface GetPackagePathByNameOptions {
   /**
-   * The working directory to get the package path from.
-   * Should be the path to the root of the repository.
+   * A directory inside the monorepo; the root is searched from there.
    * Defaults to the current working directory.
    *
    * @default process.cwd()
@@ -25,93 +15,35 @@ export interface GetPackagePathByNameOptions {
   workingDir?: string;
 
   /**
-   * Whether to return an absolute path.
+   * Whether to return an absolute path or a path relative to the monorepo root.
    * Defaults to false (relative path).
    *
    * @default false
    */
   absolute?: boolean;
-
-  /**
-   * The concurrency level for reading workspaces.
-   * If not specified, it will default to 10.
-   *
-   * @default 10
-   */
-  concurrency?: number;
-
-  /**
-   * Whether to fail on error when reading package.json files.
-   * Defaults to false.
-   *
-   * @default false
-   */
-  failOnError?: boolean;
 }
 
 /**
- * Get the file system path of a package by its name.
+ * Get the file system path of a workspace by its package name.
  *
  * @param packageName - The name of the package to find.
  * @param options - Options for getting the package path.
  * @returns The file system path of the package.
- * @throws {Error} If the package is not found or if there are errors reading package.json files (when `failOnError` is true).
+ * @throws {Error} If no monorepo is found, a manifest cannot be read, or no workspace has the name.
  */
 export async function getPackagePathByName(
   packageName: string,
   options: GetPackagePathByNameOptions = {},
 ): Promise<string> {
-  const { workingDir = cwd(), absolute = false, concurrency = DEFAULT_CONCURRENCY, failOnError = false } = options;
+  const { workingDir = cwd(), absolute = false } = options;
 
-  assertConcurrency(concurrency);
+  const { packages } = await getMonorepo(workingDir);
 
-  const workspacePaths = await getWorkspacePaths({ workingDir, absolutePaths: true });
+  const workspace = packages.find(({ packageJson }) => packageJson.name === packageName);
 
-  let absPackagePath: string | undefined;
-
-  const queueErrors = new Map<string, unknown>();
-  const queue = new Queue({ concurrency });
-
-  const enqueue = (workspacePath: string): void => {
-    queue
-      .add(async () => {
-        const pkgJson = await readPackageJson(workspacePath);
-        if (pkgJson.name !== packageName) {
-          return;
-        }
-
-        absPackagePath = workspacePath;
-        queue.clear();
-      })
-      .catch((error: unknown) => {
-        // Tasks removed by clearing the queue reject with an AbortError and are not failures.
-        if (isAbortError(error)) {
-          return;
-        }
-        queueErrors.set(relative(workingDir, workspacePath), error);
-        if (failOnError) {
-          queue.clear();
-        }
-      });
-  };
-
-  for (const workspacePath of workspacePaths) {
-    enqueue(workspacePath);
-  }
-
-  await queue.onIdle();
-
-  if (failOnError && queueErrors.size > 0) {
-    throw new Error(
-      `Failed to read package.json files: ${[...queueErrors]
-        .map(([path, error]) => `${path} (${stringifyError(error)})`)
-        .join(', ')}`,
-    );
-  }
-
-  if (!absPackagePath) {
+  if (!workspace) {
     throw new Error(`Package "${packageName}" not found in workspaces.`);
   }
 
-  return absolute ? absPackagePath : relative(workingDir, absPackagePath);
+  return absolute ? workspace.dir : workspace.relativeDir;
 }

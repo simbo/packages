@@ -42,16 +42,16 @@ vi.mock('@simbo/clirk', () => ({
   clirk: vi.fn().mockResolvedValue({ args: { _: [] } }),
 }));
 
-vi.mock('@simbo/find-git-repository-root', () => ({
-  findGitRepositoryRoot: vi.fn().mockResolvedValue('/monorepo'),
-}));
-
 vi.mock('@simbo/inject-between-html-comments', () => ({
   injectBetweenHtmlComments: vi.fn().mockReturnValue('updated content'),
 }));
 
 vi.mock('@simbo/monorepo-packages-list', () => ({
   monorepoPackagesList: vi.fn().mockResolvedValue('packages list'),
+}));
+
+vi.mock('@simbo/monorepo-utils', () => ({
+  findMonorepoRoot: vi.fn().mockResolvedValue('/monorepo'),
 }));
 
 vi.mock('yoctocolors', () => ({
@@ -71,9 +71,9 @@ const { cwd } = vi.mocked(await import('node:process'));
 const { isWritableFile } = vi.mocked(await import('@simbo/accessible'));
 const { callPrettier } = vi.mocked(await import('@simbo/call-prettier'));
 const { clirk } = vi.mocked(await import('@simbo/clirk'));
-const { findGitRepositoryRoot } = vi.mocked(await import('@simbo/find-git-repository-root'));
 const { injectBetweenHtmlComments } = vi.mocked(await import('@simbo/inject-between-html-comments'));
 const { monorepoPackagesList } = vi.mocked(await import('@simbo/monorepo-packages-list'));
+const { findMonorepoRoot } = vi.mocked(await import('@simbo/monorepo-utils'));
 const { createConfigLoader } = vi.mocked(await import('./config-loader.js'));
 
 const { monorepoPackagesListCli } = await import('./monorepo-packages-list-cli.js');
@@ -85,8 +85,8 @@ describe('monorepoPackagesListCli', () => {
     expect(cwd).toHaveBeenCalledTimes(1);
     expect(clirk).toHaveBeenCalledTimes(1);
     expect(clirk).toHaveBeenCalledWith(CLI_CONFIG);
-    expect(findGitRepositoryRoot).toHaveBeenCalledTimes(1);
-    expect(findGitRepositoryRoot).toHaveBeenCalledWith('/cwd');
+    expect(findMonorepoRoot).toHaveBeenCalledTimes(1);
+    expect(findMonorepoRoot).toHaveBeenCalledWith({ workingDir: '/cwd' });
     expect(createConfigLoader).toHaveBeenCalledTimes(1);
     expect(createConfigLoader).toHaveBeenCalledWith('/monorepo');
     expect(resolve).toHaveBeenCalledTimes(1);
@@ -134,7 +134,7 @@ describe('monorepoPackagesListCli', () => {
   });
 
   it('throws if the monorepo root could not be found', async () => {
-    findGitRepositoryRoot.mockResolvedValueOnce(undefined);
+    findMonorepoRoot.mockResolvedValueOnce(undefined);
     await expect(monorepoPackagesListCli()).rejects.toThrow(`Monorepo root not found starting from: /cwd`);
   });
 });

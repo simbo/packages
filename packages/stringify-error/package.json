@@ -1,7 +1,7 @@
 {
   "name": "@simbo/stringify-error",
   "description": "A lightweight utility that converts any error-like value into a safe, human-readable string.",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "keywords": [
     "error",
     "error-handling",
@@ -18,10 +18,14 @@
   "author": "Simon Lepel <simbo@simbo.de> (https://simbo.de/)",
   "license": "MIT",
   "homepage": "https://github.com/simbo/packages/tree/main/packages/stringify-error",
-  "repository": "github:simbo/packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "packages/stringify-error"
+  },
   "bugs": "https://github.com/simbo/packages/issues",
   "engines": {
-    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+    "node": "^24.15.0 || >=26.0.0"
   },
   "type": "module",
   "exports": {
