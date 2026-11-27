@@ -212,7 +212,7 @@ There are currently _**31**_ packages managed in this repository:
   [**`./packages/git-exec`**](https://github.com/simbo/packages/tree/main/packages/git-exec/)
 
   📦 [`@simbo/git-exec`](https://www.npmjs.com/package/@simbo/git-exec) @
-  `1.0.0`
+  `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/git-exec/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/git-exec/CHANGELOG.md)  • 
