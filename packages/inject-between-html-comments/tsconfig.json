@@ -3,6 +3,7 @@
   "extends": "@simbo/tsconfig/node",
   "include": ["**/*.ts"],
   "compilerOptions": {
+    "lib": ["ES2023", "ES2025.RegExp"],
     "rootDir": ".",
     "noEmit": true
   }

@@ -56,9 +56,6 @@
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
   },
-  "dependencies": {
-    "escape-string-regexp": "^5.0.0"
-  },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
     "@simbo/tsconfig": "workspace:*",

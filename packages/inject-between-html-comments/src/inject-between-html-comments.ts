@@ -1,5 +1,3 @@
-import escapeStringRegexp from 'escape-string-regexp';
-
 import type { Options, TextOption } from './inject-between-html-comments.types.js';
 
 /**
@@ -33,7 +31,7 @@ export function injectBetweenHtmlComments(content: string, inject: string, optio
   }
 
   const text = getCommentText(textOption, name);
-  const escapedText = escapeStringRegexp(text);
+  const escapedText = RegExp.escape(text);
 
   const opening = `<!-- ${text} -->`;
   const closing = `<!-- /${text} -->`;
