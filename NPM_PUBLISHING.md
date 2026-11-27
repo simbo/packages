@@ -9,10 +9,11 @@
 ```
 
 The tag carries the full package name, scope included, for example
-`@simbo/eslint-config/v3.4.0` or `packages-changelog/v1.8.0`. Every workspace
-gets a GitHub release, private ones included. The release contains the archive
-as `pnpm pack` names it (`simbo-eslint-config-3.4.0.tgz`) and `SHA256SUMS`;
-releases created before this format keep their asset names. Only
+`@simbo/eslint-config/v3.4.0` or `packages-changelog/v1.8.0`. Tags are
+annotated, with the app as tagger and the message `Release <tag>`. Every
+workspace gets a GitHub release, private ones included. The release contains the
+archive as `pnpm pack` names it (`simbo-eslint-config-3.4.0.tgz`) and
+`SHA256SUMS`; releases created before this format keep their asset names. Only
 `packages-changelog` releases become the latest release. The publish workflow
 skips archives whose packed manifest is private. The package is built once.
 Publishing never rebuilds or repacks it. GitHub's automatic source ZIP/tar

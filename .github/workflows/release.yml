@@ -112,15 +112,18 @@ jobs:
         run: pnpm run packages-list
 
       # Fails if main has moved since the checked commit, instead of releasing
-      # unchecked changes. Tags are lightweight and point to the new commit.
+      # unchecked changes. Tags are annotated, with the app as tagger and the
+      # message "Release <tag>", and point to the new commit.
       - name: 💾 Commit Release and Create Tags
         id: commit
-        uses: simbo-actions/signed-commit@98f498eda4eb29a405322d694b4fa17bb42fc40b # v1.0.2
+        uses: simbo-actions/signed-commit@b849fbd0c14db4ccfa873320255ecf4a56f53f88 # v2.0.0
         with:
           token: ${{ steps.app-token.outputs.token }}
           branch: main
           message: 'ci(release): ${{ steps.bumped-packages.outputs.tags }}'
           tags: ${{ steps.bumped-packages.outputs.tags }}
+          tag-type: annotated
+          tag-message: 'Release {tag}'
           sync: false
 
   dispatch-docs:
