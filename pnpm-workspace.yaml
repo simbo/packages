@@ -15,3 +15,6 @@ trustPolicy: no-downgrade
 
 allowBuilds:
   esbuild: true
+
+overrides:
+  write-package>deepmerge-ts: ^8.0.2
