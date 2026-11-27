@@ -1,5 +1,12 @@
 # packages-changelog
 
+## 1.7.9
+
+### Patch Changes
+
+- 1d41ab3: Run the cspell CLI in the `@simbo/cspell-config` tests with
+  `promisify(execFile)` instead of `spawnSync`.
+
 ## 1.7.8
 
 ### Patch Changes

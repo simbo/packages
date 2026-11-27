@@ -1,5 +1,32 @@
 # @simbo/eslint-config
 
+## 4.0.0
+
+### Major Changes
+
+- 1d41ab3: Report synchronous Node.js APIs with `n/no-sync` in the Node.js
+  presets.
+
+  - `configs.node.recommended` and `nConfigs.node.recommended` enable the rule
+    as an error, including at the top level of modules.
+  - A justified sync call stays possible with
+    `// eslint-disable-next-line n/no-sync -- <reason>`.
+
+  Calls such as `readFileSync`, `execFileSync` or `spawnSync` now fail the lint
+  run. Replace them with `node:fs/promises` or `promisify(execFile)`, or disable
+  the rule for that line and name the reason.
+
+### Patch Changes
+
+- 1d41ab3: Document the versioning policy in the README.
+
+  - A change that can make a previously passing lint run fail is a major
+    release.
+  - Changes that cannot add lint errors are minor, documentation and internal
+    changes are patches.
+  - Minor releases of the bundled plugins can report new errors without a
+    release of this package.
+
 ## 3.3.1
 
 ### Patch Changes
