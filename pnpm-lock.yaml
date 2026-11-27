@@ -591,16 +591,19 @@ importers:
 
   packages/find-git-repository-root:
     dependencies:
-      '@simbo/is-git-repository-root':
+      '@simbo/accessible':
         specifier: workspace:*
-        version: link:../is-git-repository-root
-      find-up:
-        specifier: ^8.0.0
-        version: 8.0.0
+        version: link:../accessible
+      '@simbo/git-exec':
+        specifier: workspace:*
+        version: link:../git-exec
     devDependencies:
       '@simbo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@simbo/git-fixture':
+        specifier: workspace:*
+        version: link:../git-fixture
       '@simbo/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig

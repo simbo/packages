@@ -1,6 +1,6 @@
 {
   "name": "@simbo/find-git-repository-root",
-  "description": "A lightweight utility for locating the root directory of a Git repository.",
+  "description": "A lightweight utility for locating the root directory of a Git working tree, including linked worktrees and submodules.",
   "version": "3.0.1",
   "keywords": [
     "git",
@@ -53,11 +53,12 @@
     "test:watch": "vitest dev --coverage"
   },
   "dependencies": {
-    "@simbo/is-git-repository-root": "workspace:*",
-    "find-up": "^8.0.0"
+    "@simbo/accessible": "workspace:*",
+    "@simbo/git-exec": "workspace:*"
   },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
+    "@simbo/git-fixture": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.2",
     "@vitest/coverage-v8": "^5.1.1",

@@ -144,6 +144,16 @@ describe('getGitChanges() with a real Git repository', () => {
     });
   });
 
+  it('reports the changes of a linked worktree inside the main working tree', async () => {
+    const worktree = repo.path('.worktrees/feature');
+    await repo.git(['worktree', 'add', '--quiet', '-b', 'feature', worktree]);
+    await writeFile(`${worktree}/modified.txt`, 'changed\n');
+
+    expect(Object.fromEntries(await getGitChanges(worktree))).toEqual({
+      'modified.txt': { path: 'modified.txt', staged: undefined, unstaged: GitChangeStatus.Modified },
+    });
+  });
+
   it('reports paths with spaces and non-ASCII characters as they are', async () => {
     await repo.write('dir with spaces/café ✓.txt', 'unicode\n');
 
@@ -175,6 +185,12 @@ describe('getGitChanges() with a real Git repository', () => {
     await expect(getGitChanges(repo.dir)).rejects.toThrow(
       `The directory "${repo.dir}" is not part of a Git repository.`,
     );
+  });
+
+  it('rejects if the directory does not exist inside a Git repository', async () => {
+    const missing = repo.path('missing');
+
+    await expect(getGitChanges(missing)).rejects.toThrow(`The directory "${missing}" is not part of a Git repository.`);
   });
 
   it('rejects with the Git error as cause if git status fails', async () => {

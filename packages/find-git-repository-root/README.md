@@ -3,22 +3,19 @@
 📦
 [**`@simbo/find-git-repository-root`**](https://npmjs.com/package/@simbo/find-git-repository-root)
 
-A lightweight utility for locating the **root directory of a Git repository**.
+A lightweight utility for locating the **root directory of a Git working tree**,
+including linked worktrees and submodules.
 
-It searches upward from a given directory until it finds a valid repository root
-(a directory containing a `.git` folder).
-
-This package builds on [find-up](https://npmjs.com/package/find-up) and
-[`@simbo/is-git-repository-root`](https://npmjs.com/package/@simbo/is-git-repository-root).
+It asks Git for the top-level directory with `git rev-parse --show-toplevel`.
 
 ## Features
 
-- Detects the **root directory** of a Git repository
+- Detects the **root directory** of a Git working tree, including linked
+  worktrees and submodules
 
-- Returns the absolute path to the Git repository root
+- Returns the canonical absolute path, with symbolic links resolved
 
-- Uses upward search from a given working directory (defaults to
-  `process.cwd()`)
+- Starts from a given working directory (defaults to `process.cwd()`)
 
 - Async and Promise-based API
 
@@ -26,7 +23,7 @@ This package builds on [find-up](https://npmjs.com/package/find-up) and
 
 ## Requirements
 
-Requires Node.js `^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0` and Git on the `PATH`.
 
 ## Installation
 
@@ -53,7 +50,17 @@ const root = await findGitRepositoryRoot();
 const rootFromPath = await findGitRepositoryRoot('/path/to/subdir');
 ```
 
-If no Git repository root is found, the function resolves to `undefined`.
+### Behavior
+
+| Directory                                       | Result                 |
+| ----------------------------------------------- | ---------------------- |
+| Inside a repository                             | root of the repository |
+| Inside a linked worktree                        | root of the worktree   |
+| Inside a submodule                              | root of the submodule  |
+| Bare repository or `.git` directory             | `undefined`            |
+| Outside a repository, even with a `.git` folder | `undefined`            |
+| Missing path or file                            | `undefined`            |
+| Git cannot be started                           | rejects (`GitError`)   |
 
 ## License
 

@@ -143,7 +143,8 @@ There are currently _**32**_ packages managed in this repository:
 
 - ### **Find Git Repository Root**
 
-  > A lightweight utility for locating the root directory of a Git repository.
+  > A lightweight utility for locating the root directory of a Git working tree,
+  > including linked worktrees and submodules.
 
   📂
   [**`./packages/find-git-repository-root`**](https://github.com/simbo/packages/tree/main/packages/find-git-repository-root/)
