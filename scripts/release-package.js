@@ -134,7 +134,7 @@ export async function readMetadata(tag, root = process.cwd()) {
   // Imported on demand: the publish job runs `parse` and `verify` without installed dependencies.
   // A relative import, because a root dependency on a library would break the Turbo boundaries.
   const { getPackagePathByName } = await import('../packages/monorepo-utils/dist/index.js');
-  const dir = await getPackagePathByName(name, { workingDir: root, failOnError: true });
+  const dir = await getPackagePathByName(name, { workingDir: root });
   const source = await readFile(join(root, dir, 'package.json'), 'utf8');
   return { ...metadataFromManifest(tag, source), dir };
 }
