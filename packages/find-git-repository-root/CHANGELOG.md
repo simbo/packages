@@ -1,5 +1,12 @@
 # @simbo/find-git-repository-root
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [9410189]
+  - @simbo/is-git-repository-root@4.0.0
+
 ## 3.0.0
 
 ### Major Changes

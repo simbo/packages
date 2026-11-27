@@ -1,5 +1,11 @@
 # @simbo/git-changes
 
+## 4.1.1
+
+### Patch Changes
+
+- @simbo/find-git-repository-root@3.0.1
+
 ## 4.1.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # packages-changelog
 
+## 1.8.6
+
+### Patch Changes
+
+- 9410189: Break `git status` in the failure test of `git-changes` with a
+  corrupt index instead of a missing `HEAD`.
+
+  - Without `HEAD`, Git no longer finds the repository, so the root detection
+    fails before `git status` runs.
+
+- 9410189: Run the tests of `is-git-repository-root` on `@simbo/git-fixture`.
+
+  - Add `@simbo/git-fixture` as a development dependency.
+
 ## 1.8.5
 
 ### Patch Changes
