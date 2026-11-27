@@ -1,5 +1,13 @@
 # @simbo/call-prettier
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [fe4e368]
+- Updated dependencies [fe4e368]
+  - @simbo/find-bin@3.1.0
+
 ## 3.0.0
 
 ### Major Changes

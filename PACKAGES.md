@@ -45,7 +45,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📦
   [`@simbo/call-prettier`](https://www.npmjs.com/package/@simbo/call-prettier) @
-  `3.0.0`
+  `3.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/call-prettier/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/call-prettier/CHANGELOG.md)  • 
@@ -135,7 +135,7 @@ There are currently _**32**_ packages managed in this repository:
   [**`./packages/find-bin`**](https://github.com/simbo/packages/tree/main/packages/find-bin/)
 
   📦 [`@simbo/find-bin`](https://www.npmjs.com/package/@simbo/find-bin) @
-  `3.0.0`
+  `3.1.0`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/find-bin/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/find-bin/CHANGELOG.md)  • 
@@ -320,7 +320,7 @@ There are currently _**32**_ packages managed in this repository:
 
   📦
   [`@simbo/monorepo-packages-list-cli`](https://www.npmjs.com/package/@simbo/monorepo-packages-list-cli)
-  @ `3.0.3`
+  @ `3.0.4`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/monorepo-packages-list-cli/CHANGELOG.md)  • 

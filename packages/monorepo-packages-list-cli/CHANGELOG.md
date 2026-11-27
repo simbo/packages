@@ -1,5 +1,11 @@
 # @simbo/monorepo-packages-list-cli
 
+## 3.0.4
+
+### Patch Changes
+
+- @simbo/call-prettier@3.0.1
+
 ## 3.0.3
 
 ### Patch Changes
