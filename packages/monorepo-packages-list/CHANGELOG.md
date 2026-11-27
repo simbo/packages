@@ -1,5 +1,12 @@
 # @simbo/monorepo-packages-list
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [3d93303]
+  - @simbo/monorepo-utils@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
