@@ -1,7 +1,7 @@
 {
   "name": "@simbo/github-actions-utils",
   "description": "Run a GitHub Action and parse its inputs strictly: booleans, options, and repositories.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "keywords": [
     "github-actions",
     "actions",
