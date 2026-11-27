@@ -1,5 +1,40 @@
 # @simbo/eslint-config
 
+## 5.0.0
+
+### Major Changes
+
+- 19c8dc1: Require Node.js ^24.15.0 || >=26.0.0 across all packages, as Node.js
+  22 reaches its end of life on 2027-04-30.
+
+  - Remove `^22.22.2` from `engines.node` in every package.
+  - Update the requirements in the package READMEs.
+
+  Node.js 22 is no longer supported. Upgrade to Node.js ^24.15.0 or >=26.0.0
+  before updating these packages.
+
+- 19c8dc1: Check `import.meta.dirname` against the Node.js versions in
+  `engines`.
+
+  - `n/no-unsupported-features/node-builtins` no longer ignores
+    `import.meta.dirname`, which every supported Node.js version provides.
+  - The README explains that the Node.js version checks read `engines.node` from
+    the nearest `package.json`.
+
+  Set `engines.node` in every linted package, including nested folders with
+  their own `package.json`. Without it, `eslint-plugin-n` assumes `>=16.0.0` and
+  reports `import.meta.dirname`, for example in
+  `tsconfigRootDir: import.meta.dirname` in `eslint.config.ts`.
+
+### Patch Changes
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
 ## 4.0.0
 
 ### Major Changes

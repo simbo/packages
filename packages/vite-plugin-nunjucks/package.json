@@ -1,7 +1,7 @@
 {
   "name": "@simbo/vite-plugin-nunjucks",
   "description": "Render Nunjucks templates in Vite HTML entries with layouts, locals and automatic reloads.",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "keywords": [
     "vite-plugin",
     "vite",

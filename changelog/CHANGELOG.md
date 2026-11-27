@@ -1,5 +1,26 @@
 # packages-changelog
 
+## 1.8.0
+
+### Minor Changes
+
+- 19c8dc1: Drop Node.js 22 from the repository's supported Node.js versions.
+
+  - Require Node.js ^24.15.0 || >=26.0.0 in the root and `packages-changelog`
+    workspaces.
+  - Update the requirements in `README.md` and the documentation index.
+  - Remove the `@types/node` exception for Node.js 22 from `MAINTAINING.md` and
+    `AGENTS.md`; `@types/node` stays on 24 as the lowest supported major.
+
+### Patch Changes
+
+- 19c8dc1: Point the `repository` field of the manifest to the workspace folder.
+
+  - `repository` uses the object form with `type`, `url`, and `directory`, so
+    npm links the package folder and resolves relative links in the README from
+    there.
+  - `packages-changelog` gets the field for the first time.
+
 ## 1.7.9
 
 ### Patch Changes
