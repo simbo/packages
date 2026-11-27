@@ -59,6 +59,13 @@ GitHub with the same reason.
   Here it only runs in linting and the docs build, with glob patterns from this
   repository's configuration. Remove the exception when `typedoc` supports
   minimatch 11 and `typescript-eslint` is updated to 8.73.0 or newer.
+- `deepmerge-ts` 7
+  ([advisory](https://github.com/advisories/GHSA-ggr8-5vv4-36mx)) is overridden
+  with `^8.0.2` for `write-package` in `pnpm-workspace.yaml` until 2027-02-28.
+  `write-package` 7.2.0 requires `^7.1.0` but only calls `deepmerge()`, whose
+  behavior version 8 keeps. The override does not reach users of
+  `@simbo/package-json`. Remove it when `write-package` requires deepmerge-ts 8,
+  and update `write-package` with it.
 
 CodeQL code scanning reports findings in the code itself, test code included.
 Fix them in the code where possible; a merge to `main` closes the alert. Dismiss
