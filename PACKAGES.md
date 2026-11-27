@@ -15,7 +15,7 @@ There are currently _**33**_ packages managed in this repository:
 
   📂 [**`./changelog`**](https://github.com/simbo/packages/tree/main/changelog/)
 
-  📦 `packages-changelog` @ `1.8.7`
+  📦 `packages-changelog` @ `1.8.8`
 
   [README.md](https://github.com/simbo/packages/blob/main/changelog/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/changelog/CHANGELOG.md)
