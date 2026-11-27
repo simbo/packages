@@ -1,5 +1,14 @@
 # @simbo/github-actions-utils
 
+## 1.0.1
+
+### Patch Changes
+
+- a7b1f6e: Publish from CI with npm trusted publishing.
+
+  - This release is the first one published by the release workflow, with
+    provenance, instead of by hand; the package itself is unchanged.
+
 ## 1.0.0
 
 ### Major Changes

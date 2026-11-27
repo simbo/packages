@@ -259,7 +259,7 @@ There are currently _**34**_ packages managed in this repository:
 
   📦
   [`@simbo/github-actions-utils`](https://www.npmjs.com/package/@simbo/github-actions-utils)
-  @ `1.0.0`
+  @ `1.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/github-actions-utils/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/github-actions-utils/CHANGELOG.md)  • 
