@@ -2,6 +2,11 @@
   "name": "packages-changelog",
   "version": "1.7.9",
   "description": "A meta package holding the changelog for this monorepo.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simbo/packages.git",
+    "directory": "changelog"
+  },
   "type": "module",
   "private": true,
   "engines": {
