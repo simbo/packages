@@ -7,7 +7,7 @@ more information.
 
 <!-- PACKAGES -->
 
-There are currently _**33**_ packages managed in this repository:
+There are currently _**34**_ packages managed in this repository:
 
 - ### **Simbo's Packages — Changelog**
 
@@ -248,6 +248,22 @@ There are currently _**33**_ packages managed in this repository:
   [README.md](https://github.com/simbo/packages/blob/main/packages/github-actions-octokit/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/github-actions-octokit/CHANGELOG.md)  • 
   [Documentation](https://simbo.de/packages/modules/_simbo_github-actions-octokit/)
+
+- ### **GitHub Actions Utils**
+
+  > Run a GitHub Action and parse its inputs strictly: booleans, options, and
+  > repositories.
+
+  📂
+  [**`./packages/github-actions-utils`**](https://github.com/simbo/packages/tree/main/packages/github-actions-utils/)
+
+  📦
+  [`@simbo/github-actions-utils`](https://www.npmjs.com/package/@simbo/github-actions-utils)
+  @ `0.0.0`
+
+  [README.md](https://github.com/simbo/packages/blob/main/packages/github-actions-utils/README.md)  • 
+  [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/github-actions-utils/CHANGELOG.md)  • 
+  [Documentation](https://simbo.de/packages/modules/_simbo_github-actions-utils/)
 
 - ### **Globby Has Matches**
 
