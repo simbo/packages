@@ -1,5 +1,13 @@
 # packages-changelog
 
+## 1.8.7
+
+### Patch Changes
+
+- bf3749b: Run the tests of `find-git-repository-root` on `@simbo/git-fixture`.
+
+  - Add `@simbo/git-fixture` as a development dependency.
+
 ## 1.8.6
 
 ### Patch Changes
