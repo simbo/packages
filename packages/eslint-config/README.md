@@ -129,6 +129,10 @@ Each of the following supersets extends curated third-party configurations:
   import { nConfigs } from '@simbo/eslint-config/n';
   ```
 
+  Reports synchronous Node.js APIs with `n/no-sync`. Where a sync call is
+  required, disable the rule for that line and name the reason:
+  `// eslint-disable-next-line n/no-sync -- <reason>`.
+
 - **Superset of [`eslint-config-prettier`]**  
   _Exported as_ [`prettierConfigs`]
 

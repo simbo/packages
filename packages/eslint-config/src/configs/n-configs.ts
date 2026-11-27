@@ -19,6 +19,8 @@ const recommended = defineConfig({
         ignoreTypeImport: true,
       },
     ],
+    // Async APIs are the default; justify each sync call with a disable comment.
+    'n/no-sync': 'error',
     'n/hashbang': [
       'error',
       {
