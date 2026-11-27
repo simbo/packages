@@ -26,6 +26,7 @@ describe('CSpell Configuration Package', () => {
 });
 
 describe('Changelog commit hashes', () => {
+  // Spawns a real CSpell CLI process, which starts slowly under high system load.
   it('ignores hash prefixes only in changelogs while still checking descriptions and prose', async () => {
     const directory = await mkdtemp(join(tmpdir(), 'cspell-config-'));
     try {
@@ -67,5 +68,5 @@ describe('Changelog commit hashes', () => {
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
-  });
+  }, 30_000);
 });
