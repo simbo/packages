@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
+    "@simbo/git-fixture": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.2",
     "@vitest/coverage-v8": "^5.1.1",
