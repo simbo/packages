@@ -1,5 +1,15 @@
 # packages-changelog
 
+## 1.8.3
+
+### Patch Changes
+
+- 2340885: Remove the note that `pnpm run packages-list` must run in a regular
+  clone.
+
+  - The packages list CLI finds the monorepo root, so it updates the files of
+    the worktree it runs in.
+
 ## 1.8.2
 
 ### Patch Changes
