@@ -393,7 +393,7 @@ There are currently _**30**_ packages managed in this repository:
   [**`./packages/tsconfig`**](https://github.com/simbo/packages/tree/main/packages/tsconfig/)
 
   📦 [`@simbo/tsconfig`](https://www.npmjs.com/package/@simbo/tsconfig) @
-  `3.0.0`
+  `3.0.1`
 
   [README.md](https://github.com/simbo/packages/blob/main/packages/tsconfig/README.md)  • 
   [CHANGELOG.md](https://github.com/simbo/packages/blob/main/packages/tsconfig/CHANGELOG.md)
