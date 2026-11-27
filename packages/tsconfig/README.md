@@ -6,7 +6,7 @@ Shared TypeScript configurations for TypeScript 5 and 6.
 
 ## Requirements
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0`.
 
 ## Installation
 

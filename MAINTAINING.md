@@ -72,9 +72,7 @@ release line starts or reaches its end of life.
 
 - `engines` in every `package.json` lists the release lines that Node.js still
   maintains. Dropping a line is a breaking change for every published package.
-- `@types/node` follows the lowest supported major. It stays on 24 until Node.js
-  22 reaches its end of life (2027-04-30), because its `undici-types` dependency
-  fails the pnpm trust policy.
+- `@types/node` follows the lowest supported major.
 - `.nvmrc` holds the current Active LTS release. The workflows read it through
   `node-version-file`.
 - Update the requirements in [README.md](README.md) together with these files.
@@ -177,4 +175,5 @@ must be built from a tag that still contains it.
 
 An exception to a rule, such as an ignored finding or a held back dependency,
 needs a reason and an expiry date. Record it next to the rule it affects, as
-done for `@types/node` above, and remove it when it expires.
+done for `minimatch` in [Security Alerts](#security-alerts), and remove it when
+it expires.

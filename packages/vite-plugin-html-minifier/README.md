@@ -24,7 +24,7 @@ development HTML untouched. No minifier runtime is added to the browser bundle.
 
 ## Requirements
 
-- Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`
+- Node.js `^24.15.0 || >=26.0.0`
 - Vite `^8.3.1` (Vite 8 only)
 - An ESM Vite configuration
 
