@@ -45,6 +45,23 @@ conventions, and it does not require `Temporal` or `RegExp.escape()`. The
 Node.js requirement above applies to running the linter, not to the code being
 linted.
 
+## Versioning
+
+This package follows Semantic Versioning for its own changes. A release that can
+make a previously passing lint run fail is a major release.
+
+- **Major:** enables a rule, makes a rule option or severity stricter, removes a
+  preset or export, or drops support for a Node.js or ESLint version.
+- **Minor:** cannot add lint errors, for example a rule turned off, a relaxed
+  option, or a new preset or export.
+- **Patch:** documentation and internal changes that do not affect which errors
+  are reported.
+
+The bundled plugins are dependencies with caret ranges, so their own minor
+releases reach your project without a release of this package. Upstream minor
+releases can report new errors, for example after a bug fix. Use a lockfile to
+keep a lint build stable until you update on purpose.
+
 ## Usage
 
 Add one or more configurations to your eslint configuration file (e.g.
