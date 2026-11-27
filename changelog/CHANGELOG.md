@@ -1,5 +1,56 @@
 # packages-changelog
 
+## 1.7.8
+
+### Patch Changes
+
+- 1f3126b: Create annotated release tags with `simbo-actions/signed-commit`
+  v2.0.0.
+
+  - Each tag has the app as tagger and the message `Release <tag>`.
+  - Existing tags were migrated to the same form.
+
+- 1f3126b: Dispatch the Release and Docs workflows with `gh workflow run`
+  instead of repository dispatch events.
+
+  - The dispatching jobs need only `actions: write`, not `contents: write` or
+    the app token; `peter-evans/repository-dispatch` is no longer used.
+  - The Release and Docs workflows run only when dispatched by the previous
+    workflow on `main`; manual runs are skipped, and "Re-run" keeps the original
+    actor.
+  - The Release workflow fails if `main` has moved on from the checked commit;
+    the Docs workflow builds the release commit instead of the current `main`.
+
+- 1f3126b: Exclude the local `.claude/` folder from Prettier, so that agent
+  worktrees inside it do not break the format check.
+- 1f3126b: Name release tags after the full package name, as in
+  `@simbo/eslint-config/v3.4.0`.
+
+  - Release assets carry the name that `pnpm pack` gives them, as in
+    `simbo-eslint-config-3.4.0.tgz`; existing releases keep their asset names.
+  - The release scripts find a workspace by its package name in every workspace
+    folder instead of below `packages/`.
+  - The bumped packages after `changeset version` come from a script with the
+    outputs of the planned `version-bumps` action.
+  - Manual runs of the GitHub Release and Publish workflows take `name` and
+    `version`.
+
+- 1f3126b: Create a GitHub release for every workspace, private ones included.
+
+  - The Publish workflow verifies every release and publishes it to npm only if
+    the packed manifest is not private.
+  - Only `packages-changelog` releases become the latest release.
+
+- 1f3126b: Rename the private `changelog` package to `packages-changelog` and
+  move it to `./changelog/`.
+
+  - The package name is unscoped, never published, and free on npm, so it can be
+    used in release tags.
+  - The workspace now lives next to `packages/` and is listed in
+    `pnpm-workspace.yaml` and `workspaces`.
+  - Its archive contains `CHANGELOG.md` besides the files that pnpm always
+    packs.
+
 ## 1.7.7
 
 ### Patch Changes
