@@ -65,6 +65,15 @@ Fix them in the code where possible; a merge to `main` closes the alert. Dismiss
 an alert only with an exception recorded in this section and the same reason on
 GitHub.
 
+- `js/second-order-command-line-injection` in `@simbo/git-exec` and in packages
+  whose purpose is to run Git with arguments of their callers, such as a test
+  fixture built on it, is accepted until 2027-11-27. Running Git with the
+  arguments the caller chooses is what these packages are for. They use
+  `execFile` without a shell, and a list of forbidden options would be
+  incomplete and block legitimate calls. Their READMEs tell callers to pass
+  untrusted values only after `--end-of-options` or `--`. Review the exception
+  by its date, and dismiss each alert as "Won't fix" with this reason.
+
 ## Node.js Versions
 
 Check the [Node.js release schedule](https://github.com/nodejs/Release) when a
