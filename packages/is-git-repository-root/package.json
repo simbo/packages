@@ -1,6 +1,6 @@
 {
   "name": "@simbo/is-git-repository-root",
-  "description": "A lightweight utility for checking whether a directory is the root of a Git repository.",
+  "description": "A lightweight utility for checking whether a directory is the root of a Git working tree, including linked worktrees and submodules.",
   "version": "3.0.0",
   "keywords": [
     "git",
@@ -54,10 +54,11 @@
   },
   "dependencies": {
     "@simbo/accessible": "workspace:*",
-    "@simbo/git-constants": "workspace:*"
+    "@simbo/git-exec": "workspace:*"
   },
   "devDependencies": {
     "@simbo/eslint-config": "workspace:*",
+    "@simbo/git-fixture": "workspace:*",
     "@simbo/tsconfig": "workspace:*",
     "@types/node": "^24.19.2",
     "@vitest/coverage-v8": "^5.1.1",

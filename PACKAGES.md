@@ -281,7 +281,7 @@ There are currently _**32**_ packages managed in this repository:
 - ### **Is Git Repository Root**
 
   > A lightweight utility for checking whether a directory is the root of a Git
-  > repository.
+  > working tree, including linked worktrees and submodules.
 
   📂
   [**`./packages/is-git-repository-root`**](https://github.com/simbo/packages/tree/main/packages/is-git-repository-root/)
