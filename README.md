@@ -15,8 +15,8 @@ for a comprehensive list of all packages.
 
 ## Package Requirements
 
-All packages require Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`. Node.js 20 is
-no longer supported. See individual package READMEs for peer dependencies and
+All packages require Node.js `^24.15.0 || >=26.0.0`. Node.js 22 is no longer
+supported. See individual package READMEs for peer dependencies and
 configuration requirements.
 
 ## Development

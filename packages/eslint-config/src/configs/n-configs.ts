@@ -6,12 +6,6 @@ import type { ConfigsRecord } from '../configs-record.interface.js';
 const recommended = defineConfig({
   extends: [eslintPluginNode.configs['flat/recommended']],
   rules: {
-    'n/no-unsupported-features/node-builtins': [
-      'error',
-      {
-        ignores: ['import.meta.dirname'],
-      },
-    ],
     'n/no-missing-import': [
       'error',
       {
