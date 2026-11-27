@@ -1,4 +1,4 @@
-import { rm, symlink, unlink } from 'node:fs/promises';
+import { rm, symlink, unlink, writeFile } from 'node:fs/promises';
 import { cwd } from 'node:process';
 
 import { GitError } from '@simbo/git-exec';
@@ -178,7 +178,8 @@ describe('getGitChanges() with a real Git repository', () => {
   });
 
   it('rejects with the Git error as cause if git status fails', async () => {
-    await rm(repo.path('.git/HEAD'));
+    // A corrupt index breaks `git status`, while Git still finds the repository root.
+    await writeFile(repo.path('.git/index'), 'corrupt');
 
     const rejection = await getGitChanges(repo.dir).catch((error: unknown) => error);
 

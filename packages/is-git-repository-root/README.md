@@ -4,13 +4,16 @@
 [**`@simbo/is-git-repository-root`**](https://npmjs.com/package/@simbo/is-git-repository-root)
 
 A lightweight utility for checking whether a directory is the root of a Git
-repository.
+working tree, including linked worktrees and submodules.
 
-It simply checks for the presence of a `.git` folder in the given directory.
+It asks Git for the top-level directory with `git rev-parse --show-toplevel` and
+compares it with the given directory after resolving symbolic links in both
+paths.
 
 ## Features
 
-- Detects if a directory is the root of a Git repository
+- Detects if a directory is the root of a Git working tree, including linked
+  worktrees and submodules
 
 - Defaults to checking the **current working directory**
 
@@ -20,11 +23,9 @@ It simply checks for the presence of a `.git` folder in the given directory.
 
 - Zero dependencies (besides other `@simbo/*` packages)
 
-⚠️ Git submodules and worktrees are not considered repository roots.
-
 ## Requirements
 
-Requires Node.js `^24.15.0 || >=26.0.0`.
+Requires Node.js `^24.15.0 || >=26.0.0` and Git on the `PATH`.
 
 ## Installation
 
@@ -52,6 +53,18 @@ if (await isGitRepositoryRoot('/path/to/dir')) {
   console.log('That directory is a Git repository root.');
 }
 ```
+
+### Behavior
+
+| Directory                                       | Result               |
+| ----------------------------------------------- | -------------------- |
+| Root of a repository, worktree or submodule     | `true`               |
+| Symbolic link to such a root                    | `true`               |
+| Subdirectory of a working tree                  | `false`              |
+| Bare repository or `.git` directory             | `false`              |
+| Outside a repository, even with a `.git` folder | `false`              |
+| Missing path or file                            | `false`              |
+| Git cannot be started                           | rejects (`GitError`) |
 
 ## License
 
