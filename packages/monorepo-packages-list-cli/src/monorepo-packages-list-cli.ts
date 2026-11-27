@@ -7,9 +7,9 @@ import { isWritableFile } from '@simbo/accessible';
 import { callPrettier } from '@simbo/call-prettier';
 import { success } from '@simbo/cli-output';
 import { clirk } from '@simbo/clirk';
-import { findGitRepositoryRoot } from '@simbo/find-git-repository-root';
 import { injectBetweenHtmlComments } from '@simbo/inject-between-html-comments';
 import { monorepoPackagesList } from '@simbo/monorepo-packages-list';
+import { findMonorepoRoot } from '@simbo/monorepo-utils';
 import { UserFacingError } from '@simbo/user-facing-error';
 import { dim } from 'yoctocolors';
 
@@ -27,7 +27,7 @@ export async function monorepoPackagesListCli(workingDir = cwd()): Promise<void>
   const { configFile, targetFiles } = validateArgs(args);
 
   // Determine the monorepo root path
-  const monorepoRootPath = await findGitRepositoryRoot(workingDir);
+  const monorepoRootPath = await findMonorepoRoot({ workingDir });
 
   // Fail if the monorepo root path is not found
   if (!monorepoRootPath) {

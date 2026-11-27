@@ -973,9 +973,6 @@ importers:
       '@simbo/clirk':
         specifier: workspace:*
         version: link:../clirk
-      '@simbo/find-git-repository-root':
-        specifier: workspace:*
-        version: link:../find-git-repository-root
       '@simbo/inject-between-html-comments':
         specifier: workspace:*
         version: link:../inject-between-html-comments

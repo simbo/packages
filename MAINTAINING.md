@@ -166,8 +166,7 @@ must be built from a tag that still contains it.
      The last command must find nothing.
 
    - Run `pnpm run packages-list` to update `PACKAGES.md` and the package count
-     in [README.md](README.md). Run it in a regular clone: in a Git worktree it
-     updates the files of the main checkout instead.
+     in [README.md](README.md).
    - Add a changeset for the private `packages-changelog` package.
 
    The Turbo layer tag, the boundaries check, Vitest and the release scripts
