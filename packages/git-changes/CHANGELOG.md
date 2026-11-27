@@ -1,5 +1,19 @@
 # @simbo/git-changes
 
+## 4.1.0
+
+### Minor Changes
+
+- d6894f3: Run `git status` with `@simbo/git-exec` instead of `execa`.
+
+  - `execa` is no longer a dependency.
+  - If `git status` fails, the message after `Failed to get Git changes:` is the
+    message of the `GitError`, with the command, the exit code, and the standard
+    error output, and `cause` is that `GitError` instead of an `ExecaError`.
+
+  Code that matches the error message beyond its prefix or checks `cause` for an
+  `ExecaError` needs an update.
+
 ## 4.0.0
 
 ### Major Changes
