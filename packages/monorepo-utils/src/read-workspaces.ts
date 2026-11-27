@@ -46,15 +46,15 @@ export async function readWorkspaces(options: ReadWorkspacesOptions = {}): Promi
 
   const { rootDir, packages } = await getMonorepo(workingDir);
 
-  const errors: [string, unknown][] = [];
+  const errors: { index: number; path: string; error: unknown }[] = [];
 
   const workspaces = await pMap(
     packages,
-    async ({ relativeDir }) => {
+    async ({ relativeDir }, index) => {
       try {
         return await getWorkspaceMetadata(relativeDir, { workingDir: rootDir });
       } catch (error) {
-        errors.push([relativeDir, error]);
+        errors.push({ index, path: relativeDir, error });
         return pMapSkip;
       }
     },
@@ -62,9 +62,11 @@ export async function readWorkspaces(options: ReadWorkspacesOptions = {}): Promi
   );
 
   if (errors.length > 0) {
+    // Report the failures in the order of the workspaces, not in the order they finished.
+    errors.sort((a, b) => a.index - b.index);
     throw new Error(
       `Failed to read workspace${errors.length > 1 ? 's' : ''}: ${errors
-        .map(([path, error]) => `${path} (${stringifyError(error)})`)
+        .map(({ path, error }) => `${path} (${stringifyError(error)})`)
         .join(', ')}`,
     );
   }

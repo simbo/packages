@@ -58,7 +58,7 @@ describe('readWorkspaces()', () => {
     );
   });
 
-  it('reports every workspace that cannot be read', async () => {
+  it('reports every workspace that cannot be read, in the order of the workspaces', async () => {
     await fixture.pnpmMonorepo();
     await fixture.workspace('packages/c', '@scope/c');
     await rm(join(fixture.root, 'packages/a/README.md'));
