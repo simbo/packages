@@ -45,6 +45,22 @@ In your `tsconfig.json`:
 }
 ```
 
+## Source Maps
+
+The base configuration enables `sourceMap` together with `inlineSources`, so the
+source maps contain the original sources. To build without source maps, disable
+both options; with `sourceMap` alone, TypeScript fails with TS5051:
+
+```json
+{
+  "extends": "@simbo/tsconfig/node",
+  "compilerOptions": {
+    "sourceMap": false,
+    "inlineSources": false
+  }
+}
+```
+
 ## License
 
 [MIT © Simon Lepel](https://simbo.mit-license.org/2025/)
