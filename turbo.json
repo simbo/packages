@@ -70,6 +70,10 @@
     "check:eslint": {
       "dependsOn": ["^build"]
     },
+    "check:pack": {
+      "dependsOn": ["build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/check-pack.js", "$TURBO_ROOT$/scripts/release-package.js"]
+    },
     "check:types": {
       "dependsOn": ["build"]
     },

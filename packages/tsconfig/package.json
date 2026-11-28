@@ -40,6 +40,7 @@
     "configs"
   ],
   "scripts": {
+    "check:pack": "node ../../scripts/check-pack.js",
     "test": "vitest run --coverage",
     "test:ui": "pnpm run test:watch --ui",
     "test:watch": "vitest dev --coverage"
