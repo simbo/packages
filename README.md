@@ -161,7 +161,10 @@ cache, add `--force` to a `turbo run` command.
 The Checks workflow builds all packages and runs both Turbo runs. In pull
 requests that change only files in workspaces and `.changeset/`, it runs the
 ESLint, type, and archive checks only for the affected packages and their
-dependents (`--affected`); all other runs check everything.
+dependents (`--affected`); all other runs check everything. Pull requests
+restore the Turbo cache of the latest run on `main`, so unchanged checks come
+from the cache. Runs on `main` start without a cache, check everything, and save
+a fresh cache.
 
 The boundaries check also enforces package layers. Each package declares one tag
 in its `turbo.json`, and the root `turbo.json` defines which tags may depend on

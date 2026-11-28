@@ -63,6 +63,16 @@ jobs:
           cache: true
           require-lockfile: true
 
+      # Pull requests reuse the Turbo cache of the latest run on main. Runs on
+      # main start without a cache, check everything, and save a fresh one.
+      - name: 🗄️ Restore Turbo Cache
+        if: github.event_name == 'pull_request'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.sha }}
+          restore-keys: turbo-${{ runner.os }}-
+
       - name: 🔭 Scope
         id: scope
         env:
@@ -94,6 +104,13 @@ jobs:
 
       - name: 👨‍🔬 Tests, Docs, and Repository Checks
         run: pnpm run preflight:repository
+
+      - name: 🗄️ Save Turbo Cache
+        if: github.event_name == 'push'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.sha }}
 
       - name: 📄 Check for Changesets
         id: has-changesets
