@@ -1,5 +1,33 @@
 # packages-changelog
 
+## 1.8.9
+
+### Patch Changes
+
+- fea646f: Cache the ESLint and type checks of packages and the repository root
+  with Turbo.
+
+  - A package's checks rerun when its files, the builds of its workspace
+    dependencies, its locked dependencies, or a global input (`.npmrc`,
+    `.nvmrc`, `pnpm-workspace.yaml`, the root dependencies) change.
+  - The type check of a package waits for its own build, because its
+    `tsconfig.json` includes `dist/`.
+  - The root checks cover only the root files.
+  - `each:check` runs `check:eslint` and `check:types` of all packages without
+    the root.
+
+- fea646f: Run `preflight` in two parallel phases.
+
+  - The first Turbo run builds all packages and runs the ESLint and type checks
+    of the packages and the root.
+  - The second Turbo run runs the tests, TypeDoc, and the format, spelling, and
+    boundaries checks in parallel; `docs:typedoc` runs TypeDoc without the
+    build.
+  - Both runs show only the logs of failed tasks and continue after a failure,
+    so one run reports all failures.
+  - CSpell skips the TypeDoc output in `docs/`, which TypeDoc rewrites while
+    CSpell runs; the sources of those pages are checked directly.
+
 ## 1.8.8
 
 ### Patch Changes
