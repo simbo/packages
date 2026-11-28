@@ -135,6 +135,19 @@ pnpm run [--filter=<PNPM_SELECTOR>] check:types
 pnpm run check:boundaries
 ```
 
+`preflight` runs in two Turbo runs after the install. The first builds all
+packages and runs the ESLint and type checks of the packages and the root. The
+second runs the tests, TypeDoc, and the format, spelling, and boundaries checks
+in parallel. Last, it updates the packages list. Both runs show only the logs of
+failed tasks and continue after a failure, so one run reports all failures.
+
+Turbo caches the ESLint and type checks. A package's checks rerun when its
+files, the builds of its workspace dependencies, its locked dependencies, or a
+global input (`.npmrc`, `.nvmrc`, `pnpm-workspace.yaml`, the root dependencies)
+change; the root checks rerun when the root files change. Tests, TypeDoc, and
+the format, spelling, and boundaries checks always run. To skip the cache, add
+`--force` to a `turbo run` command.
+
 The boundaries check also enforces package layers. Each package declares one tag
 in its `turbo.json`, and the root `turbo.json` defines which tags may depend on
 each other, including transitive and development dependencies:

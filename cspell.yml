@@ -1,3 +1,5 @@
 import: '@simbo/cspell-config'
 ignorePaths:
   - .handoffs/
+  # TypeDoc output, generated while the other checks run
+  - /docs/
