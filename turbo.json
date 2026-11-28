@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "noUpdateNotifier": true,
+  "globalDependencies": [".npmrc", ".nvmrc", "pnpm-workspace.yaml"],
   "boundaries": {
     "tags": {
       "config": {
@@ -34,12 +35,27 @@
     }
   },
   "tasks": {
+    "//#check:boundaries": {
+      "cache": false
+    },
     "//#check:eslint": {
-      "dependsOn": ["@simbo/monorepo-packages-list-cli#build", "@simbo/monorepo-utils#build"],
+      "dependsOn": ["^build", "@simbo/monorepo-packages-list-cli#build", "@simbo/monorepo-utils#build"],
+      "inputs": ["*.ts", "*.js", "scripts/**", "tsconfig.json", "package.json"]
+    },
+    "//#check:format": {
+      "cache": false
+    },
+    "//#check:spelling": {
       "cache": false
     },
     "//#check:types": {
-      "dependsOn": ["@simbo/monorepo-packages-list-cli#build", "@simbo/monorepo-utils#build"],
+      "dependsOn": ["^build", "@simbo/monorepo-packages-list-cli#build", "@simbo/monorepo-utils#build"],
+      "inputs": ["*.ts", "*.js", "scripts/**", "tsconfig.json", "package.json"]
+    },
+    "//#docs:typedoc": {
+      "cache": false
+    },
+    "//#test": {
       "cache": false
     },
     "build": {
@@ -52,12 +68,10 @@
       "cache": false
     },
     "check:eslint": {
-      "dependsOn": ["^build"],
-      "cache": false
+      "dependsOn": ["^build"]
     },
     "check:types": {
-      "dependsOn": ["^build"],
-      "cache": false
+      "dependsOn": ["build"]
     },
     "clean": {
       "cache": false,
