@@ -63,17 +63,37 @@ jobs:
           cache: true
           require-lockfile: true
 
+      - name: 🔭 Scope
+        id: scope
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+
+          # Pull requests that change only workspaces and changesets check the
+          # affected packages; root files and pushes to main check everything.
+          affected=''
+          if [[ "$EVENT_NAME" == 'pull_request' ]] \
+            && ! git diff --name-only 'HEAD^1' HEAD | grep -qvE '^(packages/[^/]+/|changelog/|\.changeset/)'; then
+            affected='--affected'
+          fi
+          echo "affected=${affected}" >> "$GITHUB_OUTPUT"
+          echo "Scope: ${affected:-all packages}"
+
+      # Tests and TypeDoc need the builds of all packages.
       - name: 👷 Build
         run: pnpm run each:build
 
-      - name: 👨‍🔬 Tests
-        run: pnpm run test
-
       - name: 👨‍🏫 Checks
-        run: pnpm run each:check && pnpm run check
+        env:
+          AFFECTED: ${{ steps.scope.outputs.affected }}
+          # HEAD is the merge commit of the pull request, its first parent the base branch
+          TURBO_SCM_BASE: HEAD^1
+          TURBO_SCM_HEAD: HEAD
+        run: pnpm run preflight:checks ${AFFECTED:+"$AFFECTED"}
 
-      - name: 📘 Docs
-        run: pnpm run docs
+      - name: 👨‍🔬 Tests, Docs, and Repository Checks
+        run: pnpm run preflight:repository
 
       - name: 📄 Check for Changesets
         id: has-changesets

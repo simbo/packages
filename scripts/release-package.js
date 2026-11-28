@@ -56,7 +56,7 @@ export function isRecord(value) {
  * @returns {Record<string, unknown>} Parsed manifest whose property values still need validation.
  * @throws {Error} If JSON is malformed or the top-level value is not an object.
  */
-function parseManifest(source) {
+export function parseManifest(source) {
   /**
    * @type {unknown}
    */
@@ -140,6 +140,26 @@ export async function readMetadata(tag, root = process.cwd()) {
 }
 
 /**
+ * Rejects a packed manifest that still contains workspace protocol ranges,
+ * which only resolve inside this repository.
+ *
+ * @param {Record<string, unknown>} manifest - Manifest read from a package archive.
+ * @param {string} hint - Advice appended to the error message.
+ * @throws {Error} If any dependency field contains a `workspace:` range.
+ */
+export function assertNoWorkspaceRanges(manifest, hint) {
+  for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies', 'devDependencies']) {
+    const dependencies = manifest[field];
+    if (
+      isRecord(dependencies) &&
+      Object.values(dependencies).some(value => typeof value === 'string' && value.startsWith('workspace:'))
+    ) {
+      throw new Error(`Unresolved workspace dependency in archive ${field}. ${hint}`);
+    }
+  }
+}
+
+/**
  * Verifies an archive against the tag identity and its downloaded digest.
  * SHA256SUMS must describe exactly the expected asset. The packed manifest must
  * match the tag and contain no workspace protocol ranges. Only
@@ -167,15 +187,7 @@ export async function verifyArchive(metadata, directory) {
       `Archive identity mismatch: expected ${metadata.name}@${metadata.version}, found ${String(manifest.name)}@${String(manifest.version)}.`,
     );
   }
-  for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies', 'devDependencies']) {
-    const dependencies = manifest[field];
-    if (
-      isRecord(dependencies) &&
-      Object.values(dependencies).some(value => typeof value === 'string' && value.startsWith('workspace:'))
-    ) {
-      throw new Error(`Unresolved workspace dependency in archive ${field}. Use pnpm pack from the tagged workspace.`);
-    }
-  }
+  assertNoWorkspaceRanges(manifest, 'Use pnpm pack from the tagged workspace.');
   const isPrivate = manifest.private === true;
   process.stdout.write(
     `✅ Verified ${metadata.name}@${metadata.version}${isPrivate ? ' (private)' : ''}: ${metadata.asset} (${digest})\n`,

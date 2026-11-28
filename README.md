@@ -131,22 +131,37 @@ pnpm run check:spelling
 # types
 pnpm run [--filter=<PNPM_SELECTOR>] check:types
 
+# package archives (after the build)
+pnpm run [--filter=<PNPM_SELECTOR>] check:pack
+
 # workspace boundaries
 pnpm run check:boundaries
 ```
 
-`preflight` runs in two Turbo runs after the install. The first builds all
-packages and runs the ESLint and type checks of the packages and the root. The
-second runs the tests, TypeDoc, and the format, spelling, and boundaries checks
-in parallel. Last, it updates the packages list. Both runs show only the logs of
-failed tasks and continue after a failure, so one run reports all failures.
+`preflight` runs in two Turbo runs after the install. The first
+(`preflight:checks`) builds all packages and runs the ESLint, type, and archive
+checks of the packages and the ESLint and type checks of the root. The second
+(`preflight:repository`) runs the tests, TypeDoc, and the format, spelling, and
+boundaries checks in parallel. Last, it updates the packages list. Both runs
+show only the logs of failed tasks and continue after a failure, so one run
+reports all failures.
 
-Turbo caches the ESLint and type checks. A package's checks rerun when its
-files, the builds of its workspace dependencies, its locked dependencies, or a
-global input (`.npmrc`, `.nvmrc`, `pnpm-workspace.yaml`, the root dependencies)
-change; the root checks rerun when the root files change. Tests, TypeDoc, and
-the format, spelling, and boundaries checks always run. To skip the cache, add
-`--force` to a `turbo run` command.
+The archive check (`scripts/check-pack.js`) packs a package with `pnpm pack`, as
+the release does, and fails if the packed manifest has workspace ranges or if a
+file that `exports`, `main`, `types`, or `bin` names, or the declaration file of
+an exported JavaScript file, is missing from the archive.
+
+Turbo caches the ESLint, type, and archive checks. A package's checks rerun when
+its files, the builds of its workspace dependencies, its locked dependencies, or
+a global input (`.npmrc`, `.nvmrc`, `pnpm-workspace.yaml`, the root
+dependencies) change; the root checks rerun when the root files change. Tests,
+TypeDoc, and the format, spelling, and boundaries checks always run. To skip the
+cache, add `--force` to a `turbo run` command.
+
+The Checks workflow builds all packages and runs both Turbo runs. In pull
+requests that change only files in workspaces and `.changeset/`, it runs the
+ESLint, type, and archive checks only for the affected packages and their
+dependents (`--affected`); all other runs check everything.
 
 The boundaries check also enforces package layers. Each package declares one tag
 in its `turbo.json`, and the root `turbo.json` defines which tags may depend on
